@@ -14,6 +14,8 @@ Chỉ cần Node 18+. Không có thư viện nào phải cài.
 |---|---|
 | `src/scheduler.js` | Logic xếp lịch (dùng lại được cho app Expo sau này) |
 | `data/da-nang.json` | Địa điểm Đà Nẵng. **Dữ liệu mẫu**, cần kiểm lại toạ độ, giờ, giá |
+| `data/travel-options.json` | Nơi khởi hành, vé máy bay, khách sạn (giá mẫu) |
+| `src/costing.js` | Ước tính tổng chi phí sau khi chốt lịch trình |
 | `data/rules.json` | `Quy_tac_doi_tuong`: giờ bắt đầu, số điểm/ngày, nghỉ trưa, di chuyển tối đa |
 | `web/` | Giao diện (HTML + JS thuần) |
 | `test/` | Test bằng `node --test` |

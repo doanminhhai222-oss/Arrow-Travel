@@ -1,0 +1,28 @@
+{
+  "_note": "GIÁ MẪU để chạy thử, không phải giá thật. Cần thay bằng dữ liệu thật hoặc liên kết affiliate sau.",
+  "origins": [
+    { "id": "ho-chi-minh", "name": "TP. Hồ Chí Minh", "flights": [
+      { "id": "hcm-lcc", "label": "Hãng giá rẻ", "depart": "06:10", "back": "20:40", "duration": "1h25", "priceRoundTrip": 1600000, "baggage": "7kg xách tay" },
+      { "id": "hcm-fsc", "label": "Hãng truyền thống", "depart": "08:00", "back": "18:30", "duration": "1h25", "priceRoundTrip": 2600000, "baggage": "20kg ký gửi, có suất ăn nhẹ" }
+    ] },
+    { "id": "ha-noi", "name": "Hà Nội", "flights": [
+      { "id": "han-lcc", "label": "Hãng giá rẻ", "depart": "06:30", "back": "21:00", "duration": "1h20", "priceRoundTrip": 1900000, "baggage": "7kg xách tay" },
+      { "id": "han-fsc", "label": "Hãng truyền thống", "depart": "09:15", "back": "17:45", "duration": "1h20", "priceRoundTrip": 3000000, "baggage": "20kg ký gửi, có suất ăn nhẹ" }
+    ] },
+    { "id": "hai-phong", "name": "Hải Phòng", "flights": [
+      { "id": "hph-lcc", "label": "Hãng giá rẻ", "depart": "07:00", "back": "20:15", "duration": "1h25", "priceRoundTrip": 2100000, "baggage": "7kg xách tay" },
+      { "id": "hph-fsc", "label": "Hãng truyền thống", "depart": "10:30", "back": "17:20", "duration": "1h25", "priceRoundTrip": 3200000, "baggage": "20kg ký gửi" }
+    ] },
+    { "id": "can-tho", "name": "Cần Thơ", "flights": [
+      { "id": "cat-lcc", "label": "Hãng giá rẻ", "depart": "07:20", "back": "19:50", "duration": "1h30", "priceRoundTrip": 2000000, "baggage": "7kg xách tay" },
+      { "id": "cat-fsc", "label": "Hãng truyền thống", "depart": "11:00", "back": "17:00", "duration": "1h30", "priceRoundTrip": 3100000, "baggage": "20kg ký gửi" }
+    ] }
+  ],
+  "hotels": [
+    { "id": "homestay", "name": "Homestay gần trung tâm (mẫu)", "stars": 2, "area": "Hải Châu", "pricePerRoom": 350000, "capacity": 2, "kids": true, "elderly": false, "tier": "tiet_kiem" },
+    { "id": "3sao-bien", "name": "Khách sạn 3 sao gần biển (mẫu)", "stars": 3, "area": "Mỹ Khê", "pricePerRoom": 750000, "capacity": 2, "kids": true, "elderly": true, "tier": "vua_phai" },
+    { "id": "can-ho", "name": "Căn hộ khách sạn 2 phòng ngủ (mẫu)", "stars": 4, "area": "Sơn Trà", "pricePerRoom": 1600000, "capacity": 4, "kids": true, "elderly": true, "tier": "vua_phai" },
+    { "id": "4sao-tt", "name": "Khách sạn 4 sao trung tâm (mẫu)", "stars": 4, "area": "Hải Châu, gần Cầu Rồng", "pricePerRoom": 1300000, "capacity": 2, "kids": true, "elderly": true, "tier": "thoai_mai" },
+    { "id": "resort", "name": "Resort 5 sao bán đảo Sơn Trà (mẫu)", "stars": 5, "area": "Sơn Trà", "pricePerRoom": 3200000, "capacity": 2, "kids": true, "elderly": true, "tier": "thoai_mai" }
+  ]
+}
