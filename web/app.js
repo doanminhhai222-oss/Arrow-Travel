@@ -1,4 +1,5 @@
 import { buildItinerary } from '../src/scheduler.js';
+import { placeDetailHtml } from '../src/detail.js';
 
 const $ = (id) => document.getElementById(id);
 const [data, rules] = await Promise.all([
@@ -15,13 +16,15 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&l
 const vnd = (n) => (n ? n.toLocaleString('vi-VN') + ' đ' : 'Miễn phí');
 const fmtDur = (m) => (m >= 60 ? `${Math.floor(m / 60)}h${m % 60 ? String(m % 60).padStart(2, '0') : ''}` : `${m}p`);
 
+let current = null;
 function render(plan) {
+  current = plan;
   const out = [];
   if (plan.warnings.length) out.push(`<div class="warn">${plan.warnings.map(esc).join('<br>')}</div>`);
   for (const d of plan.days) {
     const rows = d.items.map((it) => {
       const travel = it.travel ? `<div class="travel">🚗 ${it.travel.km} km · ${it.travel.min}p</div>` : '';
-      const name = it.place ? esc(it.place.name) : esc(it.note);
+      const name = it.place ? `<button type="button" class="nm" data-day="${d.dayIndex - 1}" data-id="${it.place.id}">${esc(it.place.name)}</button>` : esc(it.note);
       const sub = it.place ? `${fmtDur(it.duration)} · ${vnd(it.place.price)}${it.note && it.kind === 'meal' ? ' · ' + esc(it.note) : ''}` : fmtDur(it.duration);
       return `${travel}<div class="item"><div class="t">${it.time}</div><div><div class="n">${name}</div><div class="s">${sub}</div></div></div>`;
     }).join('');
@@ -41,3 +44,17 @@ $('form').addEventListener('submit', (e) => {
   render(buildItinerary(trip, data, rules));
   $('result').scrollIntoView({ behavior: 'smooth' });
 });
+
+// Chi tiết địa điểm
+const sheet = $('sheet');
+const closeSheet = () => { sheet.hidden = true; };
+$('result').addEventListener('click', (e) => {
+  const b = e.target.closest('.nm'); if (!b || !current) return;
+  const day = current.days[+b.dataset.day];
+  const dayPlaces = day.items.filter((i) => i.place).map((i) => i.place);
+  $('sheetBody').innerHTML = placeDetailHtml(dayPlaces.find((p) => p.id === b.dataset.id), dayPlaces);
+  sheet.hidden = false; $('sheetClose').focus();
+});
+$('sheetClose').addEventListener('click', closeSheet);
+sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });

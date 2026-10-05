@@ -1,4 +1,4 @@
-:root { --teal:#0F766E; --teal-d:#0b5a54; --orange:#D9480F; --bg:#f7faf9; --card:#fff; --text:#1c2b2a; --muted:#5f716f; --line:#dbe6e4; }
+:root { --fg:#1c2b2a; --teal-soft:#dff1ee; --teal:#0F766E; --teal-d:#0b5a54; --orange:#D9480F; --bg:#f7faf9; --card:#fff; --text:#1c2b2a; --muted:#5f716f; --line:#dbe6e4; }
 * { box-sizing:border-box; }
 body { margin:0; font-family:'Be Vietnam Pro',system-ui,sans-serif; background:var(--bg); color:var(--text); font-size:16px; line-height:1.5; }
 header { background:var(--teal); color:#fff; padding:16px; }
