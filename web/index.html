@@ -30,11 +30,12 @@
     </select>
     <label class="check"><input type="checkbox" id="hasKids"> Có trẻ nhỏ</label>
     <label class="check"><input type="checkbox" id="hasElderly"> Có người lớn tuổi</label>
-    <label for="style">Phong cách</label>
-    <select id="style">
-      <option value="thien_nhien">Thiên nhiên</option><option value="van_hoa">Văn hoá</option>
-      <option value="am_thuc">Ẩm thực</option><option value="check_in">Check-in</option><option value="thu_gian">Thư giãn</option>
-    </select>
+    <label>Phong cách (chọn nhiều)</label>
+    <label class="check"><input type="checkbox" name="style" value="thien_nhien" checked> Thiên nhiên</label>
+    <label class="check"><input type="checkbox" name="style" value="van_hoa"> Văn hoá</label>
+    <label class="check"><input type="checkbox" name="style" value="am_thuc"> Ẩm thực</label>
+    <label class="check"><input type="checkbox" name="style" value="check_in"> Check-in</label>
+    <label class="check"><input type="checkbox" name="style" value="thu_gian"> Thư giãn</label>
     <button type="submit">Lên lịch trình</button>
   </form>
   <div id="result"></div>

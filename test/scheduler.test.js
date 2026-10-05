@@ -58,3 +58,11 @@ test('ngân sách tiết kiệm loại Bà Nà Hills', () => {
   const ids = plan({ audience: 'nhom_ban', budget: 'tiet_kiem' }).days.flatMap((d) => d.items.map((i) => i.place?.id));
   assert.ok(!ids.includes('ba-na'));
 });
+
+test('phong cách quyết định điểm đầu tiên, chọn nhiều phong cách vẫn chạy', () => {
+  const first = (styles) => plan({ audience: 'mot_minh', styles, endDate: '2026-09-03' }).days[0].items.find((i) => i.kind === 'visit').place.type;
+  assert.equal(first(['van_hoa']), 'culture');
+  assert.equal(first(['thien_nhien']), 'park');
+  assert.ok(['culture', 'park', 'beach'].includes(first(['van_hoa', 'thien_nhien'])));
+  assert.doesNotThrow(() => plan({ audience: 'mot_minh', styles: [] }));
+});

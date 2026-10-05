@@ -74,7 +74,9 @@ function tryFit(place, clock, last, rule) {
   return { start, end, km: +km.toFixed(1), travelMin: tmin };
 }
 
-function score(place, fit, rule, style) {
+export const styleList = (trip) => trip.styles ?? (trip.style ? [trip.style] : []);
+
+function score(place, fit, rule, styles) {
   let s = 0;
   const h = fit.start;
   if (place.slot === 'morning') s += h < 12 * 60 ? 3 : -2;
@@ -82,7 +84,7 @@ function score(place, fit, rule, style) {
   if (place.slot === 'evening') s += h >= EVENING_FROM ? 3 : -3;
   if (rule.preferSlot === 'evening' && place.slot === 'evening') s += 2;
   if (rule.preferTypes?.includes(place.type)) s += 2;
-  if ((STYLE_TYPES[style] || []).includes(place.type)) s += 2;
+  for (const st of styles) if ((STYLE_TYPES[st] || []).includes(place.type)) s += 2; // chọn nhiều phong cách: mỗi phong cách khớp cộng 2
   s -= fit.travelMin / 15;
   return s;
 }
@@ -103,7 +105,7 @@ export function planDay(date, pool, rule, trip, visited) {
       if (visited.has(p.id) || !filterFn(p)) continue;
       const fit = tryFit(p, clock, last, rule);
       if (!fit) continue;
-      const sc = score(p, fit, rule, trip.style);
+      const sc = score(p, fit, rule, styleList(trip));
       if (!best || sc > best.sc) best = { p, fit, sc };
     }
     return best;

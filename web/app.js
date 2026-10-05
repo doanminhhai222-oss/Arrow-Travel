@@ -35,7 +35,7 @@ $('form').addEventListener('submit', (e) => {
   const trip = {
     destination: $('destination').value, startDate: $('startDate').value, endDate: $('endDate').value,
     people: +$('people').value, budget: $('budget').value, audience: $('audience').value,
-    hasKids: $('hasKids').checked, hasElderly: $('hasElderly').checked, style: $('style').value,
+    hasKids: $('hasKids').checked, hasElderly: $('hasElderly').checked, styles: [...document.querySelectorAll('input[name=style]:checked')].map((x) => x.value),
   };
   if (trip.endDate < trip.startDate) { $('result').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; return; }
   render(buildItinerary(trip, data, rules));
