@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrow Travel – Lịch trình theo đối tượng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>Arrow Travel</h1><p>Lịch trình đổi theo người đi cùng</p></header>
+<main>
+  <form id="form">
+    <label for="destination">Điểm đến</label>
+    <select id="destination"><option>Đà Nẵng</option></select>
+    <div class="row">
+      <div><label for="startDate">Ngày đi</label><input type="date" id="startDate" required></div>
+      <div><label for="endDate">Ngày về</label><input type="date" id="endDate" required></div>
+    </div>
+    <div class="row">
+      <div><label for="people">Số người</label><input type="number" id="people" min="1" max="30" value="2"></div>
+      <div><label for="budget">Ngân sách</label>
+        <select id="budget"><option value="tiet_kiem">Tiết kiệm</option><option value="vua_phai" selected>Vừa phải</option><option value="thoai_mai">Thoải mái</option></select></div>
+    </div>
+    <label for="audience">Đi cùng</label>
+    <select id="audience">
+      <option value="mot_minh">Một mình</option><option value="cap_doi">Cặp đôi</option>
+      <option value="nhom_ban" selected>Nhóm bạn trẻ</option><option value="gia_dinh">Gia đình</option>
+    </select>
+    <label class="check"><input type="checkbox" id="hasKids"> Có trẻ nhỏ</label>
+    <label class="check"><input type="checkbox" id="hasElderly"> Có người lớn tuổi</label>
+    <label for="style">Phong cách</label>
+    <select id="style">
+      <option value="thien_nhien">Thiên nhiên</option><option value="van_hoa">Văn hoá</option>
+      <option value="am_thuc">Ẩm thực</option><option value="check_in">Check-in</option><option value="thu_gian">Thư giãn</option>
+    </select>
+    <button type="submit">Lên lịch trình</button>
+  </form>
+  <div id="result"></div>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "arrow-travel",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Lên lịch trình du lịch theo đối tượng đi cùng",
+  "scripts": {
+    "start": "node serve.mjs",
+    "test": "node --test test/*.test.js"
+  }
+}
