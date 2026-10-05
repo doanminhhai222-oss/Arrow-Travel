@@ -9,6 +9,9 @@ npm test    # chạy test thuật toán xếp lịch
 ```
 Chỉ cần Node 18+. Không có thư viện nào phải cài.
 
+## Xem trên GitHub Pages
+GitHub chỉ hiện mã nguồn, không chạy web. Để mở web bằng link: vào **Settings → Pages**, mục *Build and deployment* chọn **Deploy from a branch**, chọn nhánh (hiện là `claude/tender-albattani-p9z3b9`, sau này là `main`) và thư mục **/ (root)**, bấm Save. Chờ 1-2 phút, link có dạng `https://doanminhhai222-oss.github.io/Arrow-Travel/`.
+
 ## Cấu trúc
 | Đường dẫn | Việc |
 |---|---|
