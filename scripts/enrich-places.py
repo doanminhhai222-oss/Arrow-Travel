@@ -14,7 +14,7 @@ E = {
   "cau-rong": dict(scene="bridge",
     highlights=["Cầu phun lửa và phun nước vào tối thứ Bảy, Chủ nhật (khoảng 21h), nên kiểm tra lại giờ trước khi đi", "Đứng ở bờ đông sông Hàn để chụp trọn cả thân cầu", "Buổi tối đông, giữ gìn đồ cá nhân"],
     culture="Cầu dài khoảng 666 m, hình con rồng uốn lượn. Rồng là biểu tượng của quyền uy và may mắn trong văn hoá Việt, nên được chọn làm hình ảnh đại diện cho sự vươn lên của thành phố."),
-  "my-khe": dict(scene="beach",
+  "my-khe": dict(scene="beach", image="images/my-khe.jpg", imageAlt="Hoàng hôn trên biển Mỹ Khê, Đà Nẵng",
     highlights=["Sáng sớm biển êm, hợp tắm và đi dạo; trưa nắng gắt nên thoa kem chống nắng", "Chỉ tắm trong khu có cờ và nhân viên cứu hộ", "Mùa bão (khoảng tháng 9 đến tháng 12) sóng có thể mạnh, xem dự báo trước"],
     culture="Từng được tạp chí Forbes nêu tên trong danh sách các bãi biển đẹp của thế giới. Buổi sáng có thể thấy ngư dân kéo lưới và thuyền thúng, nét sinh hoạt quen thuộc của làng chài ven biển miền Trung."),
   "linh-ung": dict(scene="temple",

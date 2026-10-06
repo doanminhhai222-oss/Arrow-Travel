@@ -57,7 +57,7 @@ const SCENES = {
 
 let sceneN = 0; // mỗi ảnh một id gradient riêng, tránh trùng khi nhiều ảnh nằm cùng trang
 export function sceneSvg(place) {
-  if (place.image) return `<img class="pd-img" src="${esc(place.image)}" alt="${esc(place.name)}">`;
+  if (place.image) return `<img class="pd-img pd-photo" src="${esc(place.image)}" alt="${esc(place.imageAlt || place.name)}" loading="lazy">`;
   const gid = 'sg' + ++sceneN;
   const body = (SCENES[place.scene] || SCENES.mountain).replaceAll('id="g"', `id="${gid}"`).replaceAll('url(#g)', `url(#${gid})`);
   return `<svg class="pd-img" viewBox="0 0 320 160" role="img" aria-label="Ảnh minh hoạ ${esc(place.name)}" preserveAspectRatio="xMidYMid slice">${body}</svg>`;

@@ -90,7 +90,9 @@
         "Chỉ tắm trong khu có cờ và nhân viên cứu hộ",
         "Mùa bão (khoảng tháng 9 đến tháng 12) sóng có thể mạnh, xem dự báo trước"
       ],
-      "culture": "Từng được tạp chí Forbes nêu tên trong danh sách các bãi biển đẹp của thế giới. Buổi sáng có thể thấy ngư dân kéo lưới và thuyền thúng, nét sinh hoạt quen thuộc của làng chài ven biển miền Trung."
+      "culture": "Từng được tạp chí Forbes nêu tên trong danh sách các bãi biển đẹp của thế giới. Buổi sáng có thể thấy ngư dân kéo lưới và thuyền thúng, nét sinh hoạt quen thuộc của làng chài ven biển miền Trung.",
+      "image": "images/my-khe.jpg",
+      "imageAlt": "Hoàng hôn trên biển Mỹ Khê, Đà Nẵng"
     },
     {
       "id": "linh-ung",

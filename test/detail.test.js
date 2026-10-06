@@ -31,3 +31,13 @@ test('tên địa điểm được escape', () => {
   const html = placeDetailHtml({ ...get('my-khe'), name: '<script>x</script>' }, []);
   assert.ok(!html.includes('<script>x'));
 });
+
+test('Mỹ Khê dùng ảnh thật khi có, các điểm khác vẫn dùng ảnh minh hoạ', async () => {
+  const { existsSync } = await import('node:fs');
+  const my = get('my-khe');
+  assert.equal(my.image, 'images/my-khe.jpg');
+  assert.ok(existsSync(new URL('../web/' + my.image, import.meta.url)), 'thiếu file ảnh');
+  const html = placeDetailHtml(my, [my]);
+  assert.match(html, /<img class="pd-img pd-photo" src="images\/my-khe\.jpg" alt="Hoàng hôn trên biển Mỹ Khê/);
+  assert.match(placeDetailHtml(get('linh-ung'), []), /<svg class="pd-img"/);
+});

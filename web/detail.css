@@ -33,3 +33,4 @@
 .pd blockquote a{color:var(--teal)}
 .pd .go{width:100%}
 .pd .go[disabled]{opacity:.55}
+.pd-photo{aspect-ratio:4/3;max-height:none;object-position:center 70%}

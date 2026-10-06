@@ -19,7 +19,15 @@ def strip_module(src):
     return src.replace("export ", "")
 
 detail = re.sub(r"^const (esc|vnd) = .*\n", "", read("src/detail.js"), flags=re.M)  # app.js tự có esc/vnd
-data_block = ("const DATA = " + read("data/da-nang.json") + ";\nconst RULES = " + read("data/rules.json") +
+import base64, mimetypes
+def inline_images(json_text):
+    def repl(m):
+        path = root / "web" / m.group(1)
+        mime = mimetypes.guess_type(path.name)[0] or "image/jpeg"
+        return '"image": "data:%s;base64,%s"' % (mime, base64.b64encode(path.read_bytes()).decode())
+    return re.sub(r'"image":\s*"(images/[^"]+)"', repl, json_text)
+
+data_block = ("const DATA = " + inline_images(read("data/da-nang.json")) + ";\nconst RULES = " + read("data/rules.json") +
               ";\nconst OPTS = " + read("data/travel-options.json") + ";\nconst TRANSPORT = " + read("data/transport.json") + ";\nconst FLIGHTS = " + read("data/flights.json") + ";\nconst PAYMENT = " + read("data/payment.json") + ";\nconst GOOGLE = " + read("data/google.json") + ";")
 app = re.sub(r"// <DATA>.*?// </DATA>", lambda m: data_block, read("web/app.js"), flags=re.S)
 vendor = read("vendor/qrcode-generator.js")
