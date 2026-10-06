@@ -1,7 +1,7 @@
 // Chi tiết khách sạn: ảnh, loại phòng, đánh giá (mẫu hoặc từ Google Maps), liên kết Google Maps.
 import { sceneSvg } from './detail.js';
 import { priceStay } from './search.js';
-import { money as hMoney } from './format.js';
+import { money } from './format.js';
 
 const hEsc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const hStars = (r) => { const n = Math.max(0, Math.min(5, Math.round(r))); return '★'.repeat(n) + '☆'.repeat(5 - n); };
@@ -23,7 +23,7 @@ export function hotelDetailHtml(hotel, { selected = false, nights, google = null
     const p = priceStay(hotel, r, { checkIn: hotel.checkIn, nights, people: hotel.people });
     const on = r.id === hotel.room.id;
     return `<button type="button" class="opt" data-room="${hEsc(r.id)}" aria-pressed="${on}"><b>${hEsc(r.name)}</b><span>${r.sizeM2} m² · ${hEsc(r.beds)} · ${hEsc(r.view)}</span><span>Tối đa ${r.sleeps} người/phòng · ${r.perks.map(hEsc).join(' · ')}</span>` +
-      (p.available ? `<span class="pr">${hMoney(p.total)} cả kỳ nghỉ · ${p.rooms} phòng × ${nights} đêm</span>` : `<span class="late">${hEsc(p.reason)}</span>`) + `</button>`;
+      (p.available ? `<span class="pr">${money(p.total)} cả kỳ nghỉ · ${p.rooms} phòng × ${nights} đêm</span>` : `<span class="late">${hEsc(p.reason)}</span>`) + `</button>`;
   }).join('')}</div>`;
 
   h += `<h3>Đánh giá</h3>`;

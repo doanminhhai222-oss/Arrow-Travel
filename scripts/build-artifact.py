@@ -16,6 +16,8 @@ body = re.sub(r'<script src="[^"]*vendor[^"]*"></script>\s*', "", body)  # thư 
 css = read("web/style.css") + "\n" + read("web/detail.css")
 
 def strip_module(src):
+    if re.search(r"^import .*\bas\b.*;$", src, flags=re.M):
+        raise SystemExit("Có import đổi tên (as ...). Bản đóng gói bỏ import nên tên đó sẽ không tồn tại. Hãy dùng đúng tên gốc.")
     src = re.sub(r"^import .*;\n", "", src, flags=re.M)
     return src.replace("export ", "")
 

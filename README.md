@@ -33,6 +33,13 @@ Muốn hiện đánh giá thật từ Google Maps: tạo khoá Google Maps Platf
 - Bạn đồng hành, đánh giá app, chính sách bảo mật, điều khoản, hướng dẫn thanh toán (`data/legal.json`, **bản nháp, cần luật sư**; điền các mục `[ĐIỀN]`).
 - Điểm, voucher, đánh giá, bạn bè đều nằm trong trình duyệt của người dùng nên có thể bị sửa tay; chủ app vẫn phải đối chiếu số tiền chuyển khoản khi xác nhận đơn. Muốn nhận đánh giá thật: dán liên kết biểu mẫu vào `feedbackUrl` trong `data/app.json`.
 
+## Kiểm tra bản đóng gói
+`npm test` chỉ kiểm tra logic. Bản artifact là file được đóng gói riêng, có thể hỏng mà `npm test` vẫn qua (đã từng xảy ra với một import đổi tên). Sau khi sửa giao diện, chạy thêm:
+```bash
+python3 scripts/build-artifact.py dist/arrow-travel.html
+node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
+```
+
 ## Cấu trúc
 | Đường dẫn | Việc |
 |---|---|

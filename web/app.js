@@ -1,11 +1,11 @@
-import { buildItinerary, effectiveRules, filterPlaces, STYLE_TYPES, styleList, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
+import { buildItinerary, effectiveRules, filterPlaces, STYLE_TYPES, styleList, BUDGET_CAP, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
 import { estimateCost, hotelsFor } from '../src/costing.js';
 import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels } from '../src/search.js';
 import { hotelDetailHtml } from '../src/hoteldetail.js';
 import { fetchPlaceReviews } from '../src/google.js';
 import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/payment.js';
 import { transportOptions } from '../src/transport.js';
-import { placeDetailHtml, sceneSvg } from '../src/detail.js';
+import { placeDetailHtml, sceneSvg, TYPE_LABEL } from '../src/detail.js';
 import { money, moneyVnd, vnd, setCurrency, getCurrency, CURRENCIES } from '../src/format.js';
 import { tr, setLang, getLang } from '../src/i18n.js';
 import { EN } from '../src/i18n-en.js';
@@ -77,37 +77,62 @@ function applyForm(p = {}) {
   const t = { audience: store.prefs.audience || 'nhom_ban', budget: store.prefs.budget || 'vua_phai', people: 2, hasKids: false, hasElderly: false, styles: ['thien_nhien'], days: 3, ...p };
   const start = t.startDate || addDays(iso(new Date()), 7);
   $('start').value = start; $('end').value = t.endDate || addDays(start, t.days - 1);
-  $('people').value = t.people; $('budget').value = t.budget;
+  $('people').value = t.people; setBudget(t.budget);
   $('kids').checked = !!t.hasKids || t.audience === 'gia_dinh'; $('elder').checked = !!t.hasElderly;
-  setAud(t.audience); setStyles(t.styles);
+  setAud(t.audience); setStyles(t.styles); updateNights();
 }
-function openCreate(p, runNow) { applyForm(p); go('create'); if (runNow) run(); }
+function openCreate(p, runNow, collapse = true) { applyForm(p); go('create'); if (runNow) run(collapse); }
 
+function setBudget(v) { $('budget').value = v; $('budgetSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.v === v))); }
+function updateNights() {
+  const a = $('start').value, b = $('end').value, n = a && b && b >= a ? daysBetween(a, b) : 0;
+  $('nights').textContent = n ? n + ' ngày ' + (n - 1) + ' đêm' : '';
+}
+let formOpen = true, dirtyEdits = false, formTimer = null, dayTab = 'all';
+const openSecs = new Set();
+function setFormOpen(open) {
+  formOpen = open; $('form').hidden = !open;
+  const fs = $('formSummary'); fs.hidden = open || !plan;
+  if (!open && plan) {
+    const t = plan.trip;
+    fs.innerHTML = '<div><b>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</b><span>' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + t.people + ' người · ' + esc(plan.audienceLabel) + '</span></div><button type="button" class="btn" data-editform>Sửa</button>';
+  }
+}
+// Đổi form: tự xếp lại lịch, trừ khi đã chỉnh tay hoặc đã chốt thì hỏi trước để không mất chỉnh sửa
+function formChanged() {
+  updateNights();
+  if (plan && (dirtyEdits || finalized)) { $('applyHint').hidden = false; return; }
+  clearTimeout(formTimer); formTimer = setTimeout(() => run(false), 250);
+}
 $('aud').addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
   setAud(b.dataset.v);
   if (aud === 'gia_dinh') $('kids').checked = true;
-  run();
+  formChanged();
 });
 $('styles').addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
   b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
-  run();
+  formChanged();
 });
-['kids', 'elder', 'budget'].forEach((id) => $(id).addEventListener('change', run));
-$('form').addEventListener('submit', (e) => { e.preventDefault(); run(); });
+$('budgetSeg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; setBudget(b.dataset.v); formChanged(); });
+document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => {
+  $('people').value = Math.min(30, Math.max(1, (+$('people').value || 1) + +b.dataset.step)); formChanged();
+}));
+['kids', 'elder', 'start', 'end', 'people'].forEach((id) => $(id).addEventListener('change', formChanged));
+$('form').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(formTimer); run(true); });
 
-function run() {
+function run(collapse = false) {
   const trip = { destination: 'Đà Nẵng', startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
     budget: $('budget').value, audience: aud, hasKids: $('kids').checked, hasElderly: $('elder').checked,
     styles: [...document.querySelectorAll('#styles [aria-pressed="true"]')].map((x) => x.dataset.v) };
-  if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; return; }
+  if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; $('dayTabs').hidden = true; setFormOpen(true); return; }
   plan = buildItinerary(trip, DATA, RULES);
   rule = effectiveRules(RULES[aud], trip);
   pool = filterPlaces(DATA.places, trip).places;
   plan.days.forEach((d) => d.items.forEach((i) => { i.dur = i.duration; }));
-  swapOpen = null; undoStack = []; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
-  render();
+  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; openSecs.clear(); $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+  render(); setFormOpen(!collapse);
 }
 
 /* ---------- Tính lại giờ sau khi xoá / đổi điểm ---------- */
@@ -150,12 +175,22 @@ function snap() {
 }
 
 /* ---------- Vẽ lịch trình ---------- */
+function renderDayTabs() {
+  const tabs = $('dayTabs');
+  if (dayTab !== 'all' && !plan.days[dayTab]) dayTab = 'all';
+  const stops = plan.days.reduce((x, d) => x + d.placeCount, 0), km = Math.round(plan.days.reduce((x, d) => x + d.totalKm, 0) * 10) / 10;
+  tabs.hidden = false;
+  tabs.innerHTML = '<div class="dt-row" role="tablist" aria-label="Chọn ngày"><button type="button" role="tab" data-daytab="all" aria-selected="' + (dayTab === 'all') + '">Tất cả</button>' +
+    plan.days.map((d, i) => '<button type="button" role="tab" data-daytab="' + i + '" aria-selected="' + (dayTab === i) + '">Ngày ' + d.dayIndex + '<small>' + fmtDate(d.date) + '</small></button>').join('') + '</div>' +
+    '<div class="dt-stat">' + plan.days.length + ' ngày · ' + stops + ' điểm · ' + km + ' km · ' + esc(plan.audienceLabel) + '</div>';
+}
 function render() {
   let h = '';
   if (plan.warnings.length) h += '<div class="warn">' + plan.warnings.map(esc).join('<br>') + '</div>';
-  h += '<div class="sum"><span>' + esc(plan.audienceLabel) + '</span><span>' + plan.days.length + ' ngày</span><span>' + plan.trip.people + ' người</span></div>';
   if (undoStack.length) h += '<div class="undo"><span>' + esc(undoStack[undoStack.length - 1].msg || '') + '</span><button data-act="undo" type="button">Hoàn tác</button></div>';
+  renderDayTabs();
   plan.days.forEach((d, di) => {
+    if (dayTab !== 'all' && dayTab !== di) return;
     h += '<section class="panel day"><h2>Ngày ' + d.dayIndex + ' · ' + d.date.split('-').reverse().join('/') + '</h2><div class="meta">' + d.placeCount + ' điểm · ' + d.totalKm + ' km</div>';
     if (!d.items.length) h += '<p class="hint">Ngày này đang trống.</p>';
     d.items.forEach((it, ii) => {
@@ -164,14 +199,15 @@ function render() {
       if (it.travel) h += '<div class="drive">🚗 ' + it.travel.km + ' km · ' + it.travel.min + 'p</div>';
       const name = it.place ? '<button type="button" class="nm" data-act="detail" data-d="' + di + '" data-id="' + it.place.id + '">' + esc(it.place.name) + '</button>' : esc(it.note);
       const sub = it.place ? dur(it.dur) + ' · ' + vnd(it.place.price) + (it.kind === 'meal' ? ' · ' + esc(it.note) : '') : dur(it.dur);
-      const acts = '<div class="acts">' + (it.place ? '<button type="button" data-act="swap"' + at + '>' + (isOpen ? 'Đóng gợi ý' : 'Đổi địa điểm') + '</button>' : '') + '<button type="button" class="del" data-act="del"' + at + '>Xoá</button></div>';
-      h += '<div class="leg ' + it.kind + '"><div class="t">' + it.time + '</div><div><div class="n">' + name + '</div><div class="s">' + sub + '</div>' + (it.late ? '<div class="late">Có thể quá giờ đóng cửa hoặc giờ kết thúc ngày</div>' : '') + acts + '</div></div>';
+      const tools = '<div class="tools">' + (it.place ? '<button type="button" class="ib" data-act="swap"' + at + ' aria-label="Đổi địa điểm" aria-expanded="' + !!isOpen + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg></button>' : '') +
+        '<button type="button" class="ib" data-act="del"' + at + ' aria-label="Xoá"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/></svg></button></div>';
+      h += '<div class="leg ' + it.kind + '"><div class="t">' + it.time + '</div><div><div class="n">' + name + '</div><div class="s">' + sub + '</div>' + (it.late ? '<div class="late">Có thể quá giờ đóng cửa hoặc giờ kết thúc ngày</div>' : '') + '</div>' + tools + '</div>';
       if (isOpen) {
         const sg = suggestions(di, ii);
         h += '<div class="sug"><h3>Đề xuất thay thế</h3>' + (sg.length ? sg.map((x, n) => '<button type="button" class="pick" data-act="pick"' + at + ' data-id="' + x.p.id + '">' + (n === 0 ? '<span class="star">TỐT NHẤT</span>' : '') + esc(x.p.name) + '<span class="why">' + dur(x.p.duration) + ' · ' + vnd(x.p.price) + ' · ' + esc(x.why) + '</span></button>').join('') : '<span class="hint">Không còn địa điểm phù hợp để thay.</span>') + '</div>';
       }
     });
-    h += '</section>';
+    h += '<button type="button" class="addbtn" data-act="addplace" data-d="' + di + '">+ Thêm địa điểm</button></section>';
   });
   h += finalHtml();
   $('out').innerHTML = h;
@@ -229,7 +265,7 @@ function flightsHtml(c) {
   const carriers = FLIGHTS.carriers.filter((k) => fl.out.some((f) => f.carrierId === k.id));
   const keep = (f) => airlineFilter.length === 0 || airlineFilter.includes(f.carrierId);
   const out = sortFlights(fl.out.filter(keep), flightSort), back = sortFlights(fl.back.filter(keep), flightSort);
-  let h = '<h3>Chuyến bay khứ hồi</h3><p class="hint">' + esc(o.name) + ' ⇄ Đà Nẵng · đi ' + fmtDate(t.startDate) + ' · về ' + fmtDate(t.endDate) + ' · ' + t.people + ' khách. Dữ liệu mẫu, chưa phải giá thật.</p>';
+  let h = '<p class="hint">' + esc(o.name) + ' ⇄ Đà Nẵng · đi ' + fmtDate(t.startDate) + ' · về ' + fmtDate(t.endDate) + ' · ' + t.people + ' khách. Dữ liệu mẫu, chưa phải giá thật.</p>';
   h += '<div class="seg" role="group" aria-label="Hãng bay" style="margin:8px 0"><button type="button" data-act="airline" data-id="all" aria-pressed="' + (airlineFilter.length === 0) + '">Tất cả hãng</button>' +
     carriers.map((k) => '<button type="button" data-act="airline" data-id="' + k.id + '" aria-pressed="' + airlineFilter.includes(k.id) + '">' + esc(k.name) + '</button>').join('') + '</div>';
   h += '<label for="fsort">Sắp xếp</label><select id="fsort"><option value="price"' + (flightSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="time"' + (flightSort === 'time' ? ' selected' : '') + '>Giờ khởi hành sớm nhất</option></select>';
@@ -242,7 +278,7 @@ function hotelsHtml(c) {
   const t = plan.trip;
   const keep = (x) => hotelStars.length === 0 || hotelStars.includes(x.stars);
   const list = sortHotels(c.hl.filter(keep), hotelSort);
-  let h = '<h3>Khách sạn · ' + c.cost.nights + ' đêm</h3><p class="hint">Nhận phòng ' + fmtDate(t.startDate) + ' · trả phòng ' + fmtDate(t.endDate) + ' (theo ngày đã chọn). Phòng trống và giá là dữ liệu mẫu.</p>';
+  let h = '<p class="hint">Nhận phòng ' + fmtDate(t.startDate) + ' · trả phòng ' + fmtDate(t.endDate) + ' (theo ngày đã chọn). Phòng trống và giá là dữ liệu mẫu.</p>';
   h += '<div class="seg" role="group" aria-label="Hạng sao" style="margin:8px 0"><button type="button" data-act="hstar" data-id="all" aria-pressed="' + (hotelStars.length === 0) + '">Mọi hạng</button>' +
     [2, 3, 4, 5].map((s) => '<button type="button" data-act="hstar" data-id="' + s + '" aria-pressed="' + hotelStars.includes(s) + '">' + s + ' sao</button>').join('') + '</div>';
   h += '<label for="hsort">Sắp xếp</label><select id="hsort"><option value="price"' + (hotelSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="rating"' + (hotelSort === 'rating' ? ' selected' : '') + '>Đánh giá cao nhất</option></select>';
@@ -253,6 +289,9 @@ function hotelsHtml(c) {
   return h;
 }
 
+function sec(id, title, summary, body) {
+  return '<details class="sec" data-sec="' + id + '"' + (openSecs.has(id) ? ' open' : '') + '><summary><span><b>' + title + '</b><small>' + summary + '</small></span><span class="chev">›</span></summary><div class="sec-body">' + body + '</div></details>';
+}
 function finalHtml() {
   if (!finalized) {
     return '<div class="panel final"><button class="go" type="button" data-act="final">Chốt lịch trình của tôi</button><p class="hint" style="margin-top:8px">Sau khi chốt, tìm chuyến bay và khách sạn theo ngày đã chọn, chọn phương tiện, xem tổng chi phí dự kiến và thanh toán. Bạn vẫn đổi hoặc xoá điểm ở trên được, chi phí tự cập nhật.</p></div>';
@@ -262,18 +301,19 @@ function finalHtml() {
   h += '<div class="opts" style="margin-top:12px"><button type="button" class="opt" data-act="needflight" aria-pressed="' + needFlight + '"><b>Đặt vé máy bay</b><span>' + (needFlight ? 'Có đặt. Tìm và tính tiền vé khứ hồi.' : 'Tôi tự lo (đã có vé hoặc đi đường bộ). Bỏ qua vé máy bay.') + '</span></button>' +
     (cost.nights > 0 ? '<button type="button" class="opt" data-act="needhotel" aria-pressed="' + needHotel + '"><b>Đặt khách sạn</b><span>' + (needHotel ? 'Có đặt. Tìm phòng theo ngày đã chọn.' : 'Tôi tự lo (đã có chỗ ở hoặc ở nhà người quen). Bỏ qua khách sạn.') + '</span></button>' : '') + '</div>';
   if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + OPTS.origins.map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
-  if (c.fl) h += flightsHtml(c);
-  if (cost.nights > 0 && needHotel) h += hotelsHtml(c);
-  h += '<h3>Phương tiện di chuyển</h3><button type="button" class="opt" data-act="owntransport" aria-pressed="' + ownTransport + '" style="width:100%;margin-bottom:8px"><b>Tôi đã có phương tiện riêng</b><span>Xe cá nhân, người quen đưa đón hoặc xe của khách sạn. Bỏ qua, không tính phí di chuyển.</span></button>';
+  if (c.fl) h += sec('flights', 'Chuyến bay khứ hồi', flightOut && flightBack ? esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + money(c.flightsTotal) : 'Chưa chọn', flightsHtml(c));
+  if (cost.nights > 0 && needHotel) h += sec('hotel', 'Khách sạn · ' + cost.nights + ' đêm', c.hotel ? esc(c.hotel.name) + ' · ' + money(c.hotelTotal) : 'Chưa chọn', hotelsHtml(c));
+  let tb = '<button type="button" class="opt" data-act="owntransport" aria-pressed="' + ownTransport + '" style="width:100%;margin-bottom:8px"><b>Tôi đã có phương tiện riêng</b><span>Xe cá nhân, người quen đưa đón hoặc xe của khách sạn. Bỏ qua, không tính phí di chuyển.</span></button>';
   if (ownTransport) {
-    h += '<p class="hint">Đã bỏ qua phần di chuyển. Quãng đường của lịch trình là ' + tp.totalKm + ' km nếu bạn cần ước lượng xăng hoặc thời gian.</p>';
+    tb += '<p class="hint">Đã bỏ qua phần di chuyển. Quãng đường của lịch trình là ' + tp.totalKm + ' km nếu bạn cần ước lượng xăng hoặc thời gian.</p>';
   } else {
-    h += '<p class="hint" style="margin-bottom:8px">Tính theo ' + tp.totalKm + ' km trên ' + tp.legs.length + ' chặng (giữa các điểm' + (c.hotel ? ', từ và về khách sạn' : '') + (c.flight ? ', sân bay' : '') + ').</p><div class="opts">' +
+    tb += '<p class="hint" style="margin-bottom:8px">Tính theo ' + tp.totalKm + ' km trên ' + tp.legs.length + ' chặng (giữa các điểm' + (c.hotel ? ', từ và về khách sạn' : '') + (c.flight ? ', sân bay' : '') + ').</p><div class="opts">' +
       tp.options.map((x) => '<button type="button" class="opt" data-act="transport" data-id="' + x.id + '" aria-pressed="' + (x.id === transportId) + '"' + (x.suitable ? '' : ' disabled aria-disabled="true"') + '>' +
         (x.tags.length ? '<span class="pill">' + x.tags.map(esc).join(' · ') + '</span>' : '') + '<b>' + esc(x.name) + '</b><span>' + esc(x.brand) + '</span><span>' + x.vehicles + ' xe' + (x.crowded && x.suitable ? ' (nhiều xe, nên chọn xe lớn)' : '') + ' · ' + esc(x.note) + '</span>' +
         (x.suitable ? '<span class="pr">' + money(x.total) + ' · ' + money(x.perPerson) + '/người</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button>').join('') +
       '</div><p class="hint">Giá mẫu tính theo quãng đường, chưa gồm phụ thu giờ cao điểm, mưa, phí cầu đường. Mở app Grab hoặc Xanh SM để xem giá thật.</p>';
   }
+  h += sec('transport', 'Phương tiện di chuyển', ownTransport ? 'Đã có phương tiện riêng' : c.selected ? esc(c.selected.name) + ' · ' + money(c.selected.total) : '–', tb);
   h += '<h3>Tổng chi phí dự kiến</h3><div class="cost">' + cost.lines.map((l) => '<div class="cl"><span>' + esc(l.label) + '<small>' + esc(l.note) + '</small></span><b>' + money(l.amount) + '</b></div>').join('') +
     '<div class="cl tot"><span>Tổng cộng</span><b>' + money(cost.total) + '</b></div><div class="cl"><span>Bình quân mỗi người</span><b>' + money(cost.perPerson) + '</b></div></div>';
   h += '<p class="hint">Chưa gồm mua sắm, quà, chi phí phát sinh. Ăn uống tính theo mức ' + BUDGET_NAME[t.budget] + '.</p>';
@@ -310,8 +350,81 @@ function openTrip(id) {
   plan.days.forEach(retime);
   finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; roomByHotel = s.roomByHotel || {}; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
   airlineFilter = []; hotelStars = []; currentTripId = id; savedOk = true; swapOpen = null; undoStack = [];
-  go('create'); render();
+  dirtyEdits = false; dayTab = 'all'; openSecs.clear(); $('applyHint').hidden = true;
+  go('create'); render(); setFormOpen(false);
 }
+
+/* ---------- Thêm địa điểm vào lịch ---------- */
+let addCtx = null;
+const ADD_CATS = [['all', 'Tất cả'], ['sight', 'Tham quan'], ['food', 'Ăn uống']];
+function whyNot(p) {
+  const t = plan.trip, r = [];
+  if (!p.audiences.includes(t.audience)) r.push('Không dành cho ' + plan.audienceLabel.toLowerCase());
+  if (t.hasKids && !p.kids) r.push('Không hợp trẻ nhỏ');
+  if (t.hasElderly && !p.elderly) r.push('Không hợp người lớn tuổi');
+  if (p.price > (BUDGET_CAP[t.budget] ?? Infinity)) r.push('Vượt ngân sách');
+  return r;
+}
+function placeItem(p) {
+  const food = p.type === 'food' && p.meal;
+  return { kind: food ? 'meal' : 'visit', place: p, note: food ? (p.meal === 'dinner' ? 'Ăn tối' : 'Ăn trưa') : '', dur: p.duration };
+}
+// Thử chèn vào lịch để biết có kịp giờ mở cửa không và phải đi bao xa
+function simulateAdd(di, pos, p) {
+  const clone = { items: plan.days[di].items.map((i) => ({ ...i })) }, it = placeItem(p);
+  clone.items.splice(pos, 0, it); retime(clone);
+  return { late: !!it.late, time: it.time, travel: it.travel };
+}
+function addCandidates() {
+  const { d, pos, q, cat, all } = addCtx, taken = used(), k = fold(q.trim());
+  return (all ? DATA.places.filter((p) => p.status !== 'closed') : pool)
+    .filter((p) => !taken.has(p.id) && (cat === 'all' || (cat === 'food' ? p.type === 'food' : p.type !== 'food')) && (!k || fold(p.name + ' ' + (TYPE_LABEL[p.type] || '')).includes(k)))
+    .map((p) => ({ p, sim: simulateAdd(d, pos, p), why: whyNot(p) }))
+    .sort((a, b) => (a.sim.late - b.sim.late) || (a.why.length - b.why.length) || ((a.sim.travel ? a.sim.travel.km : 0) - (b.sim.travel ? b.sim.travel.km : 0)));
+}
+function addListHtml() {
+  const list = addCandidates();
+  return list.length ? list.map((x) => '<div class="panel addc"><div class="grow"><b>' + esc(x.p.name) + '</b><div class="hint">' + esc(TYPE_LABEL[x.p.type] || '') + ' · ' + dur(x.p.duration) + ' · ' + vnd(x.p.price) +
+    (x.sim.travel ? ' · ' + x.sim.travel.km + ' km từ điểm trước' : '') + '</div><div class="chips" style="margin-top:6px">' +
+    (x.sim.late ? '<span class="tag-status chua_chuyen">Có thể quá giờ đóng cửa</span>' : '<span class="tag-status">Kịp giờ · khoảng ' + x.sim.time + '</span>') +
+    x.why.map((w) => '<span class="tag-status chua_chuyen">' + esc(w) + '</span>').join('') + '</div></div><button type="button" class="btn" data-add="pick" data-id="' + x.p.id + '">Thêm</button></div>').join('')
+    : '<div class="panel empty"><b>Không có địa điểm phù hợp</b>Thử bỏ bộ lọc hoặc bật hiện cả địa điểm ít phù hợp.</div>';
+}
+function renderAdd() {
+  const day = plan.days[addCtx.d], n = day.items.length;
+  const opts = [[n, 'Cuối ngày'], [0, 'Đầu ngày']];
+  day.items.forEach((it, i) => { if (i + 1 < n) opts.push([i + 1, 'Sau ' + (it.place ? it.place.name : it.note)]); });
+  $('sheetBody').innerHTML = '<div class="pd"><h2>Thêm địa điểm · Ngày ' + day.dayIndex + '</h2>' +
+    '<div class="search" style="margin:8px 0"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="addQ" type="search" value="' + esc(addCtx.q) + '" placeholder="Tìm địa điểm" aria-label="Tìm địa điểm" autocomplete="off"></div>' +
+    '<div class="chips" role="group" aria-label="Loại">' + ADD_CATS.map(([v, l]) => '<button type="button" data-add="cat" data-v="' + v + '" aria-pressed="' + (addCtx.cat === v) + '">' + esc(l) + '</button>').join('') + '</div>' +
+    '<label for="addPos" style="margin-top:12px">Thêm vào</label><select id="addPos">' + opts.map(([v, l]) => '<option value="' + v + '"' + (v === addCtx.pos ? ' selected' : '') + '>' + esc(l) + '</option>').join('') + '</select>' +
+    '<label class="check"><input type="checkbox" id="addAll"' + (addCtx.all ? ' checked' : '') + '> Hiện cả địa điểm ít phù hợp với nhóm này</label>' +
+    '<div id="addList" class="list">' + addListHtml() + '</div></div>';
+}
+function openAddPlace(di) {
+  detailPlace = null; detailHotel = null; lastFocus = document.activeElement;
+  addCtx = { d: di, pos: plan.days[di].items.length, q: '', cat: 'all', all: false };
+  renderAdd(); sheet.hidden = false; $('sheetClose').focus();
+}
+function addPlace(id) {
+  const p = DATA.places.find((x) => x.id === id); if (!p || !addCtx) return;
+  const di = addCtx.d, day = plan.days[di];
+  snap(); dirtyEdits = true; savedOk = false;
+  undoStack[undoStack.length - 1].msg = 'Đã thêm "' + p.name + '" vào ngày ' + day.dayIndex + '.';
+  day.items.splice(addCtx.pos, 0, placeItem(p)); retime(day);
+  closeSheet(); render(); toast('Đã thêm ' + p.name);
+}
+$('sheetBody').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-add]'); if (!b || !addCtx) return;
+  if (b.dataset.add === 'cat') { addCtx.cat = b.dataset.v; renderAdd(); }
+  if (b.dataset.add === 'pick') addPlace(b.dataset.id);
+});
+$('sheetBody').addEventListener('input', (e) => { if (e.target.id === 'addQ' && addCtx) { addCtx.q = e.target.value; $('addList').innerHTML = addListHtml(); } });
+$('sheetBody').addEventListener('change', (e) => {
+  if (!addCtx) return;
+  if (e.target.id === 'addPos') { addCtx.pos = +e.target.value; $('addList').innerHTML = addListHtml(); }
+  if (e.target.id === 'addAll') { addCtx.all = e.target.checked; $('addList').innerHTML = addListHtml(); }
+});
 
 /* ---------- Chi tiết khách sạn: loại phòng, ảnh, đánh giá (mẫu hoặc Google Maps) ---------- */
 function renderHotelDetail() {
@@ -407,6 +520,7 @@ $('out').addEventListener('click', (e) => {
   if (act === 'hotel') { hotelId = b.dataset.id; savedOk = false; render(); return; }
   if (act === 'airline') { const id = b.dataset.id; airlineFilter = id === 'all' ? [] : airlineFilter.includes(id) ? airlineFilter.filter((x) => x !== id) : [...airlineFilter, id]; render(); return; }
   if (act === 'hstar') { const id = b.dataset.id, n = +id; hotelStars = id === 'all' ? [] : hotelStars.includes(n) ? hotelStars.filter((x) => x !== n) : [...hotelStars, n]; render(); return; }
+  if (act === 'addplace') { openAddPlace(di); return; }
   if (act === 'hoteldetail') { openHotelDetail(b.dataset.id); return; }
   if (act === 'needflight') { needFlight = !needFlight; savedOk = false; render(); return; }
   if (act === 'needhotel') { needHotel = !needHotel; savedOk = false; render(); return; }
@@ -416,7 +530,7 @@ $('out').addEventListener('click', (e) => {
   if (act === 'save') { saveTrip(); render(); return; }
   if (act === 'swap') { swapOpen = swapOpen && swapOpen.d === di && swapOpen.i === ii ? null : { d: di, i: ii }; render(); return; }
   if (act === 'undo') { const s = undoStack.pop(); plan.days = s.days; swapOpen = null; savedOk = false; render(); return; }
-  snap();
+  snap(); dirtyEdits = true;
   const day = plan.days[di];
   if (act === 'del') {
     undoStack[undoStack.length - 1].msg = 'Đã xoá "' + (day.items[ii].place ? day.items[ii].place.name : day.items[ii].note) + '".';
@@ -429,6 +543,10 @@ $('out').addEventListener('click', (e) => {
   }
   swapOpen = null; savedOk = false; retime(day); render();
 });
+$('out').addEventListener('toggle', (e) => {
+  const d = e.target;
+  if (d.matches && d.matches('details[data-sec]')) { if (d.open) openSecs.add(d.dataset.sec); else openSecs.delete(d.dataset.sec); }
+}, true);
 $('out').addEventListener('change', (e) => {
   const id = e.target.id;
   if (id === 'origin') { originId = e.target.value; flightOut = null; flightBack = null; airlineFilter = []; savedOk = false; render(); $('origin').focus(); }
@@ -439,7 +557,7 @@ $('out').addEventListener('change', (e) => {
 /* ---------- Chi tiết địa điểm ---------- */
 const sheet = $('sheet');
 let lastFocus = null;
-function closeSheet() { sheet.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+function closeSheet() { sheet.hidden = true; addCtx = null; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
 function openDetail(di, id) {
   const dayPlaces = plan.days[di].items.filter((i) => i.place).map((i) => i.place);
   const place = dayPlaces.find((p) => p.id === id);
@@ -557,13 +675,15 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
+  if (d.editform !== undefined) { setFormOpen(true); $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+  if (d.daytab !== undefined) { dayTab = d.daytab === 'all' ? 'all' : +d.daytab; render(); window.scrollTo({ top: $('dayTabs').offsetTop - 8, behavior: 'smooth' }); return; }
   if (d.demo) { homeAud = d.demo; renderHome(); return; }
   if (d.page) { openPage(d.page); return; }
   if (d.fav) { store.favorites = store.favorites.includes(d.fav) ? store.favorites.filter((x) => x !== d.fav) : [...store.favorites, d.fav]; persist(); renderTrips(); return; }
   if (d.tripfilter) { tripFilter = d.tripfilter; renderTrips(); return; }
-  if (d.go) { if (d.go === 'create' && !plan) openCreate({}, true); else go(d.go); return; }
+  if (d.go) { if (d.go === 'create' && !plan) openCreate({}, true, false); else go(d.go); return; }
   if (d.preset) { openCreate(PRESETS[d.preset] || {}, true); return; }
   if (d.dest) { qSug.hidden = true; openCreate({}, true); return; }
   if (d.trip) { openTrip(d.trip); return; }
