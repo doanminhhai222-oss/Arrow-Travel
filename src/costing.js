@@ -37,7 +37,8 @@ export function estimateCost({ trip, plan, flight, hotel, transport = null }) {
   }
   lines.push({ key: 'food', label: 'Ăn uống', amount: (FOOD_PER_PERSON_DAY[trip.budget] ?? 0) * people * nDays, note: `${people} người × ${nDays} ngày` });
   lines.push({ key: 'tickets', label: 'Vé tham quan', amount: tickets, note: `${items.length} điểm` });
-  if (transport) lines.push({ key: 'local', label: `Di chuyển: ${transport.name}`, amount: transport.total, note: `${transport.totalKm} km, ${transport.vehicles} xe` });
+  if (transport && transport.skip) { /* đã có phương tiện riêng: không tính phí di chuyển */ }
+  else if (transport) lines.push({ key: 'local', label: `Di chuyển: ${transport.name}`, amount: transport.total, note: `${transport.totalKm} km, ${transport.vehicles} xe` });
   else lines.push({ key: 'local', label: 'Di chuyển trong thành phố', amount: Math.round((km * LOCAL_TRANSPORT_PER_KM) / 1000) * 1000, note: `${km.toFixed(1)} km` });
 
   const total = lines.reduce((s, l) => s + l.amount, 0);

@@ -60,3 +60,10 @@ test('nhóm đông: không chọn mặc định phương án cần quá 3 xe n�
   const r = transportOptions({ trip, plan, hotel: null, flight: null, modes: tr.modes, airport: tr.airport, nDays: 3 });
   assert.ok(r.options.find((o) => o.id === r.defaultId).vehicles <= 3);
 });
+
+test('đã có phương tiện riêng: bỏ dòng di chuyển khỏi tổng chi phí', () => {
+  const plan = buildItinerary(base, data, rules);
+  const c = estimateCost({ trip: base, plan, flight: null, hotel: opts.hotels[1], transport: { skip: true } });
+  assert.ok(!c.lines.some((l) => l.key === 'local'));
+  assert.equal(c.total, c.lines.reduce((s, l) => s + l.amount, 0));
+});
