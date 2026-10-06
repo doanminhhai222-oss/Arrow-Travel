@@ -18,7 +18,8 @@ const path = require('node:path');
   await step('chốt lịch trình', async () => { await p.click('[data-act=final]'); await p.evaluate(() => document.querySelectorAll('details.sec').forEach((d) => { d.open = true; })); });
   await step('chi tiết khách sạn', async () => { await p.locator('[data-act=hoteldetail]').nth(1).click(); await p.waitForSelector('#sheetBody [data-room]'); await p.click('#sheetClose'); });
   await step('thanh toán', async () => { await p.click('[data-act=book]'); await p.waitForSelector('.qrbox svg'); await p.click('#sheetClose'); });
-  for (const t of ['trips', 'notifs', 'account', 'home']) await step('tab ' + t, async () => { await p.click('.tab[data-go=' + t + ']'); });
+  await step('khoảnh khắc và album', async () => { await p.click('.tab[data-go=moments]'); await p.waitForSelector('#momStats'); await p.locator('details.mom').first().locator('summary').click(); await p.locator('[data-momstar="5"]').first().click(); await p.click('[data-album]'); await p.waitForSelector('#albumBody .album'); await p.click('#pageBack'); });
+  for (const t of ['moments', 'trips', 'notifs', 'account', 'home']) await step('tab ' + t, async () => { await p.click('.tab[data-go=' + t + ']'); });
   for (const pg of ['settings', 'promos', 'rewards', 'friends', 'rate', 'about', 'privacy', 'terms', 'payguide']) await step('trang ' + pg, async () => { await p.click('.tab[data-go=account]'); await p.evaluate((x) => document.querySelector('#scr-account [data-page=' + x + ']') ? document.querySelector('#scr-account [data-page=' + x + ']').click() : document.querySelector('[data-page=' + x + ']').click(), pg); await p.waitForSelector('#scr-page:not([hidden])'); });
   await b.close();
   if (errs.length) { console.error('\nCó lỗi:\n- ' + errs.join('\n- ')); process.exit(1); }

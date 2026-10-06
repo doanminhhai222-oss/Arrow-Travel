@@ -5,6 +5,7 @@ import { addDays } from './scheduler.js';
 export const EARN = [
   { id: 'save', label: 'Lưu một lịch trình mới', points: 10, note: 'mỗi lịch trình' },
   { id: 'photo', label: 'Đăng ảnh chuyến đi', points: 5, note: 'tối đa 10 ảnh', cap: 10 },
+  { id: 'moment', label: 'Đánh giá một nơi đã đi', points: 3, note: 'tối đa 10 nơi', cap: 10 },
   { id: 'friend', label: 'Kết nối bạn đồng hành', points: 5, note: 'tối đa 5 người', cap: 5 },
   { id: 'rate', label: 'Đánh giá Arrow Travel', points: 20, note: 'một lần', cap: 1 },
 ];

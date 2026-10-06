@@ -20,6 +20,11 @@ export async function listPhotos(key) {
   const db = await openPhotoDb();
   return wrap(db.transaction(STORE).objectStore(STORE).index('key').getAll(key));
 }
+export async function listPhotosByPrefix(prefix) {
+  const db = await openPhotoDb();
+  const all = await wrap(db.transaction(STORE).objectStore(STORE).getAll());
+  return all.filter((p) => p.key.startsWith(prefix)).sort((a, b) => a.at - b.at);
+}
 export async function deletePhoto(id) {
   const db = await openPhotoDb();
   return wrap(db.transaction(STORE, 'readwrite').objectStore(STORE).delete(id));

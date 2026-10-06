@@ -12,7 +12,7 @@ import { EN } from '../src/i18n-en.js';
 import { searchPromos, findByCode, applyPromo, isValid, daysLeft } from '../src/promos.js';
 import { EARN, CATALOG, newPoints, award, redeem, voucherCheck } from '../src/loyalty.js';
 import { matchTravelers } from '../src/friends.js';
-import { addPhoto, listPhotos, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
+import { addPhoto, listPhotos, listPhotosByPrefix, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
 
 // <DATA>
 const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
@@ -28,7 +28,7 @@ const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g
 
 /* ---------- Lưu trữ trên thiết bị (không có tài khoản, không có máy chủ) ---------- */
 const STORE_KEY = 'arrow-travel-v1';
-const baseStore = () => ({ settings: { theme: 'system', lang: 'vi', currency: 'VND' }, favorites: [], points: newPoints(), vouchers: [], friends: [], review: null });
+const baseStore = () => ({ settings: { theme: 'system', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, points: newPoints(), vouchers: [], friends: [], review: null });
 function seedStore() {
   const now = Date.now();
   return { ...baseStore(), trips: [], bookings: [], prefs: {}, notifs: [
@@ -58,12 +58,14 @@ let roomByHotel = {}, googleCache = {}, detailHotel = null;
 let needFlight = true, needHotel = true; // tắt khi khách đã tự lo vé máy bay hoặc chỗ ở
 
 /* ---------- Điều hướng ---------- */
-const SCREENS = ['home', 'create', 'trips', 'notifs', 'account'];
+const SCREENS = ['home', 'create', 'moments', 'trips', 'notifs', 'account'];
+const TAB_OF = { create: 'home' }; // màn tạo lịch trình không có tab riêng, tô sáng tab Khám phá
 function go(name) {
   armedTrip = null; armedClear = false; currentScreen = name; pageName = null; $('scr-page').hidden = true;
   SCREENS.forEach((s) => { $('scr-' + s).hidden = s !== name; });
-  document.querySelectorAll('.tab').forEach((t) => { if (t.dataset.go === name) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
+  document.querySelectorAll('.tab').forEach((t) => { if (t.dataset.go === (TAB_OF[name] || name)) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
   if (name === 'home') renderHome();
+  if (name === 'moments') renderMoments();
   if (name === 'trips') renderTrips();
   if (name === 'account') renderAccount();
   if (name === 'notifs') { renderNotifs(); store.notifs.forEach((n) => { n.read = true; }); persist(); updateBadge(); }
@@ -340,7 +342,7 @@ function saveTrip() {
     days: plan.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex, items: d.items.map((i) => ({ kind: i.kind, placeId: i.place ? i.place.id : null, note: i.note || '', dur: i.dur })) })) };
   const idx = store.trips.findIndex((x) => x.id === rec.id);
   if (idx >= 0) store.trips[idx] = rec;
-  else { store.trips.unshift(rec); givePoints('save', { tripId: rec.id }); movePhotos('draft:', rec.id + ':').catch(() => {}); addNotif('Đã lưu lịch trình', t.destination + ' ' + daysBetween(t.startDate, t.endDate) + ' ngày (' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ') đã nằm trong Lịch trình của tôi.'); }
+  else { store.trips.unshift(rec); givePoints('save', { tripId: rec.id }); movePhotos('draft:', rec.id + ':').catch(() => {}); if (store.moments.draft) { store.moments[rec.id] = store.moments.draft; delete store.moments.draft; } if (momTrip === 'draft') momTrip = rec.id; addNotif('Đã lưu lịch trình', t.destination + ' ' + daysBetween(t.startDate, t.endDate) + ' ngày (' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ') đã nằm trong Lịch trình của tôi.'); }
   currentTripId = rec.id; savedOk = true; persist();
 }
 function openTrip(id) {
@@ -588,6 +590,158 @@ const PRESETS = {
   check_in: { styles: ['check_in'] },
   thu_gian: { styles: ['thu_gian'] },
 };
+/* ---------- Khoảnh khắc của tôi: ảnh, sao, nhận xét theo từng địa điểm đã đi, gom thành album ---------- */
+let momTrip = null, momChosen = false, momQ = '', momToken = 0, momUrls = [], albumUrls = [], momCounts = {};
+const momOpen = new Set();
+const momData = (key, pid) => (store.moments[key] || {})[pid] || { rating: 0, text: '' };
+const starsText = (r) => '★'.repeat(r) + '☆'.repeat(5 - r);
+const momLine = (rating, count) => (rating ? starsText(rating) : 'Chưa đánh giá') + ' · ' + (count ? count + ' ảnh' : 'chưa có ảnh');
+function setMom(key, pid, patch) {
+  const before = momData(key, pid), first = !before.rating && patch.rating > 0;
+  store.moments[key] = store.moments[key] || {};
+  store.moments[key][pid] = { ...before, ...patch, at: Date.now() };
+  persist();
+  if (first) givePoints('moment');
+}
+function placeById(id) { return DATA.places.find((p) => p.id === id); }
+
+// Các chuyến có thể ghi lại khoảnh khắc: chuyến đã lưu, lịch đang soạn chưa lưu, hoặc chọn địa điểm bất kỳ
+function momTrips() {
+  const list = store.trips.map((s) => ({ key: s.id, label: s.trip.destination + ' ' + fmtDate(s.trip.startDate) + '–' + fmtDate(s.trip.endDate) }));
+  if (plan && !currentTripId) list.unshift({ key: 'draft', label: 'Lịch đang soạn' });
+  list.push({ key: 'free', label: 'Chọn địa điểm khác' });
+  return list;
+}
+// Danh sách địa điểm theo ngày của một chuyến
+function momInfo(key) {
+  const seen = new Set(), groups = [];
+  const take = (label, ids) => { const places = ids.filter((id) => !seen.has(id) && placeById(id)).map((id) => { seen.add(id); return placeById(id); }); if (places.length) groups.push({ label, places }); };
+  if (key === 'free') {
+    const k = fold(momQ.trim());
+    take('Tất cả địa điểm', DATA.places.filter((p) => p.status !== 'closed' && (!k || fold(p.name).includes(k))).map((p) => p.id));
+    return { title: 'Album của tôi', sub: 'Các địa điểm bạn chọn', groups };
+  }
+  if (key === 'draft') {
+    plan.days.forEach((d) => take('Ngày ' + d.dayIndex + ' · ' + fmtDate(d.date), d.items.filter((i) => i.place).map((i) => i.place.id)));
+    return { title: plan.trip.destination + ' ' + fmtDate(plan.trip.startDate) + ' – ' + fmtDate(plan.trip.endDate), sub: 'Lịch đang soạn', groups };
+  }
+  const s = store.trips.find((x) => x.id === key);
+  if (!s) return { title: '', sub: '', groups };
+  s.days.forEach((d) => take('Ngày ' + d.dayIndex + ' · ' + fmtDate(d.date), d.items.filter((i) => i.placeId).map((i) => i.placeId)));
+  return { title: s.trip.destination + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate), sub: daysBetween(s.trip.startDate, s.trip.endDate) + ' ngày · ' + RULES[s.trip.audience].label, groups };
+}
+function momStats(info, key) {
+  const places = info.groups.flatMap((g) => g.places);
+  let photos = 0, rated = 0, sum = 0, touched = 0;
+  places.forEach((p) => {
+    const d = momData(key, p.id), c = momCounts[p.id] || 0;
+    photos += c; if (d.rating) { rated++; sum += d.rating; } if (c || d.rating || d.text) touched++;
+  });
+  return { places: places.length, photos, rated, touched, avg: rated ? Math.round((sum / rated) * 10) / 10 : 0 };
+}
+function momStatsHtml(info, key) {
+  const st = momStats(info, key);
+  return '<div><b>' + st.photos + ' ảnh · ' + st.touched + '/' + st.places + ' nơi có khoảnh khắc</b><span>' + (st.rated ? 'Điểm trung bình ' + st.avg.toFixed(1) + ' ★ trên ' + st.rated + ' nơi' : 'Chưa chấm sao nơi nào') + '</span></div>' +
+    '<button type="button" class="go" data-album' + (st.touched ? '' : ' disabled') + '>Xem album kỷ niệm</button>';
+}
+
+async function renderMomBody() {
+  const token = ++momToken, keys = momTrips();
+  // Chưa tự chọn chuyến thì luôn theo chuyến mới nhất, tự cập nhật khi vừa tạo hoặc lưu lịch trình
+  if (!momChosen || !momTrip || !keys.some((k) => k.key === momTrip)) { momChosen = false; momTrip = currentTripId || (store.trips[0] && store.trips[0].id) || (plan ? 'draft' : 'free'); }
+  const hadFocus = document.activeElement && document.activeElement.id === 'momQ';
+  let photos = [], err = '';
+  try { photos = await listPhotosByPrefix(momTrip + ':'); } catch (e) { err = e.message; }
+  if (token !== momToken) return;
+  momUrls.forEach((u) => URL.revokeObjectURL(u)); momUrls = [];
+  const byPlace = {}; momCounts = {};
+  photos.forEach((p) => { const pid = p.key.slice(momTrip.length + 1); (byPlace[pid] = byPlace[pid] || []).push(p); momCounts[pid] = (momCounts[pid] || 0) + 1; });
+  const info = momInfo(momTrip);
+  let h = '<div class="chips" role="group" aria-label="Chọn chuyến">' + keys.map((k) => '<button type="button" data-momtrip="' + esc(k.key) + '" aria-pressed="' + (k.key === momTrip) + '">' + esc(k.label) + '</button>').join('') + '</div>';
+  if (!store.trips.length && !plan) h += '<div class="panel hint-card"><b>Bắt đầu từ một chuyến đi</b><p class="hint">Tạo và lưu một lịch trình để ghi lại khoảnh khắc ở từng nơi, hoặc chọn "Chọn địa điểm khác" để ghi lại một nơi bất kỳ.</p><button type="button" class="btn" data-go="create">Lên lịch trình</button></div>';
+  if (err) h += '<div class="warn">' + esc(err) + '. Không lưu được ảnh trên trình duyệt này.</div>';
+  h += '<div class="panel mstats" id="momStats">' + momStatsHtml(info, momTrip) + '</div>';
+  if (momTrip === 'free') h += '<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="momQ" type="search" value="' + esc(momQ) + '" placeholder="Tìm địa điểm" aria-label="Tìm địa điểm" autocomplete="off"></div>';
+  if (!info.groups.length) h += '<div class="panel empty"><b>Chưa có địa điểm nào</b>Chuyến này chưa có điểm đến. Hãy chọn chuyến khác.</div>';
+  h += info.groups.map((g) => '<h3 class="mgroup">' + esc(g.label) + '</h3>' + g.places.map((p) => {
+    const d = momData(momTrip, p.id), ph = byPlace[p.id] || [], urls = ph.map((x) => { const u = URL.createObjectURL(x.blob); momUrls.push(u); return { id: x.id, u }; });
+    return '<details class="mom" data-mom="' + p.id + '"' + (momOpen.has(p.id) ? ' open' : '') + '><summary><span class="mthumb">' + (urls[0] ? '<img src="' + urls[0].u + '" alt="">' : sceneSvg({ scene: p.scene || 'mountain', name: p.name })) + '</span>' +
+      '<span class="mt"><b>' + esc(p.name) + '</b><small data-line>' + momLine(d.rating, ph.length) + '</small></span><span class="chev">›</span></summary><div class="mbody">' +
+      '<div class="stars" data-momstars="' + p.id + '" role="group" aria-label="Chấm sao">' + [1, 2, 3, 4, 5].map((n) => '<button type="button" data-momstar="' + n + '" aria-label="' + n + ' sao" aria-pressed="' + (n <= d.rating) + '">★</button>').join('') + '</div>' +
+      '<label for="mt-' + p.id + '">Cảm nhận của bạn</label><textarea id="mt-' + p.id + '" data-momtext="' + p.id + '" placeholder="Bạn nhớ gì nhất ở đây?">' + esc(d.text) + '</textarea>' +
+      (urls.length ? '<div class="myph">' + urls.map((x) => '<figure><img src="' + x.u + '" alt="Ảnh kỷ niệm"><button type="button" data-momdel="' + x.id + '" aria-label="Xoá ảnh">×</button></figure>').join('') + '</div>' : '') +
+      '<button type="button" class="btn" data-momadd="' + p.id + '" style="margin-top:8px">Thêm ảnh</button></div></details>';
+  }).join('')).join('');
+  h += '<input id="momFile" class="sr-only" type="file" accept="image/*" multiple aria-label="Chọn ảnh">';
+  $('momBody').innerHTML = h;
+  if (hadFocus && $('momQ')) { const q = $('momQ'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+}
+const renderMoments = renderMomBody;
+
+function paintMomCard(pid) {
+  const d = momData(momTrip, pid);
+  document.querySelectorAll('[data-momstars="' + pid + '"] button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.momstar <= d.rating)));
+  const line = document.querySelector('details[data-mom="' + pid + '"] [data-line]'); if (line) line.textContent = momLine(d.rating, momCounts[pid] || 0);
+  const st = $('momStats'); if (st) st.innerHTML = momStatsHtml(momInfo(momTrip), momTrip);
+}
+$('momBody').addEventListener('click', (e) => {
+  const t = e.target.closest('[data-momtrip],[data-momstar],[data-momadd],[data-momdel],[data-album]'); if (!t) return;
+  if (t.dataset.momtrip) { momTrip = t.dataset.momtrip; momChosen = true; renderMomBody(); return; }
+  if (t.dataset.momstar) {
+    const pid = t.closest('[data-momstars]').dataset.momstars, v = +t.dataset.momstar, cur = momData(momTrip, pid).rating;
+    setMom(momTrip, pid, { rating: cur === v ? 0 : v }); paintMomCard(pid); return;
+  }
+  if (t.dataset.momadd) { const f = $('momFile'); f.dataset.place = t.dataset.momadd; f.click(); return; }
+  if (t.dataset.momdel) { deletePhoto(+t.dataset.momdel).then(renderMomBody).catch(() => toast('Không xoá được ảnh')); return; }
+  if (t.hasAttribute('data-album')) openPage('album');
+});
+$('momBody').addEventListener('change', async (e) => {
+  if (e.target.id !== 'momFile') return;
+  const pid = e.target.dataset.place, files = [...e.target.files].slice(0, 10);
+  if (!pid) return;
+  momOpen.add(pid);
+  try { for (const f of files) { await addPhoto(momTrip + ':' + pid, await resizeImage(f)); givePoints('photo'); } } catch (err) { toast('Không lưu được ảnh: ' + err.message); }
+  renderMomBody();
+});
+$('momBody').addEventListener('input', (e) => {
+  if (e.target.dataset.momtext) setMom(momTrip, e.target.dataset.momtext, { text: e.target.value });
+  if (e.target.id === 'momQ') { momQ = e.target.value; renderMomBody(); }
+});
+$('momBody').addEventListener('toggle', (e) => {
+  const d = e.target;
+  if (d.matches && d.matches('details[data-mom]')) { if (d.open) momOpen.add(d.dataset.mom); else momOpen.delete(d.dataset.mom); }
+}, true);
+
+/* Album kỷ niệm */
+function mosaic(urls) {
+  const n = urls.length, show = urls.slice(0, 4);
+  return '<div class="mos m' + Math.min(n, 4) + '">' + show.map((u, i) => '<div class="mc"><img src="' + u + '" alt="Ảnh kỷ niệm">' + (i === 3 && n > 4 ? '<span class="more">+' + (n - 4) + '</span>' : '') + '</div>').join('') + '</div>';
+}
+async function fillAlbum() {
+  const box = $('albumBody'); if (!box) return;
+  albumUrls.forEach((u) => URL.revokeObjectURL(u)); albumUrls = [];
+  let photos = [];
+  try { photos = await listPhotosByPrefix(momTrip + ':'); } catch (e) { box.innerHTML = '<div class="warn">' + esc(e.message) + '</div>'; return; }
+  const by = {}; photos.forEach((p) => { const pid = p.key.slice(momTrip.length + 1); const u = URL.createObjectURL(p.blob); albumUrls.push(u); (by[pid] = by[pid] || []).push(u); });
+  const info = momInfo(momTrip);
+  const entries = info.groups.map((g) => ({ label: g.label, items: g.places.map((p) => ({ p, d: momData(momTrip, p.id), urls: by[p.id] || [] })).filter((x) => x.urls.length || x.d.rating || x.d.text) })).filter((g) => g.items.length);
+  if (!entries.length) { box.innerHTML = '<div class="panel empty"><b>Chưa có khoảnh khắc nào</b>Thêm ảnh, chấm sao hoặc viết cảm nhận cho một địa điểm để album xuất hiện.</div>'; return; }
+  const all = entries.flatMap((g) => g.items);
+  const best = [...all].filter((x) => x.urls.length).sort((a, b) => b.d.rating - a.d.rating)[0];
+  const photoN = all.reduce((n, x) => n + x.urls.length, 0), rated = all.filter((x) => x.d.rating);
+  const avg = rated.length ? Math.round((rated.reduce((n, x) => n + x.d.rating, 0) / rated.length) * 10) / 10 : 0;
+  let h = '<div class="album"><div class="cover">' + (best ? '<img src="' + best.urls[0] + '" alt="Ảnh bìa album">' : sceneSvg({ scene: 'beach', name: info.title })) + '<div class="cover-shade"></div><div class="cover-in"><small>Album kỷ niệm</small><h2>' + esc(info.title) + '</h2><p>' + esc(info.sub) + '</p></div></div>' +
+    '<div class="a-stats"><span><b>' + photoN + '</b> ảnh</span><span><b>' + all.length + '</b> nơi đã ghé</span><span><b>' + (avg ? avg.toFixed(1) + ' ★' : '–') + '</b> trung bình</span></div>';
+  entries.forEach((g) => {
+    h += '<h3 class="a-day">' + esc(g.label) + '</h3>';
+    g.items.forEach((x) => {
+      h += '<article class="a-page">' + (x.urls.length ? mosaic(x.urls) : '') + '<h4>' + esc(x.p.name) + '</h4>' + (x.d.rating ? '<div class="a-stars" aria-label="' + x.d.rating + ' sao">' + starsText(x.d.rating) + '</div>' : '') + (x.d.text ? '<blockquote>' + esc(x.d.text) + '</blockquote>' : '') + '</article>';
+    });
+  });
+  box.innerHTML = h + '<p class="hint" style="text-align:center">Album lưu trên thiết bị này. Chia sẻ album cho người khác cần máy chủ, sẽ có ở bản sau.</p></div>';
+}
+function pageAlbum() { return '<div id="albumBody"><p class="hint">Đang tạo album…</p></div>'; }
+
 /* ---------- Lịch trình nổi bật từ cộng đồng (mẫu) ---------- */
 const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: 'Đà Nẵng', startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
 function buildFeaturedPlan(f) {
@@ -709,11 +863,11 @@ function renderTrips() {
   if (!store.trips.length) { el.innerHTML = '<div class="panel empty"><b>Chưa có lịch trình nào</b>Tạo lịch trình và bấm Lưu để xem lại ở đây.<button class="go" type="button" data-go="create">Tạo lịch trình mới</button></div>'; return; }
   const favN = store.trips.filter((x) => store.favorites.includes(x.id)).length;
   const list = store.trips.filter((x) => tripFilter === 'all' || store.favorites.includes(x.id));
-  el.innerHTML = '<div class="chips" role="group" aria-label="Lọc lịch trình"><button type="button" data-tripfilter="all" aria-pressed="' + (tripFilter === 'all') + '">Tất cả</button><button type="button" data-tripfilter="fav" aria-pressed="' + (tripFilter === 'fav') + '">Yêu thích (' + favN + ')</button></div>' +
+  el.innerHTML = '<button type="button" class="btn" data-go="create" style="align-self:flex-start">+ Lịch trình mới</button><div class="chips" role="group" aria-label="Lọc lịch trình"><button type="button" data-tripfilter="all" aria-pressed="' + (tripFilter === 'all') + '">Tất cả</button><button type="button" data-tripfilter="fav" aria-pressed="' + (tripFilter === 'fav') + '">Yêu thích (' + favN + ')</button></div>' +
     (list.length ? list.map((s) => {
       const t = s.trip, armed = armedTrip === s.id, fav = store.favorites.includes(s.id);
       return '<div class="panel trip"><div class="trip-top"><h3>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
-        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
+        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
     }).join('') : '<div class="panel empty"><b>Chưa có lịch trình yêu thích</b>Bấm ♥ ở một lịch trình để đánh dấu.</div>');
 }
 
@@ -727,10 +881,11 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-moments],[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
   if (d.editform !== undefined) { setFormOpen(true); $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (d.daytab !== undefined) { dayTab = d.daytab === 'all' ? 'all' : +d.daytab; render(); window.scrollTo({ top: $('dayTabs').offsetTop - 8, behavior: 'smooth' }); return; }
+  if (d.moments) { momTrip = d.moments; momChosen = true; go('moments'); return; }
   if (d.featured) { openFeatured(d.featured); return; }
   if (d.gu) { homeGu = homeGu.includes(d.gu) ? homeGu.filter((x) => x !== d.gu) : [...homeGu, d.gu]; renderGu(); return; }
   if (d.guplan !== undefined) { if (homeGu.length) openCreate({ styles: [...homeGu] }, true); return; }
@@ -744,7 +899,7 @@ document.addEventListener('click', (e) => {
   if (d.trip) { openTrip(d.trip); return; }
   if (d.deltrip) {
     if (armedTrip !== d.deltrip) { armedTrip = d.deltrip; renderTrips(); return; }
-    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
+    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); delete store.moments[d.deltrip]; store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
   }
   if (d.clearnotifs !== undefined) { store.notifs = []; persist(); updateBadge(); renderNotifs(); return; }
   if (d.clearall !== undefined) {
@@ -822,6 +977,7 @@ const legalPage = (key) => () => {
     (d.updated ? '<p class="hint">' + esc(d.updated) + '</p>' : '') + d.sections.map((s) => '<h3>' + esc(s.h) + '</h3><p>' + esc(s.p) + '</p>').join('') + '</div>';
 };
 const PAGES = {
+  album: { title: 'Album kỷ niệm', render: () => pageAlbum() },
   settings: { title: 'Cài đặt', render: () => pageSettings() },
   promos: { title: 'Khuyến mãi', render: () => pagePromos() },
   rewards: { title: 'Điểm thưởng và voucher', render: () => pageRewards() },
@@ -832,7 +988,7 @@ const PAGES = {
   terms: { title: LEGAL.terms.title, render: legalPage('terms') },
   payguide: { title: LEGAL.payguide.title, render: legalPage('payguide') },
 };
-function renderPage() { $('pageBody').innerHTML = PAGES[pageName].render(); }
+function renderPage() { $('pageBody').innerHTML = PAGES[pageName].render(); if (pageName === 'album') fillAlbum(); }
 function openPage(name) {
   if (!PAGES[name]) return;
   if (currentScreen !== 'page') pageFrom = currentScreen;
