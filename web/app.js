@@ -45,6 +45,7 @@ let aud = 'nhom_ban', plan = null, rule = null, pool = [], swapOpen = null, undo
 let finalized = false, originId = 'ho-chi-minh', flightOut = null, flightBack = null, hotelId = null, transportId = null, ownTransport = false, currentTripId = null, savedOk = false;
 let armedTrip = null, armedClear = false;
 let airlineFilter = [], flightSort = 'price', hotelStars = [], hotelSort = 'price';
+let needFlight = true, needHotel = true; // tắt khi khách đã tự lo vé máy bay hoặc chỗ ở
 
 /* ---------- Điều hướng ---------- */
 const SCREENS = ['home', 'create', 'trips', 'notifs', 'account'];
@@ -95,7 +96,7 @@ function run() {
   rule = effectiveRules(RULES[aud], trip);
   pool = filterPlaces(DATA.places, trip).places;
   plan.days.forEach((d) => d.items.forEach((i) => { i.dur = i.duration; }));
-  swapOpen = null; undoStack = []; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+  swapOpen = null; undoStack = []; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
   render();
 }
 
@@ -173,7 +174,7 @@ const todayStr = () => iso(new Date());
 
 function flightLists() {
   const t = plan.trip;
-  if (!curOrigin()) return null;
+  if (!needFlight || !curOrigin()) return null;
   const mk = (direction, date) => searchFlights({ data: FLIGHTS, originId, date, direction, people: t.people, today: todayStr() });
   return { out: mk('out', t.startDate), back: mk('back', t.endDate) };
 }
@@ -195,7 +196,7 @@ function ensureChoices(fl, hl) {
 }
 function calc() {
   const t = plan.trip, nDays = daysBetween(t.startDate, t.endDate);
-  const fl = flightLists(), hl = nDays > 1 ? hotelList() : [];
+  const fl = flightLists(), hl = nDays > 1 && needHotel ? hotelList() : [];
   ensureChoices(fl, hl);
   const flight = flightOut && flightBack ? { priceRoundTrip: flightOut.priceOne + flightBack.priceOne } : null;
   const hotel = hl.find((x) => x.id === hotelId) || null;
@@ -248,14 +249,16 @@ function finalHtml() {
   }
   const c = calc(), { tp, cost } = c, t = plan.trip;
   let h = '<section class="panel final"><h2>Chuyến đi của tôi</h2><p class="hint">Giá bên dưới là giá mẫu để ước tính.</p>';
-  h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + OPTS.origins.map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '<option value="none"' + (originId === 'none' ? ' selected' : '') + '>Tự túc (đã ở Đà Nẵng hoặc đi đường bộ)</option></select>';
+  h += '<div class="opts" style="margin-top:12px"><button type="button" class="opt" data-act="needflight" aria-pressed="' + needFlight + '"><b>Đặt vé máy bay</b><span>' + (needFlight ? 'Có đặt. Tìm và tính tiền vé khứ hồi.' : 'Tôi tự lo (đã có vé hoặc đi đường bộ). Bỏ qua vé máy bay.') + '</span></button>' +
+    (cost.nights > 0 ? '<button type="button" class="opt" data-act="needhotel" aria-pressed="' + needHotel + '"><b>Đặt khách sạn</b><span>' + (needHotel ? 'Có đặt. Tìm phòng theo ngày đã chọn.' : 'Tôi tự lo (đã có chỗ ở hoặc ở nhà người quen). Bỏ qua khách sạn.') + '</span></button>' : '') + '</div>';
+  if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + OPTS.origins.map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
   if (c.fl) h += flightsHtml(c);
-  if (cost.nights > 0) h += hotelsHtml(c);
+  if (cost.nights > 0 && needHotel) h += hotelsHtml(c);
   h += '<h3>Phương tiện di chuyển</h3><button type="button" class="opt" data-act="owntransport" aria-pressed="' + ownTransport + '" style="width:100%;margin-bottom:8px"><b>Tôi đã có phương tiện riêng</b><span>Xe cá nhân, người quen đưa đón hoặc xe của khách sạn. Bỏ qua, không tính phí di chuyển.</span></button>';
   if (ownTransport) {
     h += '<p class="hint">Đã bỏ qua phần di chuyển. Quãng đường của lịch trình là ' + tp.totalKm + ' km nếu bạn cần ước lượng xăng hoặc thời gian.</p>';
   } else {
-    h += '<p class="hint" style="margin-bottom:8px">Tính theo ' + tp.totalKm + ' km trên ' + tp.legs.length + ' chặng (giữa các điểm' + (cost.nights > 0 ? ', từ và về khách sạn' : '') + (originId !== 'none' ? ', sân bay' : '') + ').</p><div class="opts">' +
+    h += '<p class="hint" style="margin-bottom:8px">Tính theo ' + tp.totalKm + ' km trên ' + tp.legs.length + ' chặng (giữa các điểm' + (c.hotel ? ', từ và về khách sạn' : '') + (c.flight ? ', sân bay' : '') + ').</p><div class="opts">' +
       tp.options.map((x) => '<button type="button" class="opt" data-act="transport" data-id="' + x.id + '" aria-pressed="' + (x.id === transportId) + '"' + (x.suitable ? '' : ' disabled aria-disabled="true"') + '>' +
         (x.tags.length ? '<span class="pill">' + x.tags.map(esc).join(' · ') + '</span>' : '') + '<b>' + esc(x.name) + '</b><span>' + esc(x.brand) + '</span><span>' + x.vehicles + ' xe' + (x.crowded && x.suitable ? ' (nhiều xe, nên chọn xe lớn)' : '') + ' · ' + esc(x.note) + '</span>' +
         (x.suitable ? '<span class="pr">' + money(x.total) + ' · ' + money(x.perPerson) + '/người</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button>').join('') +
@@ -272,6 +275,7 @@ function finalHtml() {
       '<p class="hint">Thanh toán chuyển khoản qua mã QR, chỉ gồm vé máy bay và khách sạn. Ăn uống, vé tham quan, di chuyển trả trực tiếp tại chỗ.</p>' +
       '<button class="go" type="button" data-act="book" style="margin-top:8px">Chốt và thanh toán ' + money(c.payAmount) + '</button></div>';
   }
+  if (c.payAmount <= 0) h += '<p class="hint">Bạn tự lo ' + (!needFlight && !needHotel ? 'vé máy bay và khách sạn' : !needFlight ? 'vé máy bay' : 'khách sạn') + ' nên không cần thanh toán qua app.</p>';
   h += '<button class="go" type="button" data-act="save" style="margin-top:16px;background:var(--teal)">' + (currentTripId ? 'Cập nhật lịch trình đã lưu' : 'Lưu vào Lịch trình của tôi') + '</button>';
   if (savedOk) h += '<p class="saved-ok">Đã lưu. Xem trong tab Lịch trình của tôi.</p>';
   return h + '</section>';
@@ -279,7 +283,7 @@ function finalHtml() {
 
 function saveTrip() {
   const t = plan.trip, { cost } = calc();
-  const rec = { id: currentTripId || 't' + Date.now().toString(36), savedAt: Date.now(), trip: t, originId, flightOut, flightBack, hotelId, transportId, ownTransport, total: cost.total,
+  const rec = { id: currentTripId || 't' + Date.now().toString(36), savedAt: Date.now(), trip: t, originId, needFlight, needHotel, flightOut, flightBack, hotelId, transportId, ownTransport, total: cost.total,
     days: plan.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex, items: d.items.map((i) => ({ kind: i.kind, placeId: i.place ? i.place.id : null, note: i.note || '', dur: i.dur })) })) };
   const idx = store.trips.findIndex((x) => x.id === rec.id);
   if (idx >= 0) store.trips[idx] = rec;
@@ -294,7 +298,7 @@ function openTrip(id) {
   plan = { trip: t, audienceLabel: RULES[t.audience].label, warnings: [], days: s.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex,
     items: d.items.map((i) => ({ kind: i.kind, note: i.note, dur: i.dur, place: i.placeId ? DATA.places.find((p) => p.id === i.placeId) : null })).filter((i) => i.place || !i.kind || i.kind === 'break') })) };
   plan.days.forEach(retime);
-  finalized = true; originId = s.originId; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
+  finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
   airlineFilter = []; hotelStars = []; currentTripId = id; savedOk = true; swapOpen = null; undoStack = [];
   go('create'); render();
 }
@@ -363,6 +367,8 @@ $('out').addEventListener('click', (e) => {
   if (act === 'hotel') { hotelId = b.dataset.id; savedOk = false; render(); return; }
   if (act === 'airline') { const id = b.dataset.id; airlineFilter = id === 'all' ? [] : airlineFilter.includes(id) ? airlineFilter.filter((x) => x !== id) : [...airlineFilter, id]; render(); return; }
   if (act === 'hstar') { const id = b.dataset.id, n = +id; hotelStars = id === 'all' ? [] : hotelStars.includes(n) ? hotelStars.filter((x) => x !== n) : [...hotelStars, n]; render(); return; }
+  if (act === 'needflight') { needFlight = !needFlight; savedOk = false; render(); return; }
+  if (act === 'needhotel') { needHotel = !needHotel; savedOk = false; render(); return; }
   if (act === 'book') { startBooking(); return; }
   if (act === 'transport') { transportId = b.dataset.id; savedOk = false; render(); return; }
   if (act === 'owntransport') { ownTransport = !ownTransport; savedOk = false; render(); return; }
