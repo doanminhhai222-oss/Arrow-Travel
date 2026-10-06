@@ -259,5 +259,8 @@ export const EN = {
   "Lên lịch với": "Plan with",
   "sở thích": "interests",
   "Chọn nhiều cũng được": "Pick as many as you like",
-  "Gu du lịch (chọn nhiều)": "Travel interests (pick several)"
+  "Gu du lịch (chọn nhiều)": "Travel interests (pick several)",
+  "Lịch trình nổi bật từ cộng đồng": "Featured trips from the community",
+  "Dùng lịch trình này": "Use this itinerary",
+  "mẫu": "sample"
 };

@@ -15,7 +15,7 @@ import { matchTravelers } from '../src/friends.js';
 import { addPhoto, listPhotos, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
 
 // <DATA>
-const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
+const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
 // </DATA>
 
 const $ = (id) => document.getElementById(id);
@@ -122,6 +122,9 @@ document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('clic
 ['kids', 'elder', 'start', 'end', 'people'].forEach((id) => $(id).addEventListener('change', formChanged));
 $('form').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(formTimer); run(true); });
 
+function resetPlanState() {
+  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; openSecs.clear(); $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+}
 function run(collapse = false) {
   const trip = { destination: 'Đà Nẵng', startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
     budget: $('budget').value, audience: aud, hasKids: $('kids').checked, hasElderly: $('elder').checked,
@@ -131,7 +134,7 @@ function run(collapse = false) {
   rule = effectiveRules(RULES[aud], trip);
   pool = filterPlaces(DATA.places, trip).places;
   plan.days.forEach((d) => d.items.forEach((i) => { i.dur = i.duration; }));
-  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; openSecs.clear(); $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+  resetPlanState();
   render(); setFormOpen(!collapse);
 }
 
@@ -585,6 +588,48 @@ const PRESETS = {
   check_in: { styles: ['check_in'] },
   thu_gian: { styles: ['thu_gian'] },
 };
+/* ---------- Lịch trình nổi bật từ cộng đồng (mẫu) ---------- */
+const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: 'Đà Nẵng', startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
+function buildFeaturedPlan(f) {
+  const trip = featuredTrip(f);
+  return { trip, audienceLabel: RULES[f.audience].label, warnings: [], days: f.days.map((ids, i) => ({ date: addDays(trip.startDate, i), dayIndex: i + 1, items: ids.map((id) => placeItem(DATA.places.find((x) => x.id === id))) })) };
+}
+function featuredStats(f) {
+  const stops = f.days.reduce((n, d) => n + d.length, 0);
+  const tickets = f.days.flat().reduce((sum, id) => sum + DATA.places.find((x) => x.id === id).price, 0) * f.people;
+  return { stops, tickets };
+}
+function renderFeatured() {
+  $('homeFeatured').innerHTML = FEATURED.featured.map((f) => {
+    const st = featuredStats(f);
+    return '<button type="button" class="pcard fcard" data-featured="' + f.id + '">' + sceneSvg({ scene: f.scene, name: f.title }) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
+  }).join('');
+}
+function openFeatured(id) {
+  const f = FEATURED.featured.find((x) => x.id === id); if (!f) return;
+  const trip = featuredTrip(f), keep = rule; rule = effectiveRules(RULES[f.audience], trip);
+  const p = buildFeaturedPlan(f); p.days.forEach(retime); rule = keep;
+  const st = featuredStats(f);
+  lastFocus = document.activeElement; detailPlace = null; detailHotel = null; addCtx = null;
+  $('sheetBody').innerHTML = '<div class="pd">' + sceneSvg({ scene: f.scene, name: f.title }) + '<h2>' + esc(f.title) + '</h2><p class="hint">Bởi ' + esc(f.author) + ' · lịch trình mẫu, chưa phải của người dùng thật</p>' +
+    '<div class="pd-tags"><span class="tag">' + esc(p.audienceLabel) + '</span><span class="tag">' + f.people + ' người</span><span class="tag">' + f.days.length + ' ngày</span>' + f.styles.map((x) => '<span class="tag">' + esc(STYLE_NAME[x]) + '</span>').join('') + '</div>' +
+    '<p style="margin-top:8px">' + esc(f.desc) + '</p><p class="hint">Vé tham quan khoảng ' + moneyVnd(st.tickets) + ' cho cả nhóm.</p>' +
+    p.days.map((d) => '<h3>Ngày ' + d.dayIndex + '</h3><ul class="stops">' + d.items.map((i) => '<li class="' + (i.kind === 'visit' ? 'v' : 'm') + '"><time>' + i.time + '</time><span>' + esc(i.place.name) + (i.late ? ' <em style="color:var(--orange);font-style:normal">(có thể quá giờ)</em>' : '') + '</span></li>').join('') + '</ul>').join('') +
+    '<button type="button" class="go" data-usefeatured="' + f.id + '" style="margin-top:14px">Dùng lịch trình này</button></div>';
+  sheet.hidden = false; $('sheetClose').focus();
+}
+function useFeatured(id) {
+  const f = FEATURED.featured.find((x) => x.id === id); if (!f) return;
+  const trip = featuredTrip(f);
+  closeSheet(); applyForm({ ...trip, styles: f.styles });
+  rule = effectiveRules(RULES[f.audience], trip); pool = filterPlaces(DATA.places, trip).places;
+  plan = buildFeaturedPlan(f); plan.days.forEach(retime);
+  resetPlanState(); dirtyEdits = true; // lịch có sẵn, đổi form sẽ hỏi trước khi xếp lại
+  go('create'); render(); setFormOpen(false);
+  toast('Đã mở lịch trình mẫu, bạn có thể chỉnh sửa');
+}
+$('sheetBody').addEventListener('click', (e) => { const b = e.target.closest('[data-usefeatured]'); if (b) useFeatured(b.dataset.usefeatured); });
+
 /* ---------- Khám phá: bố cục riêng, lấy "lịch đổi theo người đi cùng" làm nhân vật chính ---------- */
 let homeAud = 'gia_dinh';
 let homeGu = []; // sở thích đang chọn ở trang Khám phá (chọn nhiều)
@@ -615,7 +660,7 @@ function ribbonHtml(day, rule) {
   return '<div class="ribbon" role="img" aria-label="Dòng thời gian một ngày">' + segs.join('') + '</div><div class="ax"><span>' + rule.start + '</span><span>' + rule.end + '</span></div>';
 }
 function renderHome() {
-  renderGu();
+  renderGu(); renderFeatured();
   const pt = store.points.balance;
   $('homePts').textContent = pt + ' ' + tr('điểm');
   // Một ngày, bốn nhịp
@@ -682,10 +727,11 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
   if (d.editform !== undefined) { setFormOpen(true); $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (d.daytab !== undefined) { dayTab = d.daytab === 'all' ? 'all' : +d.daytab; render(); window.scrollTo({ top: $('dayTabs').offsetTop - 8, behavior: 'smooth' }); return; }
+  if (d.featured) { openFeatured(d.featured); return; }
   if (d.gu) { homeGu = homeGu.includes(d.gu) ? homeGu.filter((x) => x !== d.gu) : [...homeGu, d.gu]; renderGu(); return; }
   if (d.guplan !== undefined) { if (homeGu.length) openCreate({ styles: [...homeGu] }, true); return; }
   if (d.demo) { homeAud = d.demo; renderHome(); return; }

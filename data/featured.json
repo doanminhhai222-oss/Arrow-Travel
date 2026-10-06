@@ -1,0 +1,136 @@
+{
+  "_note": "LỊCH TRÌNH NỔI BẬT MẪU do đội ngũ soạn, gán cho người dùng mẫu. App chưa có máy chủ nên chưa có lịch trình thật do người dùng chia sẻ.",
+  "sample": true,
+  "featured": [
+    {
+      "id": "f-fam",
+      "title": "Đà Nẵng 2 ngày nhẹ nhàng cho gia đình có bé",
+      "author": "Thu Hà (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "van_hoa"
+      ],
+      "scene": "beach",
+      "desc": "Đi chậm, ăn trưa dài, mỗi ngày chỉ 3 đến 4 điểm gần nhau, có biển buổi sáng và bảo tàng mát buổi chiều.",
+      "days": [
+        [
+          "my-khe",
+          "mi-quang",
+          "bao-tang-cham",
+          "hai-san"
+        ],
+        [
+          "linh-ung",
+          "banh-xeo",
+          "art-paradise"
+        ]
+      ]
+    },
+    {
+      "id": "f-couple",
+      "title": "Hoàng hôn và quán yên tĩnh cho cặp đôi",
+      "author": "Minh Anh (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "am_thuc"
+      ],
+      "scene": "cafe",
+      "desc": "Sáng đi chùa và núi, chiều ngắm hoàng hôn ở quán cà phê ven biển, tối dạo cầu Rồng.",
+      "days": [
+        [
+          "linh-ung",
+          "mi-quang",
+          "cf-hoang-hon",
+          "hai-san"
+        ],
+        [
+          "ngu-hanh-son",
+          "banh-xeo",
+          "cau-tinh-yeu",
+          "cau-rong"
+        ]
+      ]
+    },
+    {
+      "id": "f-friends",
+      "title": "Một ngày săn ảnh cho nhóm bạn",
+      "author": "Quốc Bảo (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "vua_phai",
+      "styles": [
+        "check_in",
+        "am_thuc"
+      ],
+      "scene": "wheel",
+      "desc": "Tranh 3D, chợ Hàn, công viên Châu Á và cầu Rồng về đêm, lịch dày nhưng các điểm nằm gần nhau.",
+      "days": [
+        [
+          "art-paradise",
+          "mi-quang",
+          "cho-han",
+          "asia-park",
+          "cau-rong"
+        ]
+      ]
+    },
+    {
+      "id": "f-bana",
+      "title": "Bà Nà trọn ngày rồi nghỉ biển",
+      "author": "Tuấn Kiệt (mẫu)",
+      "audience": "nhom_ban",
+      "people": 4,
+      "budget": "thoai_mai",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "scene": "mountain",
+      "desc": "Ngày đầu dành trọn cho Bà Nà Hills, ngày sau thư thả với biển, núi đá và cầu Rồng.",
+      "days": [
+        [
+          "ba-na"
+        ],
+        [
+          "my-khe",
+          "banh-xeo",
+          "ngu-hanh-son",
+          "cau-rong"
+        ]
+      ]
+    },
+    {
+      "id": "f-solo",
+      "title": "Đi một mình, chậm rãi và đủ đầy",
+      "author": "Hoàng Nam (mẫu)",
+      "audience": "mot_minh",
+      "people": 1,
+      "budget": "tiet_kiem",
+      "styles": [
+        "van_hoa",
+        "thien_nhien"
+      ],
+      "scene": "museum",
+      "desc": "Bảo tàng Chăm, chợ Hàn, quán ăn địa phương và buổi chiều ngồi cà phê, chi phí gọn.",
+      "days": [
+        [
+          "bao-tang-cham",
+          "mi-quang",
+          "cho-han",
+          "cf-hoang-hon"
+        ],
+        [
+          "linh-ung",
+          "banh-xeo",
+          "ngu-hanh-son"
+        ]
+      ]
+    }
+  ]
+}

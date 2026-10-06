@@ -88,3 +88,21 @@ test('bản dịch tiếng Anh: không mục nào dịch ra chính nó, khoá kh
     assert.equal(EN[v], undefined, `bản dịch "${v}" lại là khoá khác`);
   }
 });
+
+test('lịch trình nổi bật mẫu: địa điểm có thật, không đóng cửa, đúng đối tượng; ghi rõ là mẫu', async () => {
+  const feat = read('../data/featured.json'), data = read('../data/da-nang.json');
+  assert.equal(feat.sample, true);
+  assert.ok(feat.featured.length >= 4);
+  for (const f of feat.featured) {
+    assert.match(f.author, /\(mẫu\)/);
+    const ids = f.days.flat();
+    assert.equal(new Set(ids).size, ids.length, `${f.id} có điểm lặp`);
+    for (const id of ids) {
+      const p = data.places.find((x) => x.id === id);
+      assert.ok(p, `${f.id}: không có địa điểm ${id}`);
+      assert.notEqual(p.status, 'closed');
+      assert.ok(p.audiences.includes(f.audience), `${f.id}: ${id} không dành cho ${f.audience}`);
+      if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id} không hợp trẻ nhỏ`);
+    }
+  }
+});

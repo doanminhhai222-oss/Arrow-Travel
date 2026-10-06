@@ -311,3 +311,5 @@ textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--lin
 .addc b{display:block}
 .h2s{font-size:13px;font-weight:400;color:var(--muted);margin-left:6px}
 #guGo[disabled]{opacity:.5;cursor:not-allowed}
+.fcard{width:250px}
+.sec-h .badge-demo{margin-left:auto;margin-right:8px}
