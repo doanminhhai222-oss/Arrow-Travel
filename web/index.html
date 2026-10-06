@@ -23,40 +23,57 @@
 <main class="app">
 
   <!-- 1. Khám phá -->
-  <section id="scr-home" class="scr">
-    <div class="scr-head hero">
-      <h1>Lịch trình du lịch theo người đi cùng</h1>
-      <p>Nhập điểm đến, ngày đi, ngân sách và ai đi cùng. Arrow Travel xếp lịch từng ngày có giờ giấc, quãng di chuyển và chi phí dự kiến.</p>
+  <section id="scr-home" class="scr home">
+    <div class="home-top">
+      <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0F766E"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><b>Arrow Travel</b></div>
+      <button type="button" class="pts" id="homePts" data-page="rewards"></button>
     </div>
+
+    <div class="hero2">
+      <img class="hero2-bg" src="images/my-khe.jpg" alt="Hoàng hôn trên biển Mỹ Khê, Đà Nẵng">
+      <div class="hero2-shade"></div>
+      <div class="hero2-in">
+        <span class="eyebrow">Đang mở cho chuyến đi</span>
+        <h1>Đà Nẵng</h1>
+        <p>Đi cùng ai, nhịp lịch trình đổi theo người đó.</p>
+        <button class="go hero2-cta" type="button" data-go="create">Lên lịch trình</button>
+      </div>
+    </div>
+
     <div class="search">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg>
-      <input id="q" type="search" placeholder="Tìm điểm đến, ví dụ: Đà Nẵng" autocomplete="off" aria-label="Tìm điểm đến">
+      <input id="q" type="search" placeholder="Tìm điểm đến khác" autocomplete="off" aria-label="Tìm điểm đến">
       <div id="qsug" class="sugs" hidden></div>
     </div>
-    <div class="tiles" role="group" aria-label="Lối tắt">
-      <button class="tile" type="button" data-preset="plan"><span class="ic c1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM7 17h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h4"/></svg></span>Lịch trình</button>
-      <button class="tile" type="button" data-preset="gia_dinh"><span class="ic c2"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M17 11a2.5 2.5 0 1 0 0-5M21 19v-1a4 4 0 0 0-3-3.8"/></svg></span>Gia đình</button>
-      <button class="tile" type="button" data-preset="cap_doi"><span class="ic c3"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.4A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>Cặp đôi</button>
-      <button class="tile" type="button" data-preset="nhom_ban"><span class="ic c4"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></svg></span>Nhóm bạn</button>
-      <button class="tile" type="button" data-preset="mot_minh"><span class="ic c5"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></span>Một mình</button>
-      <button class="tile" type="button" data-preset="am_thuc"><span class="ic c6"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-3 5-3 8h3v10"/></svg></span>Ẩm thực</button>
-      <button class="tile" type="button" data-preset="van_hoa"><span class="ic c7"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M5 10v9M9 10v9M15 10v9M19 10v9M3 21h18"/></svg></span>Văn hoá</button>
+
+    <h2 class="h2">Bạn đi cùng ai?</h2>
+    <div class="aud-cards">
+      <button type="button" class="aud a-fam" data-preset="gia_dinh"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M17 11a2.5 2.5 0 1 0 0-5M21 19v-1a4 4 0 0 0-3-3.8"/></svg><b>Gia đình</b><span>Nghỉ trưa 2 tiếng, ít đi bộ, tối đa 3 điểm mỗi ngày</span></button>
+      <button type="button" class="aud a-cp" data-preset="cap_doi"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.4A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><b>Cặp đôi</b><span>Quán yên tĩnh, hoàng hôn, buổi tối thong thả</span></button>
+      <button type="button" class="aud a-fr" data-preset="nhom_ban"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></svg><b>Nhóm bạn</b><span>Lịch dày tới 6 điểm, nhiều chỗ check-in</span></button>
+      <button type="button" class="aud a-solo" data-preset="mot_minh"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg><b>Một mình</b><span>Linh hoạt, bảo tàng, biển và quán ăn địa phương</span></button>
     </div>
-    <div class="tiles" role="group" aria-label="Tiện ích">
-      <button class="tile" type="button" data-page="promos"><span class="ic c6"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12l-8 8-9-9V4h7l10 8zM7.5 8.5h.01"/></svg></span>Khuyến mãi</button>
-      <button class="tile" type="button" data-page="rewards"><span class="ic c3"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></span>Điểm thưởng</button>
-      <button class="tile" type="button" data-page="friends"><span class="ic c1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M17 8h5M19.5 5.5v5"/></svg></span>Bạn đồng hành</button>
-      <button class="tile" type="button" data-page="rate"><span class="ic c7"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12zM8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></span>Đánh giá app</button>
+
+    <h2 class="h2">Một ngày ở Đà Nẵng, bốn nhịp khác nhau</h2>
+    <div id="homeDemo" class="demo"></div>
+
+    <h2 class="h2">Bạn thích gì?</h2>
+    <div class="chips gu" role="group" aria-label="Gu du lịch">
+      <button type="button" data-preset="thien_nhien">Thiên nhiên</button><button type="button" data-preset="am_thuc">Ẩm thực</button><button type="button" data-preset="van_hoa">Văn hoá</button><button type="button" data-preset="check_in">Check-in</button><button type="button" data-preset="thu_gian">Thư giãn</button>
     </div>
-    <button class="go" type="button" data-go="create">Lên lịch trình</button>
-    <ul class="why-list panel">
-      <li><span class="dot">1</span><div><b>Lịch đổi theo người đi cùng</b><span>Gia đình có trẻ nhỏ nghỉ trưa dài, cặp đôi có hoàng hôn, nhóm bạn đi dày hơn.</span></div></li>
-      <li><span class="dot">2</span><div><b>Đổi hoặc xoá địa điểm dễ dàng</b><span>Mỗi điểm có gợi ý thay thế, giờ cả ngày tự tính lại.</span></div></li>
-      <li><span class="dot">3</span><div><b>Ước tính chi phí cả chuyến</b><span>Vé máy bay, khách sạn, ăn uống, vé tham quan, di chuyển.</span></div></li>
-    </ul>
+
     <div id="homeRecent"></div>
-    <div class="sec-h"><h2>Gợi ý cho bạn</h2></div>
-    <div id="homeCards" class="cards"></div>
+
+    <div class="sec-h"><h2 class="h2">Ưu đãi nổi bật</h2><button type="button" data-page="promos">Xem tất cả</button></div>
+    <div id="homeDeals" class="deals"></div>
+
+    <div id="homeProg" class="prog"></div>
+
+    <div class="panel menu">
+      <button class="mi" type="button" data-page="friends"><span>Bạn đồng hành<small>Tìm người trùng lịch trình</small></span><span class="chev">›</span></button>
+      <button class="mi" type="button" data-page="payguide"><span>Hướng dẫn thanh toán<small>Quét mã QR, báo chuyển khoản</small></span><span class="chev">›</span></button>
+      <button class="mi" type="button" data-page="rate"><span>Đánh giá Arrow Travel<small>Cho chúng tôi biết bạn nghĩ gì</small></span><span class="chev">›</span></button>
+    </div>
   </section>
 
   <!-- 2. Tạo lịch trình -->

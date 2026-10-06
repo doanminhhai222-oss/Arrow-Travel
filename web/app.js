@@ -463,17 +463,58 @@ const PRESETS = {
   mot_minh: { audience: 'mot_minh', people: 1, days: 2, budget: 'tiet_kiem', styles: ['van_hoa'] },
   am_thuc: { styles: ['am_thuc'] },
   van_hoa: { styles: ['van_hoa'] },
+  thien_nhien: { styles: ['thien_nhien'] },
+  check_in: { styles: ['check_in'] },
+  thu_gian: { styles: ['thu_gian'] },
 };
-const SUGGESTED = [
-  { key: 'gia_dinh', scene: 'beach', title: 'Đà Nẵng 2 ngày cho gia đình', sub: '4 người · có trẻ nhỏ · nghỉ trưa dài' },
-  { key: 'cap_doi', scene: 'cafe', title: 'Đà Nẵng 3 ngày cho cặp đôi', sub: '2 người · hoàng hôn và quán yên tĩnh' },
-  { key: 'nhom_ban', scene: 'wheel', title: 'Đà Nẵng 2 ngày cho nhóm bạn', sub: '5 người · check-in và ăn uống' },
-];
+/* ---------- Khám phá: bố cục riêng, lấy "lịch đổi theo người đi cùng" làm nhân vật chính ---------- */
+let homeAud = 'gia_dinh';
+const DEMO_TABS = [['gia_dinh', 'Gia đình'], ['cap_doi', 'Cặp đôi'], ['nhom_ban', 'Nhóm bạn'], ['mot_minh', 'Một mình']];
+// Chạy đúng thuật toán xếp lịch cho một ngày mẫu để người xem thấy khác biệt thật giữa các đối tượng
+function demoDay(aud) {
+  const start = addDays(todayStr(), 7);
+  const trip = { destination: 'Đà Nẵng', startDate: start, endDate: start, people: aud === 'gia_dinh' ? 4 : aud === 'mot_minh' ? 1 : 2, budget: 'vua_phai',
+    audience: aud, hasKids: aud === 'gia_dinh', hasElderly: false, styles: ['thien_nhien', 'am_thuc'] };
+  // Ngày mẫu trong thành phố: bỏ Bà Nà Hills vì chiếm trọn một ngày
+  const city = { ...DATA, places: DATA.places.filter((x) => x.id !== 'ba-na') };
+  return { day: buildItinerary(trip, city, RULES).days[0], rule: effectiveRules(RULES[aud], trip) };
+}
+function ribbonHtml(day, rule) {
+  const s0 = toMin(rule.start), s1 = toMin(rule.end), segs = [];
+  let cur = s0;
+  const add = (cls, a, b) => { if (b > a) segs.push('<span class="rb ' + cls + '" style="flex:' + (b - a) + '"></span>'); };
+  for (const it of day.items) {
+    const st = toMin(it.time), en = toMin(it.end), t0 = it.travel ? Math.max(cur, st - it.travel.min) : st;
+    add('idle', cur, t0); add('trv', t0, st); add(it.kind === 'visit' ? 'vis' : 'eat', st, en); cur = Math.max(cur, en);
+  }
+  add('idle', cur, s1);
+  return '<div class="ribbon" role="img" aria-label="Dòng thời gian một ngày">' + segs.join('') + '</div><div class="ax"><span>' + rule.start + '</span><span>' + rule.end + '</span></div>';
+}
 function renderHome() {
-  $('homeCards').innerHTML = SUGGESTED.map((s) => '<button type="button" class="pcard" data-preset="' + s.key + '">' + sceneSvg({ scene: s.scene, name: s.title }) + '<div><b>' + esc(s.title) + '</b><span>' + esc(s.sub) + '</span></div></button>').join('');
+  const pt = store.points.balance;
+  $('homePts').textContent = pt + ' ' + tr('điểm');
+  // Một ngày, bốn nhịp
+  const { day, rule } = demoDay(homeAud);
+  const lunch = day.items.find((i) => (i.kind === 'meal' || i.kind === 'break') && /trưa/.test(i.note || ''));
+  const visits = day.items.filter((i) => i.kind === 'visit').length;
+  $('homeDemo').innerHTML = '<div class="demo-tabs" role="group" aria-label="Chọn đối tượng">' + DEMO_TABS.map(([v, l]) => '<button type="button" data-demo="' + v + '" aria-pressed="' + (v === homeAud) + '">' + esc(l) + '</button>').join('') + '</div>' +
+    ribbonHtml(day, rule) +
+    '<div class="legend"><span><i style="background:var(--teal)"></i>Tham quan</span><span><i style="background:var(--orange)"></i>Ăn và nghỉ</span><span><i style="background:var(--muted);opacity:.55"></i>Di chuyển</span></div>' +
+    '<div class="facts"><div><b>' + visits + '</b><span>điểm tham quan</span></div><div><b>' + (lunch ? dur(lunch.duration) : '–') + '</b><span>nghỉ trưa</span></div><div><b>' + day.totalKm + '</b><span>km di chuyển</span></div></div>' +
+    '<ul class="stops">' + day.items.slice(0, 6).map((i) => '<li class="' + (i.kind === 'visit' ? 'v' : 'm') + '"><time>' + i.time + '</time><span>' + esc(i.place ? i.place.name : i.note) + '</span></li>').join('') + '</ul>' +
+    '<button type="button" class="go" data-preset="' + homeAud + '">Dùng nhịp này cho chuyến của tôi</button>';
+  // Đã lưu gần đây
   const r = store.trips.slice(0, 5);
-  $('homeRecent').innerHTML = r.length ? '<div class="sec-h"><h2>Đã lưu gần đây</h2><button type="button" data-go="trips">Tất cả</button></div><div class="cards" style="margin-top:12px">' +
-    r.map((s) => '<button type="button" class="pcard" style="width:220px" data-trip="' + s.id + '"><div><b>' + esc(s.trip.destination) + ' · ' + daysBetween(s.trip.startDate, s.trip.endDate) + ' ngày</b><span>' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + ' · ' + esc(RULES[s.trip.audience].label) + '</span><span style="display:block;color:var(--fg);font-weight:600">' + money(s.total) + '</span></div></button>').join('') + '</div>' : '';
+  $('homeRecent').innerHTML = r.length ? '<div class="sec-h"><h2 class="h2">Đã lưu gần đây</h2><button type="button" data-go="trips">Tất cả</button></div><div class="cards" style="margin-top:12px">' +
+    r.map((x) => '<button type="button" class="pcard" style="width:220px" data-trip="' + x.id + '"><div><b>' + esc(x.trip.destination) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</b><span>' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</span><span style="display:block;color:var(--fg);font-weight:600">' + money(x.total) + '</span></div></button>').join('') + '</div>' : '';
+  // Ưu đãi
+  $('homeDeals').innerHTML = searchPromos(PROMOS.promos, { today: todayStr() }).slice(0, 5).map((p) => '<button type="button" class="deal" data-page="promos"><b>' + esc(p.title) + '</b><span>' + esc(p.target.name || tr(TYPE_NAME[p.target.type])) + ' · mẫu</span>' + (p.code ? '<em>' + esc(p.code) + '</em>' : '') + '</button>').join('');
+  // Tiến độ điểm thưởng
+  const next = CATALOG.find((c) => c.cost > pt), tier = next || CATALOG[CATALOG.length - 1];
+  const pct = Math.min(100, Math.round((pt / tier.cost) * 100));
+  $('homeProg').innerHTML = '<b>' + (next ? pt + '/' + next.cost + ' điểm để đổi voucher ' + moneyVnd(next.value) : 'Bạn đủ điểm để đổi voucher ' + moneyVnd(tier.value)) + '</b>' +
+    '<div class="bar" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ điểm thưởng"><i style="width:' + pct + '%"></i></div>' +
+    '<span style="font-size:14px;opacity:.9">Lưu lịch trình, đăng ảnh, đánh giá app để tích điểm.</span><button type="button" data-page="rewards">Xem điểm thưởng</button>';
 }
 const qIn = $('q'), qSug = $('qsug');
 function showSug() {
@@ -516,8 +557,9 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
+  if (d.demo) { homeAud = d.demo; renderHome(); return; }
   if (d.page) { openPage(d.page); return; }
   if (d.fav) { store.favorites = store.favorites.includes(d.fav) ? store.favorites.filter((x) => x !== d.fav) : [...store.favorites, d.fav]; persist(); renderTrips(); return; }
   if (d.tripfilter) { tripFilter = d.tripfilter; renderTrips(); return; }
@@ -585,7 +627,7 @@ async function copyText(text) {
 }
 function givePoints(ruleId, opts) {
   const r = award(store.points, ruleId, opts);
-  if (r.awarded) { store.points = r.points; persist(); toast('+' + r.awarded + ' điểm · ' + tr(EARN.find((x) => x.id === ruleId).label)); }
+  if (r.awarded) { store.points = r.points; persist(); renderHome(); toast('+' + r.awarded + ' điểm · ' + tr(EARN.find((x) => x.id === ruleId).label)); }
   return r.awarded;
 }
 
