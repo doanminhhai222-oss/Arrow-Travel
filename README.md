@@ -22,7 +22,8 @@ GitHub chỉ hiện mã nguồn, không chạy web. Để mở web bằng link: 
 | `scripts/enrich-places.py` | Gộp nội dung chi tiết vào `data/da-nang.json` |
 | `src/costing.js` | Ước tính tổng chi phí sau khi chốt lịch trình |
 | `data/rules.json` | `Quy_tac_doi_tuong`: giờ bắt đầu, số điểm/ngày, nghỉ trưa, di chuyển tối đa |
-| `web/` | Giao diện (HTML + JS thuần) |
+| `web/` | Giao diện (HTML + JS thuần): 5 màn hình Khám phá, Tạo mới, Lịch trình của tôi, Thông báo, Tài khoản. **Nguồn duy nhất của giao diện** |
+| `scripts/build-artifact.py` | Đóng gói `web/` thành 1 file HTML để đăng artifact trên claude.ai |
 | `test/` | Test bằng `node --test` |
 
 ## Logic xếp lịch
@@ -34,8 +35,11 @@ GitHub chỉ hiện mã nguồn, không chạy web. Để mở web bằng link: 
 
 ## Lộ trình
 - [x] Khung + thuật toán + form + xem theo ngày
-- [ ] Đổi địa điểm / thêm địa điểm
-- [ ] Chi tiết địa điểm (ảnh, bản đồ, báo sai)
-- [ ] Lưu + chia sẻ bằng liên kết, xuất PDF
+- [x] Đổi / xoá địa điểm có gợi ý thay thế
+- [x] Chi tiết địa điểm (ảnh minh hoạ, bản đồ mini, văn hoá, đánh giá quán)
+- [x] Chốt lịch trình: vé máy bay, khách sạn, tổng chi phí (giá mẫu)
+- [x] Màn hình Khám phá, thanh công cụ, lưu lịch trình trên thiết bị
+- [ ] Thêm địa điểm, báo thông tin sai
+- [ ] Chia sẻ bằng liên kết, xuất PDF
 - [ ] Nhập dữ liệu từ Excel → JSON
 - [ ] Giai đoạn 2: app (Expo) dùng lại `src/scheduler.js`

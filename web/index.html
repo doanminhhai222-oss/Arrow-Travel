@@ -2,46 +2,106 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Arrow Travel – Lịch trình theo đối tượng</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arrow Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="detail.css">
 </head>
 <body>
-<header><h1>Arrow Travel</h1><p>Lịch trình đổi theo người đi cùng</p></header>
-<main>
-  <form id="form">
-    <label for="destination">Điểm đến</label>
-    <select id="destination"><option>Đà Nẵng</option></select>
-    <div class="row">
-      <div><label for="startDate">Ngày đi</label><input type="date" id="startDate" required></div>
-      <div><label for="endDate">Ngày về</label><input type="date" id="endDate" required></div>
+<main class="app">
+
+  <!-- 1. Khám phá -->
+  <section id="scr-home" class="scr">
+    <div class="scr-head hero">
+      <h1>Lịch trình du lịch theo người đi cùng</h1>
+      <p>Nhập điểm đến, ngày đi, ngân sách và ai đi cùng. Arrow Travel xếp lịch từng ngày có giờ giấc, quãng di chuyển và chi phí dự kiến.</p>
     </div>
-    <div class="row">
-      <div><label for="people">Số người</label><input type="number" id="people" min="1" max="30" value="2"></div>
-      <div><label for="budget">Ngân sách</label>
-        <select id="budget"><option value="tiet_kiem">Tiết kiệm</option><option value="vua_phai" selected>Vừa phải</option><option value="thoai_mai">Thoải mái</option></select></div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Tìm điểm đến, ví dụ: Đà Nẵng" autocomplete="off" aria-label="Tìm điểm đến">
+      <div id="qsug" class="sugs" hidden></div>
     </div>
-    <label for="audience">Đi cùng</label>
-    <select id="audience">
-      <option value="mot_minh">Một mình</option><option value="cap_doi">Cặp đôi</option>
-      <option value="nhom_ban" selected>Nhóm bạn trẻ</option><option value="gia_dinh">Gia đình</option>
-    </select>
-    <label class="check"><input type="checkbox" id="hasKids"> Có trẻ nhỏ</label>
-    <label class="check"><input type="checkbox" id="hasElderly"> Có người lớn tuổi</label>
-    <label>Phong cách (chọn nhiều)</label>
-    <label class="check"><input type="checkbox" name="style" value="thien_nhien" checked> Thiên nhiên</label>
-    <label class="check"><input type="checkbox" name="style" value="van_hoa"> Văn hoá</label>
-    <label class="check"><input type="checkbox" name="style" value="am_thuc"> Ẩm thực</label>
-    <label class="check"><input type="checkbox" name="style" value="check_in"> Check-in</label>
-    <label class="check"><input type="checkbox" name="style" value="thu_gian"> Thư giãn</label>
-    <button type="submit">Lên lịch trình</button>
-  </form>
-  <div id="result"></div>
+    <div class="tiles" role="group" aria-label="Lối tắt">
+      <button class="tile" type="button" data-preset="plan"><span class="ic c1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM7 17h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h4"/></svg></span>Lịch trình</button>
+      <button class="tile" type="button" data-preset="gia_dinh"><span class="ic c2"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M17 11a2.5 2.5 0 1 0 0-5M21 19v-1a4 4 0 0 0-3-3.8"/></svg></span>Gia đình</button>
+      <button class="tile" type="button" data-preset="cap_doi"><span class="ic c3"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.4A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span>Cặp đôi</button>
+      <button class="tile" type="button" data-preset="nhom_ban"><span class="ic c4"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></svg></span>Nhóm bạn</button>
+      <button class="tile" type="button" data-preset="mot_minh"><span class="ic c5"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></span>Một mình</button>
+      <button class="tile" type="button" data-preset="am_thuc"><span class="ic c6"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-3 5-3 8h3v10"/></svg></span>Ẩm thực</button>
+      <button class="tile" type="button" data-preset="van_hoa"><span class="ic c7"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M5 10v9M9 10v9M15 10v9M19 10v9M3 21h18"/></svg></span>Văn hoá</button>
+    </div>
+    <button class="go" type="button" data-go="create">Lên lịch trình</button>
+    <ul class="why-list panel">
+      <li><span class="dot">1</span><div><b>Lịch đổi theo người đi cùng</b><span>Gia đình có trẻ nhỏ nghỉ trưa dài, cặp đôi có hoàng hôn, nhóm bạn đi dày hơn.</span></div></li>
+      <li><span class="dot">2</span><div><b>Đổi hoặc xoá địa điểm dễ dàng</b><span>Mỗi điểm có gợi ý thay thế, giờ cả ngày tự tính lại.</span></div></li>
+      <li><span class="dot">3</span><div><b>Ước tính chi phí cả chuyến</b><span>Vé máy bay, khách sạn, ăn uống, vé tham quan, di chuyển.</span></div></li>
+    </ul>
+    <div id="homeRecent"></div>
+    <div class="sec-h"><h2>Gợi ý cho bạn</h2></div>
+    <div id="homeCards" class="cards"></div>
+  </section>
+
+  <!-- 2. Tạo lịch trình -->
+  <section id="scr-create" class="scr" hidden>
+    <div class="scr-head"><h1>Tạo lịch trình</h1><p>Dữ liệu Đà Nẵng đang là bản mẫu để chạy thử.</p></div>
+    <form class="panel" id="form">
+      <div class="row">
+        <div><label for="start">Ngày đi</label><input type="date" id="start" required></div>
+        <div><label for="end">Ngày về</label><input type="date" id="end" required></div>
+      </div>
+      <div class="row">
+        <div><label for="people">Số người</label><input type="number" id="people" min="1" max="30" value="2"></div>
+        <div><label for="budget">Ngân sách</label><select id="budget"><option value="tiet_kiem">Tiết kiệm</option><option value="vua_phai" selected>Vừa phải</option><option value="thoai_mai">Thoải mái</option></select></div>
+      </div>
+      <div><label id="aud-l">Đi cùng ai</label>
+        <div class="seg" id="aud" role="group" aria-labelledby="aud-l">
+          <button type="button" data-v="mot_minh" aria-pressed="false">Một mình</button><button type="button" data-v="cap_doi" aria-pressed="false">Cặp đôi</button>
+          <button type="button" data-v="nhom_ban" aria-pressed="true">Nhóm bạn trẻ</button><button type="button" data-v="gia_dinh" aria-pressed="false">Gia đình</button>
+        </div></div>
+      <label class="check"><input type="checkbox" id="kids"> Có trẻ nhỏ</label>
+      <label class="check"><input type="checkbox" id="elder"> Có người lớn tuổi</label>
+      <div><label id="st-l">Phong cách (chọn nhiều)</label>
+        <div class="seg" id="styles" role="group" aria-labelledby="st-l">
+          <button type="button" data-v="thien_nhien" aria-pressed="true">Thiên nhiên</button><button type="button" data-v="van_hoa" aria-pressed="false">Văn hoá</button>
+          <button type="button" data-v="am_thuc" aria-pressed="false">Ẩm thực</button><button type="button" data-v="check_in" aria-pressed="false">Check-in</button><button type="button" data-v="thu_gian" aria-pressed="false">Thư giãn</button>
+        </div></div>
+      <button class="go" type="submit">Lên lịch trình</button>
+      <p class="hint">Đổi đối tượng để so sánh giờ nghỉ trưa, số điểm mỗi ngày và quãng di chuyển.</p>
+    </form>
+    <div id="out"></div>
+  </section>
+
+  <!-- 3. Lịch trình của tôi -->
+  <section id="scr-trips" class="scr" hidden>
+    <div class="scr-head"><h1>Lịch trình của tôi</h1><p>Lưu ngay trên thiết bị này.</p></div>
+    <div id="tripsList" class="list"></div>
+  </section>
+
+  <!-- 4. Thông báo -->
+  <section id="scr-notifs" class="scr" hidden>
+    <div class="scr-head"><h1>Thông báo</h1></div>
+    <div id="notifList" class="list"></div>
+  </section>
+
+  <!-- 5. Tài khoản -->
+  <section id="scr-account" class="scr" hidden>
+    <div class="scr-head"><h1>Tài khoản</h1></div>
+    <div id="accountBody" class="list"></div>
+  </section>
 </main>
+
+<nav class="tabbar" aria-label="Điều hướng chính"><div class="tabbar-in">
+  <button class="tab" type="button" data-go="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg>Khám phá</button>
+  <button class="tab" type="button" data-go="trips"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18v12H3zM8 8V5h8v3"/></svg>Lịch trình của tôi</button>
+  <button class="tab" type="button" data-go="create"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM12 8v8M8 12h8"/></svg>Tạo mới</button>
+  <button class="tab" type="button" data-go="notifs"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17v-6a6 6 0 1 1 12 0v6l2 2H4zM10 21h4"/></svg>Thông báo<span id="badge" class="badge" hidden></span></button>
+  <button class="tab" type="button" data-go="account"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg>Tài khoản</button>
+</div></nav>
+
 <div id="sheet" class="sheet" hidden role="dialog" aria-modal="true" aria-label="Thông tin địa điểm"><div class="sheet-in"><div class="sheet-bar"><button id="sheetClose" class="x" type="button">Đóng</button></div><div id="sheetBody"></div></div></div>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
