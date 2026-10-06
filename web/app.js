@@ -806,10 +806,26 @@ function momStats(info, key) {
 }
 function momStatsHtml(info, key) {
   const st = momStats(info, key);
-  return '<div><b>' + st.photos + ' ảnh · ' + st.touched + '/' + st.places + ' nơi có khoảnh khắc</b><span>' + (st.rated ? 'Điểm trung bình ' + st.avg.toFixed(1) + ' ★ trên ' + st.rated + ' nơi' : 'Chưa chấm sao nơi nào') + '</span></div>' +
+  return '<div><b>' + st.photos + ' ảnh · ' + st.touched + '/' + st.places + ' nơi có khoảnh khắc</b>' + (momPending(key) ? '<span class="pending">Có ' + momPending(key) + ' khoảnh khắc chưa đăng, mở thẻ và bấm Đăng</span>' : '') + '<span>' + (st.rated ? 'Điểm trung bình ' + st.avg.toFixed(1) + ' ★ trên ' + st.rated + ' nơi' : 'Chưa chấm sao nơi nào') + '</span></div>' +
     '<button type="button" class="go" data-album' + (st.touched ? '' : ' disabled') + '>Xem album kỷ niệm</button>';
 }
 
+// Bản nháp theo từng địa điểm: ảnh, sao, nhận xét chỉ được lưu khi bấm "Đăng khoảnh khắc"
+const momDraft = {};
+const getDraft = (key, pid) => (momDraft[key + ':' + pid] = momDraft[key + ':' + pid] || { files: [], rating: null, text: null });
+function momEff(key, pid) {
+  const saved = momData(key, pid), dr = momDraft[key + ':' + pid];
+  const rating = dr && dr.rating != null ? dr.rating : saved.rating, text = dr && dr.text != null ? dr.text : saved.text, files = dr ? dr.files : [];
+  const dirty = !!(files.length || (dr && dr.rating != null && dr.rating !== saved.rating) || (dr && dr.text != null && dr.text !== saved.text));
+  return { saved, rating, text, files, dirty };
+}
+const momPending = (key) => Object.keys(momDraft).filter((k) => k.startsWith(key + ':') && momEff(key, k.slice(key.length + 1)).dirty).length;
+function dropDraft(key, pid) { const dr = momDraft[key + ':' + pid]; if (dr) dr.files.forEach((f) => URL.revokeObjectURL(f.url)); delete momDraft[key + ':' + pid]; }
+function momActionsHtml(pid) {
+  const e = momEff(momTrip, pid), has = e.saved.rating || e.saved.text || (momCounts[pid] || 0);
+  if (e.dirty) return '<button type="button" class="go" data-mompost="' + pid + '">Đăng khoảnh khắc</button><button type="button" class="btn quiet" data-momcancel="' + pid + '" style="margin-top:8px;width:100%">Huỷ thay đổi</button>';
+  return has ? '<p class="saved-ok">Đã đăng ✓</p>' : '<p class="hint">Thêm ảnh, chấm sao hoặc viết cảm nhận rồi bấm Đăng khoảnh khắc.</p>';
+}
 async function renderMomBody() {
   const token = ++momToken, keys = momTrips();
   // Chưa tự chọn chuyến thì luôn theo chuyến mới nhất, tự cập nhật khi vừa tạo hoặc lưu lịch trình
@@ -829,13 +845,15 @@ async function renderMomBody() {
   if (momTrip === 'free') h += '<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="momQ" type="search" value="' + esc(momQ) + '" placeholder="Tìm địa điểm" aria-label="Tìm địa điểm" autocomplete="off"></div>';
   if (!info.groups.length) h += '<div class="panel empty"><b>Chưa có địa điểm nào</b>Chuyến này chưa có điểm đến. Hãy chọn chuyến khác.</div>';
   h += info.groups.map((g) => '<h3 class="mgroup">' + esc(g.label) + '</h3>' + g.places.map((p) => {
-    const d = momData(momTrip, p.id), ph = byPlace[p.id] || [], urls = ph.map((x) => { const u = URL.createObjectURL(x.blob); momUrls.push(u); return { id: x.id, u }; });
-    return '<details class="mom" data-mom="' + p.id + '"' + (momOpen.has(p.id) ? ' open' : '') + '><summary><span class="mthumb">' + (urls[0] ? '<img src="' + urls[0].u + '" alt="">' : sceneSvg({ scene: p.scene || 'mountain', name: p.name })) + '</span>' +
-      '<span class="mt"><b>' + esc(p.name) + '</b><small data-line>' + momLine(d.rating, ph.length) + '</small></span><span class="chev">›</span></summary><div class="mbody">' +
-      '<div class="stars" data-momstars="' + p.id + '" role="group" aria-label="Chấm sao">' + [1, 2, 3, 4, 5].map((n) => '<button type="button" data-momstar="' + n + '" aria-label="' + n + ' sao" aria-pressed="' + (n <= d.rating) + '">★</button>').join('') + '</div>' +
-      '<label for="mt-' + p.id + '">Cảm nhận của bạn</label><textarea id="mt-' + p.id + '" data-momtext="' + p.id + '" placeholder="Bạn nhớ gì nhất ở đây?">' + esc(d.text) + '</textarea>' +
-      (urls.length ? '<div class="myph">' + urls.map((x) => '<figure><img src="' + x.u + '" alt="Ảnh kỷ niệm"><button type="button" data-momdel="' + x.id + '" aria-label="Xoá ảnh">×</button></figure>').join('') + '</div>' : '') +
-      '<button type="button" class="btn" data-momadd="' + p.id + '" style="margin-top:8px">Thêm ảnh</button></div></details>';
+    const e = momEff(momTrip, p.id), ph = byPlace[p.id] || [], urls = ph.map((x) => { const u = URL.createObjectURL(x.blob); momUrls.push(u); return { id: x.id, u }; });
+    return '<details class="mom" data-mom="' + p.id + '"' + (momOpen.has(p.id) ? ' open' : '') + '><summary><span class="mthumb">' + (urls[0] ? '<img src="' + urls[0].u + '" alt="">' : e.files[0] ? '<img src="' + e.files[0].url + '" alt="">' : sceneSvg({ scene: p.scene || 'mountain', name: p.name })) + '</span>' +
+      '<span class="mt"><b>' + esc(p.name) + '</b><small data-line class="' + (e.dirty ? 'pending' : '') + '">' + momLine(e.rating, ph.length + e.files.length) + (e.dirty ? ' · chưa đăng' : '') + '</small></span><span class="chev">›</span></summary><div class="mbody">' +
+      '<div class="stars" data-momstars="' + p.id + '" role="group" aria-label="Chấm sao">' + [1, 2, 3, 4, 5].map((n) => '<button type="button" data-momstar="' + n + '" aria-label="' + n + ' sao" aria-pressed="' + (n <= e.rating) + '">★</button>').join('') + '</div>' +
+      '<label for="mt-' + p.id + '">Cảm nhận của bạn</label><textarea id="mt-' + p.id + '" data-momtext="' + p.id + '" placeholder="Bạn nhớ gì nhất ở đây?">' + esc(e.text) + '</textarea>' +
+      (urls.length ? '<div class="hint" style="margin-top:8px">Ảnh đã đăng</div><div class="myph">' + urls.map((x) => '<figure><img src="' + x.u + '" alt="Ảnh kỷ niệm"><button type="button" data-momdel="' + x.id + '" aria-label="Xoá ảnh đã đăng">×</button></figure>').join('') + '</div>' : '') +
+      (e.files.length ? '<div class="hint" style="margin-top:8px">Ảnh chờ đăng</div><div class="myph">' + e.files.map((f, i) => '<figure class="pend"><img src="' + f.url + '" alt="Ảnh chờ đăng"><span class="pendtag">Chưa đăng</span><button type="button" data-momunstage="' + i + '" data-p="' + p.id + '" aria-label="Bỏ ảnh này">×</button></figure>').join('') + '</div>' : '') +
+      '<button type="button" class="btn" data-momadd="' + p.id + '" style="margin-top:8px">Thêm ảnh</button>' +
+      '<div class="mactions" data-momactions="' + p.id + '">' + momActionsHtml(p.id) + '</div></div></details>';
   }).join('')).join('');
   h += '<input id="momFile" class="sr-only" type="file" accept="image/*" multiple aria-label="Chọn ảnh">';
   $('momBody').innerHTML = h;
@@ -844,32 +862,46 @@ async function renderMomBody() {
 const renderMoments = renderMomBody;
 
 function paintMomCard(pid) {
-  const d = momData(momTrip, pid);
-  document.querySelectorAll('[data-momstars="' + pid + '"] button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.momstar <= d.rating)));
-  const line = document.querySelector('details[data-mom="' + pid + '"] [data-line]'); if (line) line.textContent = momLine(d.rating, momCounts[pid] || 0);
+  const e = momEff(momTrip, pid), n = (momCounts[pid] || 0) + e.files.length;
+  document.querySelectorAll('[data-momstars="' + pid + '"] button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.momstar <= e.rating)));
+  const line = document.querySelector('details[data-mom="' + pid + '"] [data-line]');
+  if (line) { line.textContent = momLine(e.rating, n) + (e.dirty ? ' · chưa đăng' : ''); line.className = e.dirty ? 'pending' : ''; }
+  const act = document.querySelector('[data-momactions="' + pid + '"]'); if (act) act.innerHTML = momActionsHtml(pid);
   const st = $('momStats'); if (st) st.innerHTML = momStatsHtml(momInfo(momTrip), momTrip);
 }
+async function postMoment(pid) {
+  const key = momTrip + ':' + pid, e = momEff(momTrip, pid); if (!e.dirty) return;
+  try {
+    for (const f of e.files) { await addPhoto(key, f.blob); givePoints('photo'); }
+  } catch (err) { toast('Không lưu được ảnh: ' + err.message); return; }
+  const patch = {}; if (e.rating !== e.saved.rating) patch.rating = e.rating; if (e.text !== e.saved.text) patch.text = e.text;
+  if (Object.keys(patch).length) setMom(momTrip, pid, patch);
+  dropDraft(momTrip, pid); momOpen.add(pid); toast('Đã đăng khoảnh khắc'); renderMomBody();
+}
 $('momBody').addEventListener('click', (e) => {
-  const t = e.target.closest('[data-momtrip],[data-momstar],[data-momadd],[data-momdel],[data-album]'); if (!t) return;
+  const t = e.target.closest('[data-momtrip],[data-momstar],[data-momadd],[data-momdel],[data-mompost],[data-momcancel],[data-momunstage],[data-album]'); if (!t) return;
   if (t.dataset.momtrip) { momTrip = t.dataset.momtrip; momChosen = true; renderMomBody(); return; }
   if (t.dataset.momstar) {
-    const pid = t.closest('[data-momstars]').dataset.momstars, v = +t.dataset.momstar, cur = momData(momTrip, pid).rating;
-    setMom(momTrip, pid, { rating: cur === v ? 0 : v }); paintMomCard(pid); return;
+    const pid = t.closest('[data-momstars]').dataset.momstars, v = +t.dataset.momstar, cur = momEff(momTrip, pid).rating;
+    getDraft(momTrip, pid).rating = cur === v ? 0 : v; paintMomCard(pid); return;
   }
   if (t.dataset.momadd) { const f = $('momFile'); f.dataset.place = t.dataset.momadd; f.click(); return; }
   if (t.dataset.momdel) { deletePhoto(+t.dataset.momdel).then(renderMomBody).catch(() => toast('Không xoá được ảnh')); return; }
+  if (t.dataset.mompost) { postMoment(t.dataset.mompost); return; }
+  if (t.dataset.momcancel) { dropDraft(momTrip, t.dataset.momcancel); renderMomBody(); return; }
+  if (t.dataset.momunstage !== undefined) { const dr = getDraft(momTrip, t.dataset.p); const [f] = dr.files.splice(+t.dataset.momunstage, 1); if (f) URL.revokeObjectURL(f.url); renderMomBody(); return; }
   if (t.hasAttribute('data-album')) openPage('album');
 });
 $('momBody').addEventListener('change', async (e) => {
   if (e.target.id !== 'momFile') return;
-  const pid = e.target.dataset.place, files = [...e.target.files].slice(0, 10);
-  if (!pid) return;
+  const pid = e.target.dataset.place, dr = pid && getDraft(momTrip, pid); if (!pid) return;
+  const files = [...e.target.files].slice(0, Math.max(0, 10 - dr.files.length)); e.target.value = '';
   momOpen.add(pid);
-  try { for (const f of files) { await addPhoto(momTrip + ':' + pid, await resizeImage(f)); givePoints('photo'); } } catch (err) { toast('Không lưu được ảnh: ' + err.message); }
+  try { for (const f of files) { const blob = await resizeImage(f); dr.files.push({ blob, url: URL.createObjectURL(blob) }); } } catch (err) { toast('Không xử lý được ảnh: ' + err.message); }
   renderMomBody();
 });
 $('momBody').addEventListener('input', (e) => {
-  if (e.target.dataset.momtext) setMom(momTrip, e.target.dataset.momtext, { text: e.target.value });
+  if (e.target.dataset.momtext) { getDraft(momTrip, e.target.dataset.momtext).text = e.target.value; paintMomCard(e.target.dataset.momtext); }
   if (e.target.id === 'momQ') { momQ = e.target.value; renderMomBody(); }
 });
 $('momBody').addEventListener('toggle', (e) => {
@@ -1327,25 +1359,15 @@ function placeExtrasHtml(place) {
 }
 async function renderMyPhotos() {
   const box = $('myPhotos'); if (!box || !detailPlace) return;
-  phUrls.forEach((u) => URL.revokeObjectURL(u)); phUrls = [];
-  let items = [];
-  try { items = await listPhotos(photoKey(detailPlace)); } catch (err) { box.innerHTML = '<h3>Ảnh chuyến đi của tôi</h3><p class="hint late">' + esc(err.message) + '</p>'; return; }
-  box.innerHTML = '<h3>Ảnh chuyến đi của tôi</h3><p class="hint">Ảnh chỉ lưu trên thiết bị này, chưa chia sẻ cho ai. Mỗi ảnh đầu tiên được thưởng 5 điểm (tối đa 10 ảnh).</p>' +
-    '<button type="button" class="btn" data-pg-photo="add">Thêm ảnh</button><input id="phFile" class="sr-only" type="file" accept="image/*" multiple aria-label="Chọn ảnh">' +
-    (items.length ? '<div class="myph">' + items.map((p) => { const u = URL.createObjectURL(p.blob); phUrls.push(u); return '<figure><img src="' + u + '" alt="Ảnh chuyến đi của tôi"><button type="button" data-pg-photo="del" data-id="' + p.id + '" aria-label="Xoá ảnh">×</button></figure>'; }).join('') + '</div>' : '<p class="hint">Chưa có ảnh.</p>');
+  let n = 0; try { n = (await listPhotos(photoKey(detailPlace))).length; } catch (err) { /* không đọc được thì coi như chưa có */ }
+  const d = momData(currentTripId || 'draft', detailPlace), has = n || d.rating || d.text;
+  box.innerHTML = '<h3>Khoảnh khắc của tôi</h3><p class="hint">' + (has ? 'Bạn đã đăng ' + n + ' ảnh' + (d.rating ? ' và chấm ' + d.rating + ' sao' : '') + ' cho nơi này.' : 'Chưa có ảnh hay nhận xét cho nơi này.') + '</p>' +
+    '<button type="button" class="btn" data-momgo="' + detailPlace + '">' + (has ? 'Xem và thêm khoảnh khắc' : 'Thêm ảnh và cảm nhận') + '</button>';
 }
 $('sheetBody').addEventListener('click', (e) => {
-  const b = e.target.closest('[data-pg-photo]'); if (!b) return;
-  if (b.dataset.pgPhoto === 'add') { $('phFile').click(); return; }
-  if (b.dataset.pgPhoto === 'del') deletePhoto(+b.dataset.id).then(renderMyPhotos).catch(() => toast('Không xoá được ảnh'));
-});
-$('sheetBody').addEventListener('change', async (e) => {
-  if (e.target.id !== 'phFile' || !detailPlace) return;
-  const files = [...e.target.files].slice(0, 10);
-  try {
-    for (const f of files) { await addPhoto(photoKey(detailPlace), await resizeImage(f)); givePoints('photo'); }
-  } catch (err) { toast('Không lưu được ảnh: ' + err.message); }
-  renderMyPhotos();
+  const b = e.target.closest('[data-momgo]'); if (!b) return;
+  const pid = b.dataset.momgo; momTrip = currentTripId || 'draft'; momChosen = true; momOpen.add(pid); closeSheet(); go('moments');
+  setTimeout(() => { const el = document.querySelector('details[data-mom="' + pid + '"]'); if (el) el.scrollIntoView({ block: 'center' }); }, 400);
 });
 
 /* ---------- Mã giảm giá và voucher khi thanh toán ---------- */

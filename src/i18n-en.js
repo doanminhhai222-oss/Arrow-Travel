@@ -312,5 +312,15 @@ export const EN = {
   "Đang theo dõi chuyến đi": "Tracking your trip",
   "Chưa có lịch trình đã lưu": "No saved itineraries",
   "Bạn đã đi hết các điểm của ngày này": "You have visited every stop for today",
-  "Bản xem trước": "Preview"
+  "Bản xem trước": "Preview",
+  "Đăng khoảnh khắc": "Post moment",
+  "Huỷ thay đổi": "Discard changes",
+  "Ảnh đã đăng": "Posted photos",
+  "Ảnh chờ đăng": "Photos waiting to post",
+  "Chưa đăng": "Not posted",
+  "Đã đăng ✓": "Posted ✓",
+  "Thêm ảnh, chấm sao hoặc viết cảm nhận rồi bấm Đăng khoảnh khắc.": "Add photos, rate or write your thoughts, then press Post moment.",
+  "Xem và thêm khoảnh khắc": "View and add moments",
+  "Thêm ảnh và cảm nhận": "Add photos and thoughts",
+  "Chưa có ảnh hay nhận xét cho nơi này.": "No photos or notes for this place yet."
 };
