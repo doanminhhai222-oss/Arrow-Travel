@@ -1,12 +1,14 @@
 import { buildItinerary, effectiveRules, filterPlaces, STYLE_TYPES, styleList, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
 import { estimateCost, hotelsFor } from '../src/costing.js';
 import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels } from '../src/search.js';
+import { hotelDetailHtml } from '../src/hoteldetail.js';
+import { fetchPlaceReviews } from '../src/google.js';
 import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/payment.js';
 import { transportOptions } from '../src/transport.js';
 import { placeDetailHtml, sceneSvg } from '../src/detail.js';
 
 // <DATA>
-const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
+const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
 // </DATA>
 
 const $ = (id) => document.getElementById(id);
@@ -45,6 +47,7 @@ let aud = 'nhom_ban', plan = null, rule = null, pool = [], swapOpen = null, undo
 let finalized = false, originId = 'ho-chi-minh', flightOut = null, flightBack = null, hotelId = null, transportId = null, ownTransport = false, currentTripId = null, savedOk = false;
 let armedTrip = null, armedClear = false;
 let airlineFilter = [], flightSort = 'price', hotelStars = [], hotelSort = 'price';
+let roomByHotel = {}, googleCache = {}, detailHotel = null;
 let needFlight = true, needHotel = true; // tắt khi khách đã tự lo vé máy bay hoặc chỗ ở
 
 /* ---------- Điều hướng ---------- */
@@ -96,7 +99,7 @@ function run() {
   rule = effectiveRules(RULES[aud], trip);
   pool = filterPlaces(DATA.places, trip).places;
   plan.days.forEach((d) => d.items.forEach((i) => { i.dur = i.duration; }));
-  swapOpen = null; undoStack = []; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+  swapOpen = null; undoStack = []; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
   render();
 }
 
@@ -180,7 +183,7 @@ function flightLists() {
 }
 function hotelList() {
   const t = plan.trip;
-  return searchHotels({ hotels: hotelsFor(OPTS.hotels, t), checkIn: t.startDate, checkOut: t.endDate, people: t.people });
+  return searchHotels({ hotels: hotelsFor(OPTS.hotels, t), checkIn: t.startDate, checkOut: t.endDate, people: t.people, roomByHotel });
 }
 // Giữ lựa chọn hiện tại nếu còn hợp lệ, nếu không chọn mặc định (chuyến rẻ nhất, khách sạn hợp ngân sách)
 function ensureChoices(fl, hl) {
@@ -237,9 +240,9 @@ function hotelsHtml(c) {
     [2, 3, 4, 5].map((s) => '<button type="button" data-act="hstar" data-id="' + s + '" aria-pressed="' + hotelStars.includes(s) + '">' + s + ' sao</button>').join('') + '</div>';
   h += '<label for="hsort">Sắp xếp</label><select id="hsort"><option value="price"' + (hotelSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="rating"' + (hotelSort === 'rating' ? ' selected' : '') + '>Đánh giá cao nhất</option></select>';
   h += '<div class="opts" style="margin-top:8px">' + (list.map((x) =>
-    '<button type="button" class="opt" data-act="hotel" data-id="' + x.id + '" aria-pressed="' + (x.id === hotelId) + '"' + (x.available ? '' : ' disabled aria-disabled="true"') + '><b>' + esc(x.name) + '</b>' +
-    '<span>' + x.stars + ' sao · ' + esc(x.area) + ' · điểm ' + x.rating.toFixed(1) + '</span><span>' + x.amenities.map(esc).join(' · ') + '</span>' +
-    (x.available ? '<span>' + x.rooms + ' phòng × ' + x.nights + ' đêm · trung bình ' + money(x.avgNight) + '/phòng/đêm</span><span class="pr">' + money(x.total) + ' cả kỳ nghỉ</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button>').join('') || '<p class="hint">Không có khách sạn phù hợp bộ lọc.</p>') + '</div>';
+    '<div class="opt-wrap"><button type="button" class="opt" data-act="hotel" data-id="' + x.id + '" aria-pressed="' + (x.id === hotelId) + '"' + (x.available ? '' : ' disabled aria-disabled="true"') + '><b>' + esc(x.name) + '</b>' +
+    '<span>' + x.stars + ' sao · ' + esc(x.area) + ' · ' + x.rating.toFixed(1) + '/5 ★ (' + x.reviewCount + ')' + '</span><span>' + x.amenities.map(esc).join(' · ') + '</span>' +
+    (x.available ? '<span>' + esc(x.room.name) + ' · ' + x.rooms + ' phòng × ' + x.nights + ' đêm · trung bình ' + money(x.avgNight) + '/phòng/đêm</span><span class="pr">' + money(x.total) + ' cả kỳ nghỉ</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button><button type="button" class="btn" data-act="hoteldetail" data-id="' + x.id + '">Xem chi tiết, loại phòng, đánh giá</button></div>').join('') || '<p class="hint">Không có khách sạn phù hợp bộ lọc.</p>') + '</div>';
   return h;
 }
 
@@ -283,7 +286,7 @@ function finalHtml() {
 
 function saveTrip() {
   const t = plan.trip, { cost } = calc();
-  const rec = { id: currentTripId || 't' + Date.now().toString(36), savedAt: Date.now(), trip: t, originId, needFlight, needHotel, flightOut, flightBack, hotelId, transportId, ownTransport, total: cost.total,
+  const rec = { id: currentTripId || 't' + Date.now().toString(36), savedAt: Date.now(), trip: t, originId, needFlight, needHotel, roomByHotel, flightOut, flightBack, hotelId, transportId, ownTransport, total: cost.total,
     days: plan.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex, items: d.items.map((i) => ({ kind: i.kind, placeId: i.place ? i.place.id : null, note: i.note || '', dur: i.dur })) })) };
   const idx = store.trips.findIndex((x) => x.id === rec.id);
   if (idx >= 0) store.trips[idx] = rec;
@@ -298,9 +301,29 @@ function openTrip(id) {
   plan = { trip: t, audienceLabel: RULES[t.audience].label, warnings: [], days: s.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex,
     items: d.items.map((i) => ({ kind: i.kind, note: i.note, dur: i.dur, place: i.placeId ? DATA.places.find((p) => p.id === i.placeId) : null })).filter((i) => i.place || !i.kind || i.kind === 'break') })) };
   plan.days.forEach(retime);
-  finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
+  finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; roomByHotel = s.roomByHotel || {}; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
   airlineFilter = []; hotelStars = []; currentTripId = id; savedOk = true; swapOpen = null; undoStack = [];
   go('create'); render();
+}
+
+/* ---------- Chi tiết khách sạn: loại phòng, ảnh, đánh giá (mẫu hoặc Google Maps) ---------- */
+function renderHotelDetail() {
+  const c = calc(), hotel = c.hl.find((x) => x.id === detailHotel); if (!hotel) return;
+  const g = googleCache[detailHotel];
+  $('sheetBody').innerHTML = hotelDetailHtml(hotel, { selected: hotel.id === hotelId, nights: hotel.nights,
+    google: g && g.source === 'google' ? g : null, loading: g === 'loading', error: g && g.error ? g.error : '' });
+}
+function openHotelDetail(id) {
+  detailHotel = id; lastFocus = document.activeElement;
+  renderHotelDetail(); sheet.hidden = false; $('sheetClose').focus();
+  const hotel = OPTS.hotels.find((x) => x.id === id);
+  if (GOOGLE.apiKey && hotel && !googleCache[id]) {
+    googleCache[id] = 'loading'; renderHotelDetail();
+    fetchPlaceReviews({ apiKey: GOOGLE.apiKey, query: hotel.googleQuery, lat: hotel.lat, lng: hotel.lng })
+      .then((r) => { googleCache[id] = r; })
+      .catch(() => { googleCache[id] = { error: 'Không tải được đánh giá từ Google Maps, đang hiện đánh giá mẫu.' }; })
+      .finally(() => { if (!sheet.hidden && detailHotel === id) renderHotelDetail(); });
+  }
 }
 
 /* ---------- Đặt chỗ và thanh toán bằng mã QR chuyển khoản ---------- */
@@ -349,6 +372,10 @@ $('sheetBody').addEventListener('click', (e) => {
     try { navigator.clipboard.writeText(cp.dataset.copy).then(() => done(true), () => done(false)); } catch (err) { done(false); }
     return;
   }
+  const rm = e.target.closest('[data-room]');
+  if (rm && detailHotel) { roomByHotel[detailHotel] = rm.dataset.room; savedOk = false; renderHotelDetail(); render(); return; }
+  const hp = e.target.closest('[data-hotelpick]');
+  if (hp) { hotelId = hp.dataset.hotelpick; savedOk = false; closeSheet(); render(); return; }
   const pd = e.target.closest('[data-act=paid]'); if (!pd) return;
   const b = store.bookings.find((x) => x.code === pd.dataset.code); if (!b) return;
   b.status = live() ? 'cho_xac_nhan' : 'thu'; persist();
@@ -367,6 +394,7 @@ $('out').addEventListener('click', (e) => {
   if (act === 'hotel') { hotelId = b.dataset.id; savedOk = false; render(); return; }
   if (act === 'airline') { const id = b.dataset.id; airlineFilter = id === 'all' ? [] : airlineFilter.includes(id) ? airlineFilter.filter((x) => x !== id) : [...airlineFilter, id]; render(); return; }
   if (act === 'hstar') { const id = b.dataset.id, n = +id; hotelStars = id === 'all' ? [] : hotelStars.includes(n) ? hotelStars.filter((x) => x !== n) : [...hotelStars, n]; render(); return; }
+  if (act === 'hoteldetail') { openHotelDetail(b.dataset.id); return; }
   if (act === 'needflight') { needFlight = !needFlight; savedOk = false; render(); return; }
   if (act === 'needhotel') { needHotel = !needHotel; savedOk = false; render(); return; }
   if (act === 'book') { startBooking(); return; }

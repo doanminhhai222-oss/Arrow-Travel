@@ -26,3 +26,10 @@
 .pd .hint{font-size:13px;color:var(--muted)}
 .pd-legend{margin:8px 0 0;padding-left:22px;font-size:14px;color:var(--muted)}
 .pd-legend li.cur{color:var(--orange);font-weight:700}
+.hd-photos{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}
+.hd-photos figure{flex:none;width:78%;max-width:300px;margin:0;scroll-snap-align:start}
+.hd-photos figcaption{font-size:12px;color:var(--muted);margin-top:2px}
+.hd-photos .pd-img{aspect-ratio:2/1}
+.pd blockquote a{color:var(--teal)}
+.pd .go{width:100%}
+.pd .go[disabled]{opacity:.55}

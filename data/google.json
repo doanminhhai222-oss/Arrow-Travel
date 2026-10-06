@@ -1,0 +1,4 @@
+{
+  "_note": "Khoá Google Maps Platform (Places API mới) để lấy đánh giá thật. Để trống thì dùng đánh giá mẫu. Nếu điền, PHẢI giới hạn khoá theo tên miền trang web (HTTP referrer) và chỉ bật Places API. Google không cho lưu sẵn nội dung đánh giá vào file, nên app chỉ tải trực tiếp khi mở chi tiết khách sạn.",
+  "apiKey": ""
+}

@@ -32,10 +32,69 @@
       "tier": "tiet_kiem",
       "lat": 16.0535,
       "lng": 108.2455,
-      "rating": 8.2,
+      "rating": 4.1,
       "amenities": [
         "Wifi",
         "Bếp chung"
+      ],
+      "description": "Hostel nhỏ cách biển Mỹ Khê vài phút đi bộ, phòng đơn giản, phù hợp đi tiết kiệm.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 16,
+          "beds": "1 giường đôi",
+          "view": "Hẻm yên tĩnh",
+          "factor": 1.0,
+          "perks": [
+            "Quạt trần",
+            "Phòng tắm riêng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng có cửa sổ",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Cửa sổ thoáng",
+          "factor": 1.2,
+          "perks": [
+            "Máy lạnh",
+            "Cửa sổ"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room"
+      ],
+      "reviewCount": 678,
+      "reviewSource": "sample",
+      "googleQuery": "Hostel gần biển Mỹ Khê Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -50,10 +109,70 @@
       "tier": "tiet_kiem",
       "lat": 16.061,
       "lng": 108.22,
-      "rating": 8.4,
+      "rating": 4.2,
       "amenities": [
         "Wifi",
         "Ăn sáng"
+      ],
+      "description": "Homestay gần trung tâm, đi bộ tới sông Hàn và Cầu Rồng, chủ nhà nhiệt tình.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Wifi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng ban công",
+          "sleeps": 2,
+          "sizeM2": 26,
+          "beds": "1 giường đôi",
+          "view": "Ban công",
+          "factor": 1.25,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 798,
+      "reviewSource": "sample",
+      "googleQuery": "Homestay gần trung tâm Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -68,11 +187,84 @@
       "tier": "vua_phai",
       "lat": 16.062,
       "lng": 108.2215,
-      "rating": 8.1,
+      "rating": 4.0,
       "amenities": [
         "Wifi",
         "Ăn sáng",
         "Thang máy"
+      ],
+      "description": "Khách sạn 3 sao khu Hải Châu, gần chợ Hàn và các quán ăn.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 22,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.25,
+          "perks": [
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 40,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.7,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 137,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao Hải Châu Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -87,11 +279,86 @@
       "tier": "vua_phai",
       "lat": 16.056,
       "lng": 108.247,
-      "rating": 8.5,
+      "rating": 4.2,
       "amenities": [
         "Wifi",
         "Ăn sáng",
         "Hồ bơi"
+      ],
+      "description": "Khách sạn 3 sao cách biển Mỹ Khê khoảng 200 m, có hồ bơi nhỏ trên tầng thượng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 24,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi",
+          "view": "Một phần hướng biển",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 42,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.75,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 511,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao gần biển Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -106,11 +373,72 @@
       "tier": "vua_phai",
       "lat": 16.09,
       "lng": 108.245,
-      "rating": 8.8,
+      "rating": 4.4,
       "amenities": [
         "Bếp",
         "Hồ bơi",
         "Máy giặt"
+      ],
+      "description": "Căn hộ khách sạn ở Sơn Trà, có bếp và máy giặt, hợp gia đình ở dài ngày.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "2pn",
+          "name": "Căn hộ 2 phòng ngủ",
+          "sleeps": 4,
+          "sizeM2": 65,
+          "beds": "1 giường đôi + 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Bếp đầy đủ",
+            "Máy giặt"
+          ]
+        },
+        {
+          "id": "3pn",
+          "name": "Căn hộ 3 phòng ngủ",
+          "sleeps": 6,
+          "sizeM2": 90,
+          "beds": "2 giường đôi + 2 giường đơn",
+          "view": "Một phần hướng biển",
+          "factor": 1.5,
+          "perks": [
+            "Bếp đầy đủ",
+            "Máy giặt",
+            "Ban công"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool"
+      ],
+      "reviewCount": 442,
+      "reviewSource": "sample",
+      "googleQuery": "Căn hộ khách sạn 2 phòng ngủ Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -125,12 +453,88 @@
       "tier": "thoai_mai",
       "lat": 16.064,
       "lng": 108.226,
-      "rating": 8.7,
+      "rating": 4.3,
       "amenities": [
         "Wifi",
         "Ăn sáng",
         "Hồ bơi",
         "Thang máy"
+      ],
+      "description": "Khách sạn 4 sao ngay trung tâm, đi bộ ra Cầu Rồng, có hồ bơi và nhà hàng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 34,
+          "beds": "1 giường đôi",
+          "view": "Hướng sông Hàn",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Phòng Suite",
+          "sleeps": 3,
+          "sizeM2": 52,
+          "beds": "1 giường lớn + sofa",
+          "view": "Hướng sông Hàn",
+          "factor": 1.9,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 144,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao trung tâm Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -145,11 +549,87 @@
       "tier": "thoai_mai",
       "lat": 16.058,
       "lng": 108.249,
-      "rating": 8.9,
+      "rating": 4.5,
       "amenities": [
         "Sát biển",
         "Hồ bơi",
         "Ăn sáng"
+      ],
+      "description": "Khách sạn 4 sao sát biển Mỹ Khê, có hồ bơi vô cực và quán bar ven biển.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 36,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình hướng biển",
+          "sleeps": 4,
+          "sizeM2": 56,
+          "beds": "2 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.9,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach",
+        "food"
+      ],
+      "reviewCount": 518,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao Mỹ Khê Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -164,11 +644,87 @@
       "tier": "thoai_mai",
       "lat": 16.007,
       "lng": 108.264,
-      "rating": 9.1,
+      "rating": 4.5,
       "amenities": [
         "Bãi biển riêng",
         "Hồ bơi",
         "Spa"
+      ],
+      "description": "Resort 5 sao gần Ngũ Hành Sơn, bãi biển riêng, spa và nhiều hồ bơi.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe vườn",
+          "sleeps": 2,
+          "sizeM2": 40,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Vườn nhiệt đới",
+          "factor": 1.0,
+          "perks": [
+            "Bãi biển riêng",
+            "Hồ bơi",
+            "Spa"
+          ]
+        },
+        {
+          "id": "ocean",
+          "name": "Phòng hướng biển",
+          "sleeps": 2,
+          "sizeM2": 44,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Bãi biển riêng"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Suite gia đình",
+          "sleeps": 4,
+          "sizeM2": 80,
+          "beds": "1 giường đôi + 2 giường đơn",
+          "view": "Hướng biển",
+          "factor": 2.0,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Bãi biển riêng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 195,
+      "reviewSource": "sample",
+      "googleQuery": "Resort 5 sao Ngũ Hành Sơn Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -183,12 +739,88 @@
       "tier": "thoai_mai",
       "lat": 16.1177,
       "lng": 108.303,
-      "rating": 9.3,
+      "rating": 4.7,
       "amenities": [
         "Bãi biển riêng",
         "Hồ bơi",
         "Spa",
         "Xe đưa đón"
+      ],
+      "description": "Resort 5 sao trên bán đảo Sơn Trà, bãi biển riêng, xe đưa đón và spa.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 45,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Rừng và biển",
+          "factor": 1.0,
+          "perks": [
+            "Bãi biển riêng",
+            "Xe đưa đón",
+            "Spa"
+          ]
+        },
+        {
+          "id": "ocean",
+          "name": "Phòng hướng biển",
+          "sleeps": 2,
+          "sizeM2": 50,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Bãi biển riêng"
+          ]
+        },
+        {
+          "id": "vil",
+          "name": "Villa hồ bơi riêng",
+          "sleeps": 4,
+          "sizeM2": 110,
+          "beds": "2 giường đôi",
+          "view": "Hướng biển",
+          "factor": 2.4,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp nhỏ",
+            "Xe đưa đón"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 277,
+      "reviewSource": "sample",
+      "googleQuery": "Resort 5 sao bán đảo Sơn Trà Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     },
     {
@@ -203,11 +835,74 @@
       "tier": "thoai_mai",
       "lat": 16.05,
       "lng": 108.25,
-      "rating": 9.0,
+      "rating": 4.5,
       "amenities": [
         "Hồ bơi riêng",
         "Bếp",
         "Sát biển"
+      ],
+      "description": "Villa biển 3 phòng ngủ có hồ bơi riêng, bếp và sân vườn, hợp nhóm đông hoặc gia đình ba thế hệ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "3pn",
+          "name": "Villa 3 phòng ngủ",
+          "sleeps": 6,
+          "sizeM2": 180,
+          "beds": "3 giường đôi",
+          "view": "Gần biển",
+          "factor": 1.0,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        },
+        {
+          "id": "4pn",
+          "name": "Villa 4 phòng ngủ",
+          "sleeps": 8,
+          "sizeM2": 240,
+          "beds": "4 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.4,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 232,
+      "reviewSource": "sample",
+      "googleQuery": "Villa biển 3 phòng ngủ Đà Nẵng",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
       ]
     }
   ]

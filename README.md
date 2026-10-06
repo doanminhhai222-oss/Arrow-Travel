@@ -21,6 +21,11 @@ Sau khi chốt, khách chọn chuyến bay và khách sạn (tìm theo ngày đ�
 
 Chưa đủ cả hai thì app không hiện mã QR dùng được. Tìm "tất cả các hãng" thật cần nguồn dữ liệu của đại lý hoặc API trả phí, hiện đang là dữ liệu mẫu 4 hãng.
 
+## Chi tiết khách sạn và đánh giá Google Maps
+Mỗi khách sạn có trang chi tiết: ảnh, mô tả, loại phòng (đổi loại phòng thì giá và số phòng đổi theo), đánh giá, liên kết mở Google Maps. **Hiện đánh giá, điểm số và ảnh đều là dữ liệu mẫu** (ghi rõ "đánh giá mẫu").
+
+Muốn hiện đánh giá thật từ Google Maps: tạo khoá Google Maps Platform, bật **Places API (New)** (dịch vụ trả phí, có hạn mức miễn phí), **giới hạn khoá theo tên miền web của mày** rồi điền vào `data/google.json` (`apiKey`). App tải trực tiếp khi mở chi tiết, ghi nguồn "Google Maps". Không lưu sẵn nội dung đánh giá vào file vì điều khoản Google không cho. Khoá nằm trong file công khai nên **bắt buộc** giới hạn theo tên miền. Bản artifact trên claude.ai chặn gọi mạng ngoài nên chỉ hiện đánh giá mẫu.
+
 ## Cấu trúc
 | Đường dẫn | Việc |
 |---|---|
@@ -31,6 +36,7 @@ Chưa đủ cả hai thì app không hiện mã QR dùng được. Tìm "tất c
 | `scripts/enrich-places.py` | Gộp nội dung chi tiết vào `data/da-nang.json` |
 | `src/transport.js` + `data/transport.json` | Đề xuất xe máy, Grab, Xanh SM, taxi... và tính chi phí theo quãng đường (giá mẫu) |
 | `src/search.js` | Tìm chuyến bay (mọi hãng) và khách sạn theo ngày, giá và chỗ trống mẫu |
+| `src/hoteldetail.js` + `src/google.js` | Trang chi tiết khách sạn; lấy và chuẩn hoá đánh giá từ Google Places API |
 | `src/payment.js` | Tạo mã VietQR (chuẩn NAPAS), mã đặt chỗ, điều kiện được nhận tiền thật |
 | `vendor/qrcode-generator.js` | Thư viện vẽ mã QR (MIT, Kazuhiko Arase), chép nguyên bản 1.4.4 |
 | `src/costing.js` | Ước tính tổng chi phí sau khi chốt lịch trình |

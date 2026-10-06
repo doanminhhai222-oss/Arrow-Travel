@@ -43,22 +43,28 @@ export const cheapestFlight = (list) => sortFlights(list, 'price').find((f) => !
 
 const nightFactor = (date) => { const d = dow(date); return d === 5 || d === 6 ? 1.25 : d === 0 ? 1.1 : 1; };
 
-// Khách sạn theo ngày nhận và trả phòng đã chọn: giá từng đêm, phòng trống từng đêm
-export function searchHotels({ hotels, checkIn, checkOut, people }) {
+// Giá và phòng trống của một loại phòng trong kỳ nghỉ: giá từng đêm, phòng còn lại từng đêm
+export function priceStay(hotel, room, { checkIn, nights, people }) {
+  const rooms = Math.ceil(people / room.sleeps);
+  const nightly = [];
+  for (let i = 0; i < nights; i++) {
+    const date = addDays(checkIn, i), h = hash(hotel.id + date), d = dow(date);
+    const soldOut = h % 100 < (d === 5 || d === 6 ? 12 : 6);
+    nightly.push({ date, price: round1000(hotel.pricePerRoom * room.factor * nightFactor(date)), left: soldOut ? 0 : 1 + ((h >>> 8) % 6) });
+  }
+  const short = nightly.find((n) => n.left < rooms);
+  const fmt = (s) => s.slice(8) + '/' + s.slice(5, 7);
+  const reason = short ? (short.left === 0 ? `Hết phòng ngày ${fmt(short.date)}` : `Chỉ còn ${short.left} phòng ngày ${fmt(short.date)}`) : '';
+  const stayPerRoom = nightly.reduce((s, n) => s + n.price, 0);
+  return { rooms, nightly, stayPerRoom, total: stayPerRoom * rooms, avgNight: nights ? round1000(stayPerRoom / nights) : 0, available: !short, reason };
+}
+
+// Khách sạn theo ngày nhận và trả phòng đã chọn; roomByHotel: loại phòng đang chọn cho từng khách sạn
+export function searchHotels({ hotels, checkIn, checkOut, people, roomByHotel = {} }) {
   const nights = Math.max(0, daysBetween(checkIn, checkOut) - 1);
   return hotels.map((hotel) => {
-    const rooms = Math.ceil(people / hotel.capacity);
-    const nightly = [];
-    for (let i = 0; i < nights; i++) {
-      const date = addDays(checkIn, i), h = hash(hotel.id + date), d = dow(date);
-      const soldOut = h % 100 < (d === 5 || d === 6 ? 12 : 6);
-      nightly.push({ date, price: round1000(hotel.pricePerRoom * nightFactor(date)), left: soldOut ? 0 : 1 + ((h >>> 8) % 6) });
-    }
-    const short = nightly.find((n) => n.left < rooms);
-    const fmt = (s) => s.slice(8) + '/' + s.slice(5, 7);
-    const reason = short ? (short.left === 0 ? `Hết phòng ngày ${fmt(short.date)}` : `Chỉ còn ${short.left} phòng ngày ${fmt(short.date)}`) : '';
-    const stayPerRoom = nightly.reduce((s, n) => s + n.price, 0);
-    return { ...hotel, nights, rooms, nightly, stayPerRoom, total: stayPerRoom * rooms, avgNight: nights ? round1000(stayPerRoom / nights) : 0, available: !short, reason };
+    const room = hotel.roomTypes.find((r) => r.id === roomByHotel[hotel.id]) || hotel.roomTypes[0];
+    return { ...hotel, room, capacity: room.sleeps, nights, checkIn, people, ...priceStay(hotel, room, { checkIn, nights, people }) };
   });
 }
 

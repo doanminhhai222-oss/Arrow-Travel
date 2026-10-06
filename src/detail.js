@@ -41,6 +41,14 @@ const SCENES = {
   cafe: `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a5a"/><stop offset="1" stop-color="#ffd9a0"/></linearGradient></defs>
     <rect width="320" height="160" fill="url(#g)"/><circle cx="220" cy="92" r="30" fill="#ffe3a0"/><rect y="104" width="320" height="56" fill="#2f6f8f"/>
     <path d="M90 82h56l-6 34q-22 10-44 0z" fill="#5a3a2a"/><path d="M146 88q16 2 10 14-4 8-12 8" fill="none" stroke="#5a3a2a" stroke-width="5"/><path d="M104 74q-6-10 0-18M122 74q-6-10 0-18" stroke="#fff" stroke-opacity=".7" stroke-width="3" fill="none"/>`,
+  room: `<rect width="320" height="160" fill="#efe9df"/><rect x="200" y="22" width="86" height="70" fill="#bfe3f5" stroke="#8a7a62" stroke-width="5"/><path d="M243 22v70M200 57h86" stroke="#8a7a62" stroke-width="3"/>
+    <rect x="34" y="84" width="170" height="44" rx="6" fill="#fafafa" stroke="#cfc6b4" stroke-width="3"/><rect x="34" y="70" width="40" height="30" rx="6" fill="#c9b690"/><rect x="82" y="92" width="52" height="16" rx="5" fill="#9ec9c4"/><rect y="132" width="320" height="28" fill="#b9a47b"/>`,
+  pool: `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3f5"/><stop offset="1" stop-color="#eaf6ee"/></linearGradient></defs>
+    <rect width="320" height="160" fill="url(#g)"/><rect y="104" width="320" height="56" fill="#e8dcc0"/><rect x="30" y="86" width="260" height="56" rx="12" fill="#2aa7c9"/><path d="M44 104q20-8 40 0t40 0 40 0 40 0 40 0 40 0" fill="none" stroke="#bfeaf2" stroke-width="3"/>
+    <rect x="236" y="70" width="46" height="8" rx="4" fill="#d9482f"/><rect x="40" y="70" width="46" height="8" rx="4" fill="#f2b33d"/><circle cx="270" cy="34" r="16" fill="#ffd36a"/>`,
+  lobby: `<rect width="320" height="160" fill="#f1e8d6"/><rect y="122" width="320" height="38" fill="#c9b690"/><rect x="90" y="84" width="140" height="38" rx="4" fill="#8a5a2b"/><rect x="82" y="78" width="156" height="10" rx="3" fill="#b07a3e"/>
+    <rect x="30" y="40" width="10" height="82" fill="#8a7a62"/><path d="M20 40h30l-6 -18h-18z" fill="#f2b33d"/><rect x="270" y="40" width="10" height="82" fill="#8a7a62"/><path d="M260 40h30l-6 -18h-18z" fill="#f2b33d"/>
+    <circle cx="160" cy="46" r="14" fill="#fafafa" stroke="#8a7a62" stroke-width="3"/><path d="M160 46v-8M160 46l6 3" stroke="#8a7a62" stroke-width="2"/>`,
   food: `<rect width="320" height="160" fill="#fbe9cf"/><ellipse cx="160" cy="116" rx="86" ry="14" fill="#d8b98c"/>
     <path d="M78 84h164q-4 38-82 40-78-2-82-40z" fill="#fafafa" stroke="#d6d0c4" stroke-width="3"/><path d="M92 84q68-22 136 0" fill="#e8a23c"/>
     <g fill="#d9482f"><circle cx="130" cy="76" r="6"/><circle cx="176" cy="72" r="6"/></g><g fill="#6fae3e"><circle cx="152" cy="68" r="5"/><circle cx="200" cy="78" r="5"/></g>

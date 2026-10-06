@@ -20,10 +20,10 @@ def strip_module(src):
 
 detail = re.sub(r"^const (esc|vnd) = .*\n", "", read("src/detail.js"), flags=re.M)  # app.js tự có esc/vnd
 data_block = ("const DATA = " + read("data/da-nang.json") + ";\nconst RULES = " + read("data/rules.json") +
-              ";\nconst OPTS = " + read("data/travel-options.json") + ";\nconst TRANSPORT = " + read("data/transport.json") + ";\nconst FLIGHTS = " + read("data/flights.json") + ";\nconst PAYMENT = " + read("data/payment.json") + ";")
+              ";\nconst OPTS = " + read("data/travel-options.json") + ";\nconst TRANSPORT = " + read("data/transport.json") + ";\nconst FLIGHTS = " + read("data/flights.json") + ";\nconst PAYMENT = " + read("data/payment.json") + ";\nconst GOOGLE = " + read("data/google.json") + ";")
 app = re.sub(r"// <DATA>.*?// </DATA>", lambda m: data_block, read("web/app.js"), flags=re.S)
 vendor = read("vendor/qrcode-generator.js")
-js = vendor + "\n" + "\n".join(strip_module(s) for s in [read("src/scheduler.js"), read("src/costing.js"), read("src/transport.js"), read("src/search.js"), read("src/payment.js"), detail, app])
+js = vendor + "\n" + "\n".join(strip_module(s) for s in [read("src/scheduler.js"), read("src/costing.js"), read("src/transport.js"), read("src/search.js"), read("src/payment.js"), read("src/google.js"), detail, read("src/hoteldetail.js"), app])
 
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(f"{title}\n{fonts}\n<style>\n{css}\n</style>\n{body}\n<script>\n{js}\n</script>\n", encoding="utf-8")

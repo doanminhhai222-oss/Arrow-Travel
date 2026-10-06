@@ -143,3 +143,5 @@ input,select{width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--
 .steps{margin:8px 0 12px;padding-left:20px;color:var(--muted);font-size:14px}
 .tag-status{display:inline-block;font-size:12px;padding:1px 10px;border-radius:999px;background:var(--teal-soft);color:var(--teal);font-weight:600}
 .tag-status.chua_chuyen,.tag-status.thu{background:var(--warn-bg);color:var(--warn-fg)}
+.opt-wrap{display:flex;flex-direction:column;gap:4px}
+.opt-wrap .btn{min-height:44px;font-size:13px}
