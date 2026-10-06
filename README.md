@@ -30,6 +30,8 @@ Muốn hiện đánh giá thật từ Google Maps: tạo khoá Google Maps Platf
 - Màn hình mở app (ảnh nền `web/images/splash.jpg`, tên app, slogan), cài đặt giao diện sáng/tối, ngôn ngữ (Việt/Anh, mới dịch phần giao diện chính), tiền tệ hiển thị (tỉ giá mẫu).
 - Khuyến mãi theo địa điểm, chuyến bay, khách sạn (`data/promos.json`, mẫu); nhập mã khi thanh toán.
 - **Khoảnh khắc của tôi** (tab thứ ba): chọn chuyến, với mỗi địa điểm đã đi có ảnh, chấm sao 1-5 và nhận xét, rồi gom thành **album kỷ niệm**. Ảnh nằm trong IndexedDB, sao và nhận xét trong `localStorage`, đều chỉ trên thiết bị. Màn tạo lịch trình mở từ nút Lên lịch trình ở Khám phá hoặc + Lịch trình mới.
+- **Theo dõi lịch trình** (tab thứ tư, thay cho tab Thông báo; thông báo giờ ở **chuông góc trên bên phải**): bấm Bắt đầu chuyến ở một lịch trình đã lưu. Bật vị trí để app tự đánh dấu điểm đã đến (cách điểm đến dưới 150 m), hoặc chọn thủ công "Tôi ở đây". Bản đồ SVG hiện vị trí bạn, điểm đã đi, điểm tiếp theo và gợi ý gần đó (check-in, quán ăn, cây xăng, ATM, nhà thuốc). Vị trí không được lưu hay gửi đi.
+  - Định vị dùng `navigator.geolocation` của trình duyệt (không đăng nhập Google). **Trong artifact trên claude.ai trình duyệt chặn định vị và mạng ngoài**, chỉ chạy đầy đủ ở bản web GitHub Pages. Cây xăng, ATM, nhà thuốc lấy từ OpenStreetMap qua Overpass API (miễn phí, không khoá, © OpenStreetMap contributors); lỗi mạng thì dùng danh mục của app và liên kết tìm trên Google Maps.
 - Điểm thưởng và voucher (`src/loyalty.js`); lịch trình yêu thích; ảnh chuyến đi tự đăng theo từng địa điểm (IndexedDB).
 - Bạn đồng hành, đánh giá app, chính sách bảo mật, điều khoản, hướng dẫn thanh toán (`data/legal.json`, **bản nháp, cần luật sư**; điền các mục `[ĐIỀN]`).
 - Điểm, voucher, đánh giá, bạn bè đều nằm trong trình duyệt của người dùng nên có thể bị sửa tay; chủ app vẫn phải đối chiếu số tiền chuyển khoản khi xác nhận đơn. Muốn nhận đánh giá thật: dán liên kết biểu mẫu vào `feedbackUrl` trong `data/app.json`.
@@ -54,6 +56,7 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 | `src/hoteldetail.js` + `src/google.js` | Trang chi tiết khách sạn; lấy và chuẩn hoá đánh giá từ Google Places API |
 | `src/payment.js` | Tạo mã VietQR (chuẩn NAPAS), mã đặt chỗ, điều kiện được nhận tiền thật |
 | `vendor/qrcode-generator.js` | Thư viện vẽ mã QR (MIT, Kazuhiko Arase), chép nguyên bản 1.4.4 |
+| `src/nearby.js` + `src/trackmap.js` | Gợi ý gần đó (danh mục + Overpass), nhận biết đã đến nơi, bản đồ theo dõi |
 | `src/costing.js` | Ước tính tổng chi phí sau khi chốt lịch trình |
 | `data/rules.json` | `Quy_tac_doi_tuong`: giờ bắt đầu, số điểm/ngày, nghỉ trưa, di chuyển tối đa |
 | `web/` | Giao diện (HTML + JS thuần): 5 màn hình Khám phá, Tạo mới, Lịch trình của tôi, Thông báo, Tài khoản. **Nguồn duy nhất của giao diện** |

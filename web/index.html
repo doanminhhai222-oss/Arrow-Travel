@@ -20,6 +20,7 @@
   </div>
   <button type="button" id="splashGo" class="splash-go">Bắt đầu</button>
 </div>
+<button type="button" id="bell" class="bell" data-go="notifs" aria-label="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 17v-6a6 6 0 1 1 12 0v6l2 2H4zM10 21h4"/></svg><span id="badge" class="badge" hidden></span></button>
 <main class="app">
 
   <!-- 1. Khám phá -->
@@ -28,6 +29,8 @@
       <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0F766E"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><b>Arrow Travel</b></div>
       <button type="button" class="pts" id="homePts" data-page="rewards"></button>
     </div>
+
+    <div id="homeTrack"></div>
 
     <div class="hero2">
       <img class="hero2-bg" src="images/my-khe.jpg" alt="Hoàng hôn trên biển Mỹ Khê, Đà Nẵng">
@@ -136,9 +139,15 @@
     <div id="tripsList" class="list"></div>
   </section>
 
+  <!-- Theo dõi lịch trình -->
+  <section id="scr-track" class="scr" hidden>
+    <div class="scr-head"><h1>Theo dõi lịch trình</h1><p>Vị trí của bạn, những nơi đã đi qua và gợi ý ở gần.</p></div>
+    <div id="trackBody" class="list"></div>
+  </section>
+
   <!-- 4. Thông báo -->
   <section id="scr-notifs" class="scr" hidden>
-    <div class="scr-head"><h1>Thông báo</h1></div>
+    <div class="scr-head page-head"><button type="button" class="back" id="notifBack" aria-label="Quay lại"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1>Thông báo</h1></div>
     <div id="notifList" class="list"></div>
   </section>
 
@@ -159,7 +168,7 @@
   <button class="tab" type="button" data-go="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg>Khám phá</button>
   <button class="tab" type="button" data-go="trips"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18v12H3zM8 8V5h8v3"/></svg>Lịch trình của tôi</button>
   <button class="tab" type="button" data-go="moments"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg>Khoảnh khắc</button>
-  <button class="tab" type="button" data-go="notifs"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17v-6a6 6 0 1 1 12 0v6l2 2H4zM10 21h4"/></svg>Thông báo<span id="badge" class="badge" hidden></span></button>
+  <button class="tab" type="button" data-go="track"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg>Theo dõi</button>
   <button class="tab" type="button" data-go="account"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg>Tài khoản</button>
 </div></nav>
 

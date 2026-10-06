@@ -5,6 +5,8 @@ import { hotelDetailHtml } from '../src/hoteldetail.js';
 import { fetchPlaceReviews } from '../src/google.js';
 import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/payment.js';
 import { transportOptions } from '../src/transport.js';
+import { straightKm, fmtDist, reachedStop, catalogNearby, fetchOverpass, mapsSearchUrl, mapsDirectionsUrl, mapsPlaceUrl, NEARBY_CATS } from '../src/nearby.js';
+import { trackMapSvg } from '../src/trackmap.js';
 import { placeDetailHtml, sceneSvg, TYPE_LABEL } from '../src/detail.js';
 import { money, moneyVnd, vnd, setCurrency, getCurrency, CURRENCIES } from '../src/format.js';
 import { tr, setLang, getLang } from '../src/i18n.js';
@@ -28,7 +30,7 @@ const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g
 
 /* ---------- Lưu trữ trên thiết bị (không có tài khoản, không có máy chủ) ---------- */
 const STORE_KEY = 'arrow-travel-v1';
-const baseStore = () => ({ settings: { theme: 'system', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, points: newPoints(), vouchers: [], friends: [], review: null });
+const baseStore = () => ({ settings: { theme: 'system', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null });
 function seedStore() {
   const now = Date.now();
   return { ...baseStore(), trips: [], bookings: [], prefs: {}, notifs: [
@@ -58,14 +60,17 @@ let roomByHotel = {}, googleCache = {}, detailHotel = null;
 let needFlight = true, needHotel = true; // tắt khi khách đã tự lo vé máy bay hoặc chỗ ở
 
 /* ---------- Điều hướng ---------- */
-const SCREENS = ['home', 'create', 'moments', 'trips', 'notifs', 'account'];
-const TAB_OF = { create: 'home' }; // màn tạo lịch trình không có tab riêng, tô sáng tab Khám phá
+const SCREENS = ['home', 'create', 'moments', 'track', 'trips', 'notifs', 'account'];
+const TAB_OF = { create: 'home', notifs: '' }; // thông báo mở bằng chuông nên không tô sáng tab nào
+let notifFrom = 'home'; // màn tạo lịch trình không có tab riêng, tô sáng tab Khám phá
 function go(name) {
+  if (name === 'notifs' && currentScreen !== 'notifs') notifFrom = currentScreen === 'page' ? pageFrom : currentScreen;
   armedTrip = null; armedClear = false; currentScreen = name; pageName = null; $('scr-page').hidden = true;
   SCREENS.forEach((s) => { $('scr-' + s).hidden = s !== name; });
   document.querySelectorAll('.tab').forEach((t) => { if (t.dataset.go === (TAB_OF[name] || name)) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
   if (name === 'home') renderHome();
   if (name === 'moments') renderMoments();
+  if (name === 'track') { renderTrack(); if (store.track && !nearbyFrom && !nearbyLoading) refreshNearby(); }
   if (name === 'trips') renderTrips();
   if (name === 'account') renderAccount();
   if (name === 'notifs') { renderNotifs(); store.notifs.forEach((n) => { n.read = true; }); persist(); updateBadge(); }
@@ -590,6 +595,166 @@ const PRESETS = {
   check_in: { styles: ['check_in'] },
   thu_gian: { styles: ['thu_gian'] },
 };
+/* ---------- Theo dõi lịch trình: bắt đầu chuyến, vị trí hiện tại, điểm đã đi qua, gợi ý gần đó ---------- */
+let trackPos = null, trackWatch = null, trackStatus = 'off', trackErr = '';
+let trackCat = 'checkin', nearbyItems = [], nearbyLoading = false, nearbyErr = '', nearbyToken = 0, nearbyFrom = null, nearbySrc = '', trackArmedEnd = false;
+
+function trackTrip() { return store.track ? store.trips.find((x) => x.id === store.track.tripId) || null : null; }
+function trackDayIdx(s) {
+  const t = store.track;
+  if (t.day != null && s.days[t.day]) return t.day;
+  const i = s.days.findIndex((d) => d.date === todayStr());
+  return i >= 0 ? i : 0;
+}
+function trackStops(s, di) {
+  const seen = new Set(), v = store.track.visited;
+  return s.days[di].items.filter((i) => i.placeId && placeById(i.placeId)).filter((i) => !seen.has(i.placeId) && seen.add(i.placeId))
+    .map((i) => ({ place: placeById(i.placeId), visited: !!v[i.placeId], at: v[i.placeId] || null }));
+}
+const nextStop = (stops) => stops.find((x) => !x.visited) || null;
+const trackCenter = (stops) => (trackPos ? { lat: trackPos.lat, lng: trackPos.lng, label: 'vị trí của bạn' } : (nextStop(stops) || stops[0]) ? { lat: (nextStop(stops) || stops[0]).place.lat, lng: (nextStop(stops) || stops[0]).place.lng, label: 'điểm tiếp theo' } : null);
+const hhmm = (ts) => new Date(ts).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+function markVisited(pid, ts = Date.now()) {
+  const t = store.track; if (!t || t.visited[pid]) return false;
+  t.visited[pid] = ts; persist(); return true;
+}
+function startTrack(id) {
+  const s = store.trips.find((x) => x.id === id); if (!s) return;
+  store.track = { tripId: id, startedAt: Date.now(), visited: {}, day: null };
+  store.track.day = Math.max(0, s.days.findIndex((d) => d.date === todayStr()));
+  persist(); nearbyItems = []; nearbyFrom = null; trackArmedEnd = false;
+  addNotif('Đã bắt đầu chuyến đi', s.trip.destination + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + '. Bật vị trí để app đánh dấu những nơi bạn đã đến.');
+  go('track');
+}
+function endTrack() {
+  const s = trackTrip(), t = store.track; if (!t) return;
+  const all = s ? [...new Set(s.days.flatMap((d) => d.items.map((i) => i.placeId).filter(Boolean)))] : [], done = all.filter((id) => t.visited[id]).length;
+  stopGps(); store.track = null; persist(); trackArmedEnd = false; trackPos = null; nearbyItems = [];
+  addNotif('Chuyến đi đã kết thúc', 'Bạn đã đi qua ' + done + '/' + all.length + ' địa điểm. Vào Khoảnh khắc để thêm ảnh và nhận xét cho album kỷ niệm.');
+  if (s) { momTrip = s.id; momChosen = true; }
+  toast('Đã kết thúc chuyến đi. Ghi lại khoảnh khắc nhé!'); go('moments');
+}
+
+/* Định vị: dùng vị trí của thiết bị qua trình duyệt. Không đăng nhập Google, không lưu và không gửi vị trí đi đâu. */
+function stopGps(render = true) {
+  if (trackWatch != null && navigator.geolocation) navigator.geolocation.clearWatch(trackWatch);
+  trackWatch = null; if (trackStatus !== 'off') trackStatus = 'off'; if (render && currentScreen === 'track') renderTrack();
+}
+function startGps() {
+  if (!('geolocation' in navigator)) { trackErr = 'Thiết bị hoặc trình duyệt này không hỗ trợ định vị. Hãy chọn vị trí thủ công.'; renderTrack(); return; }
+  trackErr = ''; trackStatus = 'asking'; renderTrack();
+  trackWatch = navigator.geolocation.watchPosition((p) => {
+    trackPos = { lat: p.coords.latitude, lng: p.coords.longitude, acc: p.coords.accuracy, src: 'gps', at: Date.now() };
+    trackStatus = 'on'; trackErr = ''; onPos();
+  }, (err) => {
+    trackWatch = null; trackStatus = 'off';
+    trackErr = err.code === 1 ? 'Chưa cho phép vị trí. Bản xem trước trong claude.ai chặn định vị, hãy mở bản web GitHub Pages hoặc chọn vị trí thủ công.' : err.code === 2 ? 'Không xác định được vị trí lúc này. Thử ra chỗ thoáng hơn hoặc chọn vị trí thủ công.' : 'Chờ vị trí quá lâu. Thử lại hoặc chọn vị trí thủ công.';
+    renderTrack();
+  }, { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+}
+function onPos() {
+  const s = trackTrip(); if (!s || !store.track) return;
+  const stops = trackStops(s, trackDayIdx(s));
+  stops.filter((x) => !x.visited && reachedStop(trackPos, x.place)).forEach((x) => {
+    if (markVisited(x.place.id)) { toast('Bạn đã đến ' + x.place.name); addNotif('Đã đến ' + x.place.name, 'Đánh dấu lúc ' + hhmm(Date.now()) + '. Nhớ chụp ảnh lưu lại khoảnh khắc nhé.'); }
+  });
+  const c = trackCenter(stops);
+  if (!nearbyFrom || (c && straightKm(nearbyFrom, c) > 0.3)) refreshNearby(); else renderTrack();
+}
+
+/* Gợi ý gần đó: danh mục của app + dữ liệu mở OpenStreetMap (khi gọi được mạng) */
+async function refreshNearby() {
+  const s = trackTrip(); if (!s) return;
+  const stops = trackStops(s, trackDayIdx(s)), c = trackCenter(stops); if (!c) return;
+  const token = ++nearbyToken; nearbyFrom = { lat: c.lat, lng: c.lng }; nearbyLoading = true; nearbyErr = '';
+  const exclude = stops.map((x) => x.place.id);
+  let items = catalogNearby(trackCat, c, DATA.places, { exclude }); nearbySrc = items.length ? 'catalog' : '';
+  nearbyItems = items; renderTrack();
+  try {
+    const osm = await fetchOverpass({ cat: trackCat, lat: c.lat, lng: c.lng, radiusM: 2000 });
+    if (token !== nearbyToken) return;
+    items = [...items, ...osm].sort((a, b) => a.km - b.km).slice(0, 14); nearbySrc = osm.length ? (items.some((x) => x.source === 'catalog') ? 'both' : 'osm') : nearbySrc;
+    if (!osm.length) nearbyErr = 'Dữ liệu bản đồ mở chưa có địa điểm loại này quanh đây.';
+  } catch (e) {
+    if (token !== nearbyToken) return;
+    nearbyErr = 'Không tải được dữ liệu bản đồ mở (mạng hoặc trình duyệt chặn).';
+  }
+  nearbyItems = items; nearbyLoading = false; renderTrack();
+}
+
+function renderTrack() {
+  const box = $('trackBody'); if (!box) return;
+  const s = trackTrip();
+  if (store.track && !s) { store.track = null; persist(); }
+  if (!store.track) {
+    box.innerHTML = '<div class="panel"><b>Bắt đầu chuyến đi</b><p class="hint" style="margin:6px 0 0">Chọn một lịch trình đã lưu. Khi bắt đầu, app đánh dấu những nơi bạn đã đến, hiện vị trí của bạn trên bản đồ và gợi ý điểm check-in, quán ăn, cây xăng, ATM ở gần.</p></div>' +
+      (store.trips.length ? store.trips.map((x) => '<div class="panel trip"><h3>' + esc(x.trip.destination) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</h3><div class="sub">' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</div><div class="acts"><button type="button" class="go" style="width:auto;padding:0 20px" data-trackstart="' + x.id + '">Bắt đầu chuyến này</button></div></div>').join('')
+        : '<div class="panel empty"><b>Chưa có lịch trình đã lưu</b>Tạo và lưu một lịch trình để bắt đầu theo dõi.<button class="go" type="button" data-go="create">Lên lịch trình</button></div>') +
+      (plan && !currentTripId ? '<p class="hint">Bạn đang soạn một lịch trình chưa lưu. Hãy lưu lịch trình trước khi bắt đầu.</p>' : '');
+    return;
+  }
+  const di = trackDayIdx(s), stops = trackStops(s, di), nxt = nextStop(stops), done = stops.filter((x) => x.visited).length;
+  const c = trackCenter(stops), pct = stops.length ? Math.round((done / stops.length) * 100) : 0;
+  const poiShown = nearbyItems.slice(0, 8);
+  let h = '<div class="panel"><div class="trip-top"><div><b>' + esc(s.trip.destination) + ' · ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + '</b><div class="hint">Bắt đầu lúc ' + hhmm(store.track.startedAt) + ' · ' + fmtDate(iso(new Date(store.track.startedAt))) + '</div></div></div>' +
+    '<div class="chips" style="margin-top:10px" role="group" aria-label="Chọn ngày">' + s.days.map((d, i) => '<button type="button" data-trk="day" data-v="' + i + '" aria-pressed="' + (i === di) + '">Ngày ' + d.dayIndex + ' · ' + fmtDate(d.date) + '</button>').join('') + '</div>' +
+    '<div style="margin-top:12px"><b>' + done + '/' + stops.length + ' điểm đã qua</b><div class="bar trkbar" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ"><i style="width:' + pct + '%"></i></div></div></div>';
+  // vị trí
+  const gpsOn = trackStatus === 'on' || trackStatus === 'asking';
+  h += '<div class="panel"><b>Vị trí của bạn</b>' +
+    '<p class="hint" style="margin:4px 0 8px">' + (trackStatus === 'on' && trackPos ? (trackPos.src === 'gps' ? 'Đang theo dõi bằng định vị thiết bị, sai số khoảng ' + Math.round(trackPos.acc) + ' m.' : 'Vị trí do bạn chọn tại ' + esc(trackPos.name || '') + '.') : trackStatus === 'asking' ? 'Đang chờ bạn cho phép vị trí…' : trackPos && trackPos.src === 'manual' ? 'Vị trí do bạn chọn tại ' + esc(trackPos.name || '') + '.' : 'Chưa bật vị trí.') + '</p>' +
+    (trackErr ? '<div class="warn" style="margin-bottom:8px">' + esc(trackErr) + '</div>' : '') +
+    '<div class="acts" style="margin-top:0"><button type="button" class="' + (gpsOn ? 'btn danger' : 'go') + '" style="' + (gpsOn ? '' : 'width:auto;padding:0 20px;') + '" data-trk="' + (gpsOn ? 'gpsoff' : 'gps') + '">' + (gpsOn ? 'Tắt định vị' : 'Bật vị trí hiện tại') + '</button>' +
+    (trackPos ? '<a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="' + mapsPlaceUrl(trackPos.lat, trackPos.lng) + '" target="_blank" rel="noopener">Mở trên Google Maps</a>' : '') + '</div>' +
+    '<label for="trkAt" style="margin-top:12px">Hoặc chọn nơi bạn đang đứng</label><div class="row" style="grid-template-columns:1fr auto;gap:8px"><select id="trkAt">' + stops.map((x) => '<option value="' + x.place.id + '">' + esc(x.place.name) + '</option>').join('') + '</select><button type="button" class="btn" data-trk="here">Tôi ở đây</button></div>' +
+    '<p class="hint" style="margin-top:8px">App dùng vị trí do thiết bị cung cấp (trên Android là dịch vụ vị trí của Google). Không cần đăng nhập Google, vị trí không được lưu và không gửi đi đâu.</p></div>';
+  // bản đồ
+  h += '<div class="panel" style="padding:12px">' + trackMapSvg({ stops: stops.map((x) => ({ place: x.place, visited: x.visited, next: nxt && nxt.place.id === x.place.id })), current: trackPos, pois: poiShown }) +
+    '<div class="legend" style="margin-top:8px"><span><i style="background:#2563eb;border-radius:50%"></i>Bạn</span><span><i style="background:#15803d;border-radius:50%"></i>Đã đến</span><span><i style="background:#D9480F;border-radius:50%"></i>Tiếp theo</span><span><i style="background:#7c3aed"></i>Gợi ý gần đó</span></div></div>';
+  // tiếp theo
+  if (nxt) {
+    h += '<div class="panel"><div class="hint">Điểm tiếp theo</div><b style="font-size:18px">' + esc(nxt.place.name) + '</b>' + (trackPos ? '<div class="hint">Cách bạn khoảng ' + fmtDist(straightKm(trackPos, nxt.place)) + ' (đường chim bay)</div>' : '') +
+      '<div class="acts"><a class="go" style="width:auto;padding:0 20px;display:inline-flex;align-items:center;text-decoration:none" href="' + mapsDirectionsUrl(nxt.place.lat, nxt.place.lng) + '" target="_blank" rel="noopener">Chỉ đường</a><button type="button" class="btn" data-trk="arrive" data-v="' + nxt.place.id + '">Đã đến</button></div></div>';
+  } else if (stops.length) h += '<div class="panel"><b>Bạn đã đi hết các điểm của ngày này</b><p class="hint">Chọn ngày khác hoặc kết thúc chuyến đi để ghi lại khoảnh khắc.</p></div>';
+  // danh sách điểm
+  h += '<div class="panel"><b>Các điểm trong ngày</b>' + stops.map((x, i) => '<div class="rule trkrow"><span><span class="trkn' + (x.visited ? ' ok' : nxt && nxt.place.id === x.place.id ? ' nx' : '') + '">' + (x.visited ? '✓' : i + 1) + '</span> ' + esc(x.place.name) +
+    '<small style="display:block;color:var(--muted)">' + (x.visited ? 'Đã đến lúc ' + hhmm(x.at) : trackPos ? 'Cách ' + fmtDist(straightKm(trackPos, x.place)) : 'Chưa đến') + '</small></span>' +
+    '<button type="button" class="btn quiet" data-trk="' + (x.visited ? 'unvisit' : 'arrive') + '" data-v="' + x.place.id + '">' + (x.visited ? 'Bỏ đánh dấu' : 'Đã đến') + '</button></div>').join('') + '</div>';
+  // gợi ý gần đó
+  const cat = NEARBY_CATS[trackCat];
+  h += '<div class="panel"><b>Gợi ý gần ' + (c ? esc(c.label) : '') + '</b><div class="chips" style="margin:8px 0" role="group" aria-label="Loại gợi ý">' + Object.entries(NEARBY_CATS).map(([k, v]) => '<button type="button" data-trk="cat" data-v="' + k + '" aria-pressed="' + (k === trackCat) + '">' + esc(v.label) + '</button>').join('') + '</div>' +
+    (nearbyLoading ? '<p class="hint">Đang tìm…</p>' : '') +
+    (nearbyItems.length ? nearbyItems.map((x) => '<div class="rule trkrow"><span><span class="dot" style="background:' + cat.color + '"></span> <b>' + esc(x.name) + '</b><small style="display:block;color:var(--muted)">' + fmtDist(x.km) + (x.open ? ' · ' + esc(x.open) : '') + (x.note ? ' · ' + esc(x.note.slice(0, 70)) : '') + (x.source === 'osm' ? ' · OpenStreetMap' : '') + '</small></span><a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="' + mapsDirectionsUrl(x.lat, x.lng) + '" target="_blank" rel="noopener">Chỉ đường</a></div>').join('')
+      : (nearbyLoading ? '' : '<p class="hint">Bấm tải để xem gợi ý quanh ' + (c ? esc(c.label) : 'bạn') + '.</p>')) +
+    (nearbyErr ? '<p class="hint late">' + esc(nearbyErr) + '</p>' : '') +
+    '<div class="acts"><button type="button" class="btn" data-trk="reload">Tải lại gợi ý</button>' + (c ? '<a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="' + mapsSearchUrl(trackCat, c.lat, c.lng) + '" target="_blank" rel="noopener">Tìm ' + esc(cat.label.toLowerCase()) + ' trên Google Maps</a>' : '') + '</div>' +
+    '<p class="hint" style="margin-top:8px">Check-in và quán ăn lấy từ danh mục của app (mẫu). Cây xăng, ATM, nhà thuốc lấy từ OpenStreetMap khi có mạng, © OpenStreetMap contributors. Giờ mở cửa và vị trí chỉ để tham khảo.</p></div>';
+  h += '<button type="button" class="btn ' + (trackArmedEnd ? 'danger' : 'quiet') + '" data-trk="end" style="min-height:48px">' + (trackArmedEnd ? 'Bấm lại để kết thúc chuyến đi' : 'Kết thúc chuyến đi') + '</button>';
+  box.innerHTML = h;
+}
+
+$('trackBody').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-trk]'); if (!b) return;
+  const a = b.dataset.trk, v = b.dataset.v, s = trackTrip();
+  if (a !== 'end') trackArmedEnd = false;
+  if (a === 'gps') { startGps(); return; }
+  if (a === 'gpsoff') { stopGps(false); trackStatus = 'off'; renderTrack(); return; }
+  if (a === 'day' && s) { store.track.day = +v; persist(); nearbyFrom = null; refreshNearby(); return; }
+  if (a === 'arrive') { const p = placeById(v); if (markVisited(v) && p) { toast('Đã đánh dấu: ' + p.name); } nearbyFrom = null; refreshNearby(); return; }
+  if (a === 'unvisit') { delete store.track.visited[v]; persist(); nearbyFrom = null; refreshNearby(); return; }
+  if (a === 'cat') { trackCat = v; nearbyItems = []; nearbyFrom = null; refreshNearby(); return; }
+  if (a === 'reload') { nearbyFrom = null; refreshNearby(); return; }
+  if (a === 'here') {
+    const p = placeById($('trkAt').value); if (!p) return;
+    trackPos = { lat: p.lat, lng: p.lng, acc: 30, src: 'manual', name: p.name, at: Date.now() };
+    if (trackStatus !== 'asking') trackStatus = trackWatch != null ? 'on' : 'off';
+    if (markVisited(p.id)) toast('Đã đánh dấu: ' + p.name);
+    nearbyFrom = null; refreshNearby(); return;
+  }
+  if (a === 'end') { if (!trackArmedEnd) { trackArmedEnd = true; renderTrack(); return; } endTrack(); }
+});
+
 /* ---------- Khoảnh khắc của tôi: ảnh, sao, nhận xét theo từng địa điểm đã đi, gom thành album ---------- */
 let momTrip = null, momChosen = false, momQ = '', momToken = 0, momUrls = [], albumUrls = [], momCounts = {};
 const momOpen = new Set();
@@ -813,8 +978,11 @@ function ribbonHtml(day, rule) {
   add('idle', cur, s1);
   return '<div class="ribbon" role="img" aria-label="Dòng thời gian một ngày">' + segs.join('') + '</div><div class="ax"><span>' + rule.start + '</span><span>' + rule.end + '</span></div>';
 }
+$('notifBack').addEventListener('click', () => go(notifFrom && notifFrom !== 'notifs' ? notifFrom : 'home'));
 function renderHome() {
   renderGu(); renderFeatured();
+  const ts = trackTrip();
+  $('homeTrack').innerHTML = ts ? '<button type="button" class="track-banner" data-go="track"><span><b>Đang theo dõi chuyến đi</b><span>' + esc(ts.trip.destination) + ' · ' + Object.keys(store.track.visited).length + ' điểm đã qua</span></span><span>Mở ›</span></button>' : '';
   const pt = store.points.balance;
   $('homePts').textContent = pt + ' ' + tr('điểm');
   // Một ngày, bốn nhịp
@@ -867,7 +1035,7 @@ function renderTrips() {
     (list.length ? list.map((s) => {
       const t = s.trip, armed = armedTrip === s.id, fav = store.favorites.includes(s.id);
       return '<div class="panel trip"><div class="trip-top"><h3>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
-        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
+        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-trackstart="' + s.id + '">' + (store.track && store.track.tripId === s.id ? 'Đang đi' : 'Bắt đầu chuyến') + '</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
     }).join('') : '<div class="panel empty"><b>Chưa có lịch trình yêu thích</b>Bấm ♥ ở một lịch trình để đánh dấu.</div>');
 }
 
@@ -881,10 +1049,11 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-moments],[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-trackstart],[data-moments],[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
   if (d.editform !== undefined) { setFormOpen(true); $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (d.daytab !== undefined) { dayTab = d.daytab === 'all' ? 'all' : +d.daytab; render(); window.scrollTo({ top: $('dayTabs').offsetTop - 8, behavior: 'smooth' }); return; }
+  if (d.trackstart) { if (store.track && store.track.tripId === d.trackstart) go('track'); else startTrack(d.trackstart); return; }
   if (d.moments) { momTrip = d.moments; momChosen = true; go('moments'); return; }
   if (d.featured) { openFeatured(d.featured); return; }
   if (d.gu) { homeGu = homeGu.includes(d.gu) ? homeGu.filter((x) => x !== d.gu) : [...homeGu, d.gu]; renderGu(); return; }
@@ -899,7 +1068,7 @@ document.addEventListener('click', (e) => {
   if (d.trip) { openTrip(d.trip); return; }
   if (d.deltrip) {
     if (armedTrip !== d.deltrip) { armedTrip = d.deltrip; renderTrips(); return; }
-    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); delete store.moments[d.deltrip]; store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
+    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); delete store.moments[d.deltrip]; if (store.track && store.track.tripId === d.deltrip) { stopGps(false); store.track = null; } store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
   }
   if (d.clearnotifs !== undefined) { store.notifs = []; persist(); updateBadge(); renderNotifs(); return; }
   if (d.clearall !== undefined) {
