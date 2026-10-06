@@ -1,9 +1,9 @@
 // Chi tiết khách sạn: ảnh, loại phòng, đánh giá (mẫu hoặc từ Google Maps), liên kết Google Maps.
 import { sceneSvg } from './detail.js';
 import { priceStay } from './search.js';
+import { money as hMoney } from './format.js';
 
 const hEsc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-const hMoney = (n) => n.toLocaleString('vi-VN') + ' đ';
 const hStars = (r) => { const n = Math.max(0, Math.min(5, Math.round(r))); return '★'.repeat(n) + '☆'.repeat(5 - n); };
 const PHOTO_LABEL = { lobby: 'Sảnh', room: 'Phòng', pool: 'Hồ bơi', beach: 'Biển', food: 'Bữa sáng' };
 

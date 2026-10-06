@@ -1,8 +1,8 @@
+import { vnd } from './format.js';
 // Trang chi tiết địa điểm: ảnh minh hoạ, chú ý nổi bật, nét văn hoá / quán ăn, bản đồ mini.
 // Không phụ thuộc DOM, trả về chuỗi HTML. Ảnh thật: điền `image` (URL) vào dữ liệu địa điểm, nếu không có sẽ vẽ ảnh minh hoạ.
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-const vnd = (n) => (n ? n.toLocaleString('vi-VN') + ' đ' : 'Miễn phí');
 
 export const TYPE_LABEL = { beach: 'Bãi biển', park: 'Công viên, khu vui chơi', culture: 'Văn hoá, tâm linh', checkin: 'Check-in', show: 'Cảnh đẹp ban đêm', cafe: 'Cà phê', food: 'Quán ăn' };
 

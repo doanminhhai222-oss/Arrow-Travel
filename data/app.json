@@ -1,0 +1,9 @@
+{
+  "name": "Arrow Travel",
+  "slogan": "Chuyến đi đúng người, đúng nhịp.",
+  "sloganEn": "The right trip, at the right pace.",
+  "version": "0.1",
+  "repoUrl": "https://github.com/doanminhhai222-oss/Arrow-Travel",
+  "feedbackUrl": "",
+  "_note": "feedbackUrl: dán liên kết biểu mẫu (Google Form...) để nhận góp ý thật. Để trống thì đánh giá chỉ lưu trên thiết bị người dùng."
+}

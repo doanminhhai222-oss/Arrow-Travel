@@ -26,6 +26,13 @@ Mỗi khách sạn có trang chi tiết: ảnh, mô tả, loại phòng (đổi 
 
 Muốn hiện đánh giá thật từ Google Maps: tạo khoá Google Maps Platform, bật **Places API (New)** (dịch vụ trả phí, có hạn mức miễn phí), **giới hạn khoá theo tên miền web của mày** rồi điền vào `data/google.json` (`apiKey`). App tải trực tiếp khi mở chi tiết, ghi nguồn "Google Maps". Không lưu sẵn nội dung đánh giá vào file vì điều khoản Google không cho. Khoá nằm trong file công khai nên **bắt buộc** giới hạn theo tên miền. Bản artifact trên claude.ai chặn gọi mạng ngoài nên chỉ hiện đánh giá mẫu.
 
+## Tính năng người dùng (lưu trên thiết bị, chưa có máy chủ)
+- Màn hình mở app (ảnh nền `web/images/splash.jpg`, tên app, slogan), cài đặt giao diện sáng/tối, ngôn ngữ (Việt/Anh, mới dịch phần giao diện chính), tiền tệ hiển thị (tỉ giá mẫu).
+- Khuyến mãi theo địa điểm, chuyến bay, khách sạn (`data/promos.json`, mẫu); nhập mã khi thanh toán.
+- Điểm thưởng và voucher (`src/loyalty.js`); lịch trình yêu thích; ảnh chuyến đi tự đăng theo từng địa điểm (IndexedDB).
+- Bạn đồng hành, đánh giá app, chính sách bảo mật, điều khoản, hướng dẫn thanh toán (`data/legal.json`, **bản nháp, cần luật sư**; điền các mục `[ĐIỀN]`).
+- Điểm, voucher, đánh giá, bạn bè đều nằm trong trình duyệt của người dùng nên có thể bị sửa tay; chủ app vẫn phải đối chiếu số tiền chuyển khoản khi xác nhận đơn. Muốn nhận đánh giá thật: dán liên kết biểu mẫu vào `feedbackUrl` trong `data/app.json`.
+
 ## Cấu trúc
 | Đường dẫn | Việc |
 |---|---|

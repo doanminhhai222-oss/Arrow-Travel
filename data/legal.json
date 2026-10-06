@@ -1,0 +1,101 @@
+{
+  "_note": "BẢN NHÁP do công cụ soạn, chưa được luật sư rà soát. Chủ app phải điền các mục [ĐIỀN] và nhờ luật sư kiểm tra trước khi ra mắt công khai.",
+  "privacy": {
+    "title": "Chính sách bảo mật",
+    "updated": "Bản nháp 0.1",
+    "sections": [
+      {
+        "h": "Chúng tôi lưu gì về bạn",
+        "p": "Bản hiện tại không có tài khoản và không có máy chủ riêng. Lịch trình bạn lưu, ảnh bạn tải lên, điểm thưởng, voucher, thông báo và cài đặt chỉ nằm trong bộ nhớ của trình duyệt trên thiết bị này. Chúng tôi không nhận được các dữ liệu đó."
+      },
+      {
+        "h": "Chúng tôi không thu thập",
+        "p": "Không lưu mật khẩu. Không lưu số thẻ hay thông tin thanh toán. Không theo dõi vị trí. Không bán dữ liệu."
+      },
+      {
+        "h": "Chuyển khoản",
+        "p": "Khi thanh toán, bạn tự chuyển khoản từ app ngân hàng của mình tới tài khoản nhận tiền của Arrow Travel. Ngân hàng xử lý giao dịch theo chính sách của họ. Chúng tôi chỉ biết thông tin có trong giao dịch chuyển khoản như số tiền và nội dung."
+      },
+      {
+        "h": "Dịch vụ bên thứ ba",
+        "p": "Trang tải phông chữ từ Google Fonts. Khi chủ app bật tính năng đánh giá từ Google Maps, trang sẽ gọi Google Maps Platform và áp dụng chính sách của Google. Các liên kết mở Google Maps, Grab, Xanh SM thuộc các bên đó."
+      },
+      {
+        "h": "Quyền của bạn",
+        "p": "Bạn có thể xoá toàn bộ dữ liệu trên thiết bị bất cứ lúc nào ở Tài khoản, mục Dữ liệu của bạn. Xoá dữ liệu trình duyệt cũng xoá hết."
+      },
+      {
+        "h": "Trẻ em",
+        "p": "App dành cho người lập kế hoạch là người lớn. Người dưới 16 tuổi cần có người giám hộ khi dùng."
+      },
+      {
+        "h": "Thay đổi và liên hệ",
+        "p": "Khi có thay đổi chúng tôi cập nhật trang này. Liên hệ: [ĐIỀN email hoặc số điện thoại của chủ app]. Việc xử lý dữ liệu cá nhân cần tuân thủ pháp luật Việt Nam, trong đó có Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân, nên cần luật sư xác nhận trước khi công khai."
+      }
+    ]
+  },
+  "terms": {
+    "title": "Điều khoản sử dụng",
+    "updated": "Bản nháp 0.1",
+    "sections": [
+      {
+        "h": "Bản chất dịch vụ",
+        "p": "Arrow Travel là công cụ gợi ý lịch trình và ước tính chi phí. Dữ liệu địa điểm, giá, giờ mở cửa, chuyến bay, khách sạn, khuyến mãi và đánh giá trong bản thử nghiệm là dữ liệu mẫu, chỉ để tham khảo."
+      },
+      {
+        "h": "Không đảm bảo",
+        "p": "Giờ giấc, quãng đường, chi phí là ước tính và có thể khác thực tế. Hãy kiểm tra lại giá, giờ mở cửa và điều kiện trước khi quyết định."
+      },
+      {
+        "h": "Đặt chỗ và thanh toán",
+        "p": "Thanh toán bằng chuyển khoản vào tài khoản được hiển thị. Chuyển khoản không đồng nghĩa với đặt chỗ thành công. Vé và phòng chỉ được xác nhận khi chúng tôi đối chiếu giao dịch theo mã đặt chỗ và thông báo xác nhận. Hãy ghi đúng nội dung chuyển khoản."
+      },
+      {
+        "h": "Huỷ và hoàn tiền",
+        "p": "[ĐIỀN chính sách huỷ, đổi và hoàn tiền: thời hạn, phí, thời gian hoàn]. Quy định riêng của hãng bay và khách sạn được áp dụng."
+      },
+      {
+        "h": "Điểm thưởng và voucher",
+        "p": "Điểm và voucher không quy đổi thành tiền mặt, có hạn sử dụng và điều kiện đơn tối thiểu ghi trên voucher. Chúng tôi có quyền từ chối voucher khi phát hiện gian lận hoặc sai lệch."
+      },
+      {
+        "h": "Nội dung bạn đăng",
+        "p": "Ảnh và đánh giá bạn tạo thuộc về bạn. Bạn cam kết có quyền dùng ảnh và không đăng nội dung vi phạm pháp luật. Hiện ảnh chỉ lưu trên thiết bị của bạn."
+      },
+      {
+        "h": "Giới hạn trách nhiệm",
+        "p": "Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm về thiệt hại phát sinh do dựa vào thông tin tham khảo trong app. Điều khoản chi tiết cần luật sư soạn: [ĐIỀN]."
+      }
+    ]
+  },
+  "payguide": {
+    "title": "Hướng dẫn thanh toán",
+    "updated": "",
+    "sections": [
+      {
+        "h": "Bước 1. Chốt lịch trình",
+        "p": "Tạo lịch trình, bấm Chốt lịch trình của tôi, chọn chuyến bay và khách sạn (có thể tắt nếu bạn tự lo). Phần cần thanh toán gồm vé máy bay và khách sạn. Ăn uống, vé tham quan, di chuyển trả trực tiếp tại chỗ."
+      },
+      {
+        "h": "Bước 2. Áp mã giảm giá (nếu có)",
+        "p": "Ở bảng thanh toán, nhập mã khuyến mãi hoặc chọn voucher trong ví. Mỗi đơn dùng một mã. Số tiền cần chuyển sẽ giảm tương ứng."
+      },
+      {
+        "h": "Bước 3. Quét mã QR",
+        "p": "Mở app ngân hàng, chọn quét QR, quét mã trên màn hình. Kiểm tra tên người nhận, số tiền và nội dung có mã đặt chỗ (dạng ARROW ATxxxxxx). Nếu không quét được, nhập tay số tài khoản, số tiền và nội dung."
+      },
+      {
+        "h": "Bước 4. Báo đã chuyển khoản",
+        "p": "Chuyển xong, bấm Tôi đã chuyển khoản. Trạng thái đơn chuyển sang Chờ xác nhận. Hệ thống không tự xác nhận."
+      },
+      {
+        "h": "Bước 5. Chờ xác nhận",
+        "p": "Chúng tôi đối chiếu giao dịch theo mã đặt chỗ rồi xác nhận vé và phòng. Nếu quá [ĐIỀN thời gian] chưa thấy xác nhận, hãy liên hệ và gửi mã đặt chỗ cùng ảnh giao dịch."
+      },
+      {
+        "h": "Lưu ý an toàn",
+        "p": "Chỉ chuyển khoản tới tài khoản hiển thị trong app. Không chia sẻ mật khẩu hay mã OTP ngân hàng cho bất kỳ ai. Ở chế độ thử, mã QR bị phủ chữ MẪU và không dùng để chuyển tiền."
+      }
+    ]
+  }
+}

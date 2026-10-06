@@ -1,0 +1,127 @@
+{
+  "_note": "KHUYẾN MÃI MẪU để chạy thử, không phải chương trình thật của hãng hay địa điểm.",
+  "sample": true,
+  "promos": [
+    {
+      "id": "p-arrow-first",
+      "title": "Chào bạn mới: giảm 5% vé và phòng",
+      "desc": "Giảm 5% tổng tiền vé máy bay và khách sạn cho lần đặt đầu qua Arrow Travel, tối đa 150.000 đ.",
+      "target": {
+        "type": "all"
+      },
+      "kind": "percent",
+      "value": 5,
+      "max": 150000,
+      "min": 1000000,
+      "code": "CHAOARROW",
+      "validTo": "2027-12-31"
+    },
+    {
+      "id": "p-vj",
+      "title": "Vietjet Air: giảm 8% vé khứ hồi",
+      "desc": "Giảm 8% tiền vé khi chọn chuyến bay của Vietjet Air, tối đa 200.000 đ.",
+      "target": {
+        "type": "flight",
+        "carrier": "vj",
+        "name": "Vietjet Air"
+      },
+      "kind": "percent",
+      "value": 8,
+      "max": 200000,
+      "min": 1000000,
+      "code": "ARROWVJ8",
+      "validTo": "2027-06-30"
+    },
+    {
+      "id": "p-vn",
+      "title": "Vietnam Airlines: giảm 150.000 đ",
+      "desc": "Giảm 150.000 đ cho đơn vé Vietnam Airlines từ 3.000.000 đ.",
+      "target": {
+        "type": "flight",
+        "carrier": "vn",
+        "name": "Vietnam Airlines"
+      },
+      "kind": "amount",
+      "value": 150000,
+      "min": 3000000,
+      "code": "ARROWVN150",
+      "validTo": "2027-06-30"
+    },
+    {
+      "id": "p-hotel45",
+      "title": "Khách sạn 4 sao trở lên: giảm 10%",
+      "desc": "Giảm 10% tiền phòng khách sạn từ 4 sao, tối đa 300.000 đ.",
+      "target": {
+        "type": "hotel",
+        "minStars": 4
+      },
+      "kind": "percent",
+      "value": 10,
+      "max": 300000,
+      "min": 1500000,
+      "code": "HOTEL10",
+      "validTo": "2027-03-31"
+    },
+    {
+      "id": "p-resort",
+      "title": "Resort: tặng bữa tối lãng mạn",
+      "desc": "Ở từ 2 đêm tại resort 5 sao được tặng một bữa tối cho 2 người. Ưu đãi nhận trực tiếp tại resort.",
+      "target": {
+        "type": "hotel",
+        "minStars": 5
+      },
+      "kind": "perk",
+      "validTo": "2027-03-31"
+    },
+    {
+      "id": "p-bana",
+      "title": "Bà Nà Hills: giảm vé khi đi nhóm",
+      "desc": "Nhóm từ 4 người được giảm giá vé, báo mã ARROWBANA tại quầy.",
+      "target": {
+        "type": "place",
+        "ref": "ba-na",
+        "name": "Bà Nà Hills"
+      },
+      "kind": "perk",
+      "code": "ARROWBANA",
+      "validTo": "2027-01-31"
+    },
+    {
+      "id": "p-art",
+      "title": "Art In Paradise: combo 2 người",
+      "desc": "Mua combo 2 vé giảm 15% khi đi ngày thường.",
+      "target": {
+        "type": "place",
+        "ref": "art-paradise",
+        "name": "Art In Paradise"
+      },
+      "kind": "perk",
+      "code": "ARROWART",
+      "validTo": "2027-01-31"
+    },
+    {
+      "id": "p-asia",
+      "title": "Công viên Châu Á: ưu đãi buổi tối",
+      "desc": "Giảm giá combo trò chơi sau 17:00.",
+      "target": {
+        "type": "place",
+        "ref": "asia-park",
+        "name": "Công viên Châu Á"
+      },
+      "kind": "perk",
+      "validTo": "2027-01-31"
+    },
+    {
+      "id": "p-nhs",
+      "title": "Ngũ Hành Sơn: tặng nón lá",
+      "desc": "Tặng một nón lá cho nhóm gia đình khi mua vé tham quan.",
+      "target": {
+        "type": "place",
+        "ref": "ngu-hanh-son",
+        "name": "Ngũ Hành Sơn"
+      },
+      "kind": "perk",
+      "validTo": "2027-01-31"
+    }
+  ]
+}

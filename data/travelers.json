@@ -1,0 +1,109 @@
+{
+  "_note": "NGƯỜI DÙNG MẪU để minh hoạ tính năng tìm bạn đồng hành. App chưa có máy chủ nên không có người dùng thật.",
+  "travelers": [
+    {
+      "id": "t1",
+      "name": "Minh Anh (mẫu)",
+      "audience": "cap_doi",
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "am_thuc"
+      ],
+      "startOffset": 6,
+      "nights": 3,
+      "bio": "Thích quán yên tĩnh và hoàng hôn."
+    },
+    {
+      "id": "t2",
+      "name": "Quốc Bảo (mẫu)",
+      "audience": "nhom_ban",
+      "budget": "vua_phai",
+      "styles": [
+        "check_in",
+        "am_thuc"
+      ],
+      "startOffset": 7,
+      "nights": 2,
+      "bio": "Đi nhóm 5 người, thích săn ảnh."
+    },
+    {
+      "id": "t3",
+      "name": "Thu Hà (mẫu)",
+      "audience": "gia_dinh",
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "van_hoa"
+      ],
+      "startOffset": 8,
+      "nights": 2,
+      "bio": "Gia đình có bé 4 tuổi, đi chậm."
+    },
+    {
+      "id": "t4",
+      "name": "Hoàng Nam (mẫu)",
+      "audience": "mot_minh",
+      "budget": "tiet_kiem",
+      "styles": [
+        "van_hoa",
+        "thien_nhien"
+      ],
+      "startOffset": 7,
+      "nights": 3,
+      "bio": "Đi một mình, thích bảo tàng và biển."
+    },
+    {
+      "id": "t5",
+      "name": "Lan Phương (mẫu)",
+      "audience": "nhom_ban",
+      "budget": "tiet_kiem",
+      "styles": [
+        "am_thuc",
+        "check_in"
+      ],
+      "startOffset": 9,
+      "nights": 2,
+      "bio": "Săn món ngon giá mềm."
+    },
+    {
+      "id": "t6",
+      "name": "Đức Huy (mẫu)",
+      "audience": "cap_doi",
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "thu_gian"
+      ],
+      "startOffset": 14,
+      "nights": 4,
+      "bio": "Đi tuần trăng mật, đến sau."
+    },
+    {
+      "id": "t7",
+      "name": "Mai Linh (mẫu)",
+      "audience": "gia_dinh",
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "van_hoa"
+      ],
+      "startOffset": 6,
+      "nights": 4,
+      "bio": "Gia đình ba thế hệ, thích resort."
+    },
+    {
+      "id": "t8",
+      "name": "Tuấn Kiệt (mẫu)",
+      "audience": "nhom_ban",
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "startOffset": -3,
+      "nights": 2,
+      "bio": "Đã đi xong, chia sẻ kinh nghiệm."
+    }
+  ]
+}

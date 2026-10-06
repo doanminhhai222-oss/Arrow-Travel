@@ -6,15 +6,20 @@ import { fetchPlaceReviews } from '../src/google.js';
 import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/payment.js';
 import { transportOptions } from '../src/transport.js';
 import { placeDetailHtml, sceneSvg } from '../src/detail.js';
+import { money, moneyVnd, vnd, setCurrency, getCurrency, CURRENCIES } from '../src/format.js';
+import { tr, setLang, getLang } from '../src/i18n.js';
+import { EN } from '../src/i18n-en.js';
+import { searchPromos, findByCode, applyPromo, isValid, daysLeft } from '../src/promos.js';
+import { EARN, CATALOG, newPoints, award, redeem, voucherCheck } from '../src/loyalty.js';
+import { matchTravelers } from '../src/friends.js';
+import { addPhoto, listPhotos, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
 
 // <DATA>
-const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
+const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
 // </DATA>
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-const vnd = (n) => (n ? n.toLocaleString('vi-VN') + ' đ' : 'Miễn phí');
-const money = (n) => n.toLocaleString('vi-VN') + ' đ';
 const dur = (m) => (m >= 60 ? Math.floor(m / 60) + 'h' + (m % 60 ? String(m % 60).padStart(2, '0') : '') : m + 'p');
 const iso = (d) => d.toISOString().slice(0, 10);
 const fmtDate = (s) => s.slice(8, 10) + '/' + s.slice(5, 7);
@@ -23,15 +28,16 @@ const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g
 
 /* ---------- Lưu trữ trên thiết bị (không có tài khoản, không có máy chủ) ---------- */
 const STORE_KEY = 'arrow-travel-v1';
+const baseStore = () => ({ settings: { theme: 'system', lang: 'vi', currency: 'VND' }, favorites: [], points: newPoints(), vouchers: [], friends: [], review: null });
 function seedStore() {
   const now = Date.now();
-  return { trips: [], bookings: [], prefs: {}, notifs: [
+  return { ...baseStore(), trips: [], bookings: [], prefs: {}, notifs: [
     { id: 'n1', title: 'Chào mừng đến Arrow Travel', body: 'Chọn Tạo mới để xếp lịch trình đầu tiên cho chuyến đi Đà Nẵng.', at: now, read: false },
     { id: 'n2', title: 'Dữ liệu đang là bản mẫu', body: 'Giá vé, giờ mở cửa, khách sạn và vé máy bay là số liệu mẫu. Hãy kiểm tra lại trước khi đặt thật.', at: now - 1, read: false },
   ] };
 }
 function loadStore() {
-  try { const s = JSON.parse(localStorage.getItem(STORE_KEY)); if (s && Array.isArray(s.trips)) return { prefs: {}, notifs: [], bookings: [], ...s }; } catch (e) { /* bỏ qua, dùng bộ nhớ tạm */ }
+  try { const s = JSON.parse(localStorage.getItem(STORE_KEY)); if (s && Array.isArray(s.trips)) return { ...baseStore(), prefs: {}, notifs: [], bookings: [], ...s, settings: { ...baseStore().settings, ...s.settings } }; } catch (e) { /* bỏ qua, dùng bộ nhớ tạm */ }
   return seedStore();
 }
 let store = loadStore();
@@ -46,6 +52,7 @@ function updateBadge() {
 let aud = 'nhom_ban', plan = null, rule = null, pool = [], swapOpen = null, undoStack = [];
 let finalized = false, originId = 'ho-chi-minh', flightOut = null, flightBack = null, hotelId = null, transportId = null, ownTransport = false, currentTripId = null, savedOk = false;
 let armedTrip = null, armedClear = false;
+let payBooking = null;
 let airlineFilter = [], flightSort = 'price', hotelStars = [], hotelSort = 'price';
 let roomByHotel = {}, googleCache = {}, detailHotel = null;
 let needFlight = true, needHotel = true; // tắt khi khách đã tự lo vé máy bay hoặc chỗ ở
@@ -53,7 +60,7 @@ let needFlight = true, needHotel = true; // tắt khi khách đã tự lo vé m�
 /* ---------- Điều hướng ---------- */
 const SCREENS = ['home', 'create', 'trips', 'notifs', 'account'];
 function go(name) {
-  armedTrip = null; armedClear = false;
+  armedTrip = null; armedClear = false; currentScreen = name; pageName = null; $('scr-page').hidden = true;
   SCREENS.forEach((s) => { $('scr-' + s).hidden = s !== name; });
   document.querySelectorAll('.tab').forEach((t) => { if (t.dataset.go === name) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
   if (name === 'home') renderHome();
@@ -214,7 +221,7 @@ function calc() {
 function flightCard(f, act, selectedId, people) {
   const sel = f.id === selectedId;
   return '<button type="button" class="opt fl" data-act="' + act + '" data-id="' + f.id + '" aria-pressed="' + sel + '"' + (f.soldOut ? ' disabled aria-disabled="true"' : '') + '>' +
-    '<b>' + esc(f.airline) + ' · ' + f.flightNo + '</b><span>' + f.depart + ' ' + f.from + ' → ' + f.arrive + (f.nextDay ? ' (+1)' : '') + ' ' + f.to + ' · ' + dur(f.durationMin) + '</span><span>' + esc(f.baggage) + '</span>' +
+    '<b>' + esc(f.airline) + ' · ' + f.flightNo + (flightPromo(f.carrierId) ? ' <span class="pill">Có mã giảm</span>' : '') + '</b><span>' + f.depart + ' ' + f.from + ' → ' + f.arrive + (f.nextDay ? ' (+1)' : '') + ' ' + f.to + ' · ' + dur(f.durationMin) + '</span><span>' + esc(f.baggage) + '</span>' +
     (f.soldOut ? '<span class="late">Không đủ chỗ cho ' + people + ' khách</span>' : '<span class="pr">' + money(f.priceOne) + '/người' + (f.seatsLeft <= 4 ? ' · còn ' + f.seatsLeft + ' chỗ' : '') + '</span>') + '</button>';
 }
 function flightsHtml(c) {
@@ -240,7 +247,7 @@ function hotelsHtml(c) {
     [2, 3, 4, 5].map((s) => '<button type="button" data-act="hstar" data-id="' + s + '" aria-pressed="' + hotelStars.includes(s) + '">' + s + ' sao</button>').join('') + '</div>';
   h += '<label for="hsort">Sắp xếp</label><select id="hsort"><option value="price"' + (hotelSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="rating"' + (hotelSort === 'rating' ? ' selected' : '') + '>Đánh giá cao nhất</option></select>';
   h += '<div class="opts" style="margin-top:8px">' + (list.map((x) =>
-    '<div class="opt-wrap"><button type="button" class="opt" data-act="hotel" data-id="' + x.id + '" aria-pressed="' + (x.id === hotelId) + '"' + (x.available ? '' : ' disabled aria-disabled="true"') + '><b>' + esc(x.name) + '</b>' +
+    '<div class="opt-wrap"><button type="button" class="opt" data-act="hotel" data-id="' + x.id + '" aria-pressed="' + (x.id === hotelId) + '"' + (x.available ? '' : ' disabled aria-disabled="true"') + '><b>' + esc(x.name) + (hotelPromo(x.stars) ? ' <span class="pill">Khuyến mãi</span>' : '') + '</b>' +
     '<span>' + x.stars + ' sao · ' + esc(x.area) + ' · ' + x.rating.toFixed(1) + '/5 ★ (' + x.reviewCount + ')' + '</span><span>' + x.amenities.map(esc).join(' · ') + '</span>' +
     (x.available ? '<span>' + esc(x.room.name) + ' · ' + x.rooms + ' phòng × ' + x.nights + ' đêm · trung bình ' + money(x.avgNight) + '/phòng/đêm</span><span class="pr">' + money(x.total) + ' cả kỳ nghỉ</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button><button type="button" class="btn" data-act="hoteldetail" data-id="' + x.id + '">Xem chi tiết, loại phòng, đánh giá</button></div>').join('') || '<p class="hint">Không có khách sạn phù hợp bộ lọc.</p>') + '</div>';
   return h;
@@ -290,7 +297,7 @@ function saveTrip() {
     days: plan.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex, items: d.items.map((i) => ({ kind: i.kind, placeId: i.place ? i.place.id : null, note: i.note || '', dur: i.dur })) })) };
   const idx = store.trips.findIndex((x) => x.id === rec.id);
   if (idx >= 0) store.trips[idx] = rec;
-  else { store.trips.unshift(rec); addNotif('Đã lưu lịch trình', t.destination + ' ' + daysBetween(t.startDate, t.endDate) + ' ngày (' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ') đã nằm trong Lịch trình của tôi.'); }
+  else { store.trips.unshift(rec); givePoints('save', { tripId: rec.id }); movePhotos('draft:', rec.id + ':').catch(() => {}); addNotif('Đã lưu lịch trình', t.destination + ' ' + daysBetween(t.startDate, t.endDate) + ' ngày (' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ') đã nằm trong Lịch trình của tôi.'); }
   currentTripId = rec.id; savedOk = true; persist();
 }
 function openTrip(id) {
@@ -311,10 +318,11 @@ function renderHotelDetail() {
   const c = calc(), hotel = c.hl.find((x) => x.id === detailHotel); if (!hotel) return;
   const g = googleCache[detailHotel];
   $('sheetBody').innerHTML = hotelDetailHtml(hotel, { selected: hotel.id === hotelId, nights: hotel.nights,
-    google: g && g.source === 'google' ? g : null, loading: g === 'loading', error: g && g.error ? g.error : '' });
+    google: g && g.source === 'google' ? g : null, loading: g === 'loading', error: g && g.error ? g.error : '' }) +
+    placePromosHtml(PROMOS.promos.filter((p) => p.target.type === 'hotel' && hotel.stars >= (p.target.minStars || 0)));
 }
 function openHotelDetail(id) {
-  detailHotel = id; lastFocus = document.activeElement;
+  detailHotel = id; detailPlace = null; lastFocus = document.activeElement;
   renderHotelDetail(); sheet.hidden = false; $('sheetClose').focus();
   const hotel = OPTS.hotels.find((x) => x.id === id);
   if (GOOGLE.apiKey && hotel && !googleCache[id]) {
@@ -339,26 +347,29 @@ function qrSvg(payload) {
 function startBooking() {
   const c = calc(); if (c.payAmount <= 0) return;
   saveTrip();
-  let b = store.bookings.find((x) => x.tripId === currentTripId && x.status === 'chua_chuyen' && x.amount === c.payAmount);
+  detailPlace = null;
+  let b = store.bookings.find((x) => x.tripId === currentTripId && x.status === 'chua_chuyen' && (x.base ?? x.amount) === c.payAmount);
   if (!b) {
-    b = { code: bookingCode(), tripId: currentTripId, createdAt: Date.now(), amount: c.payAmount, status: 'chua_chuyen', people: plan.trip.people,
-      flights: c.flight ? { out: flightOut, back: flightBack, total: c.flightsTotal } : null, hotel: c.hotel ? { id: c.hotel.id, name: c.hotel.name, total: c.hotelTotal, checkIn: plan.trip.startDate, checkOut: plan.trip.endDate } : null };
+    b = { code: bookingCode(), tripId: currentTripId, createdAt: Date.now(), base: c.payAmount, amount: c.payAmount, discount: null, status: 'chua_chuyen', people: plan.trip.people,
+      flights: c.flight ? { out: flightOut, back: flightBack, total: c.flightsTotal } : null, hotel: c.hotel ? { id: c.hotel.id, name: c.hotel.name, stars: c.hotel.stars, total: c.hotelTotal, checkIn: plan.trip.startDate, checkOut: plan.trip.endDate } : null };
     store.bookings.unshift(b); persist();
   }
   renderPay(b); sheet.hidden = false; lastFocus = document.activeElement; $('sheetClose').focus();
 }
 function renderPay(b) {
+  payBooking = b;
   const isLive = live();
   const payload = vietQrPayload({ bin: PAYMENT.bankBin, account: PAYMENT.accountNumber, amount: b.amount, content: (PAYMENT.contentPrefix || 'ARROW') + ' ' + b.code });
   const content = transferContent((PAYMENT.contentPrefix || 'ARROW') + ' ' + b.code);
   const row = (k, v, copy) => '<div class="cl"><span>' + k + '</span><b>' + esc(v) + (copy ? ' <button type="button" class="btn quiet" style="min-height:36px;padding:0 10px" data-copy="' + esc(copy) + '">Chép</button>' : '') + '</b></div>';
   let h = '<div class="pay"><h2>Thanh toán chuyến bay và khách sạn</h2>';
   h += isLive ? '' : '<div class="warn" style="margin:8px 0">CHẾ ĐỘ THỬ. Chuyến bay, khách sạn và giá đều là dữ liệu mẫu nên mã QR bị phủ chữ MẪU và không dùng để chuyển tiền.</div>';
-  h += '<div class="cost">' + (b.flights ? '<div class="cl"><span>Vé máy bay<small>' + esc(b.flights.out.flightNo) + ' + ' + esc(b.flights.back.flightNo) + ' · ' + b.people + ' khách</small></span><b>' + money(b.flights.total) + '</b></div>' : '') +
-    (b.hotel ? '<div class="cl"><span>Khách sạn<small>' + esc(b.hotel.name) + '</small></span><b>' + money(b.hotel.total) + '</b></div>' : '') + '<div class="cl tot"><span>Cần thanh toán</span><b>' + money(b.amount) + '</b></div></div>';
+  h += '<div class="cost">' + (b.flights ? '<div class="cl"><span>Vé máy bay<small>' + esc(b.flights.out.flightNo) + ' + ' + esc(b.flights.back.flightNo) + ' · ' + b.people + ' khách</small></span><b>' + moneyVnd(b.flights.total) + '</b></div>' : '') +
+    (b.hotel ? '<div class="cl"><span>Khách sạn<small>' + esc(b.hotel.name) + '</small></span><b>' + moneyVnd(b.hotel.total) + '</b></div>' : '') + (b.discount ? '<div class="cl"><span>Giảm giá<small>' + esc(b.discount.label) + '</small></span><b>−' + moneyVnd(b.discount.amount) + '</b></div>' : '') + '<div class="cl tot"><span>Cần thanh toán</span><b>' + moneyVnd(b.amount) + '</b></div></div>';
+  h += promoBoxHtml(b);
   h += '<div class="qrbox">' + (qrSvg(payload) || '<p class="hint">Không tải được thư viện mã QR, hãy chuyển khoản theo thông tin bên dưới.</p>') + (isLive ? '' : '<div class="qr-wm" aria-hidden="true">MẪU</div>') + '</div>';
   h += '<div class="cost">' + row('Ngân hàng', PAYMENT.bankName) + row('Số tài khoản', PAYMENT.accountNumber, PAYMENT.accountNumber) + (PAYMENT.accountName ? row('Chủ tài khoản', PAYMENT.accountName) : '') +
-    row('Số tiền', money(b.amount), String(b.amount)) + row('Nội dung', content, content) + '</div>';
+    row('Số tiền', moneyVnd(b.amount), String(b.amount)) + row('Nội dung', content, content) + '</div>';
   h += '<ol class="steps"><li>Mở app ngân hàng, quét mã QR (hoặc nhập thông tin ở trên).</li><li>Kiểm tra số tiền và nội dung chuyển khoản đúng như trên.</li><li>Chuyển xong, bấm nút bên dưới để báo cho chúng tôi.</li></ol>';
   if (b.status === 'chua_chuyen') h += '<button class="go" type="button" data-act="paid" data-code="' + b.code + '">' + (isLive ? 'Tôi đã chuyển khoản' : 'Ghi nhận đặt thử') + '</button>';
   else h += '<p class="saved-ok">' + esc(BOOKING_STATUS[b.status]) + '. Mã đặt chỗ ' + b.code + '.</p>';
@@ -378,7 +389,9 @@ $('sheetBody').addEventListener('click', (e) => {
   if (hp) { hotelId = hp.dataset.hotelpick; savedOk = false; closeSheet(); render(); return; }
   const pd = e.target.closest('[data-act=paid]'); if (!pd) return;
   const b = store.bookings.find((x) => x.code === pd.dataset.code); if (!b) return;
-  b.status = live() ? 'cho_xac_nhan' : 'thu'; persist();
+  b.status = live() ? 'cho_xac_nhan' : 'thu';
+  if (live() && b.discount && b.discount.kind === 'voucher') { const v = store.vouchers.find((x) => x.code === b.discount.code); if (v) v.used = true; }
+  persist();
   addNotif(live() ? 'Đã ghi nhận chuyển khoản' : 'Đã ghi nhận đặt thử', live() ? 'Mã ' + b.code + ' · ' + money(b.amount) + '. Chúng tôi sẽ đối chiếu giao dịch rồi xác nhận vé và phòng.' : 'Mã ' + b.code + '. Đây là bản thử, chưa có thanh toán thật và chưa đặt chỗ thật.');
   renderPay(b); renderTrips();
 });
@@ -432,8 +445,9 @@ function openDetail(di, id) {
   const place = dayPlaces.find((p) => p.id === id);
   if (!place) return;
   lastFocus = document.activeElement;
-  $('sheetBody').innerHTML = placeDetailHtml(place, dayPlaces);
-  sheet.hidden = false; $('sheetClose').focus();
+  detailPlace = place.id; detailHotel = null;
+  $('sheetBody').innerHTML = placeDetailHtml(place, dayPlaces) + placeExtrasHtml(place);
+  sheet.hidden = false; $('sheetClose').focus(); renderMyPhotos();
 }
 $('sheetClose').addEventListener('click', closeSheet);
 sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); });
@@ -478,14 +492,18 @@ function bookingLine(tripId) {
   const b = store.bookings.find((x) => x.tripId === tripId); if (!b) return '';
   return '<div class="sub" style="margin-top:4px"><span class="tag-status ' + b.status + '">' + esc(BOOKING_STATUS[b.status]) + '</span> Mã ' + b.code + ' · ' + money(b.amount) + '</div>';
 }
+let tripFilter = 'all';
 function renderTrips() {
   const el = $('tripsList');
   if (!store.trips.length) { el.innerHTML = '<div class="panel empty"><b>Chưa có lịch trình nào</b>Tạo lịch trình và bấm Lưu để xem lại ở đây.<button class="go" type="button" data-go="create">Tạo lịch trình mới</button></div>'; return; }
-  el.innerHTML = store.trips.map((s) => {
-    const t = s.trip, armed = armedTrip === s.id;
-    return '<div class="panel trip"><h3>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
-      '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
-  }).join('');
+  const favN = store.trips.filter((x) => store.favorites.includes(x.id)).length;
+  const list = store.trips.filter((x) => tripFilter === 'all' || store.favorites.includes(x.id));
+  el.innerHTML = '<div class="chips" role="group" aria-label="Lọc lịch trình"><button type="button" data-tripfilter="all" aria-pressed="' + (tripFilter === 'all') + '">Tất cả</button><button type="button" data-tripfilter="fav" aria-pressed="' + (tripFilter === 'fav') + '">Yêu thích (' + favN + ')</button></div>' +
+    (list.length ? list.map((s) => {
+      const t = s.trip, armed = armedTrip === s.id, fav = store.favorites.includes(s.id);
+      return '<div class="panel trip"><div class="trip-top"><h3>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
+        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
+    }).join('') : '<div class="panel empty"><b>Chưa có lịch trình yêu thích</b>Bấm ♥ ở một lịch trình để đánh dấu.</div>');
 }
 
 /* ---------- Thông báo ---------- */
@@ -496,44 +514,336 @@ function renderNotifs() {
     '<button class="btn quiet" type="button" data-clearnotifs>Xoá tất cả thông báo</button>';
 }
 
-/* ---------- Tài khoản ---------- */
-const opt = (v, label, cur) => '<option value="' + v + '"' + (v === cur ? ' selected' : '') + '>' + label + '</option>';
-function renderAccount() {
-  const p = store.prefs;
-  $('accountBody').innerHTML =
-    '<div class="panel me"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></div><div><b>Khách</b><span>Chưa đăng nhập</span></div></div>' +
-    '<div class="panel setting"><b>Mặc định khi tạo lịch trình</b><div><label for="prefAud">Đi cùng</label><select id="prefAud">' +
-      opt('nhom_ban', 'Nhóm bạn trẻ', p.audience || 'nhom_ban') + opt('mot_minh', 'Một mình', p.audience) + opt('cap_doi', 'Cặp đôi', p.audience) + opt('gia_dinh', 'Gia đình', p.audience) +
-    '</select></div><div><label for="prefBud">Ngân sách</label><select id="prefBud">' + opt('tiet_kiem', 'Tiết kiệm', p.budget) + opt('vua_phai', 'Vừa phải', p.budget || 'vua_phai') + opt('thoai_mai', 'Thoải mái', p.budget) + '</select></div></div>' +
-    '<div class="panel"><b>Dữ liệu của bạn</b><p class="hint" style="margin:6px 0 12px">Bản đầu chưa cần đăng nhập. Lịch trình và thông báo chỉ lưu trên thiết bị này, không lưu mật khẩu hay thông tin thanh toán. Đăng nhập để đồng bộ nhiều thiết bị sẽ có ở bản sau.</p>' +
-    '<button class="btn danger" type="button" data-clearall>' + (armedClear ? 'Bấm lại để xoá hết' : 'Xoá dữ liệu trên thiết bị này') + '</button></div>' +
-    '<p class="foot">Arrow Travel · bản thử nghiệm 0.1 · dữ liệu Đà Nẵng là mẫu</p>';
-}
-$('accountBody').addEventListener('change', (e) => {
-  if (e.target.id === 'prefAud') store.prefs.audience = e.target.value;
-  if (e.target.id === 'prefBud') store.prefs.budget = e.target.value;
-  persist();
-});
-
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-go],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
+  if (d.page) { openPage(d.page); return; }
+  if (d.fav) { store.favorites = store.favorites.includes(d.fav) ? store.favorites.filter((x) => x !== d.fav) : [...store.favorites, d.fav]; persist(); renderTrips(); return; }
+  if (d.tripfilter) { tripFilter = d.tripfilter; renderTrips(); return; }
   if (d.go) { if (d.go === 'create' && !plan) openCreate({}, true); else go(d.go); return; }
   if (d.preset) { openCreate(PRESETS[d.preset] || {}, true); return; }
   if (d.dest) { qSug.hidden = true; openCreate({}, true); return; }
   if (d.trip) { openTrip(d.trip); return; }
   if (d.deltrip) {
     if (armedTrip !== d.deltrip) { armedTrip = d.deltrip; renderTrips(); return; }
-    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
+    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
   }
   if (d.clearnotifs !== undefined) { store.notifs = []; persist(); updateBadge(); renderNotifs(); return; }
   if (d.clearall !== undefined) {
     if (!armedClear) { armedClear = true; renderAccount(); return; }
-    store = seedStore(); armedClear = false; plan = null; currentTripId = null; persist(); updateBadge(); renderAccount();
+    clearAllPhotos().catch(() => {}); store = seedStore(); armedClear = false; plan = null; currentTripId = null; rateDraft = null; persist(); applySettings(); updateBadge(); renderAccount();
   }
 });
 
+/* ---------- Dịch giao diện (tiếng Anh) ---------- */
+// Dịch mọi đoạn chữ khớp nguyên câu trong bản dịch, kể cả nội dung vẽ sau này; câu chưa có bản dịch giữ tiếng Việt.
+const origText = new Map(), origAttr = new Map(), ATTRS = ['placeholder', 'aria-label', 'title'];
+function trNode(n) {
+  if (n.nodeType === 3) {
+    const v = n.nodeValue, k = v.trim();
+    if (k && EN[k] && EN[k] !== k && getLang() === 'en') { if (!origText.has(n)) origText.set(n, v); n.nodeValue = v.replace(k, EN[k]); }
+  } else if (n.nodeType === 1 && !['SCRIPT', 'STYLE', 'TEXTAREA'].includes(n.tagName)) {
+    for (const a of ATTRS) {
+      const v = n.getAttribute(a);
+      if (v && EN[v] && EN[v] !== v && getLang() === 'en') { if (!origAttr.has(n)) origAttr.set(n, {}); origAttr.get(n)[a] = v; n.setAttribute(a, EN[v]); }
+    }
+    n.childNodes.forEach(trNode);
+  }
+}
+function retranslate() {
+  origText.forEach((v, n) => { if (n.isConnected) n.nodeValue = v; }); origText.clear();
+  origAttr.forEach((o, el) => { for (const a in o) el.setAttribute(a, o[a]); }); origAttr.clear();
+  if (getLang() === 'en') trNode(document.body);
+}
+new MutationObserver((recs) => {
+  if (getLang() !== 'en') return;
+  for (const r of recs) { r.addedNodes.forEach(trNode); if (r.type === 'characterData') trNode(r.target); }
+}).observe(document.body, { childList: true, subtree: true, characterData: true });
+
+/* ---------- Cài đặt giao diện, ngôn ngữ, tiền tệ ---------- */
+function applySettings() {
+  const st = store.settings, root = document.documentElement;
+  if (st.theme === 'light' || st.theme === 'dark') root.setAttribute('data-theme', st.theme); else root.removeAttribute('data-theme');
+  setLang(st.lang); setCurrency(st.currency); root.lang = st.lang;
+  retranslate();
+}
+function refreshAll() {
+  renderHome(); renderTrips(); renderNotifs(); updateBadge();
+  if (plan) render();
+  if (pageName) { $('pageTitle').textContent = tr(PAGES[pageName].title); renderPage(); }
+}
+
+/* ---------- Thông báo nhanh ---------- */
+let toastTimer = null;
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.hidden = false;
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2600);
+}
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); toast('Đã chép: ' + text); } catch (e) { toast('Không chép được, hãy chép thủ công'); }
+}
+function givePoints(ruleId, opts) {
+  const r = award(store.points, ruleId, opts);
+  if (r.awarded) { store.points = r.points; persist(); toast('+' + r.awarded + ' điểm · ' + tr(EARN.find((x) => x.id === ruleId).label)); }
+  return r.awarded;
+}
+
+/* ---------- Màn hình mở app ---------- */
+const splash = $('splash');
+function hideSplash() { if (splash.hidden) return; splash.classList.add('hide'); setTimeout(() => { splash.hidden = true; }, 600); }
+splash.querySelector('.slogan').textContent = APP.slogan;
+$('splashGo').addEventListener('click', hideSplash);
+splash.addEventListener('click', hideSplash);
+setTimeout(hideSplash, 2800);
+
+/* ---------- Trang phụ ---------- */
+let pageName = null, pageFrom = 'home', currentScreen = 'home';
+const legalPage = (key) => () => {
+  const d = LEGAL[key];
+  return '<div class="panel legal">' + (key !== 'payguide' ? '<div class="warn" style="margin-bottom:8px">Bản nháp, chưa được luật sư rà soát. Chủ app cần điền các mục [ĐIỀN] trước khi công khai.</div>' : '') +
+    (d.updated ? '<p class="hint">' + esc(d.updated) + '</p>' : '') + d.sections.map((s) => '<h3>' + esc(s.h) + '</h3><p>' + esc(s.p) + '</p>').join('') + '</div>';
+};
+const PAGES = {
+  settings: { title: 'Cài đặt', render: () => pageSettings() },
+  promos: { title: 'Khuyến mãi', render: () => pagePromos() },
+  rewards: { title: 'Điểm thưởng và voucher', render: () => pageRewards() },
+  friends: { title: 'Bạn đồng hành', render: () => pageFriends() },
+  rate: { title: 'Đánh giá Arrow Travel', render: () => pageRate() },
+  about: { title: 'Giới thiệu', render: () => pageAbout() },
+  privacy: { title: LEGAL.privacy.title, render: legalPage('privacy') },
+  terms: { title: LEGAL.terms.title, render: legalPage('terms') },
+  payguide: { title: LEGAL.payguide.title, render: legalPage('payguide') },
+};
+function renderPage() { $('pageBody').innerHTML = PAGES[pageName].render(); }
+function openPage(name) {
+  if (!PAGES[name]) return;
+  if (currentScreen !== 'page') pageFrom = currentScreen;
+  pageName = name; currentScreen = 'page'; armedTrip = null; armedClear = false;
+  SCREENS.forEach((s) => { $('scr-' + s).hidden = true; });
+  $('scr-page').hidden = false;
+  document.querySelectorAll('.tab').forEach((t) => { if (t.dataset.go === pageFrom) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
+  $('pageTitle').textContent = tr(PAGES[name].title); renderPage(); window.scrollTo(0, 0);
+}
+$('pageBack').addEventListener('click', () => { pageName = null; go(pageFrom); });
+
+const seg = (k, items, cur) => '<div class="seg" role="group">' + items.map(([v, l]) => '<button type="button" data-pg="set" data-k="' + k + '" data-v="' + v + '" aria-pressed="' + (v === cur) + '">' + esc(l) + '</button>').join('') + '</div>';
+function pageSettings() {
+  const st = store.settings, p = store.prefs;
+  const o = (v, l, cur) => '<option value="' + v + '"' + (v === cur ? ' selected' : '') + '>' + esc(l) + '</option>';
+  return '<div class="panel setting"><b>Giao diện</b>' + seg('theme', [['system', 'Theo hệ thống'], ['light', 'Sáng'], ['dark', 'Tối']], st.theme) + '</div>' +
+    '<div class="panel setting"><b>Ngôn ngữ</b>' + seg('lang', [['vi', 'Tiếng Việt'], ['en', 'English']], st.lang) +
+    '<p class="hint">Bản tiếng Anh mới dịch phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.</p></div>' +
+    '<div class="panel setting"><b>Tiền tệ hiển thị</b><select id="curSel" aria-label="Tiền tệ">' + Object.entries(CURRENCIES).map(([c, v]) => o(c, v.label, st.currency)).join('') + '</select>' +
+    '<p class="hint">Chỉ đổi cách hiển thị theo tỉ giá mẫu (1 USD ≈ ' + moneyVnd(CURRENCIES.USD.rate) + '). Thanh toán luôn bằng VND.</p></div>' +
+    '<div class="panel setting"><b>Mặc định khi tạo lịch trình</b><div><label for="prefAud">Đi cùng</label><select id="prefAud">' +
+    o('nhom_ban', 'Nhóm bạn trẻ', p.audience || 'nhom_ban') + o('mot_minh', 'Một mình', p.audience) + o('cap_doi', 'Cặp đôi', p.audience) + o('gia_dinh', 'Gia đình', p.audience) +
+    '</select></div><div><label for="prefBud">Ngân sách</label><select id="prefBud">' + o('tiet_kiem', 'Tiết kiệm', p.budget) + o('vua_phai', 'Vừa phải', p.budget || 'vua_phai') + o('thoai_mai', 'Thoải mái', p.budget) + '</select></div></div>';
+}
+
+/* Khuyến mãi */
+let promoQ = '', promoType = 'all';
+const PROMO_TYPES = [['all', 'Tất cả'], ['place', 'Địa điểm'], ['flight', 'Chuyến bay'], ['hotel', 'Khách sạn']];
+const TYPE_NAME = { all: 'Arrow Travel', place: 'Địa điểm', flight: 'Chuyến bay', hotel: 'Khách sạn' };
+function promoCard(p) {
+  const left = daysLeft(p, todayStr());
+  return '<div class="panel promo"><h3>' + esc(p.title) + '</h3><div class="meta">' + esc(tr(TYPE_NAME[p.target.type])) + (p.target.name ? ' · ' + esc(p.target.name) : '') +
+    (left != null ? ' · còn ' + left + ' ngày' : '') + ' <span class="badge-demo">mẫu</span></div><p style="margin:6px 0 0">' + esc(p.desc) + '</p>' +
+    (p.code ? '<div class="code">' + esc(p.code) + ' <button type="button" class="btn quiet" data-pg="copy" data-v="' + esc(p.code) + '">Chép</button></div>' : '') +
+    (p.kind === 'perk' ? '<p class="hint" style="margin-top:6px">Nhận trực tiếp tại nơi sử dụng.</p>' : '<p class="hint" style="margin-top:6px">Nhập mã khi thanh toán chuyến bay và khách sạn.</p>') + '</div>';
+}
+function promoListHtml() {
+  const r = searchPromos(PROMOS.promos, { q: promoQ, type: promoType, today: todayStr() });
+  return r.length ? r.map(promoCard).join('') : '<div class="panel empty"><b>Không tìm thấy khuyến mãi</b>Thử từ khoá khác, ví dụ Bà Nà, Vietjet, khách sạn.</div>';
+}
+function pagePromos() {
+  return '<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="promoQ" type="search" value="' + esc(promoQ) + '" placeholder="Tìm khuyến mãi, ví dụ: Bà Nà, Vietjet" aria-label="Tìm khuyến mãi" autocomplete="off"></div>' +
+    '<div class="chips" role="group">' + PROMO_TYPES.map(([v, l]) => '<button type="button" data-pg="ptype" data-v="' + v + '" aria-pressed="' + (promoType === v) + '">' + esc(l) + '</button>').join('') + '</div>' +
+    '<p class="hint">Khuyến mãi mẫu để chạy thử, không phải chương trình thật của hãng hay địa điểm.</p><div id="promoList" class="list">' + promoListHtml() + '</div>';
+}
+
+/* Điểm thưởng */
+function pageRewards() {
+  const pt = store.points, td = todayStr();
+  let h = '<div class="panel"><div class="hint">Điểm của bạn</div><div class="big">' + pt.balance + ' điểm</div><p class="hint">Điểm và voucher chỉ lưu trên thiết bị này.</p></div>';
+  h += '<div class="panel"><b>Cách nhận điểm</b>' + EARN.map((r) => '<div class="rule"><span>' + esc(tr(r.label)) + '<small style="display:block;color:var(--muted)">' + esc(tr(r.note)) + (r.cap ? ' · đã ' + (pt.counters[r.id] || 0) + '/' + r.cap : '') + '</small></span><b>+' + r.points + '</b></div>').join('') +
+    '<p class="hint" style="margin-top:8px">Điểm cho đơn đặt chỗ sẽ có khi đơn được xác nhận (chưa có ở bản này).</p></div>';
+  h += '<div class="panel"><b>Đổi voucher</b>' + CATALOG.map((c) => '<div class="vc rule"><span>Giảm ' + moneyVnd(c.value) + '<small style="display:block;color:var(--muted)">Đơn từ ' + moneyVnd(c.min) + ' · hạn 90 ngày</small></span><button type="button" class="btn" data-pg="redeem" data-v="' + c.id + '"' + (pt.balance < c.cost ? ' disabled' : '') + '>Đổi ' + c.cost + ' điểm</button></div>').join('') + '</div>';
+  h += '<div class="panel"><b>Ví voucher</b>' + (store.vouchers.length ? store.vouchers.map((v) => {
+    const st = v.used ? 'Đã dùng' : v.expires < td ? 'Hết hạn' : 'Còn hạn đến ' + v.expires.split('-').reverse().join('/');
+    return '<div class="vc rule' + (v.used || v.expires < td ? ' used' : '') + '"><span><b>' + esc(v.code) + '</b> · giảm ' + moneyVnd(v.value) + '<small style="display:block;color:var(--muted)">Đơn từ ' + moneyVnd(v.min) + ' · ' + esc(st) + '</small></span><button type="button" class="btn quiet" data-pg="copy" data-v="' + esc(v.code) + '">Chép</button></div>';
+  }).join('') : '<p class="hint">Chưa có voucher. Tích đủ điểm để đổi.</p>') + '</div>';
+  if (pt.history.length) h += '<div class="panel"><b>Lịch sử điểm</b>' + pt.history.slice(0, 8).map((x) => '<div class="rule"><span>' + esc(x.label) + '<small style="display:block;color:var(--muted)">' + fmtTime(x.at) + '</small></span><b>' + (x.delta > 0 ? '+' : '') + x.delta + '</b></div>').join('') + '</div>';
+  return h;
+}
+
+/* Bạn đồng hành */
+function friendTrip() {
+  if (plan) return { trip: plan.trip, note: '' };
+  if (store.trips[0]) return { trip: store.trips[0].trip, note: '' };
+  const start = addDays(todayStr(), 7);
+  return { trip: { destination: 'Đà Nẵng', startDate: start, endDate: addDays(start, 2), audience: store.prefs.audience || 'nhom_ban', budget: store.prefs.budget || 'vua_phai', styles: ['thien_nhien'] }, note: 'Bạn chưa có lịch trình, đang dùng lịch trình mặc định. Tạo lịch trình để gợi ý chính xác hơn.' };
+}
+function pageFriends() {
+  const { trip, note } = friendTrip(), list = matchTravelers(trip, TRAVELERS.travelers, todayStr());
+  const near = list.filter((x) => x.overlap > 0), others = list.filter((x) => x.overlap === 0);
+  const card = (x) => {
+    const on = store.friends.includes(x.id);
+    return '<div class="panel fr"><div class="avatar">' + esc(x.name[0]) + '</div><div class="grow"><b>' + esc(x.name) + '</b> <span class="badge-demo">mẫu</span><div class="hint">' + esc(x.bio) + '</div>' +
+      '<div class="chips" style="margin:6px 0"><span class="tag-status">' + (x.overlap ? 'Trùng ' + x.overlap + ' ngày (' + fmtDate(x.start) + ' – ' + fmtDate(x.end) + ')' : 'Lệch ngày (' + fmtDate(x.start) + ' – ' + fmtDate(x.end) + ')') + '</span>' +
+      (x.sameAudience ? '<span class="tag-status">Cùng đối tượng</span>' : '') + x.sharedStyles.map((s) => '<span class="tag-status">' + esc(STYLE_NAME[s]) + '</span>').join('') + '</div>' +
+      '<button type="button" class="btn' + (on ? ' quiet' : '') + '" data-pg="connect" data-v="' + x.id + '">' + (on ? 'Đã kết nối · bấm để huỷ' : 'Kết nối') + '</button></div></div>';
+  };
+  return '<div class="panel"><b>Dựa trên lịch trình</b><div class="hint">' + esc(trip.destination) + ' · ' + fmtDate(trip.startDate) + ' – ' + fmtDate(trip.endDate) + ' · ' + esc(RULES[trip.audience].label) + '</div>' + (note ? '<p class="hint">' + esc(note) + '</p>' : '') + '</div>' +
+    '<div class="warn">Người dùng bên dưới là dữ liệu mẫu: app chưa có máy chủ nên chưa kết nối được người thật, cũng chưa nhắn tin được.</div>' +
+    '<div class="sec-h"><h2>Trùng lịch với bạn</h2></div>' + (near.map(card).join('') || '<p class="hint">Chưa có ai trùng ngày.</p>') +
+    (others.length ? '<div class="sec-h"><h2>Gợi ý khác</h2></div>' + others.map(card).join('') : '');
+}
+const STYLE_NAME = { thien_nhien: 'Thiên nhiên', van_hoa: 'Văn hoá', am_thuc: 'Ẩm thực', check_in: 'Check-in', thu_gian: 'Thư giãn' };
+
+/* Đánh giá app */
+let rateDraft = null;
+function pageRate() {
+  if (!rateDraft) rateDraft = { stars: store.review ? store.review.stars : 0, text: store.review ? store.review.text : '' };
+  return '<div class="panel"><b>Bạn thấy Arrow Travel thế nào?</b><div class="stars" role="group" aria-label="Số sao">' +
+    [1, 2, 3, 4, 5].map((n) => '<button type="button" data-pg="star" data-v="' + n + '" aria-label="' + n + ' sao" aria-pressed="' + (n <= rateDraft.stars) + '">★</button>').join('') + '</div>' +
+    '<label for="rateText">Góp ý của bạn (không bắt buộc)</label><textarea id="rateText" placeholder="Điều gì tốt, điều gì cần sửa?">' + esc(rateDraft.text) + '</textarea>' +
+    '<button type="button" class="go" data-pg="sendrate" style="margin-top:12px"' + (rateDraft.stars ? '' : ' disabled') + '>' + (store.review ? 'Cập nhật đánh giá' : 'Gửi đánh giá') + '</button>' +
+    (store.review ? '<p class="saved-ok">Bạn đã đánh giá ' + store.review.stars + ' sao. Cảm ơn!</p>' : '') +
+    '<p class="hint" style="margin-top:8px">' + (APP.feedbackUrl ? 'Đánh giá được lưu trên thiết bị này. Muốn gửi cho đội ngũ Arrow Travel, bấm nút bên dưới.' : 'Đánh giá hiện chỉ lưu trên thiết bị này, chưa gửi về đâu vì app chưa có máy chủ.') + '</p>' +
+    (APP.feedbackUrl ? '<a class="pd-link" href="' + esc(APP.feedbackUrl) + '" target="_blank" rel="noopener">Gửi góp ý qua biểu mẫu</a>' : '') + '</div>';
+}
+
+/* Giới thiệu */
+function pageAbout() {
+  return '<div class="panel" style="text-align:center"><svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0F766E"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>' +
+    '<h2 style="margin:8px 0 0">' + esc(APP.name) + '</h2><p style="margin:4px 0;color:var(--teal);font-weight:600">' + esc(APP.slogan) + '</p><p class="hint">Phiên bản ' + esc(APP.version) + ' · bản thử nghiệm</p></div>' +
+    '<div class="panel"><b>Arrow Travel là gì?</b><p style="margin:6px 0 0">Ứng dụng lên lịch trình du lịch theo người đi cùng. Gia đình có trẻ nhỏ có giờ nghỉ trưa dài và ít đi bộ, cặp đôi có quán yên tĩnh và hoàng hôn, nhóm bạn trẻ có lịch dày và nhiều điểm check-in. Từ lịch trình, bạn tìm chuyến bay, khách sạn, chọn phương tiện và xem tổng chi phí cả chuyến.</p></div>' +
+    '<div class="panel menu"><button class="mi" data-page="privacy"><span>Chính sách bảo mật</span><span class="chev">›</span></button><button class="mi" data-page="terms"><span>Điều khoản sử dụng</span><span class="chev">›</span></button><button class="mi" data-page="payguide"><span>Hướng dẫn thanh toán</span><span class="chev">›</span></button></div>' +
+    '<p class="foot">Mã nguồn: <a href="' + esc(APP.repoUrl) + '" target="_blank" rel="noopener" style="color:var(--teal)">' + esc(APP.repoUrl.replace('https://', '')) + '</a>. Dữ liệu địa điểm, giá, khuyến mãi, đánh giá đang là dữ liệu mẫu.</p>';
+}
+
+/* ---------- Tài khoản (menu) ---------- */
+const mi = (page, label, sub) => '<button class="mi" type="button" data-page="' + page + '"><span>' + esc(label) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</span><span class="chev">›</span></button>';
+function renderAccount() {
+  const st = store.settings;
+  $('accountBody').innerHTML =
+    '<div class="panel me"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></div><div><b>Khách</b><span>Chưa đăng nhập</span></div></div>' +
+    '<div class="menu-h">Của tôi</div><div class="panel menu">' + mi('rewards', 'Điểm thưởng và voucher', store.points.balance + ' điểm · ' + store.vouchers.filter((v) => !v.used).length + ' voucher') + mi('friends', 'Bạn đồng hành', store.friends.length + ' đã kết nối') + mi('promos', 'Khuyến mãi') + '</div>' +
+    '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', ({ system: 'Theo hệ thống', light: 'Sáng', dark: 'Tối' })[st.theme] + ' · ' + (st.lang === 'en' ? 'English' : 'Tiếng Việt') + ' · ' + st.currency) + '</div>' +
+    '<div class="menu-h">Hỗ trợ</div><div class="panel menu">' + mi('payguide', 'Hướng dẫn thanh toán') + mi('rate', 'Đánh giá Arrow Travel', store.review ? 'Bạn đã đánh giá ' + store.review.stars + ' sao' : '') + mi('about', 'Giới thiệu') + mi('privacy', 'Chính sách bảo mật') + mi('terms', 'Điều khoản sử dụng') + '</div>' +
+    '<div class="panel"><b>Dữ liệu của bạn</b><p class="hint" style="margin:6px 0 12px">Bản đầu chưa cần đăng nhập. Lịch trình, ảnh và thông báo chỉ lưu trên thiết bị này, không lưu mật khẩu hay thông tin thanh toán. Đăng nhập để đồng bộ nhiều thiết bị sẽ có ở bản sau.</p>' +
+    '<button class="btn danger" type="button" data-clearall>' + (armedClear ? 'Bấm lại để xoá hết' : 'Xoá dữ liệu trên thiết bị này') + '</button></div>' +
+    '<p class="foot">' + esc(APP.name) + ' · ' + esc(APP.slogan) + ' · bản thử nghiệm ' + esc(APP.version) + '</p>';
+}
+
+/* ---------- Sự kiện của các trang phụ ---------- */
+$('pageBody').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-pg]'); if (!b) return;
+  const a = b.dataset.pg, v = b.dataset.v;
+  if (a === 'set') { store.settings[b.dataset.k] = v; persist(); applySettings(); refreshAll(); return; }
+  if (a === 'copy') { copyText(v); return; }
+  if (a === 'ptype') { promoType = v; renderPage(); return; }
+  if (a === 'redeem') {
+    const r = redeem(store.points, v, { today: todayStr() });
+    if (r.error) { toast(r.error); return; }
+    store.points = r.points; store.vouchers.unshift(r.voucher); persist(); toast('Đã đổi voucher ' + r.voucher.code); renderPage(); return;
+  }
+  if (a === 'connect') {
+    if (store.friends.includes(v)) store.friends = store.friends.filter((x) => x !== v);
+    else { store.friends.push(v); givePoints('friend'); }
+    persist(); renderPage(); return;
+  }
+  if (a === 'star') { rateDraft.text = ($('rateText') || {}).value ?? rateDraft.text; rateDraft.stars = +v; renderPage(); return; }
+  if (a === 'sendrate') {
+    rateDraft.text = $('rateText').value; const first = !store.review;
+    store.review = { stars: rateDraft.stars, text: rateDraft.text, at: Date.now() }; persist();
+    if (first) givePoints('rate'); else toast('Đã cập nhật đánh giá');
+    renderPage();
+  }
+});
+$('pageBody').addEventListener('input', (e) => {
+  if (e.target.id === 'promoQ') { promoQ = e.target.value; $('promoList').innerHTML = promoListHtml(); }
+  if (e.target.id === 'rateText') rateDraft.text = e.target.value;
+});
+$('pageBody').addEventListener('change', (e) => {
+  if (e.target.id === 'curSel') { store.settings.currency = e.target.value; persist(); applySettings(); refreshAll(); }
+  if (e.target.id === 'prefAud') { store.prefs.audience = e.target.value; persist(); }
+  if (e.target.id === 'prefBud') { store.prefs.budget = e.target.value; persist(); }
+});
+
+/* ---------- Ảnh chuyến đi của tôi và khuyến mãi tại địa điểm ---------- */
+let detailPlace = null, phUrls = [];
+const photoKey = (placeId) => (currentTripId || 'draft') + ':' + placeId;
+function placePromosHtml(items) {
+  const list = items.filter((p) => isValid(p, todayStr()));
+  return list.length ? '<div class="pd"><h3>Khuyến mãi tại đây</h3>' + list.map((p) => '<div class="panel promo" style="margin-bottom:8px"><h3>' + esc(p.title) + ' <span class="badge-demo">mẫu</span></h3><p style="margin:4px 0 0">' + esc(p.desc) + '</p>' +
+    (p.code ? '<div class="code">' + esc(p.code) + ' <button type="button" class="btn quiet" data-copy="' + esc(p.code) + '">Chép</button></div>' : '') + '</div>').join('') + '</div>' : '';
+}
+function placeExtrasHtml(place) {
+  return placePromosHtml(PROMOS.promos.filter((p) => p.target.type === 'place' && p.target.ref === place.id)) + '<div class="pd" id="myPhotos"></div>';
+}
+async function renderMyPhotos() {
+  const box = $('myPhotos'); if (!box || !detailPlace) return;
+  phUrls.forEach((u) => URL.revokeObjectURL(u)); phUrls = [];
+  let items = [];
+  try { items = await listPhotos(photoKey(detailPlace)); } catch (err) { box.innerHTML = '<h3>Ảnh chuyến đi của tôi</h3><p class="hint late">' + esc(err.message) + '</p>'; return; }
+  box.innerHTML = '<h3>Ảnh chuyến đi của tôi</h3><p class="hint">Ảnh chỉ lưu trên thiết bị này, chưa chia sẻ cho ai. Mỗi ảnh đầu tiên được thưởng 5 điểm (tối đa 10 ảnh).</p>' +
+    '<button type="button" class="btn" data-pg-photo="add">Thêm ảnh</button><input id="phFile" class="sr-only" type="file" accept="image/*" multiple aria-label="Chọn ảnh">' +
+    (items.length ? '<div class="myph">' + items.map((p) => { const u = URL.createObjectURL(p.blob); phUrls.push(u); return '<figure><img src="' + u + '" alt="Ảnh chuyến đi của tôi"><button type="button" data-pg-photo="del" data-id="' + p.id + '" aria-label="Xoá ảnh">×</button></figure>'; }).join('') + '</div>' : '<p class="hint">Chưa có ảnh.</p>');
+}
+$('sheetBody').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-pg-photo]'); if (!b) return;
+  if (b.dataset.pgPhoto === 'add') { $('phFile').click(); return; }
+  if (b.dataset.pgPhoto === 'del') deletePhoto(+b.dataset.id).then(renderMyPhotos).catch(() => toast('Không xoá được ảnh'));
+});
+$('sheetBody').addEventListener('change', async (e) => {
+  if (e.target.id !== 'phFile' || !detailPlace) return;
+  const files = [...e.target.files].slice(0, 10);
+  try {
+    for (const f of files) { await addPhoto(photoKey(detailPlace), await resizeImage(f)); givePoints('photo'); }
+  } catch (err) { toast('Không lưu được ảnh: ' + err.message); }
+  renderMyPhotos();
+});
+
+/* ---------- Mã giảm giá và voucher khi thanh toán ---------- */
+function promoCtx(b) {
+  return { flightsTotal: b.flights ? b.flights.total : 0, hotelTotal: b.hotel ? b.hotel.total : 0, payAmount: b.base, flightOut: b.flights ? b.flights.out : null, hotel: b.hotel };
+}
+function setDiscount(b, d) {
+  b.discount = d; b.amount = Math.max(1000, b.base - (d ? d.amount : 0)); persist(); renderPay(b);
+}
+function promoMsg(text, bad) { const m = $('promoMsg'); if (m) { m.textContent = text; m.className = bad ? 'hint late' : 'saved-ok'; } }
+function promoBoxHtml(b) {
+  if (b.status !== 'chua_chuyen') return b.discount ? '<p class="hint">Đã áp ' + esc(b.discount.label) + ': giảm ' + moneyVnd(b.discount.amount) + '.</p>' : '';
+  const usable = store.vouchers.filter((v) => !v.used && v.expires >= todayStr());
+  return '<div class="paybox" style="margin:12px 0"><label for="promoCode">Mã giảm giá hoặc voucher</label><div class="row" style="grid-template-columns:1fr auto;gap:8px"><input id="promoCode" placeholder="Nhập mã, ví dụ CHAOARROW" autocomplete="off"><button type="button" class="btn" data-promo="apply">Áp dụng</button></div>' +
+    (usable.length ? '<div class="chips" style="margin-top:8px">' + usable.map((v) => '<button type="button" data-promo="voucher" data-v="' + esc(v.code) + '">Voucher ' + esc(v.code) + ' −' + moneyVnd(v.value) + '</button>').join('') + '</div>' : '') +
+    (b.discount ? '<p class="saved-ok">Đang áp ' + esc(b.discount.label) + ': giảm ' + moneyVnd(b.discount.amount) + ' <button type="button" class="btn quiet" style="min-height:36px" data-promo="remove">Bỏ mã</button></p>' : '') + '<p id="promoMsg" class="hint" aria-live="polite"></p></div>';
+}
+$('sheetBody').addEventListener('click', (e) => {
+  const pr = e.target.closest('[data-promo]'); if (!pr) return;
+  const b = payBooking; if (!b) return;
+  const act = pr.dataset.promo;
+  if (act === 'remove') { setDiscount(b, null); return; }
+  if (act === 'voucher') {
+    const v = store.vouchers.find((x) => x.code === pr.dataset.v), r = voucherCheck(v, b.base, todayStr());
+    if (!r.ok) { promoMsg(r.reason, true); return; }
+    setDiscount(b, { kind: 'voucher', code: v.code, amount: r.discount, label: 'voucher ' + v.code }); return;
+  }
+  const code = $('promoCode').value.trim(); if (!code) { promoMsg('Hãy nhập mã.', true); return; }
+  const wallet = store.vouchers.find((x) => x.code.toLowerCase() === code.toLowerCase());
+  if (wallet) { const r = voucherCheck(wallet, b.base, todayStr()); if (!r.ok) { promoMsg(r.reason, true); return; } setDiscount(b, { kind: 'voucher', code: wallet.code, amount: r.discount, label: 'voucher ' + wallet.code }); return; }
+  const p = findByCode(PROMOS.promos, code, todayStr());
+  if (!p) { promoMsg('Mã không đúng hoặc đã hết hạn.', true); return; }
+  const r = applyPromo(p, promoCtx(b));
+  if (!r.ok) { promoMsg(r.reason, true); return; }
+  setDiscount(b, { kind: 'promo', code: p.code, amount: r.discount, label: 'mã ' + p.code });
+});
+const flightPromo = (carrier) => PROMOS.promos.some((p) => p.target.type === 'flight' && p.target.carrier === carrier && isValid(p, todayStr()));
+const hotelPromo = (stars) => PROMOS.promos.some((p) => p.target.type === 'hotel' && stars >= (p.target.minStars || 0) && isValid(p, todayStr()));
+
 applyForm({});
+applySettings();
 updateBadge();
 renderHome();

@@ -10,6 +10,16 @@
 <link rel="stylesheet" href="detail.css">
 </head>
 <body>
+<div id="splash" class="splash" role="dialog" aria-label="Arrow Travel">
+  <img class="splash-bg" src="images/splash.jpg" alt="">
+  <div class="splash-shade"></div>
+  <div class="splash-in">
+    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0F766E" stroke="#fff" stroke-width="3"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <h1>Arrow Travel</h1>
+    <p class="slogan">Chuyến đi đúng người, đúng nhịp.</p>
+  </div>
+  <button type="button" id="splashGo" class="splash-go">Bắt đầu</button>
+</div>
 <main class="app">
 
   <!-- 1. Khám phá -->
@@ -31,6 +41,12 @@
       <button class="tile" type="button" data-preset="mot_minh"><span class="ic c5"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></span>Một mình</button>
       <button class="tile" type="button" data-preset="am_thuc"><span class="ic c6"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-2 2-3 5-3 8h3v10"/></svg></span>Ẩm thực</button>
       <button class="tile" type="button" data-preset="van_hoa"><span class="ic c7"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M5 10v9M9 10v9M15 10v9M19 10v9M3 21h18"/></svg></span>Văn hoá</button>
+    </div>
+    <div class="tiles" role="group" aria-label="Tiện ích">
+      <button class="tile" type="button" data-page="promos"><span class="ic c6"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12l-8 8-9-9V4h7l10 8zM7.5 8.5h.01"/></svg></span>Khuyến mãi</button>
+      <button class="tile" type="button" data-page="rewards"><span class="ic c3"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></span>Điểm thưởng</button>
+      <button class="tile" type="button" data-page="friends"><span class="ic c1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 20v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1M17 8h5M19.5 5.5v5"/></svg></span>Bạn đồng hành</button>
+      <button class="tile" type="button" data-page="rate"><span class="ic c7"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12zM8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></span>Đánh giá app</button>
     </div>
     <button class="go" type="button" data-go="create">Lên lịch trình</button>
     <ul class="why-list panel">
@@ -85,6 +101,12 @@
     <div id="notifList" class="list"></div>
   </section>
 
+  <!-- Trang phụ: cài đặt, khuyến mãi, điểm thưởng, bạn đồng hành, đánh giá, chính sách... -->
+  <section id="scr-page" class="scr" hidden>
+    <div class="scr-head page-head"><button type="button" class="back" id="pageBack" aria-label="Quay lại"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h1 id="pageTitle"></h1></div>
+    <div id="pageBody" class="list"></div>
+  </section>
+
   <!-- 5. Tài khoản -->
   <section id="scr-account" class="scr" hidden>
     <div class="scr-head"><h1>Tài khoản</h1></div>
@@ -100,6 +122,7 @@
   <button class="tab" type="button" data-go="account"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg>Tài khoản</button>
 </div></nav>
 
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <div id="sheet" class="sheet" hidden role="dialog" aria-modal="true" aria-label="Thông tin địa điểm"><div class="sheet-in"><div class="sheet-bar"><button id="sheetClose" class="x" type="button">Đóng</button></div><div id="sheetBody"></div></div></div>
 
 <script src="../vendor/qrcode-generator.js"></script>
