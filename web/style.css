@@ -217,15 +217,13 @@ textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--lin
 .hero2 p{margin:0 0 8px;font-size:16px;max-width:30ch;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 .hero2-cta{width:auto;padding:0 26px}
 .h2{margin:4px 0 -4px;font-size:20px;letter-spacing:-.01em}
-.aud-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.aud-cards{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:12px}
 .aud{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:150px;padding:16px;border:0;border-radius:22px;color:#fff;font:inherit;text-align:left;cursor:pointer}
 .aud svg{width:30px;height:30px;stroke:#fff;margin-bottom:auto}
 .aud b{font-size:20px;letter-spacing:-.01em}
 .aud span{font-size:13px;line-height:1.35;opacity:.92}
 .aud::after{content:"→";position:absolute;right:16px;top:14px;font-size:20px;opacity:.85}
 .a-fam{background:#B8420C}.a-cp{background:#A3194F}.a-fr{background:#5B2FC7}.a-solo{background:#0B6B63}
-.aud:nth-child(2),.aud:nth-child(3){transform:translateY(0)}
-@media (min-width:420px){.aud:nth-child(even){margin-top:14px}.aud:nth-child(odd){margin-bottom:-14px}.aud-cards{padding-bottom:14px}}
 .demo{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px}
 .demo-tabs{display:flex;gap:6px;overflow-x:auto}
 .demo-tabs button{flex:none;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--fg);font:inherit;font-size:14px;cursor:pointer}
