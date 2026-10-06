@@ -57,10 +57,11 @@
     <h2 class="h2">Một ngày ở Đà Nẵng, bốn nhịp khác nhau</h2>
     <div id="homeDemo" class="demo"></div>
 
-    <h2 class="h2">Bạn thích gì?</h2>
-    <div class="chips gu" role="group" aria-label="Gu du lịch">
-      <button type="button" data-preset="thien_nhien">Thiên nhiên</button><button type="button" data-preset="am_thuc">Ẩm thực</button><button type="button" data-preset="van_hoa">Văn hoá</button><button type="button" data-preset="check_in">Check-in</button><button type="button" data-preset="thu_gian">Thư giãn</button>
+    <h2 class="h2">Bạn thích gì? <small class="h2s">Chọn nhiều cũng được</small></h2>
+    <div class="chips gu" role="group" aria-label="Gu du lịch (chọn nhiều)">
+      <button type="button" data-gu="thien_nhien" aria-pressed="false">Thiên nhiên</button><button type="button" data-gu="am_thuc" aria-pressed="false">Ẩm thực</button><button type="button" data-gu="van_hoa" aria-pressed="false">Văn hoá</button><button type="button" data-gu="check_in" aria-pressed="false">Check-in</button><button type="button" data-gu="thu_gian" aria-pressed="false">Thư giãn</button>
     </div>
+    <button class="go" type="button" id="guGo" data-guplan disabled>Chọn sở thích để bắt đầu</button>
 
     <div id="homeRecent"></div>
 

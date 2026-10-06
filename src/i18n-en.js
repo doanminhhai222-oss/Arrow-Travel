@@ -254,5 +254,10 @@ export const EN = {
   "Tăng số người": "More travelers",
   "Bạn đã chỉnh lịch hoặc chốt chuyến đi. Bấm Xếp lại lịch để áp dụng thay đổi, các chỉnh sửa trước đó sẽ mất.": "You edited the plan or finalized the trip. Press Build plan to apply the change; your earlier edits will be lost.",
   "Chưa chọn": "Not selected",
-  "Đã có phương tiện riêng": "Own transport"
+  "Đã có phương tiện riêng": "Own transport",
+  "Chọn sở thích để bắt đầu": "Pick interests to start",
+  "Lên lịch với": "Plan with",
+  "sở thích": "interests",
+  "Chọn nhiều cũng được": "Pick as many as you like",
+  "Gu du lịch (chọn nhiều)": "Travel interests (pick several)"
 };

@@ -587,6 +587,12 @@ const PRESETS = {
 };
 /* ---------- Khám phá: bố cục riêng, lấy "lịch đổi theo người đi cùng" làm nhân vật chính ---------- */
 let homeAud = 'gia_dinh';
+let homeGu = []; // sở thích đang chọn ở trang Khám phá (chọn nhiều)
+function renderGu() {
+  document.querySelectorAll('[data-gu]').forEach((b) => b.setAttribute('aria-pressed', String(homeGu.includes(b.dataset.gu))));
+  const g = $('guGo'); g.disabled = homeGu.length === 0;
+  g.textContent = homeGu.length ? tr('Lên lịch với') + ' ' + homeGu.length + ' ' + tr('sở thích') : tr('Chọn sở thích để bắt đầu');
+}
 const DEMO_TABS = [['gia_dinh', 'Gia đình'], ['cap_doi', 'Cặp đôi'], ['nhom_ban', 'Nhóm bạn'], ['mot_minh', 'Một mình']];
 // Chạy đúng thuật toán xếp lịch cho một ngày mẫu để người xem thấy khác biệt thật giữa các đối tượng
 function demoDay(aud) {
@@ -609,6 +615,7 @@ function ribbonHtml(day, rule) {
   return '<div class="ribbon" role="img" aria-label="Dòng thời gian một ngày">' + segs.join('') + '</div><div class="ax"><span>' + rule.start + '</span><span>' + rule.end + '</span></div>';
 }
 function renderHome() {
+  renderGu();
   const pt = store.points.balance;
   $('homePts').textContent = pt + ' ' + tr('điểm');
   // Một ngày, bốn nhịp
@@ -675,10 +682,12 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
   if (d.editform !== undefined) { setFormOpen(true); $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (d.daytab !== undefined) { dayTab = d.daytab === 'all' ? 'all' : +d.daytab; render(); window.scrollTo({ top: $('dayTabs').offsetTop - 8, behavior: 'smooth' }); return; }
+  if (d.gu) { homeGu = homeGu.includes(d.gu) ? homeGu.filter((x) => x !== d.gu) : [...homeGu, d.gu]; renderGu(); return; }
+  if (d.guplan !== undefined) { if (homeGu.length) openCreate({ styles: [...homeGu] }, true); return; }
   if (d.demo) { homeAud = d.demo; renderHome(); return; }
   if (d.page) { openPage(d.page); return; }
   if (d.fav) { store.favorites = store.favorites.includes(d.fav) ? store.favorites.filter((x) => x !== d.fav) : [...store.favorites, d.fav]; persist(); renderTrips(); return; }
