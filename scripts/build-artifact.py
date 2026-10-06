@@ -19,9 +19,9 @@ def strip_module(src):
 
 detail = re.sub(r"^const (esc|vnd) = .*\n", "", read("src/detail.js"), flags=re.M)  # app.js tự có esc/vnd
 data_block = ("const DATA = " + read("data/da-nang.json") + ";\nconst RULES = " + read("data/rules.json") +
-              ";\nconst OPTS = " + read("data/travel-options.json") + ";")
+              ";\nconst OPTS = " + read("data/travel-options.json") + ";\nconst TRANSPORT = " + read("data/transport.json") + ";")
 app = re.sub(r"// <DATA>.*?// </DATA>", lambda m: data_block, read("web/app.js"), flags=re.S)
-js = "\n".join(strip_module(s) for s in [read("src/scheduler.js"), read("src/costing.js"), detail, app])
+js = "\n".join(strip_module(s) for s in [read("src/scheduler.js"), read("src/costing.js"), read("src/transport.js"), detail, app])
 
 out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(f"{title}\n{fonts}\n<style>\n{css}\n</style>\n{body}\n<script>\n{js}\n</script>\n", encoding="utf-8")

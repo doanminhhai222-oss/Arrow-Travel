@@ -21,7 +21,7 @@ export function defaultFlight(flights, trip) {
 }
 
 // plan: kết quả buildItinerary (có thể đã chỉnh sửa). flight = null nghĩa là tự túc, không tính vé máy bay.
-export function estimateCost({ trip, plan, flight, hotel }) {
+export function estimateCost({ trip, plan, flight, hotel, transport = null }) {
   const people = trip.people;
   const nDays = daysBetween(trip.startDate, trip.endDate);
   const nights = Math.max(0, nDays - 1);
@@ -37,7 +37,8 @@ export function estimateCost({ trip, plan, flight, hotel }) {
   }
   lines.push({ key: 'food', label: 'Ăn uống', amount: (FOOD_PER_PERSON_DAY[trip.budget] ?? 0) * people * nDays, note: `${people} người × ${nDays} ngày` });
   lines.push({ key: 'tickets', label: 'Vé tham quan', amount: tickets, note: `${items.length} điểm` });
-  lines.push({ key: 'local', label: 'Di chuyển trong thành phố', amount: Math.round((km * LOCAL_TRANSPORT_PER_KM) / 1000) * 1000, note: `${km.toFixed(1)} km` });
+  if (transport) lines.push({ key: 'local', label: `Di chuyển: ${transport.name}`, amount: transport.total, note: `${transport.totalKm} km, ${transport.vehicles} xe` });
+  else lines.push({ key: 'local', label: 'Di chuyển trong thành phố', amount: Math.round((km * LOCAL_TRANSPORT_PER_KM) / 1000) * 1000, note: `${km.toFixed(1)} km` });
 
   const total = lines.reduce((s, l) => s + l.amount, 0);
   return { lines, total, perPerson: Math.round(total / people), nights };

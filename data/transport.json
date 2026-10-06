@@ -1,0 +1,22 @@
+{
+  "_note": "GIÁ MẪU để ước tính theo quãng đường, không phải bảng giá thật của Grab, Xanh SM hay hãng taxi. Giá thật đổi theo giờ cao điểm, mưa, khu vực. Cần thay bằng số liệu thật.",
+  "airport": { "name": "Sân bay Đà Nẵng", "lat": 16.0439, "lng": 108.1992 },
+  "modes": [
+    { "id": "thue-xe-may", "name": "Thuê xe máy tự lái", "brand": "Cửa hàng cho thuê", "kind": "rental", "cap": 2, "perDay": 150000, "fuelPerKm": 700, "kidsOk": false, "elderlyOk": false,
+      "note": "Cần bằng lái xe máy và mũ bảo hiểm. Tiền xăng tính theo quãng đường." },
+    { "id": "xe-om-cn", "name": "Xe ôm công nghệ", "brand": "GrabBike, Be, Xanh SM Bike", "kind": "ride", "cap": 1, "base": 14000, "baseKm": 2, "perKm": 5500, "kidsOk": false, "elderlyOk": false,
+      "note": "Mỗi người một xe, rẻ và nhanh khi đi một mình hoặc cặp đôi." },
+    { "id": "grab-car", "name": "Grab Car 4 chỗ", "brand": "Grab", "kind": "ride", "cap": 4, "base": 28000, "baseKm": 2, "perKm": 11000, "kidsOk": true, "elderlyOk": true,
+      "note": "Đặt qua app, có điều hoà, tối đa 4 người." },
+    { "id": "xanh-sm", "name": "Xanh SM taxi điện 4 chỗ", "brand": "Xanh SM", "kind": "ride", "cap": 4, "base": 26000, "baseKm": 2, "perKm": 12500, "kidsOk": true, "elderlyOk": true,
+      "note": "Xe điện, tài xế đồng phục, tối đa 4 người." },
+    { "id": "taxi", "name": "Taxi truyền thống 4 chỗ", "brand": "Mai Linh, Vinasun", "kind": "ride", "cap": 4, "base": 12000, "baseKm": 0.8, "perKm": 14500, "kidsOk": true, "elderlyOk": true,
+      "note": "Vẫy xe hoặc gọi tổng đài, tính tiền theo đồng hồ." },
+    { "id": "xe-7-cho", "name": "Xe 7 chỗ theo app", "brand": "Grab, Xanh SM", "kind": "ride", "cap": 6, "base": 38000, "baseKm": 2, "perKm": 14500, "kidsOk": true, "elderlyOk": true,
+      "note": "Hợp nhóm 5-6 người hoặc gia đình nhiều hành lý." },
+    { "id": "tai-xe-4", "name": "Thuê xe 4 chỗ có tài xế theo ngày", "brand": "Công ty du lịch, xe hợp đồng", "kind": "driver", "cap": 4, "perDay": 1100000, "includedKmPerDay": 100, "extraPerKm": 9000, "kidsOk": true, "elderlyOk": true,
+      "note": "Tài xế đi theo cả ngày, tiện cho điểm xa như Bà Nà, Ngũ Hành Sơn." },
+    { "id": "tai-xe-7", "name": "Thuê xe 7 chỗ có tài xế theo ngày", "brand": "Công ty du lịch, xe hợp đồng", "kind": "driver", "cap": 7, "perDay": 1500000, "includedKmPerDay": 100, "extraPerKm": 11000, "kidsOk": true, "elderlyOk": true,
+      "note": "Hợp nhóm đông hoặc gia đình ba thế hệ." }
+  ]
+}

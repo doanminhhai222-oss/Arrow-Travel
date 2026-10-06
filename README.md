@@ -20,6 +20,7 @@ GitHub chỉ hiện mã nguồn, không chạy web. Để mở web bằng link: 
 | `data/travel-options.json` | Nơi khởi hành, vé máy bay, khách sạn (giá mẫu) |
 | `src/detail.js` | Trang chi tiết địa điểm (ảnh minh hoạ, bản đồ mini, văn hoá, đánh giá quán) |
 | `scripts/enrich-places.py` | Gộp nội dung chi tiết vào `data/da-nang.json` |
+| `src/transport.js` + `data/transport.json` | Đề xuất xe máy, Grab, Xanh SM, taxi... và tính chi phí theo quãng đường (giá mẫu) |
 | `src/costing.js` | Ước tính tổng chi phí sau khi chốt lịch trình |
 | `data/rules.json` | `Quy_tac_doi_tuong`: giờ bắt đầu, số điểm/ngày, nghỉ trưa, di chuyển tối đa |
 | `web/` | Giao diện (HTML + JS thuần): 5 màn hình Khám phá, Tạo mới, Lịch trình của tôi, Thông báo, Tài khoản. **Nguồn duy nhất của giao diện** |
