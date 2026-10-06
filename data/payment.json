@@ -1,0 +1,9 @@
+{
+  "_note": "Tài khoản nhận tiền của chủ app. mode='demo': QR bị phủ chữ MẪU, không nhận tiền thật. Chỉ khi mode='live' VÀ dữ liệu chuyến bay/khách sạn đã thay bằng dữ liệu thật (sample=false) thì mới hiện QR dùng được.",
+  "mode": "demo",
+  "bankName": "Vietcombank (VCB)",
+  "bankBin": "970436",
+  "accountNumber": "0731000880190",
+  "accountName": "",
+  "contentPrefix": "ARROW"
+}

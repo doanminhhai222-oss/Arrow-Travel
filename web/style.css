@@ -132,3 +132,14 @@ input,select{width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--
 .tab svg{width:24px;height:24px;stroke:currentColor}
 .tab[aria-current="page"]{color:var(--teal);font-weight:700}
 .tab .badge{position:absolute;top:6px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--orange);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+
+/* Chuyến bay, thanh toán */
+.final h4{margin:16px 0 4px;font-size:14px}
+.paybox{margin-top:16px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.pay h2{margin:8px 0 8px;font-size:20px;color:var(--teal)}
+.qrbox{position:relative;width:min(260px,100%);margin:12px auto;border-radius:12px;overflow:hidden;background:#fff}
+.qr{display:block;width:100%;height:auto}
+.qr-wm{position:absolute;inset:0;display:grid;place-items:center;font-size:56px;font-weight:700;color:#7a2605;letter-spacing:4px;background:repeating-linear-gradient(45deg,rgba(217,72,15,.45) 0 14px,rgba(255,255,255,.7) 14px 28px)}
+.steps{margin:8px 0 12px;padding-left:20px;color:var(--muted);font-size:14px}
+.tag-status{display:inline-block;font-size:12px;padding:1px 10px;border-radius:999px;background:var(--teal-soft);color:var(--teal);font-weight:600}
+.tag-status.chua_chuyen,.tag-status.thu{background:var(--warn-bg);color:var(--warn-fg)}

@@ -33,7 +33,8 @@ export function estimateCost({ trip, plan, flight, hotel, transport = null }) {
   if (flight) lines.push({ key: 'flight', label: 'Vé máy bay khứ hồi', amount: flight.priceRoundTrip * people, note: `${people} người × ${flight.priceRoundTrip.toLocaleString('vi-VN')} đ` });
   if (hotel && nights > 0) {
     const rooms = Math.ceil(people / hotel.capacity);
-    lines.push({ key: 'hotel', label: 'Khách sạn', amount: hotel.pricePerRoom * rooms * nights, note: `${rooms} phòng × ${nights} đêm` });
+    const perRoom = hotel.stayPerRoom ?? hotel.pricePerRoom * nights; // giá từng đêm đã tính theo ngày nếu có
+    lines.push({ key: 'hotel', label: 'Khách sạn', amount: perRoom * rooms, note: `${rooms} phòng × ${nights} đêm` });
   }
   lines.push({ key: 'food', label: 'Ăn uống', amount: (FOOD_PER_PERSON_DAY[trip.budget] ?? 0) * people * nDays, note: `${people} người × ${nDays} ngày` });
   lines.push({ key: 'tickets', label: 'Vé tham quan', amount: tickets, note: `${items.length} điểm` });

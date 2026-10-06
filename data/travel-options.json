@@ -1,104 +1,43 @@
 {
-  "_note": "GIÁ MẪU để chạy thử, không phải giá thật. Cần thay bằng dữ liệu thật hoặc liên kết affiliate sau.",
+  "_note": "GIÁ VÀ PHÒNG TRỐNG MẪU để chạy thử, không phải dữ liệu thật.",
+  "sample": true,
   "origins": [
     {
       "id": "ho-chi-minh",
-      "name": "TP. Hồ Chí Minh",
-      "flights": [
-        {
-          "id": "hcm-lcc",
-          "label": "Hãng giá rẻ",
-          "depart": "06:10",
-          "back": "20:40",
-          "duration": "1h25",
-          "priceRoundTrip": 1600000,
-          "baggage": "7kg xách tay"
-        },
-        {
-          "id": "hcm-fsc",
-          "label": "Hãng truyền thống",
-          "depart": "08:00",
-          "back": "18:30",
-          "duration": "1h25",
-          "priceRoundTrip": 2600000,
-          "baggage": "20kg ký gửi, có suất ăn nhẹ"
-        }
-      ]
+      "name": "TP. Hồ Chí Minh"
     },
     {
       "id": "ha-noi",
-      "name": "Hà Nội",
-      "flights": [
-        {
-          "id": "han-lcc",
-          "label": "Hãng giá rẻ",
-          "depart": "06:30",
-          "back": "21:00",
-          "duration": "1h20",
-          "priceRoundTrip": 1900000,
-          "baggage": "7kg xách tay"
-        },
-        {
-          "id": "han-fsc",
-          "label": "Hãng truyền thống",
-          "depart": "09:15",
-          "back": "17:45",
-          "duration": "1h20",
-          "priceRoundTrip": 3000000,
-          "baggage": "20kg ký gửi, có suất ăn nhẹ"
-        }
-      ]
+      "name": "Hà Nội"
     },
     {
       "id": "hai-phong",
-      "name": "Hải Phòng",
-      "flights": [
-        {
-          "id": "hph-lcc",
-          "label": "Hãng giá rẻ",
-          "depart": "07:00",
-          "back": "20:15",
-          "duration": "1h25",
-          "priceRoundTrip": 2100000,
-          "baggage": "7kg xách tay"
-        },
-        {
-          "id": "hph-fsc",
-          "label": "Hãng truyền thống",
-          "depart": "10:30",
-          "back": "17:20",
-          "duration": "1h25",
-          "priceRoundTrip": 3200000,
-          "baggage": "20kg ký gửi"
-        }
-      ]
+      "name": "Hải Phòng"
     },
     {
       "id": "can-tho",
-      "name": "Cần Thơ",
-      "flights": [
-        {
-          "id": "cat-lcc",
-          "label": "Hãng giá rẻ",
-          "depart": "07:20",
-          "back": "19:50",
-          "duration": "1h30",
-          "priceRoundTrip": 2000000,
-          "baggage": "7kg xách tay"
-        },
-        {
-          "id": "cat-fsc",
-          "label": "Hãng truyền thống",
-          "depart": "11:00",
-          "back": "17:00",
-          "duration": "1h30",
-          "priceRoundTrip": 3100000,
-          "baggage": "20kg ký gửi"
-        }
-      ]
+      "name": "Cần Thơ"
     }
   ],
   "hotels": [
+    {
+      "id": "hostel-bien",
+      "name": "Hostel gần biển Mỹ Khê (mẫu)",
+      "stars": 2,
+      "area": "Mỹ Khê",
+      "pricePerRoom": 250000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 16.0535,
+      "lng": 108.2455,
+      "rating": 8.2,
+      "amenities": [
+        "Wifi",
+        "Bếp chung"
+      ]
+    },
     {
       "id": "homestay",
       "name": "Homestay gần trung tâm (mẫu)",
@@ -110,7 +49,31 @@
       "elderly": false,
       "tier": "tiet_kiem",
       "lat": 16.061,
-      "lng": 108.22
+      "lng": 108.22,
+      "rating": 8.4,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ]
+    },
+    {
+      "id": "3sao-tt",
+      "name": "Khách sạn 3 sao Hải Châu (mẫu)",
+      "stars": 3,
+      "area": "Hải Châu",
+      "pricePerRoom": 650000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 16.062,
+      "lng": 108.2215,
+      "rating": 8.1,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Thang máy"
+      ]
     },
     {
       "id": "3sao-bien",
@@ -123,7 +86,13 @@
       "elderly": true,
       "tier": "vua_phai",
       "lat": 16.056,
-      "lng": 108.247
+      "lng": 108.247,
+      "rating": 8.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ]
     },
     {
       "id": "can-ho",
@@ -136,7 +105,13 @@
       "elderly": true,
       "tier": "vua_phai",
       "lat": 16.09,
-      "lng": 108.245
+      "lng": 108.245,
+      "rating": 8.8,
+      "amenities": [
+        "Bếp",
+        "Hồ bơi",
+        "Máy giặt"
+      ]
     },
     {
       "id": "4sao-tt",
@@ -149,7 +124,52 @@
       "elderly": true,
       "tier": "thoai_mai",
       "lat": 16.064,
-      "lng": 108.226
+      "lng": 108.226,
+      "rating": 8.7,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Thang máy"
+      ]
+    },
+    {
+      "id": "4sao-bien",
+      "name": "Khách sạn 4 sao Mỹ Khê (mẫu)",
+      "stars": 4,
+      "area": "Mỹ Khê",
+      "pricePerRoom": 1450000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 16.058,
+      "lng": 108.249,
+      "rating": 8.9,
+      "amenities": [
+        "Sát biển",
+        "Hồ bơi",
+        "Ăn sáng"
+      ]
+    },
+    {
+      "id": "resort-nhs",
+      "name": "Resort 5 sao Ngũ Hành Sơn (mẫu)",
+      "stars": 5,
+      "area": "Ngũ Hành Sơn",
+      "pricePerRoom": 2800000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 16.007,
+      "lng": 108.264,
+      "rating": 9.1,
+      "amenities": [
+        "Bãi biển riêng",
+        "Hồ bơi",
+        "Spa"
+      ]
     },
     {
       "id": "resort",
@@ -162,7 +182,33 @@
       "elderly": true,
       "tier": "thoai_mai",
       "lat": 16.1177,
-      "lng": 108.303
+      "lng": 108.303,
+      "rating": 9.3,
+      "amenities": [
+        "Bãi biển riêng",
+        "Hồ bơi",
+        "Spa",
+        "Xe đưa đón"
+      ]
+    },
+    {
+      "id": "villa",
+      "name": "Villa biển 3 phòng ngủ (mẫu)",
+      "stars": 5,
+      "area": "Mỹ Khê",
+      "pricePerRoom": 4200000,
+      "capacity": 6,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 16.05,
+      "lng": 108.25,
+      "rating": 9.0,
+      "amenities": [
+        "Hồ bơi riêng",
+        "Bếp",
+        "Sát biển"
+      ]
     }
   ]
 }

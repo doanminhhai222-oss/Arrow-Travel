@@ -1,0 +1,102 @@
+{
+  "_note": "CHUYẾN BAY MẪU. Giờ bay và giá được sinh theo quy tắc từ giá gốc (thứ trong tuần, giờ bay, số ngày còn lại), KHÔNG phải dữ liệu thật. Tìm đủ mọi hãng thật cần nguồn dữ liệu của đại lý hoặc API trả phí.",
+  "sample": true,
+  "destination": {
+    "id": "da-nang",
+    "name": "Đà Nẵng",
+    "airport": "DAD"
+  },
+  "carriers": [
+    {
+      "id": "vn",
+      "name": "Vietnam Airlines",
+      "code": "VN",
+      "type": "full",
+      "baggage": "23kg ký gửi, có suất ăn",
+      "departures": [
+        "06:15",
+        "09:00",
+        "12:30",
+        "16:45",
+        "19:30"
+      ]
+    },
+    {
+      "id": "vj",
+      "name": "Vietjet Air",
+      "code": "VJ",
+      "type": "lcc",
+      "baggage": "7kg xách tay",
+      "departures": [
+        "05:55",
+        "08:20",
+        "11:45",
+        "15:10",
+        "18:35",
+        "21:05"
+      ]
+    },
+    {
+      "id": "qh",
+      "name": "Bamboo Airways",
+      "code": "QH",
+      "type": "full",
+      "baggage": "20kg ký gửi",
+      "departures": [
+        "07:10",
+        "13:20",
+        "19:00"
+      ]
+    },
+    {
+      "id": "vu",
+      "name": "Vietravel Airlines",
+      "code": "VU",
+      "type": "full",
+      "baggage": "20kg ký gửi, có suất ăn nhẹ",
+      "departures": [
+        "06:40",
+        "14:00",
+        "20:15"
+      ]
+    }
+  ],
+  "routes": {
+    "ho-chi-minh": {
+      "airport": "SGN",
+      "durationMin": 85,
+      "base": {
+        "vn": 1300000,
+        "vj": 750000,
+        "qh": 900000,
+        "vu": 950000
+      }
+    },
+    "ha-noi": {
+      "airport": "HAN",
+      "durationMin": 80,
+      "base": {
+        "vn": 1500000,
+        "vj": 850000,
+        "qh": 1000000,
+        "vu": 1000000
+      }
+    },
+    "hai-phong": {
+      "airport": "HPH",
+      "durationMin": 85,
+      "base": {
+        "vn": 1600000,
+        "vj": 1000000
+      }
+    },
+    "can-tho": {
+      "airport": "VCA",
+      "durationMin": 95,
+      "base": {
+        "vn": 1550000,
+        "vj": 1000000
+      }
+    }
+  }
+}

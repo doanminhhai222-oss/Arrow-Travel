@@ -12,6 +12,15 @@ Chỉ cần Node 18+. Không có thư viện nào phải cài.
 ## Xem trên GitHub Pages
 GitHub chỉ hiện mã nguồn, không chạy web. Để mở web bằng link: vào **Settings → Pages**, mục *Build and deployment* chọn **Deploy from a branch**, chọn nhánh (hiện là `claude/tender-albattani-p9z3b9`, sau này là `main`) và thư mục **/ (root)**, bấm Save. Chờ 1-2 phút, link có dạng `https://doanminhhai222-oss.github.io/Arrow-Travel/`.
 
+## Thanh toán bằng mã QR
+Sau khi chốt, khách chọn chuyến bay và khách sạn (tìm theo ngày đã chọn) rồi thanh toán qua mã VietQR tới tài khoản trong `data/payment.json`. Không có cổng thanh toán, không tự xác nhận: chủ app đối chiếu giao dịch theo mã đặt chỗ (ví dụ `ATWX7U8T`, nằm trong nội dung chuyển khoản) rồi mới xác nhận vé và phòng.
+
+**Mặc định đang ở chế độ thử**: chuyến bay và khách sạn là dữ liệu mẫu nên mã QR bị phủ chữ MẪU. Để nhận tiền thật cần đủ cả 2 điều kiện:
+1. `data/payment.json`: đổi `"mode"` thành `"live"` và điền `accountName` (tên chủ tài khoản, để khách đối chiếu).
+2. `data/flights.json` và `data/travel-options.json`: thay bằng dữ liệu thật rồi đổi `"sample"` thành `false`.
+
+Chưa đủ cả hai thì app không hiện mã QR dùng được. Tìm "tất cả các hãng" thật cần nguồn dữ liệu của đại lý hoặc API trả phí, hiện đang là dữ liệu mẫu 4 hãng.
+
 ## Cấu trúc
 | Đường dẫn | Việc |
 |---|---|
@@ -21,6 +30,9 @@ GitHub chỉ hiện mã nguồn, không chạy web. Để mở web bằng link: 
 | `src/detail.js` | Trang chi tiết địa điểm (ảnh minh hoạ, bản đồ mini, văn hoá, đánh giá quán) |
 | `scripts/enrich-places.py` | Gộp nội dung chi tiết vào `data/da-nang.json` |
 | `src/transport.js` + `data/transport.json` | Đề xuất xe máy, Grab, Xanh SM, taxi... và tính chi phí theo quãng đường (giá mẫu) |
+| `src/search.js` | Tìm chuyến bay (mọi hãng) và khách sạn theo ngày, giá và chỗ trống mẫu |
+| `src/payment.js` | Tạo mã VietQR (chuẩn NAPAS), mã đặt chỗ, điều kiện được nhận tiền thật |
+| `vendor/qrcode-generator.js` | Thư viện vẽ mã QR (MIT, Kazuhiko Arase), chép nguyên bản 1.4.4 |
 | `src/costing.js` | Ước tính tổng chi phí sau khi chốt lịch trình |
 | `data/rules.json` | `Quy_tac_doi_tuong`: giờ bắt đầu, số điểm/ngày, nghỉ trưa, di chuyển tối đa |
 | `web/` | Giao diện (HTML + JS thuần): 5 màn hình Khám phá, Tạo mới, Lịch trình của tôi, Thông báo, Tài khoản. **Nguồn duy nhất của giao diện** |
