@@ -32,12 +32,18 @@ test('tên địa điểm được escape', () => {
   assert.ok(!html.includes('<script>x'));
 });
 
-test('Mỹ Khê dùng ảnh thật khi có, các điểm khác vẫn dùng ảnh minh hoạ', async () => {
+test('địa điểm có ảnh thật thì dùng ảnh (file tồn tại, có ghi nguồn), chưa có ảnh thì dùng hình minh hoạ', async () => {
   const { existsSync } = await import('node:fs');
   const my = get('my-khe');
   assert.equal(my.image, 'images/my-khe.jpg');
   assert.ok(existsSync(new URL('../web/' + my.image, import.meta.url)), 'thiếu file ảnh');
   const html = placeDetailHtml(my, [my]);
   assert.match(html, /<img class="pd-img pd-photo" src="images\/my-khe\.jpg" alt="Hoàng hôn trên biển Mỹ Khê/);
-  assert.match(placeDetailHtml(get('linh-ung'), []), /<svg class="pd-img"/);
+  assert.match(placeDetailHtml({ ...get('linh-ung'), image: undefined, imageCredit: undefined }, []), /<svg class="pd-img"/);
+  for (const id of ['ba-na', 'linh-ung', 'cho-han']) {
+    const p = get(id);
+    assert.ok(existsSync(new URL('../web/' + p.image, import.meta.url)), 'thiếu file ảnh ' + id);
+    assert.match(p.imageCredit, /Wikimedia Commons/);
+    assert.ok(placeDetailHtml(p, [p]).includes('class="pd-credit"'));
+  }
 });

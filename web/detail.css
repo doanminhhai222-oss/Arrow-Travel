@@ -34,3 +34,4 @@
 .pd .go{width:100%}
 .pd .go[disabled]{opacity:.55}
 .pd-photo{aspect-ratio:4/3;max-height:none;object-position:center 70%}
+.pd-credit{font-size:11px;color:var(--muted);margin:2px 0 6px}

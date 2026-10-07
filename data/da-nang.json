@@ -30,7 +30,10 @@
         "Trên núi mát hơn dưới phố khoảng 5-6 độ, nên mang áo khoác mỏng",
         "Dành ít nhất 4-5 tiếng để đi hết Cầu Vàng, Làng Pháp và khu vui chơi"
       ],
-      "culture": "Cầu Vàng có đôi bàn tay đá khổng lồ nâng đỡ. Làng Pháp dựng lại theo khu nghỉ mát của người Pháp từ thập niên 1920, khi Bà Nà được khai phá làm nơi tránh nóng. Trên núi còn có chùa Linh Ứng Bà Nà và tượng Phật Thích Ca."
+      "culture": "Cầu Vàng có đôi bàn tay đá khổng lồ nâng đỡ. Làng Pháp dựng lại theo khu nghỉ mát của người Pháp từ thập niên 1920, khi Bà Nà được khai phá làm nơi tránh nóng. Trên núi còn có chùa Linh Ứng Bà Nà và tượng Phật Thích Ca.",
+      "image": "images/ba-na.jpg",
+      "imageAlt": "Bà Nà Hills",
+      "imageCredit": "Ảnh: DvTor8303 · CC0 · Wikimedia Commons"
     },
     {
       "id": "cau-rong",
@@ -60,7 +63,10 @@
         "Đứng ở bờ đông sông Hàn để chụp trọn cả thân cầu",
         "Buổi tối đông, giữ gìn đồ cá nhân"
       ],
-      "culture": "Cầu dài khoảng 666 m, hình con rồng uốn lượn. Rồng là biểu tượng của quyền uy và may mắn trong văn hoá Việt, nên được chọn làm hình ảnh đại diện cho sự vươn lên của thành phố."
+      "culture": "Cầu dài khoảng 666 m, hình con rồng uốn lượn. Rồng là biểu tượng của quyền uy và may mắn trong văn hoá Việt, nên được chọn làm hình ảnh đại diện cho sự vươn lên của thành phố.",
+      "image": "images/cau-rong.jpg",
+      "imageAlt": "Cầu Rồng",
+      "imageCredit": "Ảnh: Thangphan · CC0 · Wikimedia Commons"
     },
     {
       "id": "my-khe",
@@ -122,7 +128,10 @@
         "Tượng Quan Thế Âm cao khoảng 67 m, nhìn thấy từ xa trên đường lên bán đảo Sơn Trà",
         "Đường lên dốc, nên đi xe máy hoặc ô tô, tránh đi bộ"
       ],
-      "culture": "Chùa thờ Quan Thế Âm Bồ Tát, biểu tượng của lòng từ bi. Tượng quay mặt ra biển với ý nghĩa che chở cho ngư dân và tàu thuyền, người dân địa phương thường đến cầu bình an."
+      "culture": "Chùa thờ Quan Thế Âm Bồ Tát, biểu tượng của lòng từ bi. Tượng quay mặt ra biển với ý nghĩa che chở cho ngư dân và tàu thuyền, người dân địa phương thường đến cầu bình an.",
+      "image": "images/linh-ung.jpg",
+      "imageAlt": "Chùa Linh Ứng Bãi Bụt",
+      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "ngu-hanh-son",
@@ -151,7 +160,10 @@
         "Động Huyền Không tối, mang đèn điện thoại",
         "Đi buổi sáng cho mát, ghé làng đá mỹ nghệ Non Nước ở chân núi"
       ],
-      "culture": "Năm ngọn núi đá vôi mang tên ngũ hành Kim, Mộc, Thuỷ, Hoả, Thổ theo quan niệm phương Đông. Trong núi có nhiều chùa và hang động thờ Phật, dưới chân là làng nghề điêu khắc đá Non Nước nổi tiếng."
+      "culture": "Năm ngọn núi đá vôi mang tên ngũ hành Kim, Mộc, Thuỷ, Hoả, Thổ theo quan niệm phương Đông. Trong núi có nhiều chùa và hang động thờ Phật, dưới chân là làng nghề điêu khắc đá Non Nước nổi tiếng.",
+      "image": "images/ngu-hanh-son.jpg",
+      "imageAlt": "Ngũ Hành Sơn",
+      "imageCredit": "Ảnh: Kuroczynski · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "bao-tang-cham",
@@ -180,7 +192,10 @@
         "Nên xem theo từng phòng trưng bày: Mỹ Sơn, Trà Kiệu, Đồng Dương",
         "Thường có thuyết minh hoặc bảng giải thích song ngữ"
       ],
-      "culture": "Nơi lưu giữ bộ sưu tập điêu khắc Chăm lớn nhất cả nước. Vương quốc Chăm Pa phát triển từ khoảng thế kỷ 4 đến thế kỷ 15, chịu ảnh hưởng Ấn Độ giáo với các hình tượng thần Shiva, Vishnu và vũ nữ Apsara."
+      "culture": "Nơi lưu giữ bộ sưu tập điêu khắc Chăm lớn nhất cả nước. Vương quốc Chăm Pa phát triển từ khoảng thế kỷ 4 đến thế kỷ 15, chịu ảnh hưởng Ấn Độ giáo với các hình tượng thần Shiva, Vishnu và vũ nữ Apsara.",
+      "image": "images/bao-tang-cham.jpg",
+      "imageAlt": "Bảo tàng Điêu khắc Chăm",
+      "imageCredit": "Ảnh: Jean-Pierre Dalbéra from Paris, France · CC BY 2.0 · Wikimedia Commons"
     },
     {
       "id": "cho-han",
@@ -210,7 +225,10 @@
         "Hỏi giá và trả giá nhẹ trước khi mua",
         "Giữ kỹ ví và điện thoại ở chỗ đông"
       ],
-      "culture": "Chợ truyền thống lâu đời ở trung tâm, bán đồ ăn vặt, hải sản khô, đặc sản mua về làm quà như mực khô, nước mắm, bánh khô mè."
+      "culture": "Chợ truyền thống lâu đời ở trung tâm, bán đồ ăn vặt, hải sản khô, đặc sản mua về làm quà như mực khô, nước mắm, bánh khô mè.",
+      "image": "images/cho-han.jpg",
+      "imageAlt": "Chợ Hàn",
+      "imageCredit": "Ảnh: Daderot · CC0 · Wikimedia Commons"
     },
     {
       "id": "cau-tinh-yeu",
@@ -238,7 +256,10 @@
         "Gần Cầu Rồng, đi bộ ghép hai điểm được",
         "Có thể mua ổ khoá treo tại các quầy gần đó"
       ],
-      "culture": "Cầu có nhiều ổ khoá của các cặp đôi. Cuối cầu là tượng Cá chép hoá rồng, gắn với truyền thuyết cá chép vượt vũ môn thành rồng, tượng trưng cho ý chí vượt khó."
+      "culture": "Cầu có nhiều ổ khoá của các cặp đôi. Cuối cầu là tượng Cá chép hoá rồng, gắn với truyền thuyết cá chép vượt vũ môn thành rồng, tượng trưng cho ý chí vượt khó.",
+      "image": "images/cau-tinh-yeu.jpg",
+      "imageAlt": "Cầu Tình Yêu",
+      "imageCredit": "Ảnh: This Photo was taken by Supanut Arunoprayote.\n\nFeel free to use any of my images, but please mention me as the author and may send me a message.  (สามารถใช้ภาพได้อิสระ แต่กรุณาใส่เครดิตผู้ถ่ายและอาจส่งข้อความบอกกล่าวด้วย) \n\n\n\nPlease do not upload an updated image here without consultation with the Author. The author would like to make corrections only at his own source. This ensures that the changes are preserved.Please if you think that any changes should be required, please inform the author.Otherwise you can upload a new image with a new name. Please use one of the templates derivative or extract. · CC BY 4.0 · Wikimedia Commons"
     },
     {
       "id": "art-paradise",

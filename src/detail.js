@@ -105,7 +105,7 @@ export function placeDetailHtml(place, dayPlaces = []) {
   if (place.kids) tags.push('Hợp trẻ nhỏ');
   if (place.elderly) tags.push('Hợp người lớn tuổi');
   const list = (a) => (a && a.length ? `<ul class="pd-list">${a.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
-  let h = `<div class="pd">${sceneSvg(place)}<h2>${esc(place.name)}</h2><div class="pd-tags">${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
+  let h = `<div class="pd">${sceneSvg(place)}${place.imageCredit ? `<p class="pd-credit">${esc(place.imageCredit)}</p>` : ''}<h2>${esc(place.name)}</h2><div class="pd-tags">${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   h += `<dl class="pd-facts"><div><dt>Giờ mở cửa</dt><dd>${esc(place.open)} – ${esc(place.close)}</dd></div><div><dt>${isFood ? 'Giá tham khảo' : 'Giá vé'}</dt><dd>${vnd(place.price)}</dd></div><div><dt>Thời gian</dt><dd>${place.duration >= 60 ? Math.floor(place.duration / 60) + 'h' + (place.duration % 60 ? String(place.duration % 60).padStart(2, '0') : '') : place.duration + 'p'}</dd></div></dl>`;
   if (place.highlights?.length) h += `<h3>Chú ý nổi bật</h3>${list(place.highlights)}`;
   if (isFood || place.rating) {
