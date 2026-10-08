@@ -91,7 +91,7 @@ function score(place, fit, rule, styles) {
 
 export function planDay(date, pool, rule, trip, visited) {
   const items = [];
-  let clock = toMin(rule.start), last = null, lunchDone = false, dinnerDone = false, sights = 0;
+  let clock = toMin(rule.start), last = null, lunchDone = false, dinnerDone = false, cafeDone = false, sights = 0;
   const lunchAt = toMin(rule.lunchStart);
 
   const pushVisit = (place, fit, kind, note) => {
@@ -128,6 +128,8 @@ export function planDay(date, pool, rule, trip, visited) {
   while (sights < rule.maxPerDay) {
     if (!lunchDone && clock >= lunchAt) { doLunch(); continue; }
     const b = pickBest(sightsPool, (p) => {
+      // mỗi ngày tối đa một quán cà phê, và chỉ từ đầu giờ chiều (không ghé cà phê giữa buổi sáng)
+      if (p.type === 'cafe' && (cafeDone || clock < 13 * 60 + 30)) return false;
       if (lunchDone) return true;
       const f = tryFit(p, clock, last, rule);
       // điểm kéo dài qua giờ trưa: chỉ nhận nếu đủ dài để coi như đã gồm bữa trưa
@@ -136,6 +138,7 @@ export function planDay(date, pool, rule, trip, visited) {
     if (!b) break;
     if (!lunchDone && (b.fit.end > lunchAt + 90 || b.p.duration >= 240)) lunchDone = true;
     pushVisit(b.p, b.fit, 'visit');
+    if (b.p.type === 'cafe') cafeDone = true;
     sights++;
   }
   if (!lunchDone && clock < toMin(rule.end) - 240) doLunch();

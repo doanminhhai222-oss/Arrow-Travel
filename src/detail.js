@@ -108,7 +108,7 @@ export function placeDetailHtml(place, dayPlaces = []) {
   let h = `<div class="pd">${sceneSvg(place)}${place.imageCredit ? `<p class="pd-credit">${esc(place.imageCredit)}</p>` : ''}<h2>${esc(place.name)}</h2><div class="pd-tags">${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
   h += `<dl class="pd-facts"><div><dt>Giờ mở cửa</dt><dd>${esc(place.open)} – ${esc(place.close)}</dd></div><div><dt>${isFood ? 'Giá tham khảo' : 'Giá vé'}</dt><dd>${vnd(place.price)}</dd></div><div><dt>Thời gian</dt><dd>${place.duration >= 60 ? Math.floor(place.duration / 60) + 'h' + (place.duration % 60 ? String(place.duration % 60).padStart(2, '0') : '') : place.duration + 'p'}</dd></div></dl>`;
   if (place.highlights?.length) h += `<h3>Chú ý nổi bật</h3>${list(place.highlights)}`;
-  if (isFood || place.rating) {
+  if (isFood || place.rating || place.desc) {
     if (place.desc) h += `<h3>Mô tả</h3><p>${esc(place.desc)}</p>`;
     if (place.rating) h += `<h3>Đánh giá</h3><p class="pd-rate"><span class="pd-stars" aria-hidden="true">${stars(place.rating)}</span> <b>${place.rating.toFixed(1)}</b> · ${place.reviews} lượt${place.sample ? ' <em>(đánh giá mẫu)</em>' : ''}</p>${place.review ? `<blockquote>${esc(place.review)}</blockquote>` : ''}`;
     if (place.dishes?.length) h += `<h3>Món nên thử</h3><div class="pd-tags">${place.dishes.map((d) => `<span class="tag">${esc(d)}</span>`).join('')}</div>`;
@@ -116,7 +116,7 @@ export function placeDetailHtml(place, dayPlaces = []) {
   } else if (place.culture) {
     h += `<h3>Nét đặc trưng văn hoá</h3><p>${esc(place.culture)}</p>`;
   }
-  h += `<h3>Bản đồ</h3>${miniMapSvg(place, dayPlaces)}${legendHtml(place, dayPlaces)}<p class="hint">Số trên bản đồ là thứ tự đi trong ngày. Vị trí tính từ toạ độ mẫu.</p>`;
+  h += `${place.address ? `<h3>Địa chỉ</h3><p>${esc(place.address)}</p>` : ''}<h3>Bản đồ</h3>${miniMapSvg(place, dayPlaces)}${legendHtml(place, dayPlaces)}<p class="hint">Số trên bản đồ là thứ tự đi trong ngày. ${place.approx ? 'Vị trí chỉ là ước lượng, xem lại trên Google Maps.' : 'Vị trí tính từ toạ độ mẫu.'}</p>`;
   h += `<a class="pd-link" href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank" rel="noopener">Mở trong Google Maps</a></div>`;
   return h;
 }

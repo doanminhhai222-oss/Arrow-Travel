@@ -66,3 +66,16 @@ test('phong cách quyết định điểm đầu tiên, chọn nhiều phong cá
   assert.ok(['culture', 'park', 'beach'].includes(first(['van_hoa', 'thien_nhien'])));
   assert.doesNotThrow(() => plan({ audience: 'mot_minh', styles: [] }));
 });
+
+test('mỗi ngày tối đa một quán cà phê và chỉ từ đầu giờ chiều', () => {
+  for (const audience of ['cap_doi', 'nhom_ban', 'gia_dinh', 'mot_minh']) {
+    for (const styles of [[], ['thu_gian'], ['thu_gian', 'am_thuc']]) {
+      const p = plan({ audience, styles, startDate: '2026-10-13', endDate: '2026-10-17' });
+      for (const d of p.days) {
+        const cafes = d.items.filter((i) => i.place && i.place.type === 'cafe');
+        assert.ok(cafes.length <= 1, `${audience} ngày ${d.dayIndex} có ${cafes.length} quán cà phê`);
+        for (const c of cafes) assert.ok(toMin(c.time) >= 13 * 60 + 30, `cà phê quá sớm: ${c.time}`);
+      }
+    }
+  }
+});

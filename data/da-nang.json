@@ -506,6 +506,463 @@
         "Đã đóng cửa, không dùng"
       ],
       "culture": ""
+    },
+    {
+      "id": "an-thoi",
+      "name": "Ăn Thôi",
+      "type": "food",
+      "meal": "dinner",
+      "lat": 16.0712,
+      "lng": 108.2241,
+      "duration": 75,
+      "open": "10:30",
+      "close": "21:30",
+      "price": 150000,
+      "walking": 0,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Dễ ghép với chợ Hàn và đi dạo sông Hàn",
+        "Giờ cao điểm đông, nên đến sớm hoặc đặt chỗ",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bánh xèo miền Trung nhỏ, vỏ giòn, ăn cuốn với bánh tráng và rau sống chấm nước mắm hoặc tương.",
+      "desc": "Quán Việt gần sông Hàn và chợ Hàn, nổi tiếng với bánh xèo giòn, được Michelin Guide ghi nhận (Bib Gourmand).",
+      "dishes": [
+        "Bánh xèo giòn",
+        "Món Việt theo thực đơn quán"
+      ],
+      "address": "114 Bạch Đằng, Hải Châu",
+      "approx": true
+    },
+    {
+      "id": "banh-xeo-ba-duong",
+      "name": "Bánh xèo Bà Dưỡng",
+      "type": "food",
+      "meal": "lunch",
+      "lat": 16.0497,
+      "lng": 108.2185,
+      "duration": 60,
+      "open": "09:00",
+      "close": "21:30",
+      "price": 80000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Quán nằm trong hẻm, nhìn kỹ bản đồ",
+        "Cao điểm thường hết chỗ ngồi, nên đi trước 11h30 hoặc sau 14h",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bánh xèo Đà Nẵng nhỏ, giòn, cuốn rau sống, chấm nước lèo đặc trưng cùng nem lụi nướng.",
+      "desc": "Quán bánh xèo và nem lụi lâu năm trong hẻm, đông khách địa phương lẫn khách du lịch.",
+      "dishes": [
+        "Bánh xèo",
+        "Nem lụi"
+      ],
+      "address": "K280/23 Hoàng Diệu, Hải Châu (trong hẻm)",
+      "approx": true
+    },
+    {
+      "id": "mi-quang-ba-mua",
+      "name": "Mì Quảng Bà Mua",
+      "type": "food",
+      "meal": "lunch",
+      "lat": 16.0636,
+      "lng": 108.2162,
+      "duration": 60,
+      "open": "06:00",
+      "close": "21:00",
+      "price": 50000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Ăn kèm bánh tráng mè và rau sống",
+        "Trưa đông, nên đến trước 12h",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Mì Quảng là món đặc sản Quảng Nam – Đà Nẵng, sợi mì bản to, ít nước, ăn với đậu phộng và bánh tráng.",
+      "desc": "Quán mì Quảng quen thuộc trong trung tâm, sợi mì to, nước nhân đậm đà.",
+      "dishes": [
+        "Mì Quảng gà",
+        "Mì Quảng tôm thịt",
+        "Bánh tráng mè"
+      ],
+      "address": "19 Trần Bình Trọng, Hải Châu",
+      "approx": true
+    },
+    {
+      "id": "banh-trang-thit-heo-tran",
+      "name": "Bánh tráng cuốn thịt heo Trần",
+      "type": "food",
+      "meal": "lunch",
+      "lat": 16.0716,
+      "lng": 108.221,
+      "duration": 60,
+      "open": "10:00",
+      "close": "21:00",
+      "price": 120000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Mắm nêm hơi nặng mùi, hỏi quán nếu lần đầu ăn",
+        "Gọi theo suất, nhóm đông nên gọi nhiều phần",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Thịt heo luộc cuốn bánh tráng, rau sống và chấm mắm nêm là món ăn dân dã rất riêng của miền Trung.",
+      "desc": "Quán chuyên bánh tráng cuốn thịt heo luộc với rau sống và mắm nêm đặc trưng.",
+      "dishes": [
+        "Bánh tráng cuốn thịt heo",
+        "Mắm nêm",
+        "Bánh xèo"
+      ],
+      "address": "4 Lê Duẩn, Hải Châu",
+      "approx": true
+    },
+    {
+      "id": "bun-cha-ca-109",
+      "name": "Bún chả cá 109",
+      "type": "food",
+      "meal": "lunch",
+      "lat": 16.0652,
+      "lng": 108.22,
+      "duration": 60,
+      "open": "06:00",
+      "close": "20:00",
+      "price": 40000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Hợp bữa sáng hoặc trưa nhẹ",
+        "Thêm ớt sa tế nếu thích cay",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bún chả cá Đà Nẵng nấu từ cá biển, nước dùng ngọt, ăn cùng rau sống và ớt.",
+      "desc": "Quán bún chả cá nước lèo ngọt thanh từ xương và cá, bình dân.",
+      "dishes": [
+        "Bún chả cá",
+        "Bún chả cá giò"
+      ],
+      "address": "109 Nguyễn Chí Thanh, Hải Châu",
+      "approx": true
+    },
+    {
+      "id": "com-ga-ba-buoi",
+      "name": "Cơm gà Bà Buội",
+      "type": "food",
+      "meal": "lunch",
+      "lat": 16.0625,
+      "lng": 108.214,
+      "duration": 60,
+      "open": "09:00",
+      "close": "20:00",
+      "price": 60000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Phần ăn vừa, hợp bữa trưa",
+        "Giờ cao điểm hơi đông",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cơm gà miền Trung nấu bằng nước luộc gà, vàng thơm, ăn với hành tây, rau răm và nước mắm gừng.",
+      "desc": "Quán cơm gà xé phay kiểu Hội An - Đà Nẵng, cơm nấu nước luộc gà, ăn với rau răm và gỏi.",
+      "dishes": [
+        "Cơm gà xé",
+        "Gỏi gà",
+        "Canh"
+      ],
+      "address": "22 Thái Phiên, Hải Châu",
+      "approx": true
+    },
+    {
+      "id": "banh-mi-ba-lan",
+      "name": "Bánh mì Bà Lan",
+      "type": "food",
+      "meal": "lunch",
+      "lat": 16.0681,
+      "lng": 108.2,
+      "duration": 30,
+      "open": "06:00",
+      "close": "20:00",
+      "price": 25000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Hợp ăn nhanh, mang đi",
+        "Có thể đông giờ ăn sáng",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bánh mì Việt Nam vỏ giòn, nhân thịt, rau, pate là món ăn đường phố được yêu thích khắp cả nước.",
+      "desc": "Tiệm bánh mì nổi tiếng với pate và nhân đầy, hợp ăn nhanh hoặc mang đi.",
+      "dishes": [
+        "Bánh mì thịt nướng",
+        "Bánh mì pate"
+      ],
+      "address": "62 Trần Cao Vân, Thanh Khê",
+      "approx": true
+    },
+    {
+      "id": "hai-san-be-man",
+      "name": "Hải sản Bé Mặn",
+      "type": "food",
+      "meal": "dinner",
+      "lat": 16.0578,
+      "lng": 108.2468,
+      "duration": 90,
+      "open": "16:00",
+      "close": "23:00",
+      "price": 300000,
+      "walking": 0,
+      "slot": "evening",
+      "audiences": [
+        "nhom_ban",
+        "gia_dinh",
+        "cap_doi"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Hỏi giá theo cân và chốt giá trước khi chế biến",
+        "Nên đi nhóm 3 đến 4 người để gọi được nhiều món",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Hải sản tươi là thế mạnh của thành phố biển, thường chọn trực tiếp rồi nhờ quán nấu theo ý.",
+      "desc": "Quán hải sản ven biển, chọn hải sản tươi tại bể và nhờ quán chế biến.",
+      "dishes": [
+        "Ghẹ hấp",
+        "Tôm nướng",
+        "Ốc các loại"
+      ],
+      "address": "Võ Nguyên Giáp, Sơn Trà (khu ven biển)",
+      "approx": true
+    },
+    {
+      "id": "highlands-coffee",
+      "name": "Highlands Coffee",
+      "type": "cafe",
+      "lat": 16.0718,
+      "lng": 108.2236,
+      "duration": 60,
+      "open": "07:00",
+      "close": "22:00",
+      "price": 55000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Có nhiều chi nhánh, chọn chi nhánh gần bạn trên Google Maps",
+        "Điều hoà mát, hợp nghỉ trưa",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cà phê và trà là thói quen của người Đà Nẵng: ngồi lâu, trò chuyện, nghỉ chân giữa buổi đi chơi.",
+      "desc": "Chuỗi cà phê Việt quen thuộc, có nhiều chi nhánh trong thành phố.",
+      "dishes": [
+        "Phin sữa đá",
+        "Trà sen vàng",
+        "Freeze trà xanh"
+      ],
+      "address": "Khu ven sông Hàn, Hải Châu (nhiều chi nhánh)",
+      "approx": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "type": "cafe",
+      "lat": 16.0734,
+      "lng": 108.233,
+      "duration": 60,
+      "open": "07:30",
+      "close": "22:00",
+      "price": 85000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Có nhiều chi nhánh, chọn chi nhánh gần bạn trên Google Maps",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cà phê và trà là thói quen của người Đà Nẵng: ngồi lâu, trò chuyện, nghỉ chân giữa buổi đi chơi.",
+      "desc": "Chuỗi cà phê quốc tế, không gian yên tĩnh, có wifi, hợp ngồi làm việc hoặc nghỉ chân.",
+      "dishes": [
+        "Cà phê latte",
+        "Frappuccino",
+        "Trà trái cây"
+      ],
+      "address": "Khu Vincom Plaza, Sơn Trà (nhiều chi nhánh)",
+      "approx": true
+    },
+    {
+      "id": "phe-la",
+      "name": "Phê La",
+      "type": "cafe",
+      "lat": 16.069,
+      "lng": 108.221,
+      "duration": 60,
+      "open": "08:00",
+      "close": "22:30",
+      "price": 65000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Chưa xác minh được địa chỉ chi nhánh, tra Phê La trên Google Maps để chọn chi nhánh gần bạn",
+        "Giờ cao điểm cuối tuần khá đông",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cà phê và trà là thói quen của người Đà Nẵng: ngồi lâu, trò chuyện, nghỉ chân giữa buổi đi chơi.",
+      "desc": "Thương hiệu trà và cà phê đặc sản, nổi tiếng với trà ô long và các món dùng nguyên liệu Việt.",
+      "dishes": [
+        "Trà ô long nhài sữa",
+        "Trà ô long",
+        "Cà phê đặc sản"
+      ],
+      "address": "Khu trung tâm Hải Châu (xem chi nhánh gần nhất)",
+      "approx": true
+    },
+    {
+      "id": "ca-phe-trinh",
+      "name": "Cà phê Trình",
+      "type": "cafe",
+      "lat": 16.071,
+      "lng": 108.2158,
+      "duration": 60,
+      "open": "06:30",
+      "close": "23:30",
+      "price": 45000,
+      "walking": 0,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Mở từ sáng sớm đến khuya (theo một số nguồn đến 1h30 sáng)",
+        "Hợp ghé sau bữa tối",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cà phê và trà là thói quen của người Đà Nẵng: ngồi lâu, trò chuyện, nghỉ chân giữa buổi đi chơi.",
+      "desc": "Quán cà phê lâu năm, nổi tiếng với cà phê bơ, mở đến rạng sáng.",
+      "dishes": [
+        "Cà phê bơ",
+        "Cà phê sữa đá"
+      ],
+      "address": "25 Phạm Hồng Thái, Hải Châu",
+      "approx": true
     }
   ]
 }

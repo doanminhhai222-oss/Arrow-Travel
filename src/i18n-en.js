@@ -325,5 +325,7 @@ export const EN = {
   "Chưa có ảnh hay nhận xét cho nơi này.": "No photos or notes for this place yet.",
   "Phương tiện": "Transport",
   "Bấm vào một thẻ để xem và chọn.": "Tap a card to view and choose.",
-  "Vé máy bay, khách sạn, phương tiện": "Flights, hotel, transport"
+  "Vé máy bay, khách sạn, phương tiện": "Flights, hotel, transport",
+  "Địa chỉ": "Address",
+  "Vị trí chỉ là ước lượng, xem lại trên Google Maps.": "Location is approximate, check it on Google Maps."
 };
