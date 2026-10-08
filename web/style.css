@@ -390,3 +390,11 @@ textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--lin
 .aud::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.22) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.75) 100%)}
 .aud b,.aud span{text-shadow:0 1px 3px rgba(0,0,0,.45)}
 .a-solo .aud-bg{object-position:center 75%}.a-cp .aud-bg{object-position:center 30%}.a-fr .aud-bg{object-position:center 40%}.a-fam .aud-bg{object-position:center 55%}
+
+/* Lịch trình nổi bật: ảnh làm nền cả thẻ, chữ nằm trên lớp tối dần */
+.fcard.has-cover{position:relative;isolation:isolate;height:230px;border:0;color:#fff;display:flex;flex-direction:column;justify-content:flex-end}
+.fcard.has-cover .fc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.fcard.has-cover::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.78) 100%)}
+.fcard.has-cover div{padding:12px 14px}
+.fcard.has-cover b{font-size:16px;line-height:1.3;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.fcard.has-cover span{color:rgba(255,255,255,.9)}

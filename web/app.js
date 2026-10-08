@@ -955,10 +955,13 @@ function featuredStats(f) {
   const tickets = f.days.flat().reduce((sum, id) => sum + DATA.places.find((x) => x.id === id).price, 0) * f.people;
   return { stops, tickets };
 }
+// Ảnh bìa lịch trình nổi bật: dùng ảnh thật của một điểm trong lịch (ảnh của chủ dự án hoặc ảnh Wikimedia có giấy phép)
+const featuredCover = (f) => DATA.places.find((p) => p.id === f.cover && p.image) || null;
 function renderFeatured() {
   $('homeFeatured').innerHTML = FEATURED.featured.map((f) => {
     const st = featuredStats(f);
-    return '<button type="button" class="pcard fcard" data-featured="' + f.id + '">' + sceneSvg({ scene: f.scene, name: f.title }) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
+    const cv = featuredCover(f);
+    return '<button type="button" class="pcard fcard' + (cv ? ' has-cover' : '') + '" data-featured="' + f.id + '">' + (cv ? '<img class="fc-img" src="' + esc(cv.image) + '" alt="" loading="lazy">' : sceneSvg({ scene: f.scene, name: f.title })) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
   }).join('');
 }
 function openFeatured(id) {
@@ -967,7 +970,8 @@ function openFeatured(id) {
   const p = buildFeaturedPlan(f); p.days.forEach(retime); rule = keep;
   const st = featuredStats(f);
   lastFocus = document.activeElement; detailPlace = null; detailHotel = null; addCtx = null;
-  $('sheetBody').innerHTML = '<div class="pd">' + sceneSvg({ scene: f.scene, name: f.title }) + '<h2>' + esc(f.title) + '</h2><p class="hint">Bởi ' + esc(f.author) + ' · lịch trình mẫu, chưa phải của người dùng thật</p>' +
+  const cv = featuredCover(f);
+  $('sheetBody').innerHTML = '<div class="pd">' + (cv ? sceneSvg({ ...cv, imageAlt: cv.imageAlt || cv.name }) + (cv.imageCredit ? '<p class="pd-credit">' + esc(cv.imageCredit) + '</p>' : '') : sceneSvg({ scene: f.scene, name: f.title })) + '<h2>' + esc(f.title) + '</h2><p class="hint">Bởi ' + esc(f.author) + ' · lịch trình mẫu, chưa phải của người dùng thật</p>' +
     '<div class="pd-tags"><span class="tag">' + esc(p.audienceLabel) + '</span><span class="tag">' + f.people + ' người</span><span class="tag">' + f.days.length + ' ngày</span>' + f.styles.map((x) => '<span class="tag">' + esc(STYLE_NAME[x]) + '</span>').join('') + '</div>' +
     '<p style="margin-top:8px">' + esc(f.desc) + '</p><p class="hint">Vé tham quan khoảng ' + moneyVnd(st.tickets) + ' cho cả nhóm.</p>' +
     p.days.map((d) => '<h3>Ngày ' + d.dayIndex + '</h3><ul class="stops">' + d.items.map((i) => '<li class="' + (i.kind === 'visit' ? 'v' : 'm') + '"><time>' + i.time + '</time><span>' + esc(i.place.name) + (i.late ? ' <em style="color:var(--orange);font-style:normal">(có thể quá giờ)</em>' : '') + '</span></li>').join('') + '</ul>').join('') +

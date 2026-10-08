@@ -27,7 +27,8 @@
           "banh-xeo",
           "art-paradise"
         ]
-      ]
+      ],
+      "cover": "my-khe"
     },
     {
       "id": "f-couple",
@@ -55,7 +56,8 @@
           "cau-tinh-yeu",
           "cau-rong"
         ]
-      ]
+      ],
+      "cover": "cau-tinh-yeu"
     },
     {
       "id": "f-friends",
@@ -78,7 +80,8 @@
           "asia-park",
           "cau-rong"
         ]
-      ]
+      ],
+      "cover": "cau-rong"
     },
     {
       "id": "f-bana",
@@ -103,7 +106,8 @@
           "ngu-hanh-son",
           "cau-rong"
         ]
-      ]
+      ],
+      "cover": "ba-na"
     },
     {
       "id": "f-solo",
@@ -130,7 +134,8 @@
           "banh-xeo",
           "ngu-hanh-son"
         ]
-      ]
+      ],
+      "cover": "bao-tang-cham"
     }
   ]
 }
