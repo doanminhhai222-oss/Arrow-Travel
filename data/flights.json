@@ -184,6 +184,41 @@
           }
         }
       }
+    },
+    "Nha Trang": {
+      "airport": "CXR",
+      "name": "Nha Trang (sân bay Cam Ranh)",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 60,
+          "base": {
+            "vn": 1100000,
+            "vj": 650000,
+            "qh": 800000,
+            "vu": 850000
+          }
+        },
+        "ha-noi": {
+          "airport": "HAN",
+          "durationMin": 125,
+          "base": {
+            "vn": 1700000,
+            "vj": 1000000,
+            "qh": 1200000,
+            "vu": 1150000
+          }
+        },
+        "da-nang": {
+          "airport": "DAD",
+          "durationMin": 75,
+          "base": {
+            "vn": 1300000,
+            "vj": 800000,
+            "qh": 950000
+          }
+        }
+      }
     }
   }
 }

@@ -400,6 +400,90 @@
         ]
       ],
       "cover": "pho-co-ha-noi"
+    },
+    {
+      "id": "f-nt-couple",
+      "destination": "Nha Trang",
+      "title": "Nha Trang thong thả cho cặp đôi: biển, tháp Chăm và hải sản",
+      "author": "Bảo Ngọc (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "am_thuc"
+      ],
+      "scene": "beach",
+      "desc": "Sáng đi Tháp Bà Ponagar rồi tắm bùn khoáng, chiều ngồi Louisiane ngắm biển, tối ăn hải sản. Ngày sau lên chùa Long Sơn, ăn nem nướng và dạo Tháp Trầm Hương.",
+      "days": [
+        [
+          "thap-ba-ponagar",
+          "tam-bun-thap-ba",
+          "louisiane-brewhouse",
+          "hai-san-bo-ke"
+        ],
+        [
+          "chua-long-son",
+          "nem-nuong-dang-van-quyen",
+          "bien-nha-trang",
+          "thap-tram-huong"
+        ]
+      ],
+      "cover": "thap-ba-ponagar"
+    },
+    {
+      "id": "f-nt-family",
+      "destination": "Nha Trang",
+      "title": "Nha Trang cho gia đình có bé: Hải dương học, VinWonders và biển",
+      "author": "Quang Huy (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "van_hoa"
+      ],
+      "scene": "wheel",
+      "desc": "Ngày một tới Viện Hải dương học, ăn bún chả cá rồi chơi biển trung tâm. Ngày sau đi cáp treo sang VinWonders.",
+      "days": [
+        [
+          "vien-hai-duong-hoc",
+          "hoa-suong-cha-ca",
+          "bien-nha-trang"
+        ],
+        [
+          "vinwonders-nha-trang"
+        ]
+      ],
+      "cover": "vien-hai-duong-hoc"
+    },
+    {
+      "id": "f-nt-friends",
+      "destination": "Nha Trang",
+      "title": "Nha Trang cho nhóm bạn: tour đảo, nem nướng và Sailing Club",
+      "author": "Minh Tuấn (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "scene": "boat",
+      "desc": "Ngày đầu đi tour đảo lặn san hô Hòn Mun. Ngày sau Hòn Chồng, nem nướng, bò nướng và nhạc tối ở Sailing Club.",
+      "days": [
+        [
+          "tour-4-dao-nha-trang"
+        ],
+        [
+          "hon-chong",
+          "nem-nuong-dang-van-quyen",
+          "thap-tram-huong",
+          "bo-nuong-lac-canh",
+          "sailing-club"
+        ]
+      ],
+      "cover": "hon-chong"
     }
   ]
 }

@@ -379,5 +379,8 @@ export const EN = {
   "Hà Nội": "Hanoi",
   "Một ngày ở Hà Nội, bốn nhịp khác nhau": "One day in Hanoi, four different paces",
   "Địa điểm Hà Nội là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hanoi places are real, but coordinates and prices are estimates; hotels are sample data.",
-  "Đóng cửa vào ngày này": "Closed on this date"
+  "Đóng cửa vào ngày này": "Closed on this date",
+  "Nha Trang": "Nha Trang",
+  "Một ngày ở Nha Trang, bốn nhịp khác nhau": "One day in Nha Trang, four different paces",
+  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Nha Trang places are real, but coordinates and prices are estimates; hotels are sample data."
 };

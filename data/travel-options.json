@@ -3078,6 +3078,726 @@
         }
       ],
       "city": "Hà Nội"
+    },
+    {
+      "id": "nt-hostel",
+      "name": "Hostel trung tâm Nha Trang (mẫu)",
+      "stars": 2,
+      "area": "Trung tâm",
+      "pricePerRoom": 250000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 12.24,
+      "lng": 109.196,
+      "rating": 4.1,
+      "amenities": [
+        "Wifi",
+        "Bếp chung"
+      ],
+      "description": "Hostel nhỏ cách biển vài phút đi bộ, phù hợp đi tiết kiệm.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 16,
+          "beds": "1 giường đôi",
+          "view": "Hẻm yên tĩnh",
+          "factor": 1.0,
+          "perks": [
+            "Quạt trần",
+            "Phòng tắm riêng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng có cửa sổ",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Cửa sổ thoáng",
+          "factor": 1.2,
+          "perks": [
+            "Máy lạnh",
+            "Cửa sổ"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room"
+      ],
+      "reviewCount": 678,
+      "reviewSource": "sample",
+      "googleQuery": "Hostel trung tâm Nha Trang Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-homestay",
+      "name": "Homestay gần biển (mẫu)",
+      "stars": 2,
+      "area": "Trần Phú",
+      "pricePerRoom": 380000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 12.238,
+      "lng": 109.195,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Homestay gọn, chủ nhà thân thiện, đi bộ ra biển.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Wifi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng ban công",
+          "sleeps": 2,
+          "sizeM2": 26,
+          "beds": "1 giường đôi",
+          "view": "Ban công",
+          "factor": 1.25,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 798,
+      "reviewSource": "sample",
+      "googleQuery": "Homestay gần biển Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-3sao",
+      "name": "Khách sạn 3 sao trung tâm (mẫu)",
+      "stars": 3,
+      "area": "Trung tâm",
+      "pricePerRoom": 700000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 12.2435,
+      "lng": 109.194,
+      "rating": 4.0,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 3 sao gần phố ẩm thực, cách biển khoảng 300 m.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 22,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.25,
+          "perks": [
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 40,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.7,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 137,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao trung tâm Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-3sao-bien",
+      "name": "Khách sạn 3 sao ven biển (mẫu)",
+      "stars": 3,
+      "area": "Trần Phú",
+      "pricePerRoom": 850000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 12.246,
+      "lng": 109.196,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 3 sao ngay đường biển Trần Phú, có hồ bơi tầng thượng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 24,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi",
+          "view": "Một phần hướng biển",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 42,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.75,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 511,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao ven biển Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-4sao",
+      "name": "Khách sạn 4 sao trung tâm (mẫu)",
+      "stars": 4,
+      "area": "Trung tâm",
+      "pricePerRoom": 1400000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 12.242,
+      "lng": 109.195,
+      "rating": 4.3,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 4 sao gần biển, có hồ bơi và nhà hàng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 34,
+          "beds": "1 giường đôi",
+          "view": "Hướng sông Hàn",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Phòng Suite",
+          "sleeps": 3,
+          "sizeM2": 52,
+          "beds": "1 giường lớn + sofa",
+          "view": "Hướng sông Hàn",
+          "factor": 1.9,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 144,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao trung tâm Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-4sao-bien",
+      "name": "Khách sạn 4 sao sát biển (mẫu)",
+      "stars": 4,
+      "area": "Trần Phú",
+      "pricePerRoom": 1650000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 12.245,
+      "lng": 109.1965,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Spa"
+      ],
+      "description": "Khách sạn 4 sao hướng biển, có hồ bơi và quán bar tầng thượng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 36,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình hướng biển",
+          "sleeps": 4,
+          "sizeM2": 56,
+          "beds": "2 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.9,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach",
+        "food"
+      ],
+      "reviewCount": 518,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao sát biển Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-resort",
+      "name": "Resort 5 sao bãi dài Cam Ranh (mẫu)",
+      "stars": 5,
+      "area": "Bãi Dài",
+      "pricePerRoom": 3500000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 12.07,
+      "lng": 109.215,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Spa",
+        "Bãi biển riêng"
+      ],
+      "description": "Resort 5 sao sát bãi Dài, có hồ bơi lớn, spa và bãi biển riêng, cách trung tâm khoảng 30 km.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe vườn",
+          "sleeps": 2,
+          "sizeM2": 40,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Vườn nhiệt đới",
+          "factor": 1.0,
+          "perks": [
+            "Bãi biển riêng",
+            "Hồ bơi",
+            "Spa"
+          ]
+        },
+        {
+          "id": "ocean",
+          "name": "Phòng hướng biển",
+          "sleeps": 2,
+          "sizeM2": 44,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Bãi biển riêng"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Suite gia đình",
+          "sleeps": 4,
+          "sizeM2": 80,
+          "beds": "1 giường đôi + 2 giường đơn",
+          "view": "Hướng biển",
+          "factor": 2.0,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Bãi biển riêng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 195,
+      "reviewSource": "sample",
+      "googleQuery": "Resort 5 sao bãi dài Cam Ranh Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
+    },
+    {
+      "id": "nt-villa",
+      "name": "Villa hồ bơi riêng ven vịnh (mẫu)",
+      "stars": 5,
+      "area": "Vịnh Nha Trang",
+      "pricePerRoom": 4800000,
+      "capacity": 6,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 12.2,
+      "lng": 109.225,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi riêng",
+        "Bếp"
+      ],
+      "description": "Villa riêng có hồ bơi nhìn ra vịnh, hợp nhóm bạn hoặc gia đình đông người.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "3pn",
+          "name": "Villa 3 phòng ngủ",
+          "sleeps": 6,
+          "sizeM2": 180,
+          "beds": "3 giường đôi",
+          "view": "Gần biển",
+          "factor": 1.0,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        },
+        {
+          "id": "4pn",
+          "name": "Villa 4 phòng ngủ",
+          "sleeps": 8,
+          "sizeM2": 240,
+          "beds": "4 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.4,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 232,
+      "reviewSource": "sample",
+      "googleQuery": "Villa hồ bơi riêng ven vịnh Nha Trang",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Nha Trang"
     }
   ]
 }

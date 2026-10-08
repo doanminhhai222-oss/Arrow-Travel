@@ -166,3 +166,37 @@ test('Hà Nội: lịch trình, khách sạn, sân bay và tuyến bay đúng đ
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
   }
 });
+
+// ---- Nha Trang
+const NT = data.places.filter((p) => p.city === 'Nha Trang');
+
+test('Nha Trang: dữ liệu hợp lệ, lịch trình, khách sạn, sân bay Cam Ranh và lịch trình nổi bật', async () => {
+  const { flightDataFor, originsFor } = await import('../src/search.js');
+  assert.ok(NT.length >= 20, 'hiện ' + NT.length);
+  const types = new Set(NT.map((p) => p.type));
+  for (const t of ['beach', 'park', 'culture', 'checkin', 'food', 'cafe']) assert.ok(types.has(t), 'thiếu loại ' + t);
+  for (const p of NT) {
+    assert.ok(p.lat > 11.9 && p.lat < 12.4 && p.lng > 109.1 && p.lng < 109.4, `${p.id} nằm ngoài vùng Nha Trang`);
+    assert.ok(p.audiences.length && p.highlights.length && p.culture, p.id);
+    if (p.type === 'food') assert.ok(['lunch', 'dinner'].includes(p.meal), p.id);
+  }
+  for (const audience of ['cap_doi', 'gia_dinh', 'nhom_ban', 'mot_minh']) {
+    const p = buildItinerary(base({ destination: 'Nha Trang', audience, hasKids: audience === 'gia_dinh' }), data, rules);
+    const used = p.days.flatMap((d) => d.items.filter((i) => i.place));
+    assert.ok(used.length > 0 && used.every((i) => i.place.city === 'Nha Trang'), audience);
+  }
+  const hotels = hotelsFor(opts.hotels, { destination: 'Nha Trang' });
+  assert.ok(hotels.length >= 8 && hotels.every((h) => h.city === 'Nha Trang'));
+  for (const tier of ['tiet_kiem', 'vua_phai', 'thoai_mai']) assert.ok(hotels.some((h) => h.tier === tier));
+  assert.equal(flightDataFor(flights, 'Nha Trang').destination.airport, 'CXR');
+  const o = originsFor(flights, opts.origins, 'Nha Trang').map((x) => x.id);
+  assert.ok(o.includes('ho-chi-minh') && o.includes('ha-noi') && o.includes('da-nang') && !o.includes('can-tho'));
+  assert.ok(transport.airports['Nha Trang'].lat < 12.1, 'sân bay Cam Ranh cách trung tâm khoảng 30 km về phía nam');
+  const list = featured.featured.filter((f) => f.destination === 'Nha Trang');
+  assert.ok(list.length >= 3);
+  for (const f of list) for (const id of f.days.flat()) {
+    const p = data.places.find((x) => x.id === id);
+    assert.ok(p && p.city === 'Nha Trang' && p.audiences.includes(f.audience), f.id + ': ' + id);
+    if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
+  }
+});

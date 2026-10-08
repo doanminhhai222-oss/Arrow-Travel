@@ -379,5 +379,8 @@ export const ZH = {
   "Hà Nội": "河内",
   "Một ngày ở Hà Nội, bốn nhịp khác nhau": "河内的一天，四种节奏",
   "Địa điểm Hà Nội là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "河内的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
-  "Đóng cửa vào ngày này": "当天不开放"
+  "Đóng cửa vào ngày này": "当天不开放",
+  "Nha Trang": "芽庄",
+  "Một ngày ở Nha Trang, bốn nhịp khác nhau": "芽庄的一天，四种节奏",
+  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "芽庄的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
 };
