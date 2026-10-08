@@ -259,7 +259,7 @@
       "culture": "Cầu có nhiều ổ khoá của các cặp đôi. Cuối cầu là tượng Cá chép hoá rồng, gắn với truyền thuyết cá chép vượt vũ môn thành rồng, tượng trưng cho ý chí vượt khó.",
       "image": "images/cau-tinh-yeu.jpg",
       "imageAlt": "Cầu Tình Yêu",
-      "imageCredit": "Ảnh: This Photo was taken by Supanut Arunoprayote.\n\nFeel free to use any of my images, but please mention me as the author and may send me a message.  (สามารถใช้ภาพได้อิสระ แต่กรุณาใส่เครดิตผู้ถ่ายและอาจส่งข้อความบอกกล่าวด้วย) \n\n\n\nPlease do not upload an updated image here without consultation with the Author. The author would like to make corrections only at his own source. This ensures that the changes are preserved.Please if you think that any changes should be required, please inform the author.Otherwise you can upload a new image with a new name. Please use one of the templates derivative or extract. · CC BY 4.0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Supanut Arunoprayote · CC BY 4.0 · Wikimedia Commons"
     },
     {
       "id": "art-paradise",
@@ -355,7 +355,10 @@
         "Trà đào",
         "Nước dừa"
       ],
-      "sample": true
+      "sample": true,
+      "image": "images/cf-hoang-hon.jpg",
+      "imageAlt": "Quán cà phê ngắm hoàng hôn (mẫu)",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
     },
     {
       "id": "mi-quang",
@@ -437,7 +440,10 @@
         "Nem lụi",
         "Bánh cuốn"
       ],
-      "sample": true
+      "sample": true,
+      "image": "images/banh-xeo.jpg",
+      "imageAlt": "Bánh xèo (mẫu)",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo"
     },
     {
       "id": "hai-san",
@@ -477,7 +483,10 @@
         "Tôm nướng",
         "Mực xào"
       ],
-      "sample": true
+      "sample": true,
+      "image": "images/hai-san.jpg",
+      "imageAlt": "Quán hải sản bên biển (mẫu)",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
     },
     {
       "id": "cho-con-cu",
@@ -581,7 +590,10 @@
         "Nem lụi"
       ],
       "address": "K280/23 Hoàng Diệu, Hải Châu (trong hẻm)",
-      "approx": true
+      "approx": true,
+      "image": "images/banh-xeo-ba-duong.jpg",
+      "imageAlt": "Bánh xèo Bà Dưỡng",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo, không phải ảnh tại quán"
     },
     {
       "id": "mi-quang-ba-mua",
@@ -850,7 +862,10 @@
         "Freeze trà xanh"
       ],
       "address": "Khu ven sông Hàn, Hải Châu (nhiều chi nhánh)",
-      "approx": true
+      "approx": true,
+      "image": "images/highlands-coffee.jpg",
+      "imageAlt": "Highlands Coffee",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Highlands Coffee"
     },
     {
       "id": "starbucks",
@@ -925,7 +940,10 @@
         "Cà phê đặc sản"
       ],
       "address": "Khu trung tâm Hải Châu (xem chi nhánh gần nhất)",
-      "approx": true
+      "approx": true,
+      "image": "images/phe-la.jpg",
+      "imageAlt": "Phê La",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh cửa hàng Phê La"
     },
     {
       "id": "ca-phe-trinh",
