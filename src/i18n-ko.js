@@ -1,6 +1,6 @@
 // Bản dịch tiếng Hàn, khoá là câu tiếng Việt gốc. Câu nào chưa có thì dùng bản tiếng Anh.
 export const KO = {
-  "Chuyến đi đúng người, đúng nhịp.": "맞는 사람과, 맞는 속도로 떠나는 여행.",
+  "Chỉ một mũi tên, đi hết cả hành trình.": "화살표 하나로, 여행의 처음부터 끝까지.",
   "Bắt đầu": "시작하기",
   "Khám phá": "탐색",
   "Lịch trình của tôi": "내 일정",

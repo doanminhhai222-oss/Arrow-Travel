@@ -45,7 +45,7 @@ function drawScene(ctx, sc, progress, imgs, accent) {
     ctx.fillStyle = g; ctx.fillRect(0, 0, REEL_W, REEL_H);
     ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
     ctx.font = '700 64px ' + REEL_FONT; ctx.fillText('Arrow Travel', REEL_W / 2, REEL_H / 2 - 40);
-    ctx.font = '400 32px ' + REEL_FONT; ctx.fillText('Chuyến đi đúng người, đúng nhịp.', REEL_W / 2, REEL_H / 2 + 20);
+    ctx.font = '400 32px ' + REEL_FONT; ctx.fillText('Chỉ một mũi tên, đi hết cả hành trình.', REEL_W / 2, REEL_H / 2 + 20);
     ctx.font = '600 30px ' + REEL_FONT; ctx.globalAlpha = 0.9; ctx.fillText(sc.stats, REEL_W / 2, REEL_H / 2 + 110); ctx.globalAlpha = 1;
     return;
   }

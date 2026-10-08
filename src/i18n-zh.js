@@ -1,6 +1,6 @@
 // Bản dịch tiếng Trung giản thể, khoá là câu tiếng Việt gốc. Câu nào chưa có thì dùng bản tiếng Anh.
 export const ZH = {
-  "Chuyến đi đúng người, đúng nhịp.": "对的人，对的节奏的旅行。",
+  "Chỉ một mũi tên, đi hết cả hành trình.": "一支箭头，走完整段旅程。",
   "Bắt đầu": "开始",
   "Khám phá": "探索",
   "Lịch trình của tôi": "我的行程",

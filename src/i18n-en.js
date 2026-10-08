@@ -1,6 +1,6 @@
 // Bản dịch tiếng Anh, khoá là câu tiếng Việt gốc. Câu nào chưa có thì giữ nguyên tiếng Việt.
 export const EN = {
-  "Chuyến đi đúng người, đúng nhịp.": "The right trip, at the right pace.",
+  "Chỉ một mũi tên, đi hết cả hành trình.": "One arrow, the whole journey.",
   "Bắt đầu": "Get started",
   "Khám phá": "Explore",
   "Lịch trình của tôi": "My trips",

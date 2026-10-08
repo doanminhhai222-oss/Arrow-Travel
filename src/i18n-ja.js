@@ -1,6 +1,6 @@
 // Bản dịch tiếng Nhật, khoá là câu tiếng Việt gốc. Câu nào chưa có thì dùng bản tiếng Anh.
 export const JA = {
-  "Chuyến đi đúng người, đúng nhịp.": "合う人と、合うペースの旅。",
+  "Chỉ một mũi tên, đi hết cả hành trình.": "矢印ひとつで、旅のすべてを。",
   "Bắt đầu": "はじめる",
   "Khám phá": "探す",
   "Lịch trình của tôi": "マイ旅程",
