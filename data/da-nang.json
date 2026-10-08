@@ -709,7 +709,10 @@
         "Bún chả cá giò"
       ],
       "address": "109 Nguyễn Chí Thanh, Hải Châu",
-      "approx": true
+      "approx": true,
+      "image": "images/bun-cha-ca-109.jpg",
+      "imageAlt": "Bún chả cá 109",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bún chả cá, không phải ảnh tại quán"
     },
     {
       "id": "com-ga-ba-buoi",
@@ -748,7 +751,10 @@
         "Canh"
       ],
       "address": "22 Thái Phiên, Hải Châu",
-      "approx": true
+      "approx": true,
+      "image": "images/com-ga-ba-buoi.jpg",
+      "imageAlt": "Cơm gà Bà Buội",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món cơm gà, không phải ảnh tại quán"
     },
     {
       "id": "banh-mi-ba-lan",
@@ -786,7 +792,10 @@
         "Bánh mì pate"
       ],
       "address": "62 Trần Cao Vân, Thanh Khê",
-      "approx": true
+      "approx": true,
+      "image": "images/banh-mi-ba-lan.jpg",
+      "imageAlt": "Bánh mì Bà Lan",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh mì, không phải ảnh tại quán"
     },
     {
       "id": "hai-san-be-man",
@@ -824,7 +833,10 @@
         "Ốc các loại"
       ],
       "address": "Võ Nguyên Giáp, Sơn Trà (khu ven biển)",
-      "approx": true
+      "approx": true,
+      "image": "images/hai-san-be-man.jpg",
+      "imageAlt": "Hải sản Bé Mặn",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món hải sản, không phải ảnh tại quán"
     },
     {
       "id": "highlands-coffee",
@@ -902,7 +914,10 @@
         "Trà trái cây"
       ],
       "address": "Khu Vincom Plaza, Sơn Trà (nhiều chi nhánh)",
-      "approx": true
+      "approx": true,
+      "image": "images/starbucks.jpg",
+      "imageAlt": "Starbucks",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Starbucks"
     },
     {
       "id": "phe-la",

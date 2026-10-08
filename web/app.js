@@ -851,7 +851,9 @@ async function renderMomBody() {
   if (!info.groups.length) h += '<div class="panel empty"><b>Chưa có địa điểm nào</b>Chuyến này chưa có điểm đến. Hãy chọn chuyến khác.</div>';
   h += info.groups.map((g) => '<h3 class="mgroup">' + esc(g.label) + '</h3>' + g.places.map((p) => {
     const e = momEff(momTrip, p.id), ph = byPlace[p.id] || [], urls = ph.map((x) => { const u = URL.createObjectURL(x.blob); momUrls.push(u); return { id: x.id, u }; });
-    return '<details class="mom" data-mom="' + p.id + '"' + (momOpen.has(p.id) ? ' open' : '') + '><summary><span class="mthumb">' + (urls[0] ? '<img src="' + urls[0].u + '" alt="">' : e.files[0] ? '<img src="' + e.files[0].url + '" alt="">' : sceneSvg({ scene: p.scene || 'mountain', name: p.name })) + '</span>' +
+    // ảnh nền thẻ: ảnh bạn đã đăng / vừa chọn, nếu chưa có thì ảnh của địa điểm; không có ảnh nào thì giữ hình minh hoạ nhỏ
+    const bg = urls[0] ? urls[0].u : e.files[0] ? e.files[0].url : p.image || '';
+    return '<details class="mom' + (bg ? ' has-bg' : '') + '" data-mom="' + p.id + '"' + (momOpen.has(p.id) ? ' open' : '') + '><summary>' + (bg ? '<img class="mbg" src="' + esc(bg) + '" alt="">' : '<span class="mthumb">' + sceneSvg({ scene: p.scene || 'mountain', name: p.name }) + '</span>') +
       '<span class="mt"><b>' + esc(p.name) + '</b><small data-line class="' + (e.dirty ? 'pending' : '') + '">' + momLine(e.rating, ph.length + e.files.length) + (e.dirty ? ' · chưa đăng' : '') + '</small></span><span class="chev">›</span></summary><div class="mbody">' +
       '<div class="stars" data-momstars="' + p.id + '" role="group" aria-label="Chấm sao">' + [1, 2, 3, 4, 5].map((n) => '<button type="button" data-momstar="' + n + '" aria-label="' + n + ' sao" aria-pressed="' + (n <= e.rating) + '">★</button>').join('') + '</div>' +
       '<label for="mt-' + p.id + '">Cảm nhận của bạn</label><textarea id="mt-' + p.id + '" data-momtext="' + p.id + '" placeholder="Bạn nhớ gì nhất ở đây?">' + esc(e.text) + '</textarea>' +
