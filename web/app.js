@@ -304,7 +304,7 @@ function bookTabsHtml(tabs) {
   if (!tabs.length) return '';
   const cur = tabs.find((t) => t.id === bookTab);
   return '<div class="btabs" role="tablist" aria-label="Vé máy bay, khách sạn, phương tiện">' + tabs.map((t) =>
-    '<button type="button" role="tab" class="btab" id="bt-' + t.id + '" data-act="booktab" data-id="' + t.id + '" aria-selected="' + (t === cur) + '" aria-controls="bp-' + t.id + '"><b>' + t.title + '</b><small>' + t.summary + '</small></button>').join('') + '</div>' +
+    '<button type="button" role="tab" class="btab' + (APP.bookingImages?.[t.id] ? ' has-img' : '') + '" id="bt-' + t.id + '" data-act="booktab" data-id="' + t.id + '" aria-selected="' + (t === cur) + '" aria-controls="bp-' + t.id + '">' + (APP.bookingImages?.[t.id] ? '<img class="btab-img" src="' + esc(APP.bookingImages[t.id].image) + '" alt="">' : '') + '<b>' + t.title + '</b><small>' + t.summary + '</small></button>').join('') + '</div>' +
     (cur ? '<div class="bpanel" role="tabpanel" id="bp-' + cur.id + '" aria-labelledby="bt-' + cur.id + '">' + cur.body + '</div>' : '<p class="hint btab-hint">Bấm vào một thẻ để xem và chọn.</p>');
 }
 

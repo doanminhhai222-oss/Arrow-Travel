@@ -5,5 +5,17 @@
   "version": "0.1",
   "repoUrl": "https://github.com/doanminhhai222-oss/Arrow-Travel",
   "feedbackUrl": "",
-  "_note": "feedbackUrl: dán liên kết biểu mẫu (Google Form...) để nhận góp ý thật. Để trống thì đánh giá chỉ lưu trên thiết bị người dùng."
+  "_note": "feedbackUrl: dán liên kết biểu mẫu (Google Form...) để nhận góp ý thật. Để trống thì đánh giá chỉ lưu trên thiết bị người dùng.",
+  "bookingImages": {
+    "flights": {
+      "image": "images/book-flight.jpg"
+    },
+    "hotel": {
+      "image": "images/book-hotel.jpg"
+    },
+    "transport": {
+      "image": "images/book-transport.jpg"
+    }
+  },
+  "_noteImages": "bookingImages: ảnh nền 3 thẻ Vé máy bay / Khách sạn / Phương tiện, do chủ dự án cung cấp (có logo hãng, nên thay bằng ảnh tự chụp hoặc được phép dùng trước khi phát hành)."
 }
