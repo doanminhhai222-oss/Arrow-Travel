@@ -288,7 +288,10 @@
         "Dành khoảng 2 tiếng rưỡi, có nhân viên hướng dẫn tạo dáng",
         "Trong nhà nên không lo mưa nắng"
       ],
-      "culture": "Bảo tàng tranh 3D, nơi người xem đứng vào tranh để tạo hình ảnh vui mắt. Có nhiều cảnh mô phỏng danh thắng Việt Nam và thế giới."
+      "culture": "Bảo tàng tranh 3D, nơi người xem đứng vào tranh để tạo hình ảnh vui mắt. Có nhiều cảnh mô phỏng danh thắng Việt Nam và thế giới.",
+      "image": "images/art-paradise.jpg",
+      "imageAlt": "Art In Paradise – Bảo tàng tranh 3D",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại bảo tàng"
     },
     {
       "id": "asia-park",
@@ -317,7 +320,10 @@
         "Vé vào cổng và vé trò chơi có thể tính riêng, xem lại khi mua",
         "Hợp trẻ em, có nhiều khu trò chơi"
       ],
-      "culture": "Công viên giải trí chủ đề châu Á, nổi bật với vòng quay Sun Wheel cao khoảng 115 m nhìn ra sông Hàn và trung tâm thành phố."
+      "culture": "Công viên giải trí chủ đề châu Á, nổi bật với vòng quay Sun Wheel cao khoảng 115 m nhìn ra sông Hàn và trung tâm thành phố.",
+      "image": "images/asia-park.jpg",
+      "imageAlt": "Công viên Châu Á (Sun World)",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · vòng quay Sun Wheel"
     },
     {
       "id": "cf-hoang-hon",
@@ -555,7 +561,10 @@
         "Món Việt theo thực đơn quán"
       ],
       "address": "114 Bạch Đằng, Hải Châu",
-      "approx": true
+      "approx": true,
+      "image": "images/an-thoi.jpg",
+      "imageAlt": "Ăn Thôi",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
     },
     {
       "id": "banh-xeo-ba-duong",

@@ -9,10 +9,13 @@
 - **Bảo tàng Điêu khắc Chăm** (`bao-tang-cham.jpg`): Jean-Pierre Dalbéra from Paris, France, CC BY 2.0, [Le musée Cham (Da Nang) (4395751687).jpg](https://commons.wikimedia.org/wiki/File:Le_mus%C3%A9e_Cham_(Da_Nang)_(4395751687).jpg)
 - **Chợ Hàn** (`cho-han.jpg`): Daderot, CC0, [Han Market - Da Nang, Vietnam - DSC02375.JPG](https://commons.wikimedia.org/wiki/File:Han_Market_-_Da_Nang,_Vietnam_-_DSC02375.JPG)
 - **Cầu Tình Yêu** (`cau-tinh-yeu.jpg`): Supanut Arunoprayote, CC BY 4.0, [Love Lock Bridge Da Nang 05.19.jpg](https://commons.wikimedia.org/wiki/File:Love_Lock_Bridge_Da_Nang_05.19.jpg)
+- **Art In Paradise – Bảo tàng tranh 3D** (`art-paradise.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại bảo tàng
+- **Công viên Châu Á (Sun World)** (`asia-park.jpg`): Ảnh do chủ dự án cung cấp · vòng quay Sun Wheel
 - **Quán cà phê ngắm hoàng hôn (mẫu)** (`cf-hoang-hon.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
 - **Mì Quảng (mẫu)** (`mi-quang.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng
 - **Bánh xèo (mẫu)** (`banh-xeo.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo
 - **Quán hải sản bên biển (mẫu)** (`hai-san.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
+- **Ăn Thôi** (`an-thoi.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
 - **Bánh xèo Bà Dưỡng** (`banh-xeo-ba-duong.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo, không phải ảnh tại quán
 - **Mì Quảng Bà Mua** (`mi-quang-ba-mua.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng, không phải ảnh tại quán
 - **Bánh tráng cuốn thịt heo Trần** (`banh-trang-thit-heo-tran.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh tráng cuốn thịt heo (nguồn ảnh có logo HiDaNang)
