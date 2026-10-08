@@ -300,6 +300,9 @@ function hotelsHtml(c) {
 }
 
 // Ba mục vé máy bay / khách sạn / phương tiện gom thành các thẻ; bấm thẻ nào thì mở nội dung thẻ đó bên dưới, bấm lại để đóng.
+// nút bật/tắt đặt vé máy bay, khách sạn dùng chung ảnh nền với thẻ tương ứng
+const optImgCls = (id) => (APP.bookingImages?.[id] ? ' opt-img' : '');
+const optImg = (id) => (APP.bookingImages?.[id] ? '<img class="btab-img" src="' + esc(APP.bookingImages[id].image) + '" alt="">' : '');
 function bookTabsHtml(tabs) {
   if (!tabs.length) return '';
   const cur = tabs.find((t) => t.id === bookTab);
@@ -314,8 +317,8 @@ function finalHtml() {
   }
   const c = calc(), { tp, cost } = c, t = plan.trip;
   let h = '<section class="panel final"><h2>Chuyến đi của tôi</h2><p class="hint">Giá bên dưới là giá mẫu để ước tính.</p>';
-  h += '<div class="opts" style="margin-top:12px"><button type="button" class="opt" data-act="needflight" aria-pressed="' + needFlight + '"><b>Đặt vé máy bay</b><span>' + (needFlight ? 'Có đặt. Tìm và tính tiền vé khứ hồi.' : 'Tôi tự lo (đã có vé hoặc đi đường bộ). Bỏ qua vé máy bay.') + '</span></button>' +
-    (cost.nights > 0 ? '<button type="button" class="opt" data-act="needhotel" aria-pressed="' + needHotel + '"><b>Đặt khách sạn</b><span>' + (needHotel ? 'Có đặt. Tìm phòng theo ngày đã chọn.' : 'Tôi tự lo (đã có chỗ ở hoặc ở nhà người quen). Bỏ qua khách sạn.') + '</span></button>' : '') + '</div>';
+  h += '<div class="opts" style="margin-top:12px"><button type="button" class="opt' + optImgCls('flights') + '" data-act="needflight" aria-pressed="' + needFlight + '">' + optImg('flights') + '<b>Đặt vé máy bay</b><span>' + (needFlight ? 'Có đặt. Tìm và tính tiền vé khứ hồi.' : 'Tôi tự lo (đã có vé hoặc đi đường bộ). Bỏ qua vé máy bay.') + '</span></button>' +
+    (cost.nights > 0 ? '<button type="button" class="opt' + optImgCls('hotel') + '" data-act="needhotel" aria-pressed="' + needHotel + '">' + optImg('hotel') + '<b>Đặt khách sạn</b><span>' + (needHotel ? 'Có đặt. Tìm phòng theo ngày đã chọn.' : 'Tôi tự lo (đã có chỗ ở hoặc ở nhà người quen). Bỏ qua khách sạn.') + '</span></button>' : '') + '</div>';
   if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + OPTS.origins.map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
   const tabs = [];
   if (c.fl) tabs.push({ id: 'flights', title: 'Vé máy bay', summary: flightOut && flightBack ? esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + money(c.flightsTotal) : 'Chưa chọn', body: flightsHtml(c) });
