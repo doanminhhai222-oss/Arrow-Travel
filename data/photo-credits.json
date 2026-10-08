@@ -73,5 +73,17 @@
  },
  "starbucks": {
   "note": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Starbucks"
+ },
+ "ca-phe-trinh": {
+  "note": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
+ },
+ "banh-trang-thit-heo-tran": {
+  "note": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh tráng cuốn thịt heo (nguồn ảnh có logo HiDaNang)"
+ },
+ "mi-quang-ba-mua": {
+  "note": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng, không phải ảnh tại quán"
+ },
+ "mi-quang": {
+  "note": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng"
  }
 }

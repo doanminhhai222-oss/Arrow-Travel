@@ -399,7 +399,10 @@
         "Mì Quảng tôm thịt",
         "Bánh tráng mè"
       ],
-      "sample": true
+      "sample": true,
+      "image": "images/mi-quang.jpg",
+      "imageAlt": "Mì Quảng (mẫu)",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng"
     },
     {
       "id": "banh-xeo",
@@ -632,7 +635,10 @@
         "Bánh tráng mè"
       ],
       "address": "19 Trần Bình Trọng, Hải Châu",
-      "approx": true
+      "approx": true,
+      "image": "images/mi-quang-ba-mua.jpg",
+      "imageAlt": "Mì Quảng Bà Mua",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng, không phải ảnh tại quán"
     },
     {
       "id": "banh-trang-thit-heo-tran",
@@ -671,7 +677,10 @@
         "Bánh xèo"
       ],
       "address": "4 Lê Duẩn, Hải Châu",
-      "approx": true
+      "approx": true,
+      "image": "images/banh-trang-thit-heo-tran.jpg",
+      "imageAlt": "Bánh tráng cuốn thịt heo Trần",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh tráng cuốn thịt heo (nguồn ảnh có logo HiDaNang)"
     },
     {
       "id": "bun-cha-ca-109",
@@ -995,7 +1004,10 @@
         "Cà phê sữa đá"
       ],
       "address": "25 Phạm Hồng Thái, Hải Châu",
-      "approx": true
+      "approx": true,
+      "image": "images/ca-phe-trinh.jpg",
+      "imageAlt": "Cà phê Trình",
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
     }
   ]
 }

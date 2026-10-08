@@ -10,9 +10,12 @@
 - **Chợ Hàn** (`cho-han.jpg`): Daderot, CC0, [Han Market - Da Nang, Vietnam - DSC02375.JPG](https://commons.wikimedia.org/wiki/File:Han_Market_-_Da_Nang,_Vietnam_-_DSC02375.JPG)
 - **Cầu Tình Yêu** (`cau-tinh-yeu.jpg`): Supanut Arunoprayote, CC BY 4.0, [Love Lock Bridge Da Nang 05.19.jpg](https://commons.wikimedia.org/wiki/File:Love_Lock_Bridge_Da_Nang_05.19.jpg)
 - **Quán cà phê ngắm hoàng hôn (mẫu)** (`cf-hoang-hon.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
+- **Mì Quảng (mẫu)** (`mi-quang.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng
 - **Bánh xèo (mẫu)** (`banh-xeo.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo
 - **Quán hải sản bên biển (mẫu)** (`hai-san.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
 - **Bánh xèo Bà Dưỡng** (`banh-xeo-ba-duong.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo, không phải ảnh tại quán
+- **Mì Quảng Bà Mua** (`mi-quang-ba-mua.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng, không phải ảnh tại quán
+- **Bánh tráng cuốn thịt heo Trần** (`banh-trang-thit-heo-tran.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh tráng cuốn thịt heo (nguồn ảnh có logo HiDaNang)
 - **Bún chả cá 109** (`bun-cha-ca-109.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bún chả cá, không phải ảnh tại quán
 - **Cơm gà Bà Buội** (`com-ga-ba-buoi.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món cơm gà, không phải ảnh tại quán
 - **Bánh mì Bà Lan** (`banh-mi-ba-lan.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh mì, không phải ảnh tại quán
@@ -20,3 +23,4 @@
 - **Highlands Coffee** (`highlands-coffee.jpg`): Ảnh do chủ dự án cung cấp · ảnh thương hiệu Highlands Coffee
 - **Starbucks** (`starbucks.jpg`): Ảnh do chủ dự án cung cấp · ảnh thương hiệu Starbucks
 - **Phê La** (`phe-la.jpg`): Ảnh do chủ dự án cung cấp · ảnh cửa hàng Phê La
+- **Cà phê Trình** (`ca-phe-trinh.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
