@@ -493,3 +493,5 @@ section.day.sorting{user-select:none}
 /* Chọn điểm đến */
 .dest-switch{margin:4px 0 12px}
 #destSeg{margin-top:2px}
+.dest-switch,#destSeg{grid-template-columns:repeat(auto-fit,minmax(88px,1fr))}
+.dest-switch button,#destSeg button{padding:0 6px;white-space:nowrap}

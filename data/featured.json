@@ -228,6 +228,89 @@
         ]
       ],
       "cover": "hoi-quan-phuc-kien"
+    },
+    {
+      "id": "f-pq-couple",
+      "destination": "Phú Quốc",
+      "title": "Phú Quốc nhẹ nhàng cho cặp đôi: hoàng hôn và biển nam đảo",
+      "author": "Mai Linh (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "check_in"
+      ],
+      "scene": "beach",
+      "desc": "Ngày đầu dạo Dương Đông: nhà thùng nước mắm, gỏi cá trích, Bãi Trường, Dinh Cậu rồi chợ đêm. Ngày sau đi cáp treo vượt biển Hòn Thơm và ngắm hoàng hôn ở Thị trấn Hoàng Hôn.",
+      "days": [
+        [
+          "nha-thung-nuoc-mam",
+          "quan-viet-goi-ca-trich",
+          "bai-truong",
+          "dinh-cau",
+          "cho-dem-phu-quoc"
+        ],
+        [
+          "cap-treo-hon-thom",
+          "thi-tran-hoang-hon"
+        ]
+      ],
+      "cover": "dinh-cau"
+    },
+    {
+      "id": "f-pq-family",
+      "destination": "Phú Quốc",
+      "title": "Phú Quốc cho gia đình có bé: Safari, VinWonders và biển",
+      "author": "Hoàng Nam (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "scene": "field",
+      "desc": "Hai ngày cho bé chơi: Safari buổi sáng, bún quậy trưa rồi nghỉ ở Bãi Dài. Ngày sau VinWonders và đi dạo Grand World buổi tối.",
+      "days": [
+        [
+          "vinpearl-safari",
+          "bun-quay-phu-quoc",
+          "bai-dai"
+        ],
+        [
+          "vinwonders-phu-quoc",
+          "grand-world"
+        ]
+      ],
+      "cover": "vinpearl-safari"
+    },
+    {
+      "id": "f-pq-friends",
+      "destination": "Phú Quốc",
+      "title": "Phú Quốc cho nhóm bạn: tour 4 đảo và ghẹ Hàm Ninh",
+      "author": "Tuấn Kiệt (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "am_thuc"
+      ],
+      "scene": "boat",
+      "desc": "Ngày một đi tour ra đảo lặn ngắm san hô. Ngày hai ra Bãi Sao, ăn ghẹ ở làng chài Hàm Ninh rồi về ăn tối ngắm hoàng hôn.",
+      "days": [
+        [
+          "tour-4-dao"
+        ],
+        [
+          "bai-sao",
+          "ghe-ham-ninh",
+          "lang-chai-ham-ninh",
+          "nha-hang-xin-chao"
+        ]
+      ],
+      "cover": "bai-sao"
     }
   ]
 }

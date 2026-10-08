@@ -372,5 +372,8 @@ export const EN = {
   "Hội An": "Hoi An",
   "Trong vé phố cổ": "In the Old Town ticket",
   "Một ngày ở Hội An, bốn nhịp khác nhau": "One day in Hoi An, four different paces",
-  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hoi An places are real, but coordinates and prices are estimates; hotels are sample data."
+  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hoi An places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Phú Quốc": "Phu Quoc",
+  "Một ngày ở Phú Quốc, bốn nhịp khác nhau": "One day in Phu Quoc, four different paces",
+  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Phu Quoc places are real, but coordinates and prices are estimates; hotels are sample data."
 };

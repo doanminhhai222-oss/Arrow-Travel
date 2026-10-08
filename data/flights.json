@@ -98,5 +98,50 @@
         "vj": 1000000
       }
     }
+  },
+  "destinations": {
+    "Đà Nẵng": {
+      "airport": "DAD",
+      "name": "Đà Nẵng"
+    },
+    "Hội An": {
+      "airport": "DAD",
+      "name": "Đà Nẵng",
+      "note": "Hội An không có sân bay, bay tới Đà Nẵng rồi đi xe khoảng 30 km."
+    },
+    "Phú Quốc": {
+      "airport": "PQC",
+      "name": "Phú Quốc",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 60,
+          "base": {
+            "vn": 1100000,
+            "vj": 650000,
+            "qh": 800000,
+            "vu": 850000
+          }
+        },
+        "ha-noi": {
+          "airport": "HAN",
+          "durationMin": 130,
+          "base": {
+            "vn": 1900000,
+            "vj": 1100000,
+            "qh": 1300000,
+            "vu": 1250000
+          }
+        },
+        "can-tho": {
+          "airport": "VCA",
+          "durationMin": 50,
+          "base": {
+            "vn": 1400000,
+            "vj": 850000
+          }
+        }
+      }
+    }
   }
 }

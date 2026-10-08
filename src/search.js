@@ -12,6 +12,14 @@ const DOW_FACTOR = [1.1, 0.95, 0.9, 0.9, 1.0, 1.15, 1.1]; // CN, T2 ... T7: giá
 const timeFactor = (t) => { const m = toM(t); return m < 420 ? 0.9 : m < 660 ? 1.0 : m < 960 ? 0.95 : m < 1200 ? 1.15 : 0.9; };
 const advanceFactor = (daysUntil) => (daysUntil <= 2 ? 1.35 : daysUntil <= 7 ? 1.2 : daysUntil <= 21 ? 1.0 : 0.9);
 
+// Dữ liệu bay theo điểm đến: mỗi điểm đến có sân bay riêng (Hội An dùng sân bay Đà Nẵng) và có thể có bảng tuyến riêng
+export function flightDataFor(data, destination = 'Đà Nẵng') {
+  const d = (data.destinations && data.destinations[destination]) || data.destination;
+  return { ...data, destination: { ...data.destination, ...d }, routes: d.routes || data.routes };
+}
+// Các nơi khởi hành có chuyến bay tới điểm đến đó
+export const originsFor = (data, origins, destination) => origins.filter((o) => flightDataFor(data, destination).routes[o.id]);
+
 // Chuyến bay một chiều. direction 'out' = từ nơi khởi hành đến Đà Nẵng, 'back' = chiều ngược lại.
 export function searchFlights({ data, originId, date, direction, people, today = new Date().toISOString().slice(0, 10) }) {
   const route = data.routes[originId];

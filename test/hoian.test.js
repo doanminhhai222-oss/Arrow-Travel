@@ -69,3 +69,50 @@ test('lịch trình nổi bật của Hội An: địa điểm có thật, đún
     assert.ok(data.places.find((x) => x.id === f.cover), f.id + ' thiếu ảnh bìa');
   }
 });
+
+// ---- Phú Quốc: đảo có sân bay riêng
+const PQ = data.places.filter((p) => p.city === 'Phú Quốc');
+const flights = read('flights.json'), transport = read('transport.json');
+
+test('Phú Quốc có đủ loại địa điểm, dữ liệu hợp lệ, nằm trên đảo', () => {
+  assert.ok(PQ.length >= 25, 'hiện ' + PQ.length);
+  const types = new Set(PQ.map((p) => p.type));
+  for (const t of ['beach', 'park', 'culture', 'checkin', 'food', 'cafe']) assert.ok(types.has(t), 'thiếu loại ' + t);
+  for (const p of PQ) {
+    assert.ok(p.lat > 9.9 && p.lat < 10.5 && p.lng > 103.8 && p.lng < 104.1, `${p.id} nằm ngoài đảo Phú Quốc`);
+    assert.ok(p.audiences.length && p.highlights.length && p.culture, p.id);
+    if (p.type === 'food') assert.ok(['lunch', 'dinner'].includes(p.meal), p.id);
+  }
+});
+
+test('Phú Quốc: lịch trình, khách sạn, sân bay và tuyến bay đúng điểm đến', async () => {
+  const { flightDataFor, originsFor, searchFlights } = await import('../src/search.js');
+  for (const audience of ['cap_doi', 'gia_dinh', 'nhom_ban', 'mot_minh']) {
+    const p = buildItinerary(base({ destination: 'Phú Quốc', audience, hasKids: audience === 'gia_dinh' }), data, rules);
+    const used = p.days.flatMap((d) => d.items.filter((i) => i.place));
+    assert.ok(used.length > 0 && used.every((i) => i.place.city === 'Phú Quốc'), audience);
+  }
+  const pq = hotelsFor(opts.hotels, { destination: 'Phú Quốc' });
+  assert.ok(pq.length >= 8 && pq.every((h) => h.city === 'Phú Quốc'));
+  for (const tier of ['tiet_kiem', 'vua_phai', 'thoai_mai']) assert.ok(pq.some((h) => h.tier === tier));
+  assert.equal(flightDataFor(flights, 'Phú Quốc').destination.airport, 'PQC');
+  assert.equal(flightDataFor(flights, 'Hội An').destination.airport, 'DAD', 'Hội An bay tới Đà Nẵng');
+  assert.equal(flightDataFor(flights, 'Đà Nẵng').destination.airport, 'DAD');
+  const origins = originsFor(flights, opts.origins, 'Phú Quốc').map((o) => o.id);
+  assert.ok(origins.includes('ho-chi-minh') && origins.includes('ha-noi') && !origins.includes('hai-phong'), 'Hải Phòng chưa có tuyến mẫu tới Phú Quốc');
+  const list = searchFlights({ data: flightDataFor(flights, 'Phú Quốc'), originId: 'ho-chi-minh', date: '2026-10-20', direction: 'out', people: 2, today: '2026-10-08' });
+  assert.ok(list.length > 10 && list.every((f) => f.to === 'PQC' && f.from === 'SGN'));
+  const back = searchFlights({ data: flightDataFor(flights, 'Phú Quốc'), originId: 'ha-noi', date: '2026-10-23', direction: 'back', people: 2, today: '2026-10-08' });
+  assert.ok(back.every((f) => f.from === 'PQC' && f.to === 'HAN'));
+  assert.ok(transport.airports['Phú Quốc'].lat < 10.5 && transport.airports['Hội An'].name === transport.airports['Đà Nẵng'].name);
+});
+
+test('lịch trình nổi bật của Phú Quốc: địa điểm có thật, đúng đảo, hợp đối tượng', () => {
+  const list = featured.featured.filter((f) => f.destination === 'Phú Quốc');
+  assert.ok(list.length >= 3);
+  for (const f of list) for (const id of f.days.flat()) {
+    const p = data.places.find((x) => x.id === id);
+    assert.ok(p && p.city === 'Phú Quốc', f.id + ': ' + id); assert.ok(p.audiences.includes(f.audience), `${f.id}: ${id} không dành cho ${f.audience}`);
+    if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id} không hợp trẻ nhỏ`);
+  }
+});

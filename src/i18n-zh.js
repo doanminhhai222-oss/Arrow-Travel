@@ -372,5 +372,8 @@ export const ZH = {
   "Hội An": "会安",
   "Trong vé phố cổ": "含在古城门票内",
   "Một ngày ở Hội An, bốn nhịp khác nhau": "会安的一天，四种节奏",
-  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "会安的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
+  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "会安的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
+  "Phú Quốc": "富国岛",
+  "Một ngày ở Phú Quốc, bốn nhịp khác nhau": "富国岛的一天，四种节奏",
+  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "富国岛的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
 };

@@ -372,5 +372,8 @@ export const KO = {
   "Hội An": "호이안",
   "Trong vé phố cổ": "구시가지 입장권에 포함",
   "Một ngày ở Hội An, bốn nhịp khác nhau": "호이안의 하루, 네 가지 속도",
-  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "호이안 장소는 실제로 있는 곳이지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
+  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "호이안 장소는 실제로 있는 곳이지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
+  "Phú Quốc": "푸꾸옥",
+  "Một ngày ở Phú Quốc, bốn nhịp khác nhau": "푸꾸옥의 하루, 네 가지 속도",
+  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "푸꾸옥 장소는 실제로 있는 곳이지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
 };

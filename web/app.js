@@ -1,6 +1,6 @@
 import { buildItinerary, effectiveRules, filterPlaces, STYLE_TYPES, styleList, BUDGET_CAP, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
 import { estimateCost, hotelsFor } from '../src/costing.js';
-import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels } from '../src/search.js';
+import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels, flightDataFor, originsFor } from '../src/search.js';
 import { hotelDetailHtml } from '../src/hoteldetail.js';
 import { fetchPlaceReviews } from '../src/google.js';
 import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/payment.js';
@@ -95,7 +95,7 @@ function go(name) {
 /* ---------- Form ---------- */
 // Điểm đến đang chọn: dùng cho form tạo lịch, trang chủ và lịch trình nổi bật
 let destName = 'Đà Nẵng';
-const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an' };
+const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an', 'Phú Quốc': 'bai-sao' };
 const heroDefault = { src: $('heroImg').getAttribute('src'), alt: $('heroImg').alt };
 function setDest(name, { render = true } = {}) {
   if (!DESTS.some((d) => d.name === name && d.ok)) name = 'Đà Nẵng';
@@ -108,7 +108,7 @@ function setDest(name, { render = true } = {}) {
   if (name === 'Đà Nẵng' || !hp || !hp.image) { img.src = heroDefault.src; img.alt = heroDefault.alt; }
   else { img.src = hp.image; img.alt = hp.imageAlt || hp.name; }
   $('demoTitle').textContent = 'Một ngày ở ' + name + ', bốn nhịp khác nhau';
-  $('scr-create').querySelector('.scr-head p').textContent = name === 'Đà Nẵng' ? 'Dữ liệu Đà Nẵng đang là bản mẫu để chạy thử.' : 'Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.';
+  $('scr-create').querySelector('.scr-head p').textContent = name === 'Đà Nẵng' ? 'Dữ liệu Đà Nẵng đang là bản mẫu để chạy thử.' : 'Địa điểm ' + name + ' là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.';
   if (render && typeof renderHome === 'function' && !$('scr-home').hidden) renderHome();
   if (render) persist();
 }
@@ -262,14 +262,22 @@ function render() {
 }
 
 /* ---------- Bước 2: chốt lịch trình, tìm chuyến bay và khách sạn, chi phí, thanh toán ---------- */
-const curOrigin = () => OPTS.origins.find((o) => o.id === originId) || null;
+// Nơi khởi hành hợp lệ cho điểm đến đang lập lịch; nếu nơi đang chọn không có chuyến bay thì chuyển sang nơi đầu tiên có
+const tripOrigins = () => originsFor(FLIGHTS, OPTS.origins, plan ? plan.trip.destination : destName);
+function curOrigin() {
+  const list = tripOrigins();
+  if (!list.some((o) => o.id === originId) && list.length) originId = list[0].id;
+  return list.find((o) => o.id === originId) || null;
+}
+const flightsData = () => flightDataFor(FLIGHTS, plan.trip.destination);
+const airportOf = (dest) => (TRANSPORT.airports && TRANSPORT.airports[dest]) || TRANSPORT.airport;
 const BUDGET_NAME = { tiet_kiem: 'tiết kiệm', vua_phai: 'vừa phải', thoai_mai: 'thoải mái' };
 const todayStr = () => iso(new Date());
 
 function flightLists() {
   const t = plan.trip;
   if (!needFlight || !curOrigin()) return null;
-  const mk = (direction, date) => searchFlights({ data: FLIGHTS, originId, date, direction, people: t.people, today: todayStr() });
+  const mk = (direction, date) => searchFlights({ data: flightsData(), originId, date, direction, people: t.people, today: todayStr() });
   return { out: mk('out', t.startDate), back: mk('back', t.endDate) };
 }
 function hotelList() {
@@ -294,7 +302,7 @@ function calc() {
   ensureChoices(fl, hl);
   const flight = flightOut && flightBack ? { priceRoundTrip: flightOut.priceOne + flightBack.priceOne } : null;
   const hotel = hl.find((x) => x.id === hotelId) || null;
-  const tp = transportOptions({ trip: t, plan, hotel, flight, modes: TRANSPORT.modes, airport: TRANSPORT.airport, nDays });
+  const tp = transportOptions({ trip: t, plan, hotel, flight, modes: TRANSPORT.modes, airport: airportOf(t.destination), nDays });
   if (!tp.options.some((x) => x.id === transportId && x.suitable)) transportId = tp.defaultId;
   const selected = tp.options.find((x) => x.id === transportId) || null;
   const cost = estimateCost({ trip: t, plan, flight, hotel, transport: ownTransport ? { skip: true } : selected });
@@ -319,7 +327,7 @@ function flightsHtml(c) {
   const carriers = FLIGHTS.carriers.filter((k) => fl.out.some((f) => f.carrierId === k.id));
   const keep = (f) => airlineFilter.length === 0 || airlineFilter.includes(f.carrierId);
   const out = sortFlights(fl.out.filter(keep), flightSort), back = sortFlights(fl.back.filter(keep), flightSort);
-  let h = '<p class="hint">' + esc(o.name) + ' ⇄ ' + (t.destination === 'Hội An' ? 'Đà Nẵng (sân bay DAD, cách Hội An khoảng 30 km)' : 'Đà Nẵng') + ' · đi ' + fmtDate(t.startDate) + ' · về ' + fmtDate(t.endDate) + ' · ' + t.people + ' khách. Dữ liệu mẫu, chưa phải giá thật.</p>';
+  let h = '<p class="hint">' + esc(o.name) + ' ⇄ ' + (t.destination === 'Hội An' ? 'Đà Nẵng (sân bay DAD, cách Hội An khoảng 30 km)' : t.destination) + ' · đi ' + fmtDate(t.startDate) + ' · về ' + fmtDate(t.endDate) + ' · ' + t.people + ' khách. Dữ liệu mẫu, chưa phải giá thật.</p>';
   h += '<div class="seg" role="group" aria-label="Hãng bay" style="margin:8px 0"><button type="button" data-act="airline" data-id="all" aria-pressed="' + (airlineFilter.length === 0) + '">Tất cả hãng</button>' +
     carriers.map((k) => '<button type="button" data-act="airline" data-id="' + k.id + '" aria-pressed="' + airlineFilter.includes(k.id) + '">' + esc(k.name) + '</button>').join('') + '</div>';
   h += '<label for="fsort">Sắp xếp</label><select id="fsort"><option value="price"' + (flightSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="time"' + (flightSort === 'time' ? ' selected' : '') + '>Giờ khởi hành sớm nhất</option></select>';
@@ -364,7 +372,7 @@ function finalHtml() {
   let h = '<section class="panel final"><h2>Chuyến đi của tôi</h2><p class="hint">Giá bên dưới là giá mẫu để ước tính.</p>';
   h += '<div class="opts" style="margin-top:12px"><button type="button" class="opt' + optImgCls('flights') + '" data-act="needflight" aria-pressed="' + needFlight + '">' + optImg('flights') + '<b>Đặt vé máy bay</b><span>' + (needFlight ? 'Có đặt. Tìm và tính tiền vé khứ hồi.' : 'Tôi tự lo (đã có vé hoặc đi đường bộ). Bỏ qua vé máy bay.') + '</span></button>' +
     (cost.nights > 0 ? '<button type="button" class="opt' + optImgCls('hotel') + '" data-act="needhotel" aria-pressed="' + needHotel + '">' + optImg('hotel') + '<b>Đặt khách sạn</b><span>' + (needHotel ? 'Có đặt. Tìm phòng theo ngày đã chọn.' : 'Tôi tự lo (đã có chỗ ở hoặc ở nhà người quen). Bỏ qua khách sạn.') + '</span></button>' : '') + '</div>';
-  if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + OPTS.origins.map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
+  if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + tripOrigins().map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
   const tabs = [];
   if (c.fl) tabs.push({ id: 'flights', title: 'Vé máy bay', summary: flightOut && flightBack ? esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + money(c.flightsTotal) : 'Chưa chọn', body: flightsHtml(c) });
   if (cost.nights > 0 && needHotel) tabs.push({ id: 'hotel', title: 'Khách sạn', summary: c.hotel ? esc(c.hotel.name) + ' · ' + money(c.hotelTotal) : 'Chưa chọn · ' + cost.nights + ' đêm', body: hotelsHtml(c) });
@@ -746,7 +754,7 @@ sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) closeSheet(); });
 
 /* ---------- Màn hình Khám phá ---------- */
-const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Hà Nội' }, { name: 'Đà Lạt' }, { name: 'Nha Trang' }, { name: 'Phú Quốc' }];
+const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Phú Quốc', ok: true }, { name: 'Hà Nội' }, { name: 'Đà Lạt' }, { name: 'Nha Trang' }];
 const PRESETS = {
   plan: {},
   gia_dinh: { audience: 'gia_dinh', hasKids: true, people: 4, days: 2, budget: 'vua_phai', styles: ['thien_nhien', 'van_hoa'] },
@@ -1406,7 +1414,7 @@ function demoDay(aud) {
   const trip = { destination: destName, startDate: start, endDate: start, people: aud === 'gia_dinh' ? 4 : aud === 'mot_minh' ? 1 : 2, budget: 'vua_phai',
     audience: aud, hasKids: aud === 'gia_dinh', hasElderly: false, styles: ['thien_nhien', 'am_thuc'] };
   // Ngày mẫu trong thành phố: bỏ Bà Nà Hills vì chiếm trọn một ngày
-  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son'];
+  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son', 'tour-4-dao', 'cap-treo-hon-thom', 'vinwonders-phu-quoc', 'vinpearl-safari'];
   const city = { ...DATA, places: DATA.places.filter((x) => !far.includes(x.id)) };
   return { day: buildItinerary(trip, city, RULES).days[0], rule: effectiveRules(RULES[aud], trip) };
 }
@@ -1830,6 +1838,9 @@ $('sheetBody').addEventListener('click', (e) => {
 const flightPromo = (carrier) => PROMOS.promos.some((p) => p.target.type === 'flight' && p.target.carrier === carrier && isValid(p, todayStr()));
 const hotelPromo = (stars) => PROMOS.promos.some((p) => p.target.type === 'hotel' && stars >= (p.target.minStars || 0) && isValid(p, todayStr()));
 
+// nút chọn điểm đến sinh từ danh sách DESTS (chỉ điểm đến đã có dữ liệu)
+const destBtns = (attr) => DESTS.filter((d) => d.ok).map((d) => '<button type="button" ' + attr + '="' + esc(d.name) + '" aria-pressed="false">' + esc(d.name) + '</button>').join('');
+$('destSeg').innerHTML = destBtns('data-v'); $('homeDest').innerHTML = destBtns('data-homedest');
 setDest(store.prefs.dest || 'Đà Nẵng', { render: false });
 applyForm({});
 applySettings();
