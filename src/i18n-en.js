@@ -253,7 +253,7 @@ export const EN = {
   "Giảm số người": "Fewer travelers",
   "Tăng số người": "More travelers",
   "Bạn đã chỉnh lịch hoặc chốt chuyến đi. Bấm Xếp lại lịch để áp dụng thay đổi, các chỉnh sửa trước đó sẽ mất.": "You edited the plan or finalized the trip. Press Build plan to apply the change; your earlier edits will be lost.",
-  "Chưa chọn": "Not selected",
+  "Chưa chọn": "Not chosen",
   "Đã có phương tiện riêng": "Own transport",
   "Chọn sở thích để bắt đầu": "Pick interests to start",
   "Lên lịch với": "Plan with",
@@ -322,5 +322,8 @@ export const EN = {
   "Thêm ảnh, chấm sao hoặc viết cảm nhận rồi bấm Đăng khoảnh khắc.": "Add photos, rate or write your thoughts, then press Post moment.",
   "Xem và thêm khoảnh khắc": "View and add moments",
   "Thêm ảnh và cảm nhận": "Add photos and thoughts",
-  "Chưa có ảnh hay nhận xét cho nơi này.": "No photos or notes for this place yet."
+  "Chưa có ảnh hay nhận xét cho nơi này.": "No photos or notes for this place yet.",
+  "Phương tiện": "Transport",
+  "Bấm vào một thẻ để xem và chọn.": "Tap a card to view and choose.",
+  "Vé máy bay, khách sạn, phương tiện": "Flights, hotel, transport"
 };

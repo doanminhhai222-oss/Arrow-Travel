@@ -96,7 +96,7 @@ function updateNights() {
   $('nights').textContent = n ? n + ' ngày ' + (n - 1) + ' đêm' : '';
 }
 let formOpen = true, dirtyEdits = false, formTimer = null, dayTab = 'all';
-const openSecs = new Set();
+let bookTab = null; // thẻ đang mở trong 'Chuyến đi của tôi': flights | hotel | transport
 function setFormOpen(open) {
   formOpen = open; $('form').hidden = !open;
   const fs = $('formSummary'); fs.hidden = open || !plan;
@@ -130,7 +130,7 @@ document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('clic
 $('form').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(formTimer); run(true); });
 
 function resetPlanState() {
-  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; openSecs.clear(); $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; bookTab = null; $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
 }
 function run(collapse = false) {
   const trip = { destination: 'Đà Nẵng', startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
@@ -299,9 +299,15 @@ function hotelsHtml(c) {
   return h;
 }
 
-function sec(id, title, summary, body) {
-  return '<details class="sec" data-sec="' + id + '"' + (openSecs.has(id) ? ' open' : '') + '><summary><span><b>' + title + '</b><small>' + summary + '</small></span><span class="chev">›</span></summary><div class="sec-body">' + body + '</div></details>';
+// Ba mục vé máy bay / khách sạn / phương tiện gom thành các thẻ; bấm thẻ nào thì mở nội dung thẻ đó bên dưới, bấm lại để đóng.
+function bookTabsHtml(tabs) {
+  if (!tabs.length) return '';
+  const cur = tabs.find((t) => t.id === bookTab);
+  return '<div class="btabs" role="tablist" aria-label="Vé máy bay, khách sạn, phương tiện">' + tabs.map((t) =>
+    '<button type="button" role="tab" class="btab" id="bt-' + t.id + '" data-act="booktab" data-id="' + t.id + '" aria-selected="' + (t === cur) + '" aria-controls="bp-' + t.id + '"><b>' + t.title + '</b><small>' + t.summary + '</small></button>').join('') + '</div>' +
+    (cur ? '<div class="bpanel" role="tabpanel" id="bp-' + cur.id + '" aria-labelledby="bt-' + cur.id + '">' + cur.body + '</div>' : '<p class="hint btab-hint">Bấm vào một thẻ để xem và chọn.</p>');
 }
+
 function finalHtml() {
   if (!finalized) {
     return '<div class="panel final"><button class="go" type="button" data-act="final">Chốt lịch trình của tôi</button><p class="hint" style="margin-top:8px">Sau khi chốt, tìm chuyến bay và khách sạn theo ngày đã chọn, chọn phương tiện, xem tổng chi phí dự kiến và thanh toán. Bạn vẫn đổi hoặc xoá điểm ở trên được, chi phí tự cập nhật.</p></div>';
@@ -311,8 +317,9 @@ function finalHtml() {
   h += '<div class="opts" style="margin-top:12px"><button type="button" class="opt" data-act="needflight" aria-pressed="' + needFlight + '"><b>Đặt vé máy bay</b><span>' + (needFlight ? 'Có đặt. Tìm và tính tiền vé khứ hồi.' : 'Tôi tự lo (đã có vé hoặc đi đường bộ). Bỏ qua vé máy bay.') + '</span></button>' +
     (cost.nights > 0 ? '<button type="button" class="opt" data-act="needhotel" aria-pressed="' + needHotel + '"><b>Đặt khách sạn</b><span>' + (needHotel ? 'Có đặt. Tìm phòng theo ngày đã chọn.' : 'Tôi tự lo (đã có chỗ ở hoặc ở nhà người quen). Bỏ qua khách sạn.') + '</span></button>' : '') + '</div>';
   if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + OPTS.origins.map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
-  if (c.fl) h += sec('flights', 'Chuyến bay khứ hồi', flightOut && flightBack ? esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + money(c.flightsTotal) : 'Chưa chọn', flightsHtml(c));
-  if (cost.nights > 0 && needHotel) h += sec('hotel', 'Khách sạn · ' + cost.nights + ' đêm', c.hotel ? esc(c.hotel.name) + ' · ' + money(c.hotelTotal) : 'Chưa chọn', hotelsHtml(c));
+  const tabs = [];
+  if (c.fl) tabs.push({ id: 'flights', title: 'Vé máy bay', summary: flightOut && flightBack ? esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + money(c.flightsTotal) : 'Chưa chọn', body: flightsHtml(c) });
+  if (cost.nights > 0 && needHotel) tabs.push({ id: 'hotel', title: 'Khách sạn', summary: c.hotel ? esc(c.hotel.name) + ' · ' + money(c.hotelTotal) : 'Chưa chọn · ' + cost.nights + ' đêm', body: hotelsHtml(c) });
   let tb = '<button type="button" class="opt" data-act="owntransport" aria-pressed="' + ownTransport + '" style="width:100%;margin-bottom:8px"><b>Tôi đã có phương tiện riêng</b><span>Xe cá nhân, người quen đưa đón hoặc xe của khách sạn. Bỏ qua, không tính phí di chuyển.</span></button>';
   if (ownTransport) {
     tb += '<p class="hint">Đã bỏ qua phần di chuyển. Quãng đường của lịch trình là ' + tp.totalKm + ' km nếu bạn cần ước lượng xăng hoặc thời gian.</p>';
@@ -323,7 +330,8 @@ function finalHtml() {
         (x.suitable ? '<span class="pr">' + money(x.total) + ' · ' + money(x.perPerson) + '/người</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button>').join('') +
       '</div><p class="hint">Giá mẫu tính theo quãng đường, chưa gồm phụ thu giờ cao điểm, mưa, phí cầu đường. Mở app Grab hoặc Xanh SM để xem giá thật.</p>';
   }
-  h += sec('transport', 'Phương tiện di chuyển', ownTransport ? 'Đã có phương tiện riêng' : c.selected ? esc(c.selected.name) + ' · ' + money(c.selected.total) : '–', tb);
+  tabs.push({ id: 'transport', title: 'Phương tiện', summary: ownTransport ? 'Đã có phương tiện riêng' : c.selected ? esc(c.selected.name) + ' · ' + money(c.selected.total) : 'Chưa chọn', body: tb });
+  h += bookTabsHtml(tabs);
   h += '<h3>Tổng chi phí dự kiến</h3><div class="cost">' + cost.lines.map((l) => '<div class="cl"><span>' + esc(l.label) + '<small>' + esc(l.note) + '</small></span><b>' + money(l.amount) + '</b></div>').join('') +
     '<div class="cl tot"><span>Tổng cộng</span><b>' + money(cost.total) + '</b></div><div class="cl"><span>Bình quân mỗi người</span><b>' + money(cost.perPerson) + '</b></div></div>';
   h += '<p class="hint">Chưa gồm mua sắm, quà, chi phí phát sinh. Ăn uống tính theo mức ' + BUDGET_NAME[t.budget] + '.</p>';
@@ -360,7 +368,7 @@ function openTrip(id) {
   plan.days.forEach(retime);
   finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; roomByHotel = s.roomByHotel || {}; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
   airlineFilter = []; hotelStars = []; currentTripId = id; savedOk = true; swapOpen = null; undoStack = [];
-  dirtyEdits = false; dayTab = 'all'; openSecs.clear(); $('applyHint').hidden = true;
+  dirtyEdits = false; dayTab = 'all'; bookTab = null; $('applyHint').hidden = true;
   go('create'); render(); setFormOpen(false);
 }
 
@@ -524,6 +532,7 @@ $('out').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-act]'); if (!b) return;
   const act = b.dataset.act, di = +b.dataset.d, ii = +b.dataset.i;
   if (act === 'detail') { openDetail(di, b.dataset.id); return; }
+  if (act === 'booktab') { bookTab = bookTab === b.dataset.id ? null : b.dataset.id; render(); const t = document.getElementById('bt-' + b.dataset.id); if (t) t.focus(); return; }
   if (act === 'final') { finalized = true; render(); const f = document.querySelector('section.final'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (act === 'fout') { flightOut = flightLists().out.find((f) => f.id === b.dataset.id) || flightOut; savedOk = false; render(); return; }
   if (act === 'fback') { flightBack = flightLists().back.find((f) => f.id === b.dataset.id) || flightBack; savedOk = false; render(); return; }
@@ -553,10 +562,6 @@ $('out').addEventListener('click', (e) => {
   }
   swapOpen = null; savedOk = false; retime(day); render();
 });
-$('out').addEventListener('toggle', (e) => {
-  const d = e.target;
-  if (d.matches && d.matches('details[data-sec]')) { if (d.open) openSecs.add(d.dataset.sec); else openSecs.delete(d.dataset.sec); }
-}, true);
 $('out').addEventListener('change', (e) => {
   const id = e.target.id;
   if (id === 'origin') { originId = e.target.value; flightOut = null; flightBack = null; airlineFilter = []; savedOk = false; render(); $('origin').focus(); }

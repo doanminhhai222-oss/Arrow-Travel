@@ -15,7 +15,7 @@ const path = require('node:path');
   await step('lối tắt gia đình', async () => { await p.click('[data-preset=gia_dinh]'); await p.waitForSelector('section.day'); });
   await step('chi tiết địa điểm', async () => { await p.locator('.nm').first().click(); await p.waitForSelector('#sheetBody .pd'); await p.click('#sheetClose'); });
   await step('thêm địa điểm', async () => { await p.locator('[data-act=addplace]').first().click(); await p.waitForSelector('#addList'); await p.click('#sheetClose'); });
-  await step('chốt lịch trình', async () => { await p.click('[data-act=final]'); await p.evaluate(() => document.querySelectorAll('details.sec').forEach((d) => { d.open = true; })); });
+  await step('chốt lịch trình', async () => { await p.click('[data-act=final]'); await p.click('#bt-flights'); await p.waitForSelector('.bpanel [data-act=fout]'); await p.click('#bt-transport'); await p.waitForSelector('.bpanel [data-act=transport]'); await p.click('#bt-hotel'); });
   await step('chi tiết khách sạn', async () => { await p.locator('[data-act=hoteldetail]').nth(1).click(); await p.waitForSelector('#sheetBody [data-room]'); await p.click('#sheetClose'); });
   await step('thanh toán', async () => { await p.click('[data-act=book]'); await p.waitForSelector('.qrbox svg'); await p.click('#sheetClose'); });
   await step('khoảnh khắc và album', async () => { await p.click('.tab[data-go=moments]'); await p.waitForSelector('#momStats'); await p.locator('details.mom').first().locator('summary').click(); await p.locator('[data-momstar="5"]').first().click(); await p.click('[data-mompost]'); await p.waitForSelector('.saved-ok'); await p.click('[data-album]'); await p.waitForSelector('#albumBody .album'); await p.click('#pageBack'); });
