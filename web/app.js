@@ -1148,7 +1148,7 @@ async function makeReel() {
     const ext = blob.type.includes('mp4') ? 'mp4' : 'webm', name = 'arrow-travel-' + (r.info.title || 'ky-niem').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g, 'd').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() + '.' + ext;
     r.file = new File([blob], name, { type: blob.type });
     $('reelOut').innerHTML = '<div class="panel reel-done"><b>Video đã sẵn sàng</b><video src="' + r.outUrl + '" controls playsinline></video>' +
-      '<a class="go" href="' + r.outUrl + '" download="' + esc(name) + '">Tải video (' + (blob.size / 1048576).toFixed(1) + ' MB, .' + ext + ')</a>' +
+      '<a class="go reel-dl" href="' + r.outUrl + '" download="' + esc(name) + '">Tải video (' + (blob.size / 1048576).toFixed(1) + ' MB, .' + ext + ')</a>' +
       (navigator.canShare && navigator.canShare({ files: [r.file] }) ? '<button type="button" class="btn" data-reelact="share" style="width:100%;margin-top:8px">Chia sẻ</button>' : '') +
       (ext === 'webm' ? '<p class="hint">File .webm xem được trên Chrome, Android, YouTube. Một số app trên iPhone cần đổi sang .mp4 trước khi đăng.</p>' : '') + '</div>';
     toast('Đã tạo video kỷ niệm');
@@ -1158,6 +1158,16 @@ async function makeReel() {
     if (reel === r) { r.busy = false; prog.hidden = true; $('reelMake').disabled = false; }
   }
 }
+// Trong khung xem artifact trên claude.ai, trang không tự tải file được: nhờ nền tảng hỏi người xem rồi lưu.
+// Mở ở nơi khác (GitHub Pages, máy tính) thì không có window.claude, link tải thường vẫn chạy.
+$('pageBody').addEventListener('click', async (e) => {
+  const a = e.target.closest('a.reel-dl'); if (!a || !reel || !reel.file || !(window.claude && typeof window.claude.use === 'function')) return;
+  e.preventDefault();
+  const dl = await window.claude.use('downloads');
+  if (!dl) { toast('Nơi đang xem không cho tải file. Mở app trên GitHub Pages để tải video.'); return; }
+  try { await dl.save({ filename: reel.file.name, data: reel.file }); toast('Đã lưu video'); }
+  catch (err) { if (err && err.code !== 'declined') toast(err.code === 'rate_limited' ? 'Đang có hộp thoại lưu, thử lại sau giây lát' : 'Không lưu được video ở đây'); }
+});
 $('pageBody').addEventListener('click', (e) => {
   const b = e.target.closest('[data-reelact="share"]'); if (!b || !reel || !reel.file) return;
   navigator.share({ files: [reel.file], title: reel.info.title || 'Video kỷ niệm' }).catch(() => {});
