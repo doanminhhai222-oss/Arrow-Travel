@@ -122,6 +122,35 @@
       },
       "kind": "perk",
       "validTo": "2027-01-31"
+    },
+    {
+      "id": "p-pro-flight",
+      "title": "ArrowPro: giảm 10% mọi chuyến bay",
+      "desc": "Thành viên ArrowPro giảm 10% tiền vé máy bay mọi hãng, tối đa 300.000 đ.",
+      "target": {
+        "type": "flight_any"
+      },
+      "kind": "percent",
+      "value": 10,
+      "max": 300000,
+      "min": 800000,
+      "code": "PROBAY10",
+      "validTo": "2027-12-31",
+      "pro": true
+    },
+    {
+      "id": "p-pro-car",
+      "title": "ArrowPro: giảm 15% thuê xe tự lái",
+      "desc": "Thành viên ArrowPro giảm 15% khi thuê xe máy hoặc ô tô tự lái tại đối tác, đưa mã khi nhận xe (ưu đãi mẫu, chưa có đối tác thật).",
+      "target": {
+        "type": "transport",
+        "name": "Thuê xe tự lái"
+      },
+      "kind": "perk",
+      "value": 15,
+      "code": "PROXE15",
+      "validTo": "2027-12-31",
+      "pro": true
     }
   ]
 }

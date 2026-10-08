@@ -16,11 +16,13 @@ import { searchPromos, findByCode, applyPromo, isValid, daysLeft } from '../src/
 import { EARN, CATALOG, newPoints, award, redeem, voucherCheck } from '../src/loyalty.js';
 import { matchTravelers } from '../src/friends.js';
 import { planReel, TRACKS } from '../src/reel.js';
+import { verifyLicense, proStatus, startTrial, limitsFor } from '../src/pro.js';
+import { optimizeDayOrder, routeKm } from '../src/optimize.js';
 import { loadReelImages, createReelPlayer, exportReel, reelMime } from './reel.js';
 import { addPhoto, listPhotos, listPhotosByPrefix, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
 
 // <DATA>
-const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
+const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED, PRO] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured', 'pro'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
 // </DATA>
 
 const $ = (id) => document.getElementById(id);
@@ -33,7 +35,7 @@ const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g
 
 /* ---------- Lưu trữ trên thiết bị (không có tài khoản, không có máy chủ) ---------- */
 const STORE_KEY = 'arrow-travel-v1';
-const baseStore = () => ({ settings: { theme: 'light', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null, customPlaces: [] });
+const baseStore = () => ({ settings: { theme: 'light', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null, customPlaces: [], pro: { license: null, trialUsed: false, trialUntil: null } });
 function seedStore() {
   const now = Date.now();
   return { ...baseStore(), trips: [], bookings: [], prefs: {}, notifs: [
@@ -48,6 +50,11 @@ function loadStore() {
 let store = loadStore();
 // Địa điểm người dùng tự thêm từ Google Maps: lưu trên thiết bị, gộp vào danh sách để mở lại lịch đã lưu, xem chi tiết, khoảnh khắc
 (store.customPlaces || []).forEach((p) => { if (!DATA.places.some((x) => x.id === p.id)) DATA.places.push(p); });
+// ArrowPro: trạng thái gói, giới hạn bản miễn phí
+const proNow = () => proStatus(store.pro);
+const isPro = () => proNow().active;
+const lim = () => limitsFor(isPro());
+function needPro(what) { toast(what + ' là tính năng ArrowPro'); openPage('pro'); }
 function persist() { try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { /* trình duyệt chặn lưu */ } }
 function addNotif(title, body) { store.notifs.unshift({ id: 'n' + Date.now().toString(36), title, body, at: Date.now(), read: false }); persist(); updateBadge(); }
 function updateBadge() {
@@ -222,7 +229,8 @@ function render() {
         h += '<div class="sug"><h3>Đề xuất thay thế</h3>' + (sg.length ? sg.map((x, n) => '<button type="button" class="pick" data-act="pick"' + at + ' data-id="' + x.p.id + '">' + (n === 0 ? '<span class="star">TỐT NHẤT</span>' : '') + esc(x.p.name) + '<span class="why">' + dur(x.p.duration) + ' · ' + vnd(x.p.price) + ' · ' + esc(x.why) + '</span></button>').join('') : '<span class="hint">Không còn địa điểm phù hợp để thay.</span>') + '</div>';
       }
     });
-    h += '<button type="button" class="addbtn" data-act="addplace" data-d="' + di + '">+ Thêm địa điểm</button></section>';
+    h += '<div class="dayacts"><button type="button" class="addbtn" data-act="addplace" data-d="' + di + '">+ Thêm địa điểm</button>' +
+      (d.items.filter((x) => x.kind === 'visit').length > 1 ? '<button type="button" class="addbtn opt-btn" data-act="optimize" data-d="' + di + '">⚡ Tối ưu lộ trình' + (isPro() ? '' : ' <span class="pro-tag">Pro</span>') + '</button>' : '') + '</div></section>';
   });
   h += finalHtml();
   $('out').innerHTML = h;
@@ -275,6 +283,12 @@ function flightCard(f, act, selectedId, people) {
     '<b>' + esc(f.airline) + ' · ' + f.flightNo + (flightPromo(f.carrierId) ? ' <span class="pill">Có mã giảm</span>' : '') + '</b><span>' + f.depart + ' ' + f.from + ' → ' + f.arrive + (f.nextDay ? ' (+1)' : '') + ' ' + f.to + ' · ' + dur(f.durationMin) + '</span><span>' + esc(f.baggage) + '</span>' +
     (f.soldOut ? '<span class="late">Không đủ chỗ cho ' + people + ' khách</span>' : '<span class="pr">' + money(f.priceOne) + '/người' + (f.seatsLeft <= 4 ? ' · còn ' + f.seatsLeft + ' chỗ' : '') + '</span>') + '</button>';
 }
+const liveFlightUrl = (f) => 'https://www.flightradar24.com/data/flights/' + encodeURIComponent(String(f.flightNo).replace(/\s+/g, '').toLowerCase());
+function liveFlightHtml() {
+  if (!flightOut || !flightBack) return '';
+  if (!isPro()) return '<button type="button" class="btn quiet pro-lock" data-propage>📡 Theo dõi chuyến bay trực tiếp <span class="pro-tag">Pro</span></button>';
+  return '<div class="live-fl"><b>📡 Theo dõi trực tiếp</b>' + [flightOut, flightBack].map((f) => '<a class="btn" href="' + liveFlightUrl(f) + '" target="_blank" rel="noopener">' + esc(f.flightNo) + ' · ' + esc(f.depart || '') + '</a>').join('') + '<p class="hint">Mở Flightradar24: giờ cất, hạ cánh, trễ chuyến. Số hiệu chuyến đang là dữ liệu mẫu.</p></div>';
+}
 function flightsHtml(c) {
   const t = plan.trip, o = curOrigin(), fl = c.fl;
   const carriers = FLIGHTS.carriers.filter((k) => fl.out.some((f) => f.carrierId === k.id));
@@ -287,6 +301,7 @@ function flightsHtml(c) {
   const sel = (f) => f ? '<p class="hint">Đang chọn: ' + esc(f.airline) + ' ' + f.flightNo + ' lúc ' + f.depart + ' · ' + money(f.priceOne) + '/người</p>' : '';
   h += '<h4>Chiều đi · ' + fmtDate(t.startDate) + '</h4>' + sel(flightOut) + '<div class="opts">' + (out.map((f) => flightCard(f, 'fout', flightOut && flightOut.id, t.people)).join('') || '<p class="hint">Không có chuyến phù hợp bộ lọc.</p>') + '</div>';
   h += '<h4>Chiều về · ' + fmtDate(t.endDate) + '</h4>' + sel(flightBack) + '<div class="opts">' + (back.map((f) => flightCard(f, 'fback', flightBack && flightBack.id, t.people)).join('') || '<p class="hint">Không có chuyến phù hợp bộ lọc.</p>') + '</div>';
+  h += liveFlightHtml();
   return h;
 }
 function hotelsHtml(c) {
@@ -471,6 +486,14 @@ $('sheetBody').addEventListener('change', (e) => {
 });
 
 
+function optimizeDay(di) {
+  if (!isPro()) { needPro('Tối ưu lộ trình'); return; }
+  const day = plan.days[di], before = routeKm(day.items, distanceKm), next = optimizeDayOrder(day.items, distanceKm), after = routeKm(next, distanceKm);
+  if (after >= before - 0.05) { toast('Lộ trình ngày ' + day.dayIndex + ' đã ngắn nhất rồi'); return; }
+  snap(); dirtyEdits = true; savedOk = false; swapOpen = null;
+  undoStack[undoStack.length - 1].msg = 'Đã tối ưu ngày ' + day.dayIndex + ': bớt ' + (before - after).toFixed(1) + ' km.';
+  day.items = next; retime(day); render(); toast('Bớt ' + (before - after).toFixed(1) + ' km đường đi');
+}
 /* ---------- Kéo thả đổi thứ tự địa điểm trong ngày (chuột, cảm ứng, bàn phím) ---------- */
 function moveItem(di, from, to) {
   const day = plan.days[di];
@@ -650,6 +673,7 @@ $('out').addEventListener('click', (e) => {
   if (act === 'airline') { const id = b.dataset.id; airlineFilter = id === 'all' ? [] : airlineFilter.includes(id) ? airlineFilter.filter((x) => x !== id) : [...airlineFilter, id]; render(); return; }
   if (act === 'hstar') { const id = b.dataset.id, n = +id; hotelStars = id === 'all' ? [] : hotelStars.includes(n) ? hotelStars.filter((x) => x !== n) : [...hotelStars, n]; render(); return; }
   if (act === 'addplace') { openAddPlace(di); return; }
+  if (act === 'optimize') { optimizeDay(di); return; }
   if (act === 'hoteldetail') { openHotelDetail(b.dataset.id); return; }
   if (act === 'needflight') { needFlight = !needFlight; savedOk = false; render(); return; }
   if (act === 'needhotel') { needHotel = !needHotel; savedOk = false; render(); return; }
@@ -682,7 +706,7 @@ $('out').addEventListener('change', (e) => {
 /* ---------- Chi tiết địa điểm ---------- */
 const sheet = $('sheet');
 let lastFocus = null;
-function closeSheet() { sheet.hidden = true; addCtx = null; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+function closeSheet() { sheet.hidden = true; addCtx = null; attTrip = null; attUrls.forEach((u) => URL.revokeObjectURL(u)); attUrls = []; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
 function openDetail(di, id) {
   const dayPlaces = plan.days[di].items.filter((i) => i.place).map((i) => i.place);
   const place = dayPlaces.find((p) => p.id === id);
@@ -1015,7 +1039,9 @@ $('momBody').addEventListener('click', (e) => {
 $('momBody').addEventListener('change', async (e) => {
   if (e.target.id !== 'momFile') return;
   const pid = e.target.dataset.place, dr = pid && getDraft(momTrip, pid); if (!pid) return;
-  const files = [...e.target.files].slice(0, Math.max(0, 10 - dr.files.length)); e.target.value = '';
+  const cap = lim().photosPerPlace, room = cap === Infinity ? Infinity : Math.max(0, cap - (momCounts[pid] || 0) - dr.files.length);
+  if (room <= 0) { needPro('Thêm hơn ' + cap + ' ảnh mỗi nơi'); e.target.value = ''; return; }
+  const files = [...e.target.files].slice(0, room); e.target.value = '';
   momOpen.add(pid);
   try { for (const f of files) { const blob = await resizeImage(f); dr.files.push({ blob, url: URL.createObjectURL(blob) }); } } catch (err) { toast('Không xử lý được ảnh: ' + err.message); }
   renderMomBody();
@@ -1060,6 +1086,127 @@ async function fillAlbum() {
 function pageAlbum() { return '<div id="albumBody"><p class="hint">Đang tạo album…</p></div>'; }
 
 
+
+/* ---------- ArrowPro: trang gói, mua bằng QR, mã kích hoạt, dùng thử, ngoại tuyến ---------- */
+let proPlan = 'year', proBuy = false, proMsg = '';
+const PRO_REASON = { format: 'Mã không đúng dạng. Mã có dạng AP1.xxxx.yyyy, hãy dán nguyên văn.', signature: 'Mã không hợp lệ (sai chữ ký). Kiểm tra lại hoặc liên hệ Arrow Travel.', unsupported: 'Trình duyệt này không kiểm tra được mã. Hãy mở app trên Chrome, Safari hoặc Edge mới.' };
+function proCardHtml() {
+  const s = proNow();
+  return '<button type="button" class="pro-card" data-page="pro"><span class="pro-logo">ArrowPro</span><span><b>' +
+    (s.active ? (s.kind === 'trial' ? 'Đang dùng thử, còn ' + s.daysLeft + ' ngày' : 'Đang dùng ArrowPro') : 'Nâng cấp ArrowPro') + '</b><small>' +
+    (s.active ? 'Hiệu lực đến ' + s.until.split('-').reverse().join('/') : 'Tối ưu lộ trình, dùng ngoại tuyến, ưu đãi riêng… từ ' + moneyVnd(PRO.plans[0].price) + '/tháng') + '</small></span><span class="chev">›</span></button>';
+}
+function pagePro() {
+  const s = proNow(), plan = PRO.plans.find((x) => x.id === proPlan) || PRO.plans[0];
+  let h = '<div class="pro-hero"><span class="pro-logo">ArrowPro</span><h2>Đi nhiều hơn, lo ít hơn</h2><p>' +
+    (s.active ? (s.kind === 'trial' ? 'Bạn đang dùng thử, còn ' + s.daysLeft + ' ngày (đến ' + s.until.split('-').reverse().join('/') + ').' : 'Gói của bạn còn hiệu lực đến ' + s.until.split('-').reverse().join('/') + '.') :
+      s.kind === 'expired' ? 'Gói ArrowPro của bạn đã hết hạn.' : s.kind === 'trial_over' ? 'Thời gian dùng thử đã hết.' : 'Mở khoá các tính năng dành cho người đi nhiều.') + '</p></div>';
+  h += '<div class="panel"><b>Đặc quyền</b><ul class="perks">' + PRO.perks.map((x) => '<li class="pk-' + x.status + '"><span class="pk-i">' + (x.status === 'live' ? '✓' : '…') + '</span><span><b>' + esc(x.title) + (x.status === 'soon' ? ' <em class="pk-badge">Sắp có</em>' : '') + '</b><small>' + esc(x.desc) + '</small></span></li>').join('') + '</ul>' +
+    '<p class="hint">Mục "Sắp có" chưa nằm trong gói, giá hiện tại chỉ tính các đặc quyền đã có.</p></div>';
+  if (s.kind === 'free' || (!s.active && !store.pro.trialUsed)) h += '<button type="button" class="go" data-pg="protrial">Dùng thử miễn phí 7 ngày</button>';
+  h += '<div class="panel"><b>' + (s.kind === 'license' ? 'Gia hạn' : 'Mua gói') + '</b><div class="seg" role="group" aria-label="Chọn gói" style="margin-top:8px">' + PRO.plans.map((x) => '<button type="button" data-pg="proplan" data-v="' + x.id + '" aria-pressed="' + (x.id === proPlan) + '">' + esc(x.label) + ' · ' + moneyVnd(x.price) + (x.note ? '<small style="display:block;font-weight:400">' + esc(x.note) + '</small>' : '') + '</button>').join('') + '</div>' +
+    (proBuy ? proPayHtml(plan) : '<button type="button" class="go" data-pg="probuy" style="margin-top:12px">Thanh toán ' + moneyVnd(plan.price) + ' qua QR</button>') + '</div>';
+  h += '<div class="panel"><b>Nhập mã kích hoạt</b><p class="hint" style="margin:4px 0 8px">Sau khi chuyển khoản, Arrow Travel gửi mã kích hoạt cho bạn (thường trong 24 giờ).</p><textarea id="proCode" rows="3" placeholder="AP1.…" autocomplete="off" spellcheck="false"></textarea><button type="button" class="btn" data-pg="proactivate" style="margin-top:8px;width:100%">Kích hoạt</button><p class="hint" id="proMsg" aria-live="polite">' + esc(proMsg) + '</p></div>';
+  h += offlineHtml();
+  h += '<p class="hint">Gói gắn với thiết bị này và lưu trên máy; xoá dữ liệu app vẫn giữ gói. Bản này chưa có tài khoản nên chưa dùng chung một gói trên nhiều máy.</p>';
+  return h;
+}
+function proPayHtml(plan) {
+  const isLive = PAYMENT.mode === 'live', code = 'PRO' + Date.now().toString(36).slice(-6).toUpperCase();
+  const content = transferContent((PAYMENT.contentPrefix || 'ARROW') + ' ' + code);
+  const payload = vietQrPayload({ bin: PAYMENT.bankBin, account: PAYMENT.accountNumber, amount: plan.price, content });
+  return '<div class="pay" style="margin-top:12px">' + (isLive ? '' : '<div class="warn" style="margin-bottom:8px">CHẾ ĐỘ THỬ. Chủ app chưa bật thanh toán thật (data/payment.json) nên mã QR bị phủ chữ MẪU, đừng chuyển tiền. Dùng thử 7 ngày để trải nghiệm.</div>') +
+    '<div class="qrbox">' + (qrSvg(payload) || '') + (isLive ? '' : '<div class="qr-wm" aria-hidden="true">MẪU</div>') + '</div>' +
+    '<div class="cost"><div class="cl"><span>Gói</span><b>ArrowPro ' + esc(plan.label) + '</b></div><div class="cl"><span>Số tiền</span><b>' + moneyVnd(plan.price) + '</b></div><div class="cl"><span>Nội dung</span><b>' + esc(content) + '</b></div><div class="cl"><span>Tài khoản</span><b>' + esc(PAYMENT.bankName) + ' · ' + esc(PAYMENT.accountNumber) + '</b></div></div>' +
+    '<p class="hint">Ghi đúng nội dung để được đối chiếu. Chuyển xong, gửi ảnh giao dịch cho Arrow Travel để nhận mã kích hoạt, rồi dán mã ở ô bên dưới.</p></div>';
+}
+async function activatePro() {
+  const code = ($('proCode') && $('proCode').value) || '';
+  proMsg = 'Đang kiểm tra…'; $('proMsg').textContent = proMsg;
+  const r = await verifyLicense(code, PRO.publicKey);
+  if (!r.ok) { proMsg = PRO_REASON[r.reason] || 'Mã không hợp lệ.'; $('proMsg').textContent = proMsg; return; }
+  if (Date.parse(r.payload.exp + 'T23:59:59') < Date.now()) { proMsg = 'Mã này đã hết hạn ngày ' + r.payload.exp.split('-').reverse().join('/') + '.'; $('proMsg').textContent = proMsg; return; }
+  store.pro = { ...store.pro, license: { id: r.payload.id, plan: r.payload.plan, exp: r.payload.exp } }; persist();
+  proMsg = ''; proBuy = false; addNotif('Đã kích hoạt ArrowPro', 'Gói của bạn có hiệu lực đến ' + r.payload.exp.split('-').reverse().join('/') + '. Cảm ơn bạn đã ủng hộ Arrow Travel!');
+  toast('Đã kích hoạt ArrowPro'); renderPage();
+}
+
+// Dùng ngoại tuyến: service worker lưu mọi tệp app đã tải (chỉ khi mở qua web, không chạy trong khung xem thử)
+const swOk = () => 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !(window.claude && typeof window.claude.use === 'function');
+function offlineHtml() {
+  if (!swOk()) return '<div class="panel"><b>Dùng ngoại tuyến</b><p class="hint" style="margin:4px 0 0">Mở Arrow Travel bằng trình duyệt (bản trên GitHub Pages) để bật dùng ngoại tuyến. Khung xem thử này không hỗ trợ.</p></div>';
+  const on = !!store.pro.offline;
+  return '<div class="panel"><b>Dùng ngoại tuyến</b><p class="hint" style="margin:4px 0 8px">' + (on ? 'Đã bật. App, dữ liệu địa điểm và ảnh đã lưu vào máy, mở được khi mất mạng. Lịch trình, khoảnh khắc vốn đã lưu trên máy.' : 'Lưu app vào máy để mở khi không có mạng (máy bay, vùng sóng yếu).') + '</p>' +
+    '<button type="button" class="btn" data-pg="' + (on ? 'offoff' : 'offon') + '" style="width:100%">' + (on ? 'Tắt và xoá bản lưu' : (isPro() ? 'Bật dùng ngoại tuyến' : 'Bật dùng ngoại tuyến · Pro 🔒')) + '</button></div>';
+}
+async function enableOffline() {
+  if (!isPro()) { needPro('Dùng ngoại tuyến'); return; }
+  try {
+    const reg = await navigator.serviceWorker.register('sw.js');
+    await navigator.serviceWorker.ready;
+    const urls = new Set([location.href.split('#')[0], ...performance.getEntriesByType('resource').map((e) => e.name).filter((u) => u.startsWith(location.origin))]);
+    DATA.places.forEach((p) => { if (p.image && !p.image.startsWith('data:')) urls.add(new URL(p.image, location.href).href); });
+    Object.values(APP.bookingImages || {}).forEach((x) => urls.add(new URL(x.image, location.href).href));
+    const c = await caches.open('arrow-offline-v1');
+    await Promise.all([...urls].map((u) => c.add(u).catch(() => {})));
+    store.pro.offline = true; persist(); toast('Đã lưu ' + urls.size + ' tệp, dùng được khi mất mạng'); renderPage();
+    return reg;
+  } catch (err) { toast('Không bật được: ' + (err.message || err)); }
+}
+async function disableOffline() {
+  try { (await navigator.serviceWorker.getRegistrations()).forEach((r) => r.unregister()); await caches.delete('arrow-offline-v1'); } catch (e) { /* bỏ qua */ }
+  store.pro.offline = false; persist(); toast('Đã tắt dùng ngoại tuyến'); if (pageName === 'pro') renderPage();
+}
+// hết gói thì gỡ bản lưu ngoại tuyến
+if (store.pro && store.pro.offline && !isPro() && swOk()) disableOffline();
+
+$('pageBody').addEventListener('click', (e) => {
+  if (pageName !== 'pro') return;
+  const b = e.target.closest('[data-pg]'); if (!b) return;
+  const a = b.dataset.pg;
+  if (a === 'protrial') { const n = startTrial(store.pro); if (!n) { toast('Thiết bị này đã dùng thử rồi'); return; } store.pro = n; persist(); addNotif('Bắt đầu dùng thử ArrowPro', 'Bạn có 7 ngày dùng mọi đặc quyền ArrowPro.'); toast('Đã bật dùng thử 7 ngày'); renderPage(); return; }
+  if (a === 'proplan') { proPlan = b.dataset.v; renderPage(); return; }
+  if (a === 'probuy') { proBuy = true; renderPage(); return; }
+  if (a === 'proactivate') { activatePro(); return; }
+  if (a === 'offon') { enableOffline(); return; }
+  if (a === 'offoff') { disableOffline(); }
+});
+
+/* ---------- Tệp đính kèm của chuyến đi: vé, xác nhận đặt phòng… (lưu trên máy) ---------- */
+let attTrip = null, attUrls = [];
+async function openAttach(id) {
+  attTrip = id; detailPlace = null; detailHotel = null; addCtx = null; lastFocus = document.activeElement;
+  sheet.hidden = false; await renderAttach(); $('sheetClose').focus();
+}
+async function renderAttach() {
+  const s = store.trips.find((x) => x.id === attTrip); if (!s) return;
+  attUrls.forEach((u) => URL.revokeObjectURL(u)); attUrls = [];
+  let files = [];
+  try { files = await listPhotos('att:' + attTrip); } catch (e) { $('sheetBody').innerHTML = '<div class="warn">' + esc(e.message) + '</div>'; return; }
+  const cap = lim().attachmentsPerTrip, full = files.length >= cap;
+  $('sheetBody').innerHTML = '<div class="pd"><h2>Tệp đính kèm</h2><p class="hint">' + esc(s.trip.destination) + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + ' · ' + files.length + (cap === Infinity ? ' tệp' : '/' + cap + ' tệp (bản thường)') + '</p>' +
+    '<div class="list">' + (files.length ? files.map((f) => {
+      const u = URL.createObjectURL(f.blob); attUrls.push(u);
+      const name = f.blob.name || 'tệp', kb = Math.max(1, Math.round(f.blob.size / 1024));
+      return '<div class="panel att"><span class="att-i">' + (/^image\//.test(f.blob.type) ? '<img src="' + u + '" alt="">' : /pdf/.test(f.blob.type) ? 'PDF' : 'TỆP') + '</span><span class="grow"><b>' + esc(name) + '</b><small>' + (kb > 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB') + ' · ' + fmtTime(f.at) + '</small></span><a class="btn quiet" href="' + u + '" target="_blank" rel="noopener">Mở</a><button type="button" class="btn quiet" data-attdel="' + f.id + '" aria-label="Xoá ' + esc(name) + '">Xoá</button></div>';
+    }).join('') : '<div class="panel empty"><b>Chưa có tệp nào</b>Lưu vé máy bay, xác nhận đặt phòng, lịch tàu xe… để mở nhanh khi đi.</div>') + '</div>' +
+    (full ? '<button type="button" class="go" data-propage>Thêm không giới hạn với ArrowPro</button>' : '<label class="go file-go">+ Thêm tệp<input type="file" id="attFile" multiple accept="image/*,application/pdf,.pdf,.doc,.docx,.xls,.xlsx,.txt" hidden></label>') +
+    '<p class="hint" style="margin-top:8px">Tệp chỉ nằm trên thiết bị này, không tải lên đâu cả. Không nên lưu giấy tờ tuỳ thân nếu máy dùng chung.</p></div>';
+}
+$('sheetBody').addEventListener('change', async (e) => {
+  if (e.target.id !== 'attFile' || !attTrip) return;
+  const cap = lim().attachmentsPerTrip;
+  let have = 0; try { have = (await listPhotos('att:' + attTrip)).length; } catch (err) { /* bỏ qua */ }
+  const files = [...e.target.files].slice(0, cap === Infinity ? Infinity : Math.max(0, cap - have)); e.target.value = '';
+  for (const f of files) { try { await addPhoto('att:' + attTrip, f); } catch (err) { toast('Không lưu được ' + f.name); } }
+  if (e.target.files && files.length < e.target.files.length) toast('Bản thường lưu tối đa ' + cap + ' tệp mỗi chuyến');
+  renderAttach();
+});
+$('sheetBody').addEventListener('click', async (e) => {
+  const d = e.target.closest('[data-attdel]'); if (!d || !attTrip) return;
+  await deletePhoto(+d.dataset.attdel).catch(() => {}); renderAttach();
+});
+
 /* ---------- Video kỷ niệm: ảnh đã đăng + nhạc nền, tạo ngay trên máy ---------- */
 var reel = null; // var: go() gọi stopReel() trước khi tới dòng này lúc khởi động. { plan, imgs, urls, music, userBuf, userName, perPhoto, player, outUrl, busy }
 function stopReel() {
@@ -1083,7 +1230,7 @@ async function fillReel() {
   urls.forEach((u, i) => { if (imgList[i]) imgs.set(u, imgList[i]); });
   if ($('reelBody') !== box) { urls.forEach((u) => URL.revokeObjectURL(u)); return; } // đã rời trang trong lúc tải ảnh
   reel = { entries, info, imgs, urls, music: 'nhe_nhang', userBuf: null, userName: '', perPhoto: 3, outUrl: null, busy: false };
-  reel.plan = planReel(entries, info, { perPhoto: reel.perPhoto });
+  reel.plan = planReel(entries, info, { perPhoto: reel.perPhoto, maxPhotos: lim().reelPhotos });
   box.innerHTML = reelHtml();
   reel.player = createReelPlayer($('reelCv'), () => ({ plan: reel.plan, imgs: reel.imgs, music: reel.music === 'file' ? reel.userBuf : reel.music === 'none' ? null : reel.music, accent: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0F766E' }), (t) => {
     const el = $('reelT'); if (el) el.textContent = fmtSec(t) + ' / ' + fmtSec(reel.plan.duration);
@@ -1114,7 +1261,7 @@ $('pageBody').addEventListener('click', async (e) => {
     document.querySelectorAll('[data-reelmusic]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     return;
   }
-  if (b.dataset.reelsec) { reel.perPhoto = +b.dataset.reelsec; reel.player.reset(); reel.plan = planReel(reel.entries, reel.info, { perPhoto: reel.perPhoto }); refreshReelUi(); return; }
+  if (b.dataset.reelsec) { reel.perPhoto = +b.dataset.reelsec; reel.player.reset(); reel.plan = planReel(reel.entries, reel.info, { perPhoto: reel.perPhoto, maxPhotos: lim().reelPhotos }); refreshReelUi(); return; }
   if (b.dataset.reelact === 'play') { if (reel.player.isPlaying()) reel.player.pause(); else reel.player.play(); return; }
   if (b.dataset.reelact === 'make') makeReel();
 });
@@ -1305,7 +1452,7 @@ function renderTrips() {
     (list.length ? list.map((s) => {
       const t = s.trip, armed = armedTrip === s.id, fav = store.favorites.includes(s.id);
       return '<div class="panel trip"><div class="trip-top"><h3>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
-        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-trackstart="' + s.id + '">' + (store.track && store.track.tripId === s.id ? 'Đang đi' : 'Bắt đầu chuyến') + '</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
+        '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-trackstart="' + s.id + '">' + (store.track && store.track.tripId === s.id ? 'Đang đi' : 'Bắt đầu chuyến') + '</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" data-attach="' + s.id + '">Tệp</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
     }).join('') : '<div class="panel empty"><b>Chưa có lịch trình yêu thích</b>Bấm ♥ ở một lịch trình để đánh dấu.</div>');
 }
 
@@ -1319,10 +1466,12 @@ function renderNotifs() {
 
 /* ---------- Bắt sự kiện chung: tab, lối tắt, danh sách ---------- */
 document.addEventListener('click', (e) => {
-  const t = e.target.closest('[data-trackstart],[data-moments],[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
+  const t = e.target.closest('[data-attach],[data-propage],[data-trackstart],[data-moments],[data-featured],[data-gu],[data-guplan],[data-daytab],[data-editform],[data-demo],[data-go],[data-page],[data-fav],[data-tripfilter],[data-preset],[data-dest],[data-trip],[data-deltrip],[data-clearnotifs],[data-clearall]'); if (!t) return;
   const d = t.dataset;
   if (d.editform !== undefined) { setFormOpen(true); $('form').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (d.daytab !== undefined) { dayTab = d.daytab === 'all' ? 'all' : +d.daytab; render(); window.scrollTo({ top: $('dayTabs').offsetTop - 8, behavior: 'smooth' }); return; }
+  if (d.attach) { openAttach(d.attach); return; }
+  if (d.propage !== undefined) { if (!sheet.hidden) closeSheet(); openPage('pro'); return; }
   if (d.trackstart) { if (store.track && store.track.tripId === d.trackstart) go('track'); else startTrack(d.trackstart); return; }
   if (d.moments) { momTrip = d.moments; momChosen = true; go('moments'); return; }
   if (d.featured) { openFeatured(d.featured); return; }
@@ -1338,12 +1487,12 @@ document.addEventListener('click', (e) => {
   if (d.trip) { openTrip(d.trip); return; }
   if (d.deltrip) {
     if (armedTrip !== d.deltrip) { armedTrip = d.deltrip; renderTrips(); return; }
-    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); delete store.moments[d.deltrip]; if (store.track && store.track.tripId === d.deltrip) { stopGps(false); store.track = null; } store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
+    store.trips = store.trips.filter((x) => x.id !== d.deltrip); store.favorites = store.favorites.filter((x) => x !== d.deltrip); deleteTripPhotos(d.deltrip + ':').catch(() => {}); deleteTripPhotos('att:' + d.deltrip).catch(() => {}); delete store.moments[d.deltrip]; if (store.track && store.track.tripId === d.deltrip) { stopGps(false); store.track = null; } store.bookings = store.bookings.filter((x) => x.tripId !== d.deltrip || x.status !== 'chua_chuyen'); armedTrip = null; persist(); renderTrips(); return;
   }
   if (d.clearnotifs !== undefined) { store.notifs = []; persist(); updateBadge(); renderNotifs(); return; }
   if (d.clearall !== undefined) {
     if (!armedClear) { armedClear = true; renderAccount(); return; }
-    clearAllPhotos().catch(() => {}); store = seedStore(); armedClear = false; plan = null; currentTripId = null; rateDraft = null; persist(); applySettings(); updateBadge(); renderAccount();
+    clearAllPhotos().catch(() => {}); const keepPro = store.pro; store = seedStore(); store.pro = keepPro; armedClear = false; plan = null; currentTripId = null; rateDraft = null; persist(); applySettings(); updateBadge(); renderAccount();
   }
 });
 
@@ -1377,6 +1526,7 @@ const THEMES = { light: 'Sáng', pink: 'Hồng nhạt', yellow: 'Vàng nhạt' }
 function applySettings() {
   const st = store.settings, root = document.documentElement;
   if (!THEMES[st.theme]) st.theme = 'light'; // bản cũ có 'system' / 'dark', nay bỏ giao diện tối
+  if (st.theme === 'pink' && !isPro()) st.theme = 'light'; // Hồng nhạt thuộc ArrowPro, hết gói thì về Sáng
   if (st.theme === 'light') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', st.theme);
   setLang(st.lang); setCurrency(st.currency); root.lang = st.lang;
   retranslate();
@@ -1420,6 +1570,7 @@ const legalPage = (key) => () => {
 const PAGES = {
   album: { title: 'Album kỷ niệm', render: () => pageAlbum() },
   reel: { title: 'Video kỷ niệm', render: () => pageReel() },
+  pro: { title: 'ArrowPro', render: () => pagePro() },
   settings: { title: 'Cài đặt', render: () => pageSettings() },
   promos: { title: 'Khuyến mãi', render: () => pagePromos() },
   rewards: { title: 'Điểm thưởng và voucher', render: () => pageRewards() },
@@ -1446,7 +1597,7 @@ const seg = (k, items, cur) => '<div class="seg" role="group">' + items.map(([v,
 function pageSettings() {
   const st = store.settings, p = store.prefs;
   const o = (v, l, cur) => '<option value="' + v + '"' + (v === cur ? ' selected' : '') + '>' + esc(l) + '</option>';
-  return '<div class="panel setting"><b>Giao diện</b>' + seg('theme', Object.entries(THEMES), st.theme) + '</div>' +
+  return '<div class="panel setting"><b>Giao diện</b>' + seg('theme', Object.entries(THEMES).map(([k, l]) => [k, k === 'pink' && !isPro() ? l + ' · Pro 🔒' : l]), st.theme) + '</div>' +
     '<div class="panel setting"><b>Ngôn ngữ</b>' + seg('lang', [['vi', 'Tiếng Việt'], ['en', 'English']], st.lang) +
     '<p class="hint">Bản tiếng Anh mới dịch phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.</p></div>' +
     '<div class="panel setting"><b>Tiền tệ hiển thị</b><select id="curSel" aria-label="Tiền tệ">' + Object.entries(CURRENCIES).map(([c, v]) => o(c, v.label, st.currency)).join('') + '</select>' +
@@ -1458,13 +1609,13 @@ function pageSettings() {
 
 /* Khuyến mãi */
 let promoQ = '', promoType = 'all';
-const PROMO_TYPES = [['all', 'Tất cả'], ['place', 'Địa điểm'], ['flight', 'Chuyến bay'], ['hotel', 'Khách sạn']];
-const TYPE_NAME = { all: 'Arrow Travel', place: 'Địa điểm', flight: 'Chuyến bay', hotel: 'Khách sạn' };
+const PROMO_TYPES = [['all', 'Tất cả'], ['place', 'Địa điểm'], ['flight', 'Chuyến bay'], ['hotel', 'Khách sạn'], ['transport', 'Thuê xe']];
+const TYPE_NAME = { all: 'Arrow Travel', place: 'Địa điểm', flight: 'Chuyến bay', flight_any: 'Chuyến bay', hotel: 'Khách sạn', transport: 'Thuê xe' };
 function promoCard(p) {
   const left = daysLeft(p, todayStr());
-  return '<div class="panel promo"><h3>' + esc(p.title) + '</h3><div class="meta">' + esc(tr(TYPE_NAME[p.target.type])) + (p.target.name ? ' · ' + esc(p.target.name) : '') +
+  return '<div class="panel promo' + (p.pro ? ' promo-pro' : '') + '"><h3>' + (p.pro ? '<span class="pro-tag">Pro</span> ' : '') + esc(p.title) + '</h3><div class="meta">' + esc(tr(TYPE_NAME[p.target.type])) + (p.target.name ? ' · ' + esc(p.target.name) : '') +
     (left != null ? ' · còn ' + left + ' ngày' : '') + ' <span class="badge-demo">mẫu</span></div><p style="margin:6px 0 0">' + esc(p.desc) + '</p>' +
-    (p.code ? '<div class="code">' + esc(p.code) + ' <button type="button" class="btn quiet" data-pg="copy" data-v="' + esc(p.code) + '">Chép</button></div>' : '') +
+    (p.pro && !isPro() ? '<button type="button" class="btn" data-propage style="margin-top:8px">Mở khoá với ArrowPro</button>' : p.code ? '<div class="code">' + esc(p.code) + ' <button type="button" class="btn quiet" data-pg="copy" data-v="' + esc(p.code) + '">Chép</button></div>' : '') +
     (p.kind === 'perk' ? '<p class="hint" style="margin-top:6px">Nhận trực tiếp tại nơi sử dụng.</p>' : '<p class="hint" style="margin-top:6px">Nhập mã khi thanh toán chuyến bay và khách sạn.</p>') + '</div>';
 }
 function promoListHtml() {
@@ -1544,6 +1695,7 @@ function renderAccount() {
   const st = store.settings;
   $('accountBody').innerHTML =
     '<div class="panel me"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></div><div><b>Khách</b><span>Chưa đăng nhập</span></div></div>' +
+    proCardHtml() +
     '<div class="menu-h">Của tôi</div><div class="panel menu">' + mi('rewards', 'Điểm thưởng và voucher', store.points.balance + ' điểm · ' + store.vouchers.filter((v) => !v.used).length + ' voucher') + mi('friends', 'Bạn đồng hành', store.friends.length + ' đã kết nối') + mi('promos', 'Khuyến mãi') + '</div>' +
     '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', (THEMES[st.theme] || THEMES.light) + ' · ' + (st.lang === 'en' ? 'English' : 'Tiếng Việt') + ' · ' + st.currency) + '</div>' +
     '<div class="menu-h">Hỗ trợ</div><div class="panel menu">' + mi('payguide', 'Hướng dẫn thanh toán') + mi('rate', 'Đánh giá Arrow Travel', store.review ? 'Bạn đã đánh giá ' + store.review.stars + ' sao' : '') + mi('about', 'Giới thiệu') + mi('privacy', 'Chính sách bảo mật') + mi('terms', 'Điều khoản sử dụng') + '</div>' +
@@ -1556,7 +1708,7 @@ function renderAccount() {
 $('pageBody').addEventListener('click', (e) => {
   const b = e.target.closest('[data-pg]'); if (!b) return;
   const a = b.dataset.pg, v = b.dataset.v;
-  if (a === 'set') { store.settings[b.dataset.k] = v; persist(); applySettings(); refreshAll(); return; }
+  if (a === 'set') { if (b.dataset.k === 'theme' && v === 'pink' && !isPro()) { needPro('Giao diện Hồng nhạt'); return; } store.settings[b.dataset.k] = v; persist(); applySettings(); refreshAll(); return; }
   if (a === 'copy') { copyText(v); return; }
   if (a === 'ptype') { promoType = v; renderPage(); return; }
   if (a === 'redeem') {
@@ -1613,7 +1765,7 @@ $('sheetBody').addEventListener('click', (e) => {
 
 /* ---------- Mã giảm giá và voucher khi thanh toán ---------- */
 function promoCtx(b) {
-  return { flightsTotal: b.flights ? b.flights.total : 0, hotelTotal: b.hotel ? b.hotel.total : 0, payAmount: b.base, flightOut: b.flights ? b.flights.out : null, hotel: b.hotel };
+  return { flightsTotal: b.flights ? b.flights.total : 0, hotelTotal: b.hotel ? b.hotel.total : 0, payAmount: b.base, flightOut: b.flights ? b.flights.out : null, hotel: b.hotel, pro: isPro() };
 }
 function setDiscount(b, d) {
   b.discount = d; b.amount = Math.max(1000, b.base - (d ? d.amount : 0)); persist(); renderPay(b);

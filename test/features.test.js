@@ -14,7 +14,7 @@ const TODAY = '2026-10-06';
 
 test('tìm khuyến mãi theo loại, theo từ khoá không dấu, bỏ mã hết hạn', () => {
   assert.ok(searchPromos(promos, { today: TODAY }).length >= 8);
-  assert.ok(searchPromos(promos, { type: 'flight', today: TODAY }).every((p) => p.target.type === 'flight'));
+  assert.ok(searchPromos(promos, { type: 'flight', today: TODAY }).every((p) => p.target.type === 'flight' || p.target.type === 'flight_any'));
   assert.equal(searchPromos(promos, { q: 'ba na', today: TODAY })[0].target.ref, 'ba-na');
   assert.equal(searchPromos(promos, { q: 'bà nà', today: TODAY })[0].target.ref, 'ba-na');
   assert.equal(searchPromos(promos, { today: '2028-01-01' }).length, 0);
@@ -105,4 +105,15 @@ test('lịch trình nổi bật mẫu: địa điểm có thật, không đóng 
       if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id} không hợp trẻ nhỏ`);
     }
   }
+});
+
+test('mã ưu đãi ArrowPro chỉ dùng được khi là thành viên Pro, áp cho mọi hãng bay', async () => {
+  const { applyPromo, findByCode, searchPromos } = await import('../src/promos.js');
+  const { promos } = JSON.parse((await import('node:fs')).readFileSync(new URL('../data/promos.json', import.meta.url)));
+  const p = findByCode(promos, 'probay10', '2026-10-10');
+  const ctx = { flightsTotal: 2000000, hotelTotal: 0, payAmount: 2000000, flightOut: { carrierId: 'qh' } };
+  assert.equal(applyPromo(p, ctx).ok, false);
+  assert.deepEqual(applyPromo(p, { ...ctx, pro: true }), { ok: true, discount: 200000, reason: '' });
+  assert.equal(applyPromo(findByCode(promos, 'PROXE15', '2026-10-10'), { ...ctx, pro: true }).ok, false, 'ưu đãi thuê xe nhận tại chỗ');
+  assert.ok(searchPromos(promos, { type: 'flight', today: '2026-10-10' }).some((x) => x.code === 'PROBAY10'));
 });

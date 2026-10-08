@@ -1,0 +1,19 @@
+{
+  "_note": "Gói ArrowPro. Giá do chủ app đặt, sửa ở đây. Thanh toán bằng chuyển khoản QR (data/payment.json), chủ app kiểm tra tiền về rồi gửi mã kích hoạt tạo bằng scripts/pro-license.mjs. publicKey là khoá CÔNG KHAI, an toàn để đưa lên GitHub.",
+  "name": "ArrowPro",
+  "plans": [
+    { "id": "month", "label": "1 tháng", "price": 49000, "days": 30 },
+    { "id": "year", "label": "1 năm", "price": 399000, "days": 365, "note": "Tiết kiệm 32%" }
+  ],
+  "publicKey": {"kty":"EC","crv":"P-256","x":"qgItiIruZZc8aRwQk-y4Cpuf2yXiIxWkOYhhVQt70LU","y":"zjHFwTqe_Tl7GXD6Y2ud9xFVWJ1fiTLEDYGYf7VBSs4"},
+  "perks": [
+    { "id": "offline", "title": "Dùng ngoại tuyến", "desc": "Lưu app, dữ liệu và ảnh địa điểm vào máy để mở khi không có mạng (bản trên web, không áp dụng trong khung xem thử).", "status": "live" },
+    { "id": "optimize", "title": "Tối ưu lịch trình", "desc": "Một chạm xếp lại các điểm trong ngày cho quãng đường ngắn nhất, giữ nguyên giờ ăn.", "status": "live" },
+    { "id": "flight", "title": "Theo dõi chuyến bay trực tiếp", "desc": "Mở trạng thái giờ bay, cổng, trễ chuyến của chuyến đã chọn trên Flightradar24.", "status": "live" },
+    { "id": "deals", "title": "Ưu đãi riêng vé máy bay và thuê xe", "desc": "Mã giảm giá chỉ dành cho thành viên Pro (hiện là ưu đãi mẫu).", "status": "live" },
+    { "id": "files", "title": "Tệp đính kèm không giới hạn", "desc": "Lưu vé, xác nhận đặt phòng, giấy tờ chuyến đi không giới hạn số lượng (bản thường 3 tệp mỗi chuyến), ảnh khoảnh khắc không giới hạn.", "status": "live" },
+    { "id": "pink", "title": "Giao diện Hồng nhạt", "desc": "Mở khoá giao diện màu hồng.", "status": "live" },
+    { "id": "gmail", "title": "Quét Gmail lấy vé và đặt phòng", "desc": "Tự đọc email xác nhận vé máy bay, khách sạn để thêm vào chuyến đi. Cần Google duyệt quyền đọc Gmail và máy chủ riêng.", "status": "soon" },
+    { "id": "chrome", "title": "Bản đồ trên tiện ích Chrome", "desc": "Tiện ích Chrome hiện lịch trình và bản đồ ngay khi bạn duyệt web.", "status": "soon" }
+  ]
+}

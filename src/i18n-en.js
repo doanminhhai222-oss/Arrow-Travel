@@ -350,5 +350,21 @@ export const EN = {
   "Mỗi ảnh hiện": "Each photo shows for",
   "Video đã sẵn sàng": "Your video is ready",
   "Chia sẻ": "Share",
-  "Đã tạo video kỷ niệm": "Memory video created"
+  "Đã tạo video kỷ niệm": "Memory video created",
+  "Đặc quyền": "Perks",
+  "Mua gói": "Buy a plan",
+  "Gia hạn": "Renew",
+  "Nhập mã kích hoạt": "Enter activation code",
+  "Kích hoạt": "Activate",
+  "Dùng thử miễn phí 7 ngày": "Free 7-day trial",
+  "Dùng ngoại tuyến": "Offline mode",
+  "Sắp có": "Coming soon",
+  "Tệp đính kèm": "Attachments",
+  "Tệp": "Files",
+  "+ Thêm tệp": "+ Add files",
+  "Đi nhiều hơn, lo ít hơn": "Travel more, worry less",
+  "Nâng cấp ArrowPro": "Upgrade to ArrowPro",
+  "Đang dùng ArrowPro": "ArrowPro active",
+  "⚡ Tối ưu lộ trình": "⚡ Optimize route",
+  "📡 Theo dõi trực tiếp": "📡 Live tracking"
 };
