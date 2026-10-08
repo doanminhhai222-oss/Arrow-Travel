@@ -30,7 +30,7 @@ const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g
 
 /* ---------- Lưu trữ trên thiết bị (không có tài khoản, không có máy chủ) ---------- */
 const STORE_KEY = 'arrow-travel-v1';
-const baseStore = () => ({ settings: { theme: 'system', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null });
+const baseStore = () => ({ settings: { theme: 'light', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null });
 function seedStore() {
   const now = Date.now();
   return { ...baseStore(), trips: [], bookings: [], prefs: {}, notifs: [
@@ -1140,9 +1140,11 @@ new MutationObserver((recs) => {
 }).observe(document.body, { childList: true, subtree: true, characterData: true });
 
 /* ---------- Cài đặt giao diện, ngôn ngữ, tiền tệ ---------- */
+const THEMES = { light: 'Sáng', pink: 'Hồng nhạt', yellow: 'Vàng nhạt' };
 function applySettings() {
   const st = store.settings, root = document.documentElement;
-  if (st.theme === 'light' || st.theme === 'dark') root.setAttribute('data-theme', st.theme); else root.removeAttribute('data-theme');
+  if (!THEMES[st.theme]) st.theme = 'light'; // bản cũ có 'system' / 'dark', nay bỏ giao diện tối
+  if (st.theme === 'light') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', st.theme);
   setLang(st.lang); setCurrency(st.currency); root.lang = st.lang;
   retranslate();
 }
@@ -1210,7 +1212,7 @@ const seg = (k, items, cur) => '<div class="seg" role="group">' + items.map(([v,
 function pageSettings() {
   const st = store.settings, p = store.prefs;
   const o = (v, l, cur) => '<option value="' + v + '"' + (v === cur ? ' selected' : '') + '>' + esc(l) + '</option>';
-  return '<div class="panel setting"><b>Giao diện</b>' + seg('theme', [['system', 'Theo hệ thống'], ['light', 'Sáng'], ['dark', 'Tối']], st.theme) + '</div>' +
+  return '<div class="panel setting"><b>Giao diện</b>' + seg('theme', Object.entries(THEMES), st.theme) + '</div>' +
     '<div class="panel setting"><b>Ngôn ngữ</b>' + seg('lang', [['vi', 'Tiếng Việt'], ['en', 'English']], st.lang) +
     '<p class="hint">Bản tiếng Anh mới dịch phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.</p></div>' +
     '<div class="panel setting"><b>Tiền tệ hiển thị</b><select id="curSel" aria-label="Tiền tệ">' + Object.entries(CURRENCIES).map(([c, v]) => o(c, v.label, st.currency)).join('') + '</select>' +
@@ -1309,7 +1311,7 @@ function renderAccount() {
   $('accountBody').innerHTML =
     '<div class="panel me"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></div><div><b>Khách</b><span>Chưa đăng nhập</span></div></div>' +
     '<div class="menu-h">Của tôi</div><div class="panel menu">' + mi('rewards', 'Điểm thưởng và voucher', store.points.balance + ' điểm · ' + store.vouchers.filter((v) => !v.used).length + ' voucher') + mi('friends', 'Bạn đồng hành', store.friends.length + ' đã kết nối') + mi('promos', 'Khuyến mãi') + '</div>' +
-    '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', ({ system: 'Theo hệ thống', light: 'Sáng', dark: 'Tối' })[st.theme] + ' · ' + (st.lang === 'en' ? 'English' : 'Tiếng Việt') + ' · ' + st.currency) + '</div>' +
+    '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', (THEMES[st.theme] || THEMES.light) + ' · ' + (st.lang === 'en' ? 'English' : 'Tiếng Việt') + ' · ' + st.currency) + '</div>' +
     '<div class="menu-h">Hỗ trợ</div><div class="panel menu">' + mi('payguide', 'Hướng dẫn thanh toán') + mi('rate', 'Đánh giá Arrow Travel', store.review ? 'Bạn đã đánh giá ' + store.review.stars + ' sao' : '') + mi('about', 'Giới thiệu') + mi('privacy', 'Chính sách bảo mật') + mi('terms', 'Điều khoản sử dụng') + '</div>' +
     '<div class="panel"><b>Dữ liệu của bạn</b><p class="hint" style="margin:6px 0 12px">Bản đầu chưa cần đăng nhập. Lịch trình, ảnh và thông báo chỉ lưu trên thiết bị này, không lưu mật khẩu hay thông tin thanh toán. Đăng nhập để đồng bộ nhiều thiết bị sẽ có ở bản sau.</p>' +
     '<button class="btn danger" type="button" data-clearall>' + (armedClear ? 'Bấm lại để xoá hết' : 'Xoá dữ liệu trên thiết bị này') + '</button></div>' +

@@ -1,7 +1,7 @@
 /* Bố cục: một cột như app điện thoại, 5 màn hình chuyển bằng thanh công cụ dưới đáy */
 :root{--bg:#f4f8f7;--card:#fff;--fg:#17302d;--muted:#5a6f6c;--line:#d9e5e2;--teal:#0F766E;--teal-soft:#dff1ee;--orange:#D9480F;--warn-bg:#fff2ea;--warn-fg:#8a2f08;--font:'Be Vietnam Pro',system-ui,sans-serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b1a;--card:#162826;--fg:#e6f2f0;--muted:#98b0ac;--line:#27403d;--teal:#3fb8ad;--teal-soft:#1d3835;--orange:#ff7a3d;--warn-bg:#3a2216;--warn-fg:#ffb48f;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0f1b1a;--card:#162826;--fg:#e6f2f0;--muted:#98b0ac;--line:#27403d;--teal:#3fb8ad;--teal-soft:#1d3835;--orange:#ff7a3d;--warn-bg:#3a2216;--warn-fg:#ffb48f;color-scheme:dark}
+:root[data-theme="pink"]{--bg:#fff4f7;--card:#fff;--fg:#3b1f2b;--muted:#7a5566;--line:#f2d3df;--teal:#B8235A;--teal-soft:#fde3ec;--orange:#C2410C;--warn-bg:#fff0e6;--warn-fg:#8a2f08}
+:root[data-theme="yellow"]{--bg:#fffaeb;--card:#fff;--fg:#33290d;--muted:#6e6142;--line:#f0e2b6;--teal:#8F5A00;--teal-soft:#fdf0c6;--orange:#C2410C;--warn-bg:#fff0e6;--warn-fg:#8a2f08}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 var(--font)}
@@ -253,9 +253,7 @@ textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--lin
 .prog b{font-size:18px}
 .bar{height:10px;border-radius:5px;background:rgba(255,255,255,.25);overflow:hidden}
 .bar i{display:block;height:100%;background:#fff;border-radius:5px}
-.prog button{align-self:flex-start;min-height:44px;padding:0 18px;border:0;border-radius:12px;background:#fff;color:#0B5A54;font:inherit;font-weight:700;cursor:pointer}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .prog{background:#0B5A54}}
-:root[data-theme="dark"] .prog{background:#0B5A54}
+.prog button{align-self:flex-start;min-height:44px;padding:0 18px;border:0;border-radius:12px;background:#fff;color:var(--teal);font:inherit;font-weight:700;cursor:pointer}
 
 /* Tạo lịch trình: gọn hơn, chia nhóm, thu form sau khi xếp lịch */
 .form2{gap:14px}

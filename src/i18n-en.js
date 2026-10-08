@@ -165,9 +165,7 @@ export const EN = {
   "Bấm lại để xoá hết": "Tap again to delete everything",
   "Quay lại": "Back",
   "Giao diện": "Appearance",
-  "Theo hệ thống": "System",
   "Sáng": "Light",
-  "Tối": "Dark",
   "Ngôn ngữ": "Language",
   "Tiền tệ hiển thị": "Display currency",
   "Tiền tệ": "Currency",
@@ -327,5 +325,7 @@ export const EN = {
   "Bấm vào một thẻ để xem và chọn.": "Tap a card to view and choose.",
   "Vé máy bay, khách sạn, phương tiện": "Flights, hotel, transport",
   "Địa chỉ": "Address",
-  "Vị trí chỉ là ước lượng, xem lại trên Google Maps.": "Location is approximate, check it on Google Maps."
+  "Vị trí chỉ là ước lượng, xem lại trên Google Maps.": "Location is approximate, check it on Google Maps.",
+  "Hồng nhạt": "Light pink",
+  "Vàng nhạt": "Light yellow"
 };
