@@ -135,6 +135,11 @@
       "name": "Sân bay quốc tế Cam Ranh",
       "lat": 11.9982,
       "lng": 109.2194
+    },
+    "Đà Lạt": {
+      "name": "Sân bay Liên Khương",
+      "lat": 11.7504,
+      "lng": 108.3672
     }
   }
 }

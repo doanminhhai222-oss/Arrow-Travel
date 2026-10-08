@@ -382,5 +382,8 @@ export const ZH = {
   "Đóng cửa vào ngày này": "当天不开放",
   "Nha Trang": "芽庄",
   "Một ngày ở Nha Trang, bốn nhịp khác nhau": "芽庄的一天，四种节奏",
-  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "芽庄的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
+  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "芽庄的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
+  "Đà Lạt": "大叻",
+  "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "大叻的一天，四种节奏",
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "大叻的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
 };

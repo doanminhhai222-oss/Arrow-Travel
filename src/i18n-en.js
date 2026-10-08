@@ -382,5 +382,8 @@ export const EN = {
   "Đóng cửa vào ngày này": "Closed on this date",
   "Nha Trang": "Nha Trang",
   "Một ngày ở Nha Trang, bốn nhịp khác nhau": "One day in Nha Trang, four different paces",
-  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Nha Trang places are real, but coordinates and prices are estimates; hotels are sample data."
+  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Nha Trang places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Đà Lạt": "Da Lat",
+  "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "One day in Da Lat, four different paces",
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Da Lat places are real, but coordinates and prices are estimates; hotels are sample data."
 };

@@ -219,6 +219,38 @@
           }
         }
       }
+    },
+    "Đà Lạt": {
+      "airport": "DLI",
+      "name": "Đà Lạt (sân bay Liên Khương)",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 55,
+          "base": {
+            "vn": 1000000,
+            "vj": 600000,
+            "qh": 750000
+          }
+        },
+        "ha-noi": {
+          "airport": "HAN",
+          "durationMin": 110,
+          "base": {
+            "vn": 1650000,
+            "vj": 950000,
+            "qh": 1150000
+          }
+        },
+        "da-nang": {
+          "airport": "DAD",
+          "durationMin": 80,
+          "base": {
+            "vn": 1300000,
+            "vj": 800000
+          }
+        }
+      }
     }
   }
 }

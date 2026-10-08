@@ -382,5 +382,8 @@ export const KO = {
   "Đóng cửa vào ngày này": "이 날은 휴무",
   "Nha Trang": "나트랑",
   "Một ngày ở Nha Trang, bốn nhịp khác nhau": "나트랑의 하루, 네 가지 속도",
-  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "나트랑 장소는 실제로 있는 곳이지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
+  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "나트랑 장소는 실제로 있는 곳이지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
+  "Đà Lạt": "달랏",
+  "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "달랏의 하루, 네 가지 속도",
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "달랏의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
 };

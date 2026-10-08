@@ -3798,6 +3798,722 @@
         }
       ],
       "city": "Nha Trang"
+    },
+    {
+      "id": "dl-hostel",
+      "name": "Hostel trung tâm Đà Lạt (mẫu)",
+      "stars": 2,
+      "area": "Trung tâm",
+      "pricePerRoom": 220000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 11.943,
+      "lng": 108.438,
+      "rating": 4.1,
+      "amenities": [
+        "Wifi",
+        "Bếp chung"
+      ],
+      "description": "Hostel nhỏ gần chợ Đà Lạt, phù hợp đi tiết kiệm.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 16,
+          "beds": "1 giường đôi",
+          "view": "Hẻm yên tĩnh",
+          "factor": 1.0,
+          "perks": [
+            "Quạt trần",
+            "Phòng tắm riêng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng có cửa sổ",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Cửa sổ thoáng",
+          "factor": 1.2,
+          "perks": [
+            "Máy lạnh",
+            "Cửa sổ"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room"
+      ],
+      "reviewCount": 678,
+      "reviewSource": "sample",
+      "googleQuery": "Hostel trung tâm Đà Lạt Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-homestay",
+      "name": "Homestay vườn hoa (mẫu)",
+      "stars": 2,
+      "area": "Phường 1",
+      "pricePerRoom": 400000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 11.938,
+      "lng": 108.44,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Homestay có vườn hoa nhỏ, ấm cúng, gần hồ Xuân Hương.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Wifi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng ban công",
+          "sleeps": 2,
+          "sizeM2": 26,
+          "beds": "1 giường đôi",
+          "view": "Ban công",
+          "factor": 1.25,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 798,
+      "reviewSource": "sample",
+      "googleQuery": "Homestay vườn hoa Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-3sao",
+      "name": "Khách sạn 3 sao gần chợ (mẫu)",
+      "stars": 3,
+      "area": "Trung tâm",
+      "pricePerRoom": 700000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 11.9425,
+      "lng": 108.439,
+      "rating": 4.0,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Khách sạn 3 sao gần chợ đêm và hồ Xuân Hương, có lò sưởi trong phòng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 22,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.25,
+          "perks": [
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 40,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.7,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 137,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao gần chợ Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-3sao-ho",
+      "name": "Khách sạn 3 sao view hồ (mẫu)",
+      "stars": 3,
+      "area": "Hồ Xuân Hương",
+      "pricePerRoom": 880000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 11.945,
+      "lng": 108.442,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Khách sạn 3 sao nhìn ra hồ Xuân Hương, ban công thoáng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 24,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi",
+          "view": "Một phần hướng biển",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 42,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.75,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 511,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao view hồ Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-4sao",
+      "name": "Khách sạn 4 sao trung tâm (mẫu)",
+      "stars": 4,
+      "area": "Trung tâm",
+      "pricePerRoom": 1500000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 11.941,
+      "lng": 108.441,
+      "rating": 4.3,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Spa"
+      ],
+      "description": "Khách sạn 4 sao gần hồ, có nhà hàng và spa.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 34,
+          "beds": "1 giường đôi",
+          "view": "Hướng sông Hàn",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Phòng Suite",
+          "sleeps": 3,
+          "sizeM2": 52,
+          "beds": "1 giường lớn + sofa",
+          "view": "Hướng sông Hàn",
+          "factor": 1.9,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 144,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao trung tâm Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-4sao-doi",
+      "name": "Khách sạn 4 sao trên đồi (mẫu)",
+      "stars": 4,
+      "area": "Đồi thông",
+      "pricePerRoom": 1750000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 11.935,
+      "lng": 108.447,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Spa"
+      ],
+      "description": "Khách sạn 4 sao trên đồi thông, nhìn ra thành phố.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 36,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình hướng biển",
+          "sleeps": 4,
+          "sizeM2": 56,
+          "beds": "2 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.9,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach",
+        "food"
+      ],
+      "reviewCount": 518,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao trên đồi Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-resort",
+      "name": "Resort 5 sao rừng thông (mẫu)",
+      "stars": 5,
+      "area": "Hồ Tuyền Lâm",
+      "pricePerRoom": 3400000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 11.885,
+      "lng": 108.43,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Spa",
+        "Hồ bơi nóng"
+      ],
+      "description": "Resort 5 sao giữa rừng thông, gần hồ Tuyền Lâm, có spa và nhà hàng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe vườn",
+          "sleeps": 2,
+          "sizeM2": 40,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Vườn nhiệt đới",
+          "factor": 1.0,
+          "perks": [
+            "Bãi biển riêng",
+            "Hồ bơi",
+            "Spa"
+          ]
+        },
+        {
+          "id": "ocean",
+          "name": "Phòng hướng biển",
+          "sleeps": 2,
+          "sizeM2": 44,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Bãi biển riêng"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Suite gia đình",
+          "sleeps": 4,
+          "sizeM2": 80,
+          "beds": "1 giường đôi + 2 giường đơn",
+          "view": "Hướng biển",
+          "factor": 2.0,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Bãi biển riêng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 195,
+      "reviewSource": "sample",
+      "googleQuery": "Resort 5 sao rừng thông Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
+    },
+    {
+      "id": "dl-villa",
+      "name": "Villa nguyên căn có lò sưởi (mẫu)",
+      "stars": 5,
+      "area": "Đồi thông",
+      "pricePerRoom": 4200000,
+      "capacity": 6,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 11.933,
+      "lng": 108.45,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Lò sưởi",
+        "Bếp"
+      ],
+      "description": "Villa riêng có lò sưởi và sân vườn, hợp nhóm bạn hoặc gia đình đông người.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "3pn",
+          "name": "Villa 3 phòng ngủ",
+          "sleeps": 6,
+          "sizeM2": 180,
+          "beds": "3 giường đôi",
+          "view": "Gần biển",
+          "factor": 1.0,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        },
+        {
+          "id": "4pn",
+          "name": "Villa 4 phòng ngủ",
+          "sleeps": 8,
+          "sizeM2": 240,
+          "beds": "4 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.4,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 232,
+      "reviewSource": "sample",
+      "googleQuery": "Villa nguyên căn có lò sưởi Đà Lạt",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Đà Lạt"
     }
   ]
 }

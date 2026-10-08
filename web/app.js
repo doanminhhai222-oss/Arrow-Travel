@@ -95,7 +95,7 @@ function go(name) {
 /* ---------- Form ---------- */
 // Điểm đến đang chọn: dùng cho form tạo lịch, trang chủ và lịch trình nổi bật
 let destName = 'Đà Nẵng';
-const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an', 'Phú Quốc': 'bai-sao', 'Hà Nội': 'ho-hoan-kiem', 'Nha Trang': 'bien-nha-trang' };
+const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an', 'Phú Quốc': 'bai-sao', 'Hà Nội': 'ho-hoan-kiem', 'Nha Trang': 'bien-nha-trang', 'Đà Lạt': 'ho-xuan-huong' };
 const heroDefault = { src: $('heroImg').getAttribute('src'), alt: $('heroImg').alt };
 function setDest(name, { render = true } = {}) {
   if (!DESTS.some((d) => d.name === name && d.ok)) name = 'Đà Nẵng';
@@ -755,7 +755,7 @@ sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) closeSheet(); });
 
 /* ---------- Màn hình Khám phá ---------- */
-const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Phú Quốc', ok: true }, { name: 'Hà Nội', ok: true }, { name: 'Nha Trang', ok: true }, { name: 'Đà Lạt' }];
+const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Phú Quốc', ok: true }, { name: 'Hà Nội', ok: true }, { name: 'Nha Trang', ok: true }, { name: 'Đà Lạt', ok: true }];
 const PRESETS = {
   plan: {},
   gia_dinh: { audience: 'gia_dinh', hasKids: true, people: 4, days: 2, budget: 'vua_phai', styles: ['thien_nhien', 'van_hoa'] },
@@ -1415,7 +1415,7 @@ function demoDay(aud) {
   const trip = { destination: destName, startDate: start, endDate: start, people: aud === 'gia_dinh' ? 4 : aud === 'mot_minh' ? 1 : 2, budget: 'vua_phai',
     audience: aud, hasKids: aud === 'gia_dinh', hasElderly: false, styles: ['thien_nhien', 'am_thuc'] };
   // Ngày mẫu trong thành phố: bỏ Bà Nà Hills vì chiếm trọn một ngày
-  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son', 'tour-4-dao', 'cap-treo-hon-thom', 'vinwonders-phu-quoc', 'vinpearl-safari', 'chua-huong', 'lang-gom-bat-trang', 'tour-4-dao-nha-trang', 'vinwonders-nha-trang', 'doc-let', 'bai-dai-cam-ranh'];
+  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son', 'tour-4-dao', 'cap-treo-hon-thom', 'vinwonders-phu-quoc', 'vinpearl-safari', 'chua-huong', 'lang-gom-bat-trang', 'tour-4-dao-nha-trang', 'vinwonders-nha-trang', 'doc-let', 'bai-dai-cam-ranh', 'langbiang', 'doi-che-cau-dat', 'duong-ham-dieu-khac'];
   const city = { ...DATA, places: DATA.places.filter((x) => !far.includes(x.id)) };
   return { day: buildItinerary(trip, city, RULES).days[0], rule: effectiveRules(RULES[aud], trip) };
 }

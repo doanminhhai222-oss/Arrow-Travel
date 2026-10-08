@@ -382,5 +382,8 @@ export const JA = {
   "Đóng cửa vào ngày này": "この日は休業",
   "Nha Trang": "ニャチャン",
   "Một ngày ở Nha Trang, bốn nhịp khác nhau": "ニャチャンの1日、4つのペース",
-  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ニャチャンのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。"
+  "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ニャチャンのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。",
+  "Đà Lạt": "ダラット",
+  "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "ダラットの一日、四つのペース",
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ダラットのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。"
 };

@@ -200,3 +200,37 @@ test('Nha Trang: dữ liệu hợp lệ, lịch trình, khách sạn, sân bay C
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
   }
 });
+
+// ---- Đà Lạt
+const DL = data.places.filter((p) => p.city === 'Đà Lạt');
+
+test('Đà Lạt: dữ liệu hợp lệ, lịch trình, khách sạn, sân bay Liên Khương và lịch trình nổi bật', async () => {
+  const { flightDataFor, originsFor } = await import('../src/search.js');
+  assert.ok(DL.length >= 20, 'hiện ' + DL.length);
+  const types = new Set(DL.map((p) => p.type));
+  for (const t of ['park', 'culture', 'checkin', 'food', 'cafe']) assert.ok(types.has(t), 'thiếu loại ' + t);
+  for (const p of DL) {
+    assert.ok(p.lat > 11.8 && p.lat < 12.06 && p.lng > 108.35 && p.lng < 108.55, `${p.id} nằm ngoài vùng Đà Lạt`);
+    assert.ok(p.audiences.length && p.highlights.length && p.culture, p.id);
+    if (p.type === 'food') assert.ok(['lunch', 'dinner'].includes(p.meal), p.id);
+  }
+  for (const audience of ['cap_doi', 'gia_dinh', 'nhom_ban', 'mot_minh']) {
+    const p = buildItinerary(base({ destination: 'Đà Lạt', audience, hasKids: audience === 'gia_dinh' }), data, rules);
+    const used = p.days.flatMap((d) => d.items.filter((i) => i.place));
+    assert.ok(used.length > 0 && used.every((i) => i.place.city === 'Đà Lạt'), audience);
+  }
+  const hotels = hotelsFor(opts.hotels, { destination: 'Đà Lạt' });
+  assert.ok(hotels.length >= 8 && hotels.every((h) => h.city === 'Đà Lạt'));
+  for (const tier of ['tiet_kiem', 'vua_phai', 'thoai_mai']) assert.ok(hotels.some((h) => h.tier === tier));
+  assert.equal(flightDataFor(flights, 'Đà Lạt').destination.airport, 'DLI');
+  const o = originsFor(flights, opts.origins, 'Đà Lạt').map((x) => x.id);
+  assert.ok(o.includes('ho-chi-minh') && o.includes('ha-noi') && o.includes('da-nang') && !o.includes('can-tho'));
+  assert.ok(transport.airports['Đà Lạt'].lat < 11.8, 'sân bay Liên Khương cách trung tâm khoảng 30 km về phía nam');
+  const list = featured.featured.filter((f) => f.destination === 'Đà Lạt');
+  assert.ok(list.length >= 3);
+  for (const f of list) for (const id of f.days.flat()) {
+    const p = data.places.find((x) => x.id === id);
+    assert.ok(p && p.city === 'Đà Lạt' && p.audiences.includes(f.audience), f.id + ': ' + id);
+    if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
+  }
+});
