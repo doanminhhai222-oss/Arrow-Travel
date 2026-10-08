@@ -1,4 +1,4 @@
-import { buildItinerary, effectiveRules, filterPlaces, STYLE_TYPES, styleList, BUDGET_CAP, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
+import { buildItinerary, closedOn, effectiveRules, filterPlaces, STYLE_TYPES, styleList, BUDGET_CAP, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
 import { estimateCost, hotelsFor } from '../src/costing.js';
 import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels, flightDataFor, originsFor } from '../src/search.js';
 import { hotelDetailHtml } from '../src/hoteldetail.js';
@@ -95,7 +95,7 @@ function go(name) {
 /* ---------- Form ---------- */
 // Điểm đến đang chọn: dùng cho form tạo lịch, trang chủ và lịch trình nổi bật
 let destName = 'Đà Nẵng';
-const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an', 'Phú Quốc': 'bai-sao' };
+const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an', 'Phú Quốc': 'bai-sao', 'Hà Nội': 'ho-hoan-kiem' };
 const heroDefault = { src: $('heroImg').getAttribute('src'), alt: $('heroImg').alt };
 function setDest(name, { render = true } = {}) {
   if (!DESTS.some((d) => d.name === name && d.ok)) name = 'Đà Nẵng';
@@ -204,7 +204,7 @@ function used() { return new Set(plan.days.flatMap((d) => d.items.filter((i) => 
 function suggestions(di, ii) {
   const day = plan.days[di], cur = day.items[ii], prev = day.items.slice(0, ii).reverse().find((i) => i.place);
   const taken = used(), isFood = cur.kind === 'meal';
-  return pool.filter((p) => !taken.has(p.id) && (isFood ? p.type === 'food' && p.meal === cur.place.meal : !(p.type === 'food' && p.meal)))
+  return pool.filter((p) => !taken.has(p.id) && !closedOn(p, day.date) && (isFood ? p.type === 'food' && p.meal === cur.place.meal : !(p.type === 'food' && p.meal)))
     .map((p) => {
       const k = prev ? distanceKm(prev.place, p) : 0;
       let s = 0; const why = [];
@@ -431,8 +431,9 @@ function openTrip(id) {
 /* ---------- Thêm địa điểm vào lịch ---------- */
 let addCtx = null;
 const ADD_CATS = [['all', 'Tất cả'], ['sight', 'Tham quan'], ['food', 'Ăn uống']];
-function whyNot(p) {
+function whyNot(p, date) {
   const t = plan.trip, r = [];
+  if (date && closedOn(p, date)) r.push('Đóng cửa vào ngày này');
   if (!p.audiences.includes(t.audience)) r.push('Không dành cho ' + plan.audienceLabel.toLowerCase());
   if (t.hasKids && !p.kids) r.push('Không hợp trẻ nhỏ');
   if (t.hasElderly && !p.elderly) r.push('Không hợp người lớn tuổi');
@@ -453,7 +454,7 @@ function addCandidates() {
   const { d, pos, q, cat, all } = addCtx, taken = used(), k = fold(q.trim());
   return (all ? DATA.places.filter((p) => p.status !== 'closed') : pool)
     .filter((p) => !taken.has(p.id) && (cat === 'all' || (cat === 'food' ? p.type === 'food' : p.type !== 'food')) && (!k || fold(p.name + ' ' + (TYPE_LABEL[p.type] || '')).includes(k)))
-    .map((p) => ({ p, sim: simulateAdd(d, pos, p), why: whyNot(p) }))
+    .map((p) => ({ p, sim: simulateAdd(d, pos, p), why: whyNot(p, plan.days[d].date) }))
     .sort((a, b) => (a.sim.late - b.sim.late) || (a.why.length - b.why.length) || ((a.sim.travel ? a.sim.travel.km : 0) - (b.sim.travel ? b.sim.travel.km : 0)));
 }
 function addListHtml() {
@@ -754,7 +755,7 @@ sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) closeSheet(); });
 
 /* ---------- Màn hình Khám phá ---------- */
-const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Phú Quốc', ok: true }, { name: 'Hà Nội' }, { name: 'Đà Lạt' }, { name: 'Nha Trang' }];
+const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Phú Quốc', ok: true }, { name: 'Hà Nội', ok: true }, { name: 'Đà Lạt' }, { name: 'Nha Trang' }];
 const PRESETS = {
   plan: {},
   gia_dinh: { audience: 'gia_dinh', hasKids: true, people: 4, days: 2, budget: 'vua_phai', styles: ['thien_nhien', 'van_hoa'] },
@@ -1414,7 +1415,7 @@ function demoDay(aud) {
   const trip = { destination: destName, startDate: start, endDate: start, people: aud === 'gia_dinh' ? 4 : aud === 'mot_minh' ? 1 : 2, budget: 'vua_phai',
     audience: aud, hasKids: aud === 'gia_dinh', hasElderly: false, styles: ['thien_nhien', 'am_thuc'] };
   // Ngày mẫu trong thành phố: bỏ Bà Nà Hills vì chiếm trọn một ngày
-  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son', 'tour-4-dao', 'cap-treo-hon-thom', 'vinwonders-phu-quoc', 'vinpearl-safari'];
+  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son', 'tour-4-dao', 'cap-treo-hon-thom', 'vinwonders-phu-quoc', 'vinpearl-safari', 'chua-huong', 'lang-gom-bat-trang'];
   const city = { ...DATA, places: DATA.places.filter((x) => !far.includes(x.id)) };
   return { day: buildItinerary(trip, city, RULES).days[0], rule: effectiveRules(RULES[aud], trip) };
 }

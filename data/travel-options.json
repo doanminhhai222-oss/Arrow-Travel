@@ -17,6 +17,10 @@
     {
       "id": "can-tho",
       "name": "Cần Thơ"
+    },
+    {
+      "id": "da-nang",
+      "name": "Đà Nẵng"
     }
   ],
   "hotels": [
@@ -2358,6 +2362,722 @@
         }
       ],
       "city": "Phú Quốc"
+    },
+    {
+      "id": "hn-hostel",
+      "name": "Hostel phố cổ Hà Nội (mẫu)",
+      "stars": 2,
+      "area": "Phố cổ",
+      "pricePerRoom": 250000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 21.034,
+      "lng": 105.85,
+      "rating": 4.1,
+      "amenities": [
+        "Wifi",
+        "Bếp chung"
+      ],
+      "description": "Hostel nhỏ trong phố cổ, đi bộ tới Hồ Gươm và chợ đêm.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 16,
+          "beds": "1 giường đôi",
+          "view": "Hẻm yên tĩnh",
+          "factor": 1.0,
+          "perks": [
+            "Quạt trần",
+            "Phòng tắm riêng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng có cửa sổ",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Cửa sổ thoáng",
+          "factor": 1.2,
+          "perks": [
+            "Máy lạnh",
+            "Cửa sổ"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room"
+      ],
+      "reviewCount": 678,
+      "reviewSource": "sample",
+      "googleQuery": "Hostel phố cổ Hà Nội Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-homestay",
+      "name": "Homestay ngõ nhỏ Hoàn Kiếm (mẫu)",
+      "stars": 2,
+      "area": "Hoàn Kiếm",
+      "pricePerRoom": 400000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 21.03,
+      "lng": 105.847,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Homestay trong ngõ nhỏ, phòng gọn, chủ nhà thân thiện.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Wifi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng ban công",
+          "sleeps": 2,
+          "sizeM2": 26,
+          "beds": "1 giường đôi",
+          "view": "Ban công",
+          "factor": 1.25,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 798,
+      "reviewSource": "sample",
+      "googleQuery": "Homestay ngõ nhỏ Hoàn Kiếm Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-3sao",
+      "name": "Khách sạn 3 sao phố cổ (mẫu)",
+      "stars": 3,
+      "area": "Phố cổ",
+      "pricePerRoom": 850000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 21.0335,
+      "lng": 105.851,
+      "rating": 4.0,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Khách sạn 3 sao trong phố cổ, cách Hồ Gươm khoảng 5 phút đi bộ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 22,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.25,
+          "perks": [
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 40,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.7,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 137,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao phố cổ Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-3sao-ho",
+      "name": "Khách sạn 3 sao gần Hồ Tây (mẫu)",
+      "stars": 3,
+      "area": "Tây Hồ",
+      "pricePerRoom": 800000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 21.062,
+      "lng": 105.825,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng"
+      ],
+      "description": "Khách sạn 3 sao yên tĩnh gần Hồ Tây, ít ồn hơn phố cổ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 24,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe view đẹp",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi",
+          "view": "Một phần hướng hồ",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 42,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.75,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 511,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao gần Hồ Tây Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-4sao",
+      "name": "Khách sạn 4 sao Hoàn Kiếm (mẫu)",
+      "stars": 4,
+      "area": "Hoàn Kiếm",
+      "pricePerRoom": 1600000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 21.027,
+      "lng": 105.853,
+      "rating": 4.3,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 4 sao cạnh Hồ Gươm, có nhà hàng và hồ bơi.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 34,
+          "beds": "1 giường đôi",
+          "view": "Hướng sông Hàn",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Phòng Suite",
+          "sleeps": 3,
+          "sizeM2": 52,
+          "beds": "1 giường lớn + sofa",
+          "view": "Hướng sông Hàn",
+          "factor": 1.9,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 144,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao Hoàn Kiếm Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-4sao-bd",
+      "name": "Khách sạn 4 sao Ba Đình (mẫu)",
+      "stars": 4,
+      "area": "Ba Đình",
+      "pricePerRoom": 1500000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 21.036,
+      "lng": 105.833,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 4 sao gần Lăng Bác và Hoàng thành, đi bộ tới nhiều di tích.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe view đẹp",
+          "sleeps": 2,
+          "sizeM2": 36,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình view đẹp",
+          "sleeps": 4,
+          "sizeM2": 56,
+          "beds": "2 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.9,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach",
+        "food"
+      ],
+      "reviewCount": 518,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao Ba Đình Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-resort",
+      "name": "Khách sạn 5 sao sang trọng (mẫu)",
+      "stars": 5,
+      "area": "Hoàn Kiếm",
+      "pricePerRoom": 3200000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 21.025,
+      "lng": 105.856,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Spa"
+      ],
+      "description": "Khách sạn 5 sao cạnh Nhà hát Lớn, có spa và nhà hàng.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe vườn",
+          "sleeps": 2,
+          "sizeM2": 40,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Vườn nhiệt đới",
+          "factor": 1.0,
+          "perks": [
+            "Bãi biển riêng",
+            "Hồ bơi",
+            "Spa"
+          ]
+        },
+        {
+          "id": "ocean",
+          "name": "Phòng view đẹp",
+          "sleeps": 2,
+          "sizeM2": 44,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Bãi biển riêng"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Suite gia đình",
+          "sleeps": 4,
+          "sizeM2": 80,
+          "beds": "1 giường đôi + 2 giường đơn",
+          "view": "Hướng biển",
+          "factor": 2.0,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Bãi biển riêng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 195,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 5 sao sang trọng Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
+    },
+    {
+      "id": "hn-villa",
+      "name": "Khách sạn boutique 5 sao ven Hồ Tây (mẫu)",
+      "stars": 5,
+      "area": "Tây Hồ",
+      "pricePerRoom": 4200000,
+      "capacity": 6,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 21.058,
+      "lng": 105.83,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Spa"
+      ],
+      "description": "Khách sạn boutique 5 sao ven Hồ Tây với view hồ, phù hợp cặp đôi và nhóm nhỏ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "3pn",
+          "name": "Villa 3 phòng ngủ",
+          "sleeps": 6,
+          "sizeM2": 180,
+          "beds": "3 giường đôi",
+          "view": "Gần biển",
+          "factor": 1.0,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        },
+        {
+          "id": "4pn",
+          "name": "Villa 4 phòng ngủ",
+          "sleeps": 8,
+          "sizeM2": 240,
+          "beds": "4 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.4,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 232,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn boutique 5 sao ven Hồ Tây Hà Nội",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hà Nội"
     }
   ]
 }

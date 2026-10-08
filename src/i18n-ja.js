@@ -375,5 +375,9 @@ export const JA = {
   "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ホイアンのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。",
   "Phú Quốc": "フーコック",
   "Một ngày ở Phú Quốc, bốn nhịp khác nhau": "フーコックの1日、4つのペース",
-  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "フーコックのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。"
+  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "フーコックのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。",
+  "Hà Nội": "ハノイ",
+  "Một ngày ở Hà Nội, bốn nhịp khác nhau": "ハノイの1日、4つのペース",
+  "Địa điểm Hà Nội là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ハノイのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。",
+  "Đóng cửa vào ngày này": "この日は休業"
 };

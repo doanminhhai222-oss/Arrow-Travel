@@ -125,6 +125,11 @@
       "name": "Sân bay quốc tế Phú Quốc",
       "lat": 10.1698,
       "lng": 103.9931
+    },
+    "Hà Nội": {
+      "name": "Sân bay quốc tế Nội Bài",
+      "lat": 21.2212,
+      "lng": 105.8072
     }
   }
 }

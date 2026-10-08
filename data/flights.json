@@ -140,6 +140,48 @@
             "vn": 1400000,
             "vj": 850000
           }
+        },
+        "da-nang": {
+          "airport": "DAD",
+          "durationMin": 85,
+          "base": {
+            "vn": 1500000,
+            "vj": 900000
+          }
+        }
+      }
+    },
+    "Hà Nội": {
+      "airport": "HAN",
+      "name": "Hà Nội",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 125,
+          "base": {
+            "vn": 1500000,
+            "vj": 850000,
+            "qh": 1000000,
+            "vu": 1000000
+          }
+        },
+        "da-nang": {
+          "airport": "DAD",
+          "durationMin": 80,
+          "base": {
+            "vn": 1500000,
+            "vj": 850000,
+            "qh": 1000000,
+            "vu": 1000000
+          }
+        },
+        "can-tho": {
+          "airport": "VCA",
+          "durationMin": 120,
+          "base": {
+            "vn": 1700000,
+            "vj": 1000000
+          }
         }
       }
     }

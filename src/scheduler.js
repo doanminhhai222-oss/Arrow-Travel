@@ -90,7 +90,14 @@ function score(place, fit, rule, styles) {
   return s;
 }
 
-export function planDay(date, pool, rule, trip, visited) {
+// Địa điểm đóng cửa vào ngày cụ thể: closedWeekdays (0 = Chủ nhật … 6 = thứ Bảy) hoặc closedBetween [[từ, đến], …] (yyyy-mm-dd)
+export function closedOn(place, date) {
+  const dow = new Date(date + 'T00:00:00Z').getUTCDay();
+  return !!((place.closedWeekdays || []).includes(dow) || (place.closedBetween || []).some(([a, b]) => date >= a && date <= b));
+}
+
+export function planDay(date, allPool, rule, trip, visited) {
+  const pool = allPool.filter((p) => !closedOn(p, date)); // bỏ địa điểm đang đóng cửa vào ngày này
   const items = [];
   let clock = toMin(rule.start), last = null, lunchDone = false, dinnerDone = false, cafeDone = false, sights = 0;
   const lunchAt = toMin(rule.lunchStart);

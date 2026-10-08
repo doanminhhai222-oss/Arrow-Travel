@@ -311,6 +311,95 @@
         ]
       ],
       "cover": "bai-sao"
+    },
+    {
+      "id": "f-hn-couple",
+      "destination": "Hà Nội",
+      "title": "Hà Nội lãng mạn cho cặp đôi: Hồ Gươm, phố cổ và cà phê trứng",
+      "author": "Phương Anh (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "am_thuc"
+      ],
+      "scene": "bridge",
+      "desc": "Ngày đầu dạo Hồ Gươm, ăn bún chả trưa, ngồi cà phê trứng rồi xem múa rối nước. Ngày sau tới Văn Miếu, Hoàng thành, ăn tối chả cá và đi dạo phố Tạ Hiện.",
+      "days": [
+        [
+          "ho-hoan-kiem",
+          "den-ngoc-son",
+          "bun-cha-huong-lien",
+          "ca-phe-giang",
+          "nha-hat-mua-roi"
+        ],
+        [
+          "pho-bat-dan",
+          "van-mieu",
+          "hoang-thanh-thang-long",
+          "cha-ca-thang-long",
+          "pho-ta-hien"
+        ]
+      ],
+      "cover": "ho-hoan-kiem"
+    },
+    {
+      "id": "f-hn-family",
+      "destination": "Hà Nội",
+      "title": "Hà Nội cho gia đình có bé: bảo tàng, múa rối và kem Tràng Tiền",
+      "author": "Đức Minh (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "van_hoa"
+      ],
+      "scene": "museum",
+      "desc": "Sáng đi dạo Hồ Gươm, trưa ăn bún chả, chiều tới Bảo tàng Dân tộc học, tối xem múa rối nước. Ngày sau Văn Miếu, Hoàng thành rồi kem Tràng Tiền.",
+      "days": [
+        [
+          "ho-hoan-kiem",
+          "bun-cha-huong-lien",
+          "bao-tang-dan-toc-hoc",
+          "nha-hat-mua-roi"
+        ],
+        [
+          "van-mieu",
+          "hoang-thanh-thang-long",
+          "kem-trang-tien"
+        ]
+      ],
+      "cover": "van-mieu"
+    },
+    {
+      "id": "f-hn-solo",
+      "destination": "Hà Nội",
+      "title": "Hà Nội một mình: di sản, bún thang và hoàng hôn cầu Long Biên",
+      "author": "Khánh Linh (mẫu)",
+      "audience": "mot_minh",
+      "people": 1,
+      "budget": "tiet_kiem",
+      "styles": [
+        "van_hoa"
+      ],
+      "scene": "temple",
+      "desc": "Hai ngày đi chậm: Chùa Một Cột, Văn Miếu, ăn bún thang, Hoả Lò rồi cà phê Giảng. Ngày sau lang thang phố cổ, ăn bánh mì 25 và ngắm hoàng hôn trên cầu Long Biên.",
+      "days": [
+        [
+          "chua-mot-cot",
+          "van-mieu",
+          "bun-thang-ba-duc",
+          "nha-tu-hoa-lo",
+          "ca-phe-giang"
+        ],
+        [
+          "pho-co-ha-noi",
+          "banh-mi-25",
+          "cau-long-bien"
+        ]
+      ],
+      "cover": "pho-co-ha-noi"
     }
   ]
 }

@@ -116,3 +116,53 @@ test('lịch trình nổi bật của Phú Quốc: địa điểm có thật, đ
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id} không hợp trẻ nhỏ`);
   }
 });
+
+// ---- Hà Nội
+const HN = data.places.filter((p) => p.city === 'Hà Nội');
+
+test('Hà Nội có đủ loại địa điểm, dữ liệu hợp lệ', () => {
+  assert.ok(HN.length >= 30, 'hiện ' + HN.length);
+  const types = new Set(HN.map((p) => p.type));
+  for (const t of ['culture', 'checkin', 'show', 'park', 'food', 'cafe']) assert.ok(types.has(t), 'thiếu loại ' + t);
+  for (const p of HN) {
+    assert.ok(p.lat > 20.5 && p.lat < 21.3 && p.lng > 105.4 && p.lng < 106.0, `${p.id} nằm ngoài vùng Hà Nội`);
+    assert.ok(p.audiences.length && p.highlights.length && p.culture, p.id);
+    if (p.type === 'food') assert.ok(['lunch', 'dinner'].includes(p.meal), p.id);
+  }
+});
+
+test('địa điểm đóng cửa theo ngày: Lăng Bác không được xếp vào thứ Hai, thứ Sáu hoặc lúc tu bổ', async () => {
+  const { closedOn } = await import('../src/scheduler.js');
+  const lang = data.places.find((p) => p.id === 'lang-bac');
+  assert.equal(closedOn(lang, '2026-12-07'), true, 'thứ Hai');
+  assert.equal(closedOn(lang, '2026-12-11'), true, 'thứ Sáu');
+  assert.equal(closedOn(lang, '2026-12-09'), false, 'thứ Tư');
+  assert.equal(closedOn(lang, '2026-10-15'), true, 'đang tu bổ');
+  assert.equal(closedOn(lang, '2026-11-03'), false, 'mở lại 3/11 (thứ Ba)');
+  const inRepair = buildItinerary(base({ destination: 'Hà Nội', startDate: '2026-10-14', endDate: '2026-10-20', audience: 'nhom_ban', people: 3 }), data, rules);
+  assert.ok(!inRepair.days.flatMap((d) => d.items).some((i) => i.place && i.place.id === 'lang-bac'), 'đang tu bổ mà vẫn xếp Lăng Bác');
+  const open = buildItinerary(base({ destination: 'Hà Nội', startDate: '2026-12-08', endDate: '2026-12-12', audience: 'mot_minh', styles: ['van_hoa'], budget: 'tiet_kiem', people: 1 }), data, rules);
+  for (const d of open.days) if (d.items.some((i) => i.place && i.place.id === 'lang-bac')) assert.ok(![1, 5].includes(new Date(d.date + 'T00:00:00Z').getUTCDay()), 'xếp Lăng Bác vào ' + d.date);
+});
+
+test('Hà Nội: lịch trình, khách sạn, sân bay và tuyến bay đúng điểm đến', async () => {
+  const { flightDataFor, originsFor } = await import('../src/search.js');
+  for (const audience of ['cap_doi', 'gia_dinh', 'nhom_ban', 'mot_minh']) {
+    const p = buildItinerary(base({ destination: 'Hà Nội', audience, hasKids: audience === 'gia_dinh' }), data, rules);
+    assert.ok(p.days.flatMap((d) => d.items.filter((i) => i.place)).every((i) => i.place.city === 'Hà Nội'), audience);
+  }
+  const hotels = hotelsFor(opts.hotels, { destination: 'Hà Nội' });
+  assert.ok(hotels.length >= 8 && hotels.every((h) => h.city === 'Hà Nội'));
+  assert.equal(flightDataFor(flights, 'Hà Nội').destination.airport, 'HAN');
+  const o = originsFor(flights, opts.origins, 'Hà Nội').map((x) => x.id);
+  assert.ok(o.includes('ho-chi-minh') && o.includes('da-nang') && !o.includes('ha-noi'), 'không có chuyến Hà Nội đi Hà Nội: ' + o);
+  assert.ok(!originsFor(flights, opts.origins, 'Đà Nẵng').some((x) => x.id === 'da-nang'), 'không có chuyến Đà Nẵng đi Đà Nẵng');
+  assert.ok(transport.airports['Hà Nội'].lat > 21);
+  const list = featured.featured.filter((f) => f.destination === 'Hà Nội');
+  assert.ok(list.length >= 3);
+  for (const f of list) for (const id of f.days.flat()) {
+    const p = data.places.find((x) => x.id === id);
+    assert.ok(p && p.city === 'Hà Nội' && p.audiences.includes(f.audience), f.id + ': ' + id);
+    if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
+  }
+});

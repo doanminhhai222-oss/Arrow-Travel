@@ -375,5 +375,9 @@ export const EN = {
   "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hoi An places are real, but coordinates and prices are estimates; hotels are sample data.",
   "Phú Quốc": "Phu Quoc",
   "Một ngày ở Phú Quốc, bốn nhịp khác nhau": "One day in Phu Quoc, four different paces",
-  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Phu Quoc places are real, but coordinates and prices are estimates; hotels are sample data."
+  "Địa điểm Phú Quốc là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Phu Quoc places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Hà Nội": "Hanoi",
+  "Một ngày ở Hà Nội, bốn nhịp khác nhau": "One day in Hanoi, four different paces",
+  "Địa điểm Hà Nội là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hanoi places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Đóng cửa vào ngày này": "Closed on this date"
 };
