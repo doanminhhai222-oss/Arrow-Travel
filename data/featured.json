@@ -28,7 +28,8 @@
           "art-paradise"
         ]
       ],
-      "cover": "my-khe"
+      "cover": "my-khe",
+      "destination": "Đà Nẵng"
     },
     {
       "id": "f-couple",
@@ -57,7 +58,8 @@
           "cau-rong"
         ]
       ],
-      "cover": "cau-tinh-yeu"
+      "cover": "cau-tinh-yeu",
+      "destination": "Đà Nẵng"
     },
     {
       "id": "f-friends",
@@ -81,7 +83,8 @@
           "cau-rong"
         ]
       ],
-      "cover": "cau-rong"
+      "cover": "cau-rong",
+      "destination": "Đà Nẵng"
     },
     {
       "id": "f-bana",
@@ -107,7 +110,8 @@
           "cau-rong"
         ]
       ],
-      "cover": "ba-na"
+      "cover": "ba-na",
+      "destination": "Đà Nẵng"
     },
     {
       "id": "f-solo",
@@ -135,7 +139,95 @@
           "ngu-hanh-son"
         ]
       ],
-      "cover": "bao-tang-cham"
+      "cover": "bao-tang-cham",
+      "destination": "Đà Nẵng"
+    },
+    {
+      "id": "f-hoian-couple",
+      "destination": "Hội An",
+      "title": "Hội An lung linh đèn lồng cho cặp đôi",
+      "author": "Thu Trang (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "check_in"
+      ],
+      "scene": "lantern",
+      "desc": "Sáng đi góc phố vàng và Chùa Cầu, chiều ngồi cà phê ngắm mái ngói, tối thả hoa đăng và ăn tối trong nhà cổ. Ngày sau đạp xe làng rau rồi ra biển An Bàng.",
+      "days": [
+        [
+          "goc-pho-hoa-giay",
+          "chua-cau",
+          "cao-lau-thanh",
+          "faifo-coffee",
+          "tha-hoa-dang",
+          "morning-glory"
+        ],
+        [
+          "lang-rau-tra-que",
+          "banh-mi-phuong",
+          "bien-an-bang",
+          "cau-an-hoi"
+        ]
+      ],
+      "cover": "chua-cau"
+    },
+    {
+      "id": "f-hoian-family",
+      "destination": "Hội An",
+      "title": "Hội An cho gia đình có bé: làng nghề và phố cổ",
+      "author": "Quốc Bảo (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "van_hoa",
+        "thien_nhien"
+      ],
+      "scene": "field",
+      "desc": "Đi nhẹ nhàng: phố cổ và Chùa Cầu buổi sáng, cơm gà trưa, ngày sau làm gốm ở Thanh Hà và đi thuyền thúng ở rừng dừa.",
+      "days": [
+        [
+          "pho-co-hoi-an",
+          "chua-cau",
+          "com-ga-ba-buoi-hoi-an",
+          "bao-tang-gom-su",
+          "cau-an-hoi"
+        ],
+        [
+          "lang-gom-thanh-ha",
+          "banh-bao-banh-vac",
+          "rung-dua-bay-mau"
+        ]
+      ],
+      "cover": "pho-co-hoi-an"
+    },
+    {
+      "id": "f-hoian-solo",
+      "destination": "Hội An",
+      "title": "Hội An một mình: nhà cổ, hội quán và quán trà yên tĩnh",
+      "author": "Hải Yến (mẫu)",
+      "audience": "mot_minh",
+      "people": 1,
+      "budget": "tiet_kiem",
+      "styles": [
+        "van_hoa"
+      ],
+      "scene": "museum",
+      "desc": "Ngày dành cho các nhà cổ, hội quán, bảo tàng trong phố cổ, nghỉ chân ở quán trà, ăn bánh bao bánh vạc rồi đi dạo chợ đêm.",
+      "days": [
+        [
+          "nha-co-tan-ky",
+          "hoi-quan-quang-dong",
+          "bao-tang-sa-huynh",
+          "banh-bao-banh-vac",
+          "reaching-out",
+          "cho-dem-nguyen-hoang"
+        ]
+      ],
+      "cover": "hoi-quan-phuc-kien"
     }
   ]
 }

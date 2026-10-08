@@ -27,3 +27,16 @@
 - **Starbucks** (`starbucks.jpg`): Ảnh do chủ dự án cung cấp · ảnh thương hiệu Starbucks
 - **Phê La** (`phe-la.jpg`): Ảnh do chủ dự án cung cấp · ảnh cửa hàng Phê La
 - **Cà phê Trình** (`ca-phe-trinh.jpg`): Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán
+- **Phố cổ Hội An** (`pho-co-hoi-an.jpg`): Alexkom000, CC BY 4.0, [2024-12-20 Hoi An Old Town at night 5.jpg](https://commons.wikimedia.org/wiki/File:2024-12-20_Hoi_An_Old_Town_at_night_5.jpg)
+- **Chùa Cầu (Cầu Nhật Bản)** (`chua-cau.jpg`): Steffen Schmitz (more photos), CC BY-SA 4.0, [Hội An, Chùa Cầu, 2020-01 CN-02.jpg](https://commons.wikimedia.org/wiki/File:H%E1%BB%99i_An,_Ch%C3%B9a_C%E1%BA%A7u,_2020-01_CN-02.jpg)
+- **Hội quán Phúc Kiến** (`hoi-quan-phuc-kien.jpg`): Chainwit., CC BY 4.0, [Hội An 2024 - Fujian Assembly Hall (Hội quán Phúc Kiến , 會安福建會館) - img 01.jpg](https://commons.wikimedia.org/wiki/File:H%E1%BB%99i_An_2024_-_Fujian_Assembly_Hall_(H%E1%BB%99i_qu%C3%A1n_Ph%C3%BAc_Ki%E1%BA%BFn_,_%E6%9C%83%E5%AE%89%E7%A6%8F%E5%BB%BA%E6%9C%83%E9%A4%A8)_-_img_01.jpg)
+- **Cầu An Hội và bờ sông Hoài về đêm** (`cau-an-hoi.jpg`): lumoplank, CC0, [Hoi An - HoiAn1441.jpg](https://commons.wikimedia.org/wiki/File:Hoi_An_-_HoiAn1441.jpg)
+- **Chợ Hội An** (`cho-hoi-an.jpg`): Chainwit., CC BY 4.0, [Chợ Hội An - Hoi An Market (2024) - img 02.jpg](https://commons.wikimedia.org/wiki/File:Ch%E1%BB%A3_H%E1%BB%99i_An_-_Hoi_An_Market_(2024)_-_img_02.jpg)
+- **Làng rau Trà Quế** (`lang-rau-tra-que.jpg`): Isabell Schulz, CC BY-SA 2.0, [Tra Que Village, Hoi An (46404328621).jpg](https://commons.wikimedia.org/wiki/File:Tra_Que_Village,_Hoi_An_(46404328621).jpg)
+- **Làng mộc Kim Bồng** (`lang-moc-kim-bong.jpg`): Dragfyre, CC BY-SA 3.0, [Wood Carver Kim Bong.JPG](https://commons.wikimedia.org/wiki/File:Wood_Carver_Kim_Bong.JPG)
+- **Biển An Bàng** (`bien-an-bang.jpg`): Alexkom000, CC BY 4.0, [2024-11-23 An Bang Beach in Hoi An in November.jpg](https://commons.wikimedia.org/wiki/File:2024-11-23_An_Bang_Beach_in_Hoi_An_in_November.jpg)
+- **Cù Lao Chàm** (`cu-lao-cham.jpg`): Soupybev, CC BY 4.0, [Cham Island (Cù Lao Chàm) seen from Mỹ Khê Beach, Đà Nẵng, Vietnam.jpg](https://commons.wikimedia.org/wiki/File:Cham_Island_(C%C3%B9_Lao_Ch%C3%A0m)_seen_from_M%E1%BB%B9_Kh%C3%AA_Beach,_%C4%90%C3%A0_N%E1%BA%B5ng,_Vietnam.jpg)
+- **Thánh địa Mỹ Sơn** (`thanh-dia-my-son.jpg`): Chainwit., CC BY 4.0, [2024 - Mỹ Sơn Sanctuary Temple E7 - img 01.jpg](https://commons.wikimedia.org/wiki/File:2024_-_M%E1%BB%B9_S%C6%A1n_Sanctuary_Temple_E7_-_img_01.jpg)
+- **Cao lầu Thanh** (`cao-lau-thanh.jpg`): Ảnh minh hoạ món cao lầu (không phải ảnh tại quán): avlxyz · CC BY-SA 2.0 · Wikimedia Commons, [Stall - Cao Lau Ba Be, Hoi An Market.jpg](https://commons.wikimedia.org/wiki/File:Stall_-_Cao_Lau_Ba_Be,_Hoi_An_Market.jpg)
+- **Bánh mì Phượng** (`banh-mi-phuong.jpg`): Chainwit., CC BY 4.0, [Bánh Mì Phượng (2024) - img 01.jpg](https://commons.wikimedia.org/wiki/File:B%C3%A1nh_M%C3%AC_Ph%C6%B0%E1%BB%A3ng_(2024)_-_img_01.jpg)
+- **Nhà hàng Hoa Hồng Trắng (bánh bao, bánh vạc)** (`banh-bao-banh-vac.jpg`): Ảnh minh hoạ món bánh bao bánh vạc (không phải ảnh tại quán): Chainwit. · CC BY 4.0 · Wikimedia Commons, [Bánh bao bánh vạc - hoi an (2024).jpg](https://commons.wikimedia.org/wiki/File:B%C3%A1nh_bao_b%C3%A1nh_v%E1%BA%A1c_-_hoi_an_(2024).jpg)

@@ -366,5 +366,11 @@ export const ZH = {
   "Nâng cấp ArrowPro": "升级到 ArrowPro",
   "Đang dùng ArrowPro": "ArrowPro 已开通",
   "⚡ Tối ưu lộ trình": "⚡ 优化路线",
-  "📡 Theo dõi trực tiếp": "📡 实时追踪"
+  "📡 Theo dõi trực tiếp": "📡 实时追踪",
+  "Điểm đến": "目的地",
+  "Đà Nẵng": "岘港",
+  "Hội An": "会安",
+  "Trong vé phố cổ": "含在古城门票内",
+  "Một ngày ở Hội An, bốn nhịp khác nhau": "会安的一天，四种节奏",
+  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "会安的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
 };

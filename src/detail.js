@@ -7,6 +7,20 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<
 export const TYPE_LABEL = { beach: 'Bãi biển', park: 'Công viên, khu vui chơi', culture: 'Văn hoá, tâm linh', checkin: 'Check-in', show: 'Cảnh đẹp ban đêm', cafe: 'Cà phê', food: 'Quán ăn' };
 
 const SCENES = {
+  lantern: `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2347"/><stop offset="1" stop-color="#5a3a52"/></linearGradient></defs>
+    <rect width="320" height="160" fill="url(#g)"/><rect y="118" width="320" height="42" fill="#243a52"/><path d="M0 132q20-6 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0" fill="none" stroke="#f6b042" stroke-opacity=".5" stroke-width="3"/>
+    <path d="M0 36q80 22 160 0t160 0" fill="none" stroke="#c9b27a" stroke-width="1.5"/>
+    <g><ellipse cx="50" cy="56" rx="12" ry="16" fill="#e8483a"/><ellipse cx="108" cy="62" rx="12" ry="16" fill="#f6b042"/><ellipse cx="166" cy="58" rx="12" ry="16" fill="#e8483a"/><ellipse cx="224" cy="64" rx="12" ry="16" fill="#f6b042"/><ellipse cx="282" cy="58" rx="12" ry="16" fill="#e8483a"/></g>
+    <path d="M18 100h284v18H18z" fill="#d6a85a"/><path d="M30 100l10-14h40l10 14zM130 100l10-14h50l10 14zM240 100l10-14h40l10 14z" fill="#b5532f"/>`,
+  boat: `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfeadf"/><stop offset="1" stop-color="#7fc6b2"/></linearGradient></defs>
+    <rect width="320" height="160" fill="url(#g)"/><circle cx="262" cy="36" r="16" fill="#ffd36e"/><rect y="86" width="320" height="74" fill="#3a9a86"/>
+    <path d="M0 104q20-6 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0" fill="none" stroke="#a6e0d3" stroke-width="3"/>
+    <path d="M10 92l20-30 8 30zM46 92l14-24 6 24zM250 92l16-26 8 26z" fill="#2e6f4e"/>
+    <ellipse cx="160" cy="124" rx="44" ry="13" fill="#8a5a2b"/><ellipse cx="160" cy="120" rx="40" ry="9" fill="#b07a3e"/><circle cx="160" cy="98" r="8" fill="#e4b83a"/><path d="M150 106q10 8 20 0v14h-20z" fill="#d9482f"/>`,
+  field: `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d6ecf6"/><stop offset="1" stop-color="#f2f6e0"/></linearGradient></defs>
+    <rect width="320" height="160" fill="url(#g)"/><rect y="70" width="320" height="90" fill="#8fc063"/>
+    <g stroke="#3e8c3a" stroke-width="6" stroke-linecap="round"><path d="M0 92h320"/><path d="M0 108h320" stroke="#5ba447"/><path d="M0 124h320"/><path d="M0 140h320" stroke="#5ba447"/></g>
+    <circle cx="70" cy="40" r="20" fill="#ffd36e"/><path d="M200 70l16-20 18 20zM250 70l12-14 14 14z" fill="#6fa28a"/><path d="M180 112q12-14 24 0z" fill="#e6c27a"/><rect x="190" y="112" width="4" height="12" fill="#8a5a2b"/>`,
   beach: `<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a0"/><stop offset="1" stop-color="#8fd3e3"/></linearGradient></defs>
     <rect width="320" height="160" fill="url(#g)"/><circle cx="240" cy="62" r="24" fill="#ffb347"/>
     <rect y="84" width="320" height="42" fill="#2a9bb8"/><path d="M0 98q20-8 40 0t40 0 40 0 40 0 40 0 40 0 40 0 40 0" fill="none" stroke="#bfeaf2" stroke-width="3"/>
@@ -106,7 +120,7 @@ export function placeDetailHtml(place, dayPlaces = []) {
   if (place.elderly) tags.push('Hợp người lớn tuổi');
   const list = (a) => (a && a.length ? `<ul class="pd-list">${a.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '');
   let h = `<div class="pd">${sceneSvg(place)}${place.imageCredit ? `<p class="pd-credit">${esc(place.imageCredit)}</p>` : ''}<h2>${esc(place.name)}</h2><div class="pd-tags">${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>`;
-  h += `<dl class="pd-facts"><div><dt>Giờ mở cửa</dt><dd>${esc(place.open)} – ${esc(place.close)}</dd></div><div><dt>${isFood || place.type === 'cafe' ? 'Giá tham khảo' : 'Giá vé'}</dt><dd>${vnd(place.price)}</dd></div><div><dt>Thời gian</dt><dd>${place.duration >= 60 ? Math.floor(place.duration / 60) + 'h' + (place.duration % 60 ? String(place.duration % 60).padStart(2, '0') : '') : place.duration + 'p'}</dd></div></dl>`;
+  h += `<dl class="pd-facts"><div><dt>Giờ mở cửa</dt><dd>${esc(place.open)} – ${esc(place.close)}</dd></div><div><dt>${isFood || place.type === 'cafe' ? 'Giá tham khảo' : 'Giá vé'}</dt><dd>${place.ticketGroup ? 'Trong vé phố cổ' : vnd(place.price)}</dd></div><div><dt>Thời gian</dt><dd>${place.duration >= 60 ? Math.floor(place.duration / 60) + 'h' + (place.duration % 60 ? String(place.duration % 60).padStart(2, '0') : '') : place.duration + 'p'}</dd></div></dl>`;
   if (place.highlights?.length) h += `<h3>Chú ý nổi bật</h3>${list(place.highlights)}`;
   if (isFood || place.rating || place.desc) {
     if (place.desc) h += `<h3>Mô tả</h3><p>${esc(place.desc)}</p>`;

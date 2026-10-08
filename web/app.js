@@ -27,6 +27,8 @@ const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+// Giá hiển thị của một điểm: điểm thuộc vé phố cổ không có giá riêng
+const priceText = (p) => (p.ticketGroup ? 'Trong vé phố cổ' : vnd(p.price));
 const dur = (m) => (m >= 60 ? Math.floor(m / 60) + 'h' + (m % 60 ? String(m % 60).padStart(2, '0') : '') : m + 'p');
 const iso = (d) => d.toISOString().slice(0, 10);
 const fmtDate = (s) => s.slice(8, 10) + '/' + s.slice(5, 7);
@@ -55,6 +57,7 @@ const proNow = () => proStatus(store.pro);
 const isPro = () => proNow().active;
 const lim = () => limitsFor(isPro());
 function needPro(what) { toast(what + ' là tính năng ArrowPro'); openPage('pro'); }
+// điểm đến lần trước
 function persist() { try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { /* trình duyệt chặn lưu */ } }
 function addNotif(title, body) { store.notifs.unshift({ id: 'n' + Date.now().toString(36), title, body, at: Date.now(), read: false }); persist(); updateBadge(); }
 function updateBadge() {
@@ -90,6 +93,27 @@ function go(name) {
 }
 
 /* ---------- Form ---------- */
+// Điểm đến đang chọn: dùng cho form tạo lịch, trang chủ và lịch trình nổi bật
+let destName = 'Đà Nẵng';
+const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an' };
+const heroDefault = { src: $('heroImg').getAttribute('src'), alt: $('heroImg').alt };
+function setDest(name, { render = true } = {}) {
+  if (!DESTS.some((d) => d.name === name && d.ok)) name = 'Đà Nẵng';
+  destName = name; store.prefs.dest = name;
+  $('destSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.v === name)));
+  $('homeDest').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.homedest === name)));
+  const hp = DATA.places.find((p) => p.id === DEST_HERO[name]);
+  $('heroTitle').textContent = name;
+  const img = $('heroImg');
+  if (name === 'Đà Nẵng' || !hp || !hp.image) { img.src = heroDefault.src; img.alt = heroDefault.alt; }
+  else { img.src = hp.image; img.alt = hp.imageAlt || hp.name; }
+  $('demoTitle').textContent = 'Một ngày ở ' + name + ', bốn nhịp khác nhau';
+  $('scr-create').querySelector('.scr-head p').textContent = name === 'Đà Nẵng' ? 'Dữ liệu Đà Nẵng đang là bản mẫu để chạy thử.' : 'Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.';
+  if (render && typeof renderHome === 'function' && !$('scr-home').hidden) renderHome();
+  if (render) persist();
+}
+$('destSeg').addEventListener('click', (e) => { const b = e.target.closest('button[data-v]'); if (!b) return; setDest(b.dataset.v, { render: false }); formChanged(); });
+$('homeDest').addEventListener('click', (e) => { const b = e.target.closest('button[data-homedest]'); if (b) setDest(b.dataset.homedest); });
 function setAud(v) { aud = v; $('aud').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.v === v))); }
 function setStyles(arr) { $('styles').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(arr.includes(x.dataset.v)))); }
 function applyForm(p = {}) {
@@ -99,6 +123,7 @@ function applyForm(p = {}) {
   $('people').value = t.people; setBudget(t.budget);
   $('kids').checked = !!t.hasKids || t.audience === 'gia_dinh'; $('elder').checked = !!t.hasElderly;
   setAud(t.audience); setStyles(t.styles); updateNights();
+  setDest(t.destination || destName, { render: false });
 }
 function openCreate(p, runNow, collapse = true) { applyForm(p); go('create'); if (runNow) run(collapse); }
 
@@ -145,7 +170,7 @@ function resetPlanState() {
   swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; bookTab = null; $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
 }
 function run(collapse = false) {
-  const trip = { destination: 'Đà Nẵng', startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
+  const trip = { destination: destName, startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
     budget: $('budget').value, audience: aud, hasKids: $('kids').checked, hasElderly: $('elder').checked,
     styles: [...document.querySelectorAll('#styles [aria-pressed="true"]')].map((x) => x.dataset.v) };
   if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; $('dayTabs').hidden = true; setFormOpen(true); return; }
@@ -220,13 +245,13 @@ function render() {
       const at = ' data-d="' + di + '" data-i="' + ii + '"';
       if (it.travel) h += '<div class="drive">🚗 ' + it.travel.km + ' km · ' + it.travel.min + 'p</div>';
       const name = it.place ? '<button type="button" class="nm" data-act="detail" data-d="' + di + '" data-id="' + it.place.id + '">' + esc(it.place.name) + '</button>' : esc(it.note);
-      const sub = it.place ? dur(it.dur) + ' · ' + vnd(it.place.price) + (it.kind === 'meal' ? ' · ' + esc(it.note) : '') : dur(it.dur);
+      const sub = it.place ? dur(it.dur) + ' · ' + priceText(it.place) + (it.kind === 'meal' ? ' · ' + esc(it.note) : '') : dur(it.dur);
       const tools = '<div class="tools">' + (it.place ? '<button type="button" class="ib" data-act="swap"' + at + ' aria-label="Đổi địa điểm" aria-expanded="' + !!isOpen + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg></button>' : '') +
         '<button type="button" class="ib" data-act="del"' + at + ' aria-label="Xoá"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/></svg></button></div>';
       h += '<div class="leg ' + it.kind + '"' + at + '><button type="button" class="grip" data-grip' + at + ' aria-label="Kéo để đổi thứ tự (hoặc dùng phím mũi tên lên, xuống)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button><div class="t">' + it.time + '</div><div><div class="n">' + name + '</div><div class="s">' + sub + '</div>' + (it.late ? '<div class="late">Có thể quá giờ đóng cửa hoặc giờ kết thúc ngày</div>' : '') + '</div>' + tools + '</div>';
       if (isOpen) {
         const sg = suggestions(di, ii);
-        h += '<div class="sug"><h3>Đề xuất thay thế</h3>' + (sg.length ? sg.map((x, n) => '<button type="button" class="pick" data-act="pick"' + at + ' data-id="' + x.p.id + '">' + (n === 0 ? '<span class="star">TỐT NHẤT</span>' : '') + esc(x.p.name) + '<span class="why">' + dur(x.p.duration) + ' · ' + vnd(x.p.price) + ' · ' + esc(x.why) + '</span></button>').join('') : '<span class="hint">Không còn địa điểm phù hợp để thay.</span>') + '</div>';
+        h += '<div class="sug"><h3>Đề xuất thay thế</h3>' + (sg.length ? sg.map((x, n) => '<button type="button" class="pick" data-act="pick"' + at + ' data-id="' + x.p.id + '">' + (n === 0 ? '<span class="star">TỐT NHẤT</span>' : '') + esc(x.p.name) + '<span class="why">' + dur(x.p.duration) + ' · ' + priceText(x.p) + ' · ' + esc(x.why) + '</span></button>').join('') : '<span class="hint">Không còn địa điểm phù hợp để thay.</span>') + '</div>';
       }
     });
     h += '<div class="dayacts"><button type="button" class="addbtn" data-act="addplace" data-d="' + di + '">+ Thêm địa điểm</button>' +
@@ -294,7 +319,7 @@ function flightsHtml(c) {
   const carriers = FLIGHTS.carriers.filter((k) => fl.out.some((f) => f.carrierId === k.id));
   const keep = (f) => airlineFilter.length === 0 || airlineFilter.includes(f.carrierId);
   const out = sortFlights(fl.out.filter(keep), flightSort), back = sortFlights(fl.back.filter(keep), flightSort);
-  let h = '<p class="hint">' + esc(o.name) + ' ⇄ Đà Nẵng · đi ' + fmtDate(t.startDate) + ' · về ' + fmtDate(t.endDate) + ' · ' + t.people + ' khách. Dữ liệu mẫu, chưa phải giá thật.</p>';
+  let h = '<p class="hint">' + esc(o.name) + ' ⇄ ' + (t.destination === 'Hội An' ? 'Đà Nẵng (sân bay DAD, cách Hội An khoảng 30 km)' : 'Đà Nẵng') + ' · đi ' + fmtDate(t.startDate) + ' · về ' + fmtDate(t.endDate) + ' · ' + t.people + ' khách. Dữ liệu mẫu, chưa phải giá thật.</p>';
   h += '<div class="seg" role="group" aria-label="Hãng bay" style="margin:8px 0"><button type="button" data-act="airline" data-id="all" aria-pressed="' + (airlineFilter.length === 0) + '">Tất cả hãng</button>' +
     carriers.map((k) => '<button type="button" data-act="airline" data-id="' + k.id + '" aria-pressed="' + airlineFilter.includes(k.id) + '">' + esc(k.name) + '</button>').join('') + '</div>';
   h += '<label for="fsort">Sắp xếp</label><select id="fsort"><option value="price"' + (flightSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="time"' + (flightSort === 'time' ? ' selected' : '') + '>Giờ khởi hành sớm nhất</option></select>';
@@ -425,7 +450,7 @@ function addCandidates() {
 }
 function addListHtml() {
   const list = addCandidates();
-  return list.length ? list.map((x) => '<div class="panel addc"><div class="grow"><b>' + esc(x.p.name) + '</b><div class="hint">' + esc(TYPE_LABEL[x.p.type] || '') + ' · ' + dur(x.p.duration) + ' · ' + vnd(x.p.price) +
+  return list.length ? list.map((x) => '<div class="panel addc"><div class="grow"><b>' + esc(x.p.name) + '</b><div class="hint">' + esc(TYPE_LABEL[x.p.type] || '') + ' · ' + dur(x.p.duration) + ' · ' + priceText(x.p) +
     (x.sim.travel ? ' · ' + x.sim.travel.km + ' km từ điểm trước' : '') + '</div><div class="chips" style="margin-top:6px">' +
     (x.sim.late ? '<span class="tag-status chua_chuyen">Có thể quá giờ đóng cửa</span>' : '<span class="tag-status">Kịp giờ · khoảng ' + x.sim.time + '</span>') +
     x.why.map((w) => '<span class="tag-status chua_chuyen">' + esc(w) + '</span>').join('') + '</div></div><button type="button" class="btn" data-add="pick" data-id="' + x.p.id + '">Thêm</button></div>').join('')
@@ -721,7 +746,7 @@ sheet.addEventListener('click', (e) => { if (e.target === sheet) closeSheet(); }
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sheet.hidden) closeSheet(); });
 
 /* ---------- Màn hình Khám phá ---------- */
-const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An' }, { name: 'Hà Nội' }, { name: 'Đà Lạt' }, { name: 'Nha Trang' }, { name: 'Phú Quốc' }];
+const DESTS = [{ name: 'Đà Nẵng', ok: true }, { name: 'Hội An', ok: true }, { name: 'Hà Nội' }, { name: 'Đà Lạt' }, { name: 'Nha Trang' }, { name: 'Phú Quốc' }];
 const PRESETS = {
   plan: {},
   gia_dinh: { audience: 'gia_dinh', hasKids: true, people: 4, days: 2, budget: 'vua_phai', styles: ['thien_nhien', 'van_hoa'] },
@@ -1321,7 +1346,7 @@ $('pageBody').addEventListener('click', (e) => {
 });
 
 /* ---------- Lịch trình nổi bật từ cộng đồng (mẫu) ---------- */
-const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: 'Đà Nẵng', startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
+const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: f.destination || 'Đà Nẵng', startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
 function buildFeaturedPlan(f) {
   const trip = featuredTrip(f);
   return { trip, audienceLabel: RULES[f.audience].label, warnings: [], days: f.days.map((ids, i) => ({ date: addDays(trip.startDate, i), dayIndex: i + 1, items: ids.map((id) => placeItem(DATA.places.find((x) => x.id === id))) })) };
@@ -1334,7 +1359,7 @@ function featuredStats(f) {
 // Ảnh bìa lịch trình nổi bật: dùng ảnh thật của một điểm trong lịch (ảnh của chủ dự án hoặc ảnh Wikimedia có giấy phép)
 const featuredCover = (f) => DATA.places.find((p) => p.id === f.cover && p.image) || null;
 function renderFeatured() {
-  $('homeFeatured').innerHTML = FEATURED.featured.map((f) => {
+  $('homeFeatured').innerHTML = FEATURED.featured.filter((f) => (f.destination || 'Đà Nẵng') === destName).map((f) => {
     const st = featuredStats(f);
     const cv = featuredCover(f);
     return '<button type="button" class="pcard fcard' + (cv ? ' has-cover' : '') + '" data-featured="' + f.id + '">' + (cv ? '<img class="fc-img" src="' + esc(cv.image) + '" alt="" loading="lazy">' : sceneSvg({ scene: f.scene, name: f.title })) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
@@ -1378,10 +1403,11 @@ const DEMO_TABS = [['gia_dinh', 'Gia đình'], ['cap_doi', 'Cặp đôi'], ['nho
 // Chạy đúng thuật toán xếp lịch cho một ngày mẫu để người xem thấy khác biệt thật giữa các đối tượng
 function demoDay(aud) {
   const start = addDays(todayStr(), 7);
-  const trip = { destination: 'Đà Nẵng', startDate: start, endDate: start, people: aud === 'gia_dinh' ? 4 : aud === 'mot_minh' ? 1 : 2, budget: 'vua_phai',
+  const trip = { destination: destName, startDate: start, endDate: start, people: aud === 'gia_dinh' ? 4 : aud === 'mot_minh' ? 1 : 2, budget: 'vua_phai',
     audience: aud, hasKids: aud === 'gia_dinh', hasElderly: false, styles: ['thien_nhien', 'am_thuc'] };
   // Ngày mẫu trong thành phố: bỏ Bà Nà Hills vì chiếm trọn một ngày
-  const city = { ...DATA, places: DATA.places.filter((x) => x.id !== 'ba-na') };
+  const far = ['ba-na', 'cu-lao-cham', 'thanh-dia-my-son'];
+  const city = { ...DATA, places: DATA.places.filter((x) => !far.includes(x.id)) };
   return { day: buildItinerary(trip, city, RULES).days[0], rule: effectiveRules(RULES[aud], trip) };
 }
 function ribbonHtml(day, rule) {
@@ -1483,7 +1509,7 @@ document.addEventListener('click', (e) => {
   if (d.tripfilter) { tripFilter = d.tripfilter; renderTrips(); return; }
   if (d.go) { if (d.go === 'create' && !plan) openCreate({}, true, false); else go(d.go); return; }
   if (d.preset) { openCreate(PRESETS[d.preset] || {}, true); return; }
-  if (d.dest) { qSug.hidden = true; openCreate({}, true); return; }
+  if (d.dest) { qSug.hidden = true; setDest(d.dest, { render: false }); openCreate({ destination: d.dest }, true); return; }
   if (d.trip) { openTrip(d.trip); return; }
   if (d.deltrip) {
     if (armedTrip !== d.deltrip) { armedTrip = d.deltrip; renderTrips(); return; }
@@ -1804,6 +1830,7 @@ $('sheetBody').addEventListener('click', (e) => {
 const flightPromo = (carrier) => PROMOS.promos.some((p) => p.target.type === 'flight' && p.target.carrier === carrier && isValid(p, todayStr()));
 const hotelPromo = (stars) => PROMOS.promos.some((p) => p.target.type === 'hotel' && stars >= (p.target.minStars || 0) && isValid(p, todayStr()));
 
+setDest(store.prefs.dest || 'Đà Nẵng', { render: false });
 applyForm({});
 applySettings();
 updateBadge();

@@ -489,3 +489,7 @@ section.day.sorting{user-select:none}
 .brand .vn-mini{margin-left:6px}.brand .vn-mini svg{height:24px}
 .pts{white-space:nowrap}
 @media (max-width:360px){.brand .vn-mini{display:none}}
+
+/* Chọn điểm đến */
+.dest-switch{margin:4px 0 12px}
+#destSeg{margin-top:2px}

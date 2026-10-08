@@ -46,12 +46,14 @@
 
     <div id="homeTrack"></div>
 
+    <div class="seg dest-switch" id="homeDest" role="group" aria-label="Điểm đến"><button type="button" data-homedest="Đà Nẵng" aria-pressed="true">Đà Nẵng</button><button type="button" data-homedest="Hội An" aria-pressed="false">Hội An</button></div>
+
     <div class="hero2">
-      <img class="hero2-bg" src="images/my-khe.jpg" alt="Hoàng hôn trên biển Mỹ Khê, Đà Nẵng">
+      <img class="hero2-bg" id="heroImg" src="images/my-khe.jpg" alt="Hoàng hôn trên biển Mỹ Khê, Đà Nẵng">
       <div class="hero2-shade"></div>
       <div class="hero2-in">
         <span class="eyebrow">Đang mở cho chuyến đi</span>
-        <h1>Đà Nẵng</h1>
+        <h1 id="heroTitle">Đà Nẵng</h1>
         <p>Đi cùng ai, nhịp lịch trình đổi theo người đó.</p>
         <button class="go hero2-cta" type="button" data-go="create">Lên lịch trình</button>
       </div>
@@ -71,7 +73,7 @@
       <button type="button" class="aud a-solo" data-preset="mot_minh"><img class="aud-bg" src="images/aud-solo.jpg" alt="" loading="lazy"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg><b>Một mình</b><span>Linh hoạt, bảo tàng, biển và quán ăn địa phương</span></button>
     </div>
 
-    <h2 class="h2">Một ngày ở Đà Nẵng, bốn nhịp khác nhau</h2>
+    <h2 class="h2" id="demoTitle">Một ngày ở Đà Nẵng, bốn nhịp khác nhau</h2>
     <div id="homeDemo" class="demo"></div>
 
     <h2 class="h2">Bạn thích gì? <small class="h2s">Chọn nhiều cũng được</small></h2>
@@ -102,6 +104,9 @@
     <div class="scr-head"><h1>Tạo lịch trình</h1><p>Dữ liệu Đà Nẵng đang là bản mẫu để chạy thử.</p></div>
     <div id="formSummary" class="fsum" hidden></div>
     <form class="panel form2" id="form">
+      <fieldset class="fg"><legend>Điểm đến</legend>
+        <div class="seg" id="destSeg" role="group" aria-label="Điểm đến"><button type="button" data-v="Đà Nẵng" aria-pressed="true">Đà Nẵng</button><button type="button" data-v="Hội An" aria-pressed="false">Hội An</button></div>
+      </fieldset>
       <fieldset class="fg"><legend>Chuyến đi</legend>
         <div class="row">
           <div><label for="start">Ngày đi</label><input type="date" id="start" required></div>

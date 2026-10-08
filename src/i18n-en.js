@@ -366,5 +366,11 @@ export const EN = {
   "Nâng cấp ArrowPro": "Upgrade to ArrowPro",
   "Đang dùng ArrowPro": "ArrowPro active",
   "⚡ Tối ưu lộ trình": "⚡ Optimize route",
-  "📡 Theo dõi trực tiếp": "📡 Live tracking"
+  "📡 Theo dõi trực tiếp": "📡 Live tracking",
+  "Điểm đến": "Destination",
+  "Đà Nẵng": "Da Nang",
+  "Hội An": "Hoi An",
+  "Trong vé phố cổ": "In the Old Town ticket",
+  "Một ngày ở Hội An, bốn nhịp khác nhau": "One day in Hoi An, four different paces",
+  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hoi An places are real, but coordinates and prices are estimates; hotels are sample data."
 };

@@ -14,9 +14,9 @@ for p in places:
     if not c or not (root / "web" / "images" / f"{p['id']}.jpg").exists(): continue
     p["image"] = f"images/{p['id']}.jpg"
     p["imageAlt"] = p.get("imageAlt") or p["name"]
-    if "note" in c:  # ảnh do chủ dự án gửi
+    if "note" in c:  # ảnh do chủ dự án gửi, hoặc ảnh minh hoạ có ghi chú riêng
         p["imageCredit"] = c["note"]
-        lines.append(f"- **{p['name']}** (`{p['id']}.jpg`): {c['note']}")
+        lines.append(f"- **{p['name']}** (`{p['id']}.jpg`): {c['note']}" + (f", [{c['file']}]({c['page']})" if c.get("page") else ""))
         continue
     p["imageCredit"] = f"Ảnh: {c['author']} · {c['license']} · Wikimedia Commons"
     lines.append(f"- **{p['name']}** (`{p['id']}.jpg`): {c['author']}, {c['license']}, [{c['file']}]({c['page']})")

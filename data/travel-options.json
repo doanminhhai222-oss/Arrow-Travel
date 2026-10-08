@@ -95,7 +95,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "homestay",
@@ -173,7 +174,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "3sao-tt",
@@ -265,7 +267,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "3sao-bien",
@@ -359,7 +362,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "can-ho",
@@ -439,7 +443,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "4sao-tt",
@@ -535,7 +540,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "4sao-bien",
@@ -630,7 +636,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "resort-nhs",
@@ -725,7 +732,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "resort",
@@ -821,7 +829,8 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
     },
     {
       "id": "villa",
@@ -903,7 +912,730 @@
           "time": "2 tháng trước",
           "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
         }
-      ]
+      ],
+      "city": "Đà Nẵng"
+    },
+    {
+      "id": "hoian-hostel",
+      "name": "Hostel phố cổ Hội An (mẫu)",
+      "stars": 2,
+      "area": "Phố cổ",
+      "pricePerRoom": 300000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 15.879,
+      "lng": 108.327,
+      "rating": 4.1,
+      "amenities": [
+        "Wifi",
+        "Bếp chung"
+      ],
+      "description": "Hostel nhỏ cách Chùa Cầu vài phút đi bộ, phòng đơn giản, phù hợp đi tiết kiệm.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 16,
+          "beds": "1 giường đôi",
+          "view": "Hẻm yên tĩnh",
+          "factor": 1.0,
+          "perks": [
+            "Quạt trần",
+            "Phòng tắm riêng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng có cửa sổ",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Cửa sổ thoáng",
+          "factor": 1.2,
+          "perks": [
+            "Máy lạnh",
+            "Cửa sổ"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room"
+      ],
+      "reviewCount": 678,
+      "reviewSource": "sample",
+      "googleQuery": "Hostel phố cổ Hội An Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-homestay",
+      "name": "Homestay vườn Cẩm Châu (mẫu)",
+      "stars": 2,
+      "area": "Cẩm Châu",
+      "pricePerRoom": 450000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": false,
+      "tier": "tiet_kiem",
+      "lat": 15.869,
+      "lng": 108.342,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Xe đạp",
+        "Ăn sáng"
+      ],
+      "description": "Homestay có vườn và xe đạp miễn phí, cách phố cổ khoảng 2 km.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 20,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Wifi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng ban công",
+          "sleeps": 2,
+          "sizeM2": 26,
+          "beds": "1 giường đôi",
+          "view": "Ban công",
+          "factor": 1.25,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 798,
+      "reviewSource": "sample",
+      "googleQuery": "Homestay vườn Cẩm Châu Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-3sao-pc",
+      "name": "Khách sạn 3 sao phố cổ (mẫu)",
+      "stars": 3,
+      "area": "Phố cổ",
+      "pricePerRoom": 800000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 15.878,
+      "lng": 108.3285,
+      "rating": 4.0,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 3 sao nằm trong khu phố cổ, đi bộ tới Chùa Cầu và chợ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 22,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.25,
+          "perks": [
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 40,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.7,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "food"
+      ],
+      "reviewCount": 137,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao phố cổ Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-3sao-ab",
+      "name": "Khách sạn 3 sao An Bàng (mẫu)",
+      "stars": 3,
+      "area": "An Bàng",
+      "pricePerRoom": 700000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "vua_phai",
+      "lat": 15.9,
+      "lng": 108.359,
+      "rating": 4.2,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi"
+      ],
+      "description": "Khách sạn 3 sao cách biển An Bàng vài phút đi bộ, có hồ bơi.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng tiêu chuẩn",
+          "sleeps": 2,
+          "sizeM2": 24,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Máy lạnh",
+            "Ăn sáng"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi",
+          "view": "Một phần hướng biển",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình",
+          "sleeps": 4,
+          "sizeM2": 42,
+          "beds": "2 giường đôi",
+          "view": "Thành phố",
+          "factor": 1.75,
+          "perks": [
+            "Rộng rãi",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 511,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 3 sao An Bàng Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-4sao-pc",
+      "name": "Khách sạn 4 sao ven sông gần phố cổ (mẫu)",
+      "stars": 4,
+      "area": "Phố cổ",
+      "pricePerRoom": 1500000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 15.875,
+      "lng": 108.332,
+      "rating": 4.3,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Spa"
+      ],
+      "description": "Khách sạn 4 sao ven sông Hoài, có hồ bơi và nhà hàng, cách Chùa Cầu khoảng 10 phút đi bộ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 28,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe",
+          "sleeps": 2,
+          "sizeM2": 34,
+          "beds": "1 giường đôi",
+          "view": "Hướng sông Hàn",
+          "factor": 1.3,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Phòng Suite",
+          "sleeps": 3,
+          "sizeM2": 52,
+          "beds": "1 giường lớn + sofa",
+          "view": "Hướng sông Hàn",
+          "factor": 1.9,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "food"
+      ],
+      "reviewCount": 144,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao ven sông gần phố cổ Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-4sao-ab",
+      "name": "Khách sạn 4 sao An Bàng (mẫu)",
+      "stars": 4,
+      "area": "An Bàng",
+      "pricePerRoom": 1400000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 15.902,
+      "lng": 108.36,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Đưa đón phố cổ"
+      ],
+      "description": "Khách sạn 4 sao gần biển An Bàng, có hồ bơi và xe đưa đón phố cổ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "std",
+          "name": "Phòng Superior",
+          "sleeps": 2,
+          "sizeM2": 30,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Thành phố",
+          "factor": 1.0,
+          "perks": [
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe hướng biển",
+          "sleeps": 2,
+          "sizeM2": 36,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Ăn sáng",
+            "Hồ bơi"
+          ]
+        },
+        {
+          "id": "fam",
+          "name": "Phòng gia đình hướng biển",
+          "sleeps": 4,
+          "sizeM2": 56,
+          "beds": "2 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.9,
+          "perks": [
+            "Ban công",
+            "Ăn sáng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach",
+        "food"
+      ],
+      "reviewCount": 518,
+      "reviewSource": "sample",
+      "googleQuery": "Khách sạn 4 sao An Bàng Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-resort",
+      "name": "Resort 5 sao ven sông (mẫu)",
+      "stars": 5,
+      "area": "Cẩm Châu",
+      "pricePerRoom": 3000000,
+      "capacity": 2,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 15.87,
+      "lng": 108.345,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi",
+        "Spa",
+        "Đưa đón phố cổ"
+      ],
+      "description": "Resort 5 sao yên tĩnh ven sông Thu Bồn, có hồ bơi lớn, spa và xe điện đưa đón phố cổ.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "dlx",
+          "name": "Phòng Deluxe vườn",
+          "sleeps": 2,
+          "sizeM2": 40,
+          "beds": "1 giường đôi hoặc 2 giường đơn",
+          "view": "Vườn nhiệt đới",
+          "factor": 1.0,
+          "perks": [
+            "Bãi biển riêng",
+            "Hồ bơi",
+            "Spa"
+          ]
+        },
+        {
+          "id": "ocean",
+          "name": "Phòng hướng biển",
+          "sleeps": 2,
+          "sizeM2": 44,
+          "beds": "1 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.35,
+          "perks": [
+            "Ban công",
+            "Bãi biển riêng"
+          ]
+        },
+        {
+          "id": "sui",
+          "name": "Suite gia đình",
+          "sleeps": 4,
+          "sizeM2": 80,
+          "beds": "1 giường đôi + 2 giường đơn",
+          "view": "Hướng biển",
+          "factor": 2.0,
+          "perks": [
+            "Phòng khách riêng",
+            "Bồn tắm",
+            "Bãi biển riêng"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 195,
+      "reviewSource": "sample",
+      "googleQuery": "Resort 5 sao ven sông Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
+    },
+    {
+      "id": "hoian-villa",
+      "name": "Villa hồ bơi riêng gần Cửa Đại (mẫu)",
+      "stars": 5,
+      "area": "Cửa Đại",
+      "pricePerRoom": 4500000,
+      "capacity": 6,
+      "kids": true,
+      "elderly": true,
+      "tier": "thoai_mai",
+      "lat": 15.88,
+      "lng": 108.383,
+      "rating": 4.5,
+      "amenities": [
+        "Wifi",
+        "Ăn sáng",
+        "Hồ bơi riêng",
+        "Bếp"
+      ],
+      "description": "Villa riêng có hồ bơi, gần biển Cửa Đại, hợp nhóm bạn hoặc gia đình đông người.",
+      "checkInTime": "14:00",
+      "checkOutTime": "12:00",
+      "cancel": "Huỷ miễn phí trước 3 ngày so với ngày nhận phòng (mẫu).",
+      "roomTypes": [
+        {
+          "id": "3pn",
+          "name": "Villa 3 phòng ngủ",
+          "sleeps": 6,
+          "sizeM2": 180,
+          "beds": "3 giường đôi",
+          "view": "Gần biển",
+          "factor": 1.0,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        },
+        {
+          "id": "4pn",
+          "name": "Villa 4 phòng ngủ",
+          "sleeps": 8,
+          "sizeM2": 240,
+          "beds": "4 giường đôi",
+          "view": "Hướng biển",
+          "factor": 1.4,
+          "perks": [
+            "Hồ bơi riêng",
+            "Bếp",
+            "Sân vườn"
+          ]
+        }
+      ],
+      "photos": [
+        "lobby",
+        "room",
+        "pool",
+        "beach"
+      ],
+      "reviewCount": 232,
+      "reviewSource": "sample",
+      "googleQuery": "Villa hồ bơi riêng gần Cửa Đại Hội An",
+      "reviews": [
+        {
+          "author": "Khách mẫu A",
+          "rating": 5,
+          "time": "2 tuần trước",
+          "text": "Phòng sạch sẽ, nhân viên thân thiện, vị trí thuận tiện đi lại."
+        },
+        {
+          "author": "Khách mẫu B",
+          "rating": 4,
+          "time": "1 tháng trước",
+          "text": "Giá hợp lý so với chất lượng. Bữa sáng ổn nhưng giờ cao điểm hơi đông."
+        },
+        {
+          "author": "Khách mẫu C",
+          "rating": 4,
+          "time": "2 tháng trước",
+          "text": "Cách âm tạm được, thủ tục nhận phòng hơi lâu nhưng nhân viên hỗ trợ tốt."
+        }
+      ],
+      "city": "Hội An"
     }
   ]
 }

@@ -7,7 +7,7 @@ export const LOCAL_TRANSPORT_PER_KM = 10000; // taxi / xe công nghệ trong th�
 
 export function hotelsFor(hotels, trip) {
   return hotels
-    .filter((h) => (!trip.hasKids || h.kids) && (!trip.hasElderly || h.elderly))
+    .filter((h) => (h.city || 'Đà Nẵng') === (trip.destination || 'Đà Nẵng') && (!trip.hasKids || h.kids) && (!trip.hasElderly || h.elderly))
     .sort((a, b) => a.pricePerRoom - b.pricePerRoom);
 }
 
@@ -21,13 +21,17 @@ export function defaultFlight(flights, trip) {
   return trip.budget === 'thoai_mai' ? sorted[sorted.length - 1] : sorted[0];
 }
 
+// Vé dùng chung cho nhiều điểm (ví dụ vé phố cổ Hội An): tính một lần cho mỗi khách, các điểm trong nhóm có giá 0
+export const TICKET_GROUPS = { 'pho-co': { label: 'Vé tham quan phố cổ Hội An', price: 120000 } };
+
 // plan: kết quả buildItinerary (có thể đã chỉnh sửa). flight = null nghĩa là tự túc, không tính vé máy bay.
 export function estimateCost({ trip, plan, flight, hotel, transport = null }) {
   const people = trip.people;
   const nDays = daysBetween(trip.startDate, trip.endDate);
   const nights = Math.max(0, nDays - 1);
   const items = plan.days.flatMap((d) => d.items.filter((i) => i.kind === 'visit' && i.place));
-  const tickets = items.reduce((s, i) => s + i.place.price, 0) * people;
+  const groups = [...new Set(items.map((i) => i.place.ticketGroup).filter((g) => TICKET_GROUPS[g]))];
+  const tickets = (items.reduce((s, i) => s + i.place.price, 0) + groups.reduce((s, g) => s + TICKET_GROUPS[g].price, 0)) * people;
   const km = plan.days.reduce((s, d) => s + (d.totalKm || 0), 0);
 
   const lines = [];
@@ -38,7 +42,7 @@ export function estimateCost({ trip, plan, flight, hotel, transport = null }) {
     lines.push({ key: 'hotel', label: 'Khách sạn', amount: perRoom * rooms, note: `${rooms} phòng × ${nights} đêm` });
   }
   lines.push({ key: 'food', label: 'Ăn uống', amount: (FOOD_PER_PERSON_DAY[trip.budget] ?? 0) * people * nDays, note: `${people} người × ${nDays} ngày` });
-  lines.push({ key: 'tickets', label: 'Vé tham quan', amount: tickets, note: `${items.length} điểm` });
+  lines.push({ key: 'tickets', label: 'Vé tham quan', amount: tickets, note: `${items.length} điểm` + (groups.length ? ` (gồm ${groups.map((g) => TICKET_GROUPS[g].label.toLowerCase()).join(', ')})` : '') });
   if (transport && transport.skip) { /* đã có phương tiện riêng: không tính phí di chuyển */ }
   else if (transport) lines.push({ key: 'local', label: `Di chuyển: ${transport.name}`, amount: transport.total, note: `${transport.totalKm} km, ${transport.vehicles} xe` });
   else lines.push({ key: 'local', label: 'Di chuyển trong thành phố', amount: Math.round((km * LOCAL_TRANSPORT_PER_KM) / 1000) * 1000, note: `${km.toFixed(1)} km` });

@@ -366,5 +366,11 @@ export const JA = {
   "Nâng cấp ArrowPro": "ArrowPro にアップグレード",
   "Đang dùng ArrowPro": "ArrowPro 利用中",
   "⚡ Tối ưu lộ trình": "⚡ ルートを最適化",
-  "📡 Theo dõi trực tiếp": "📡 リアルタイム追跡"
+  "📡 Theo dõi trực tiếp": "📡 リアルタイム追跡",
+  "Điểm đến": "目的地",
+  "Đà Nẵng": "ダナン",
+  "Hội An": "ホイアン",
+  "Trong vé phố cổ": "旧市街チケットに含まれる",
+  "Một ngày ở Hội An, bốn nhịp khác nhau": "ホイアンの1日、4つのペース",
+  "Địa điểm Hội An là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ホイアンのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。"
 };

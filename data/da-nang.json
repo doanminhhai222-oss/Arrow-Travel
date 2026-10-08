@@ -33,7 +33,8 @@
       "culture": "Cầu Vàng có đôi bàn tay đá khổng lồ nâng đỡ. Làng Pháp dựng lại theo khu nghỉ mát của người Pháp từ thập niên 1920, khi Bà Nà được khai phá làm nơi tránh nóng. Trên núi còn có chùa Linh Ứng Bà Nà và tượng Phật Thích Ca.",
       "image": "images/ba-na.jpg",
       "imageAlt": "Bà Nà Hills",
-      "imageCredit": "Ảnh: DvTor8303 · CC0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: DvTor8303 · CC0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "cau-rong",
@@ -66,7 +67,8 @@
       "culture": "Cầu dài khoảng 666 m, hình con rồng uốn lượn. Rồng là biểu tượng của quyền uy và may mắn trong văn hoá Việt, nên được chọn làm hình ảnh đại diện cho sự vươn lên của thành phố.",
       "image": "images/cau-rong.jpg",
       "imageAlt": "Cầu Rồng",
-      "imageCredit": "Ảnh: Thangphan · CC0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Thangphan · CC0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "my-khe",
@@ -98,7 +100,8 @@
       ],
       "culture": "Từng được tạp chí Forbes nêu tên trong danh sách các bãi biển đẹp của thế giới. Buổi sáng có thể thấy ngư dân kéo lưới và thuyền thúng, nét sinh hoạt quen thuộc của làng chài ven biển miền Trung.",
       "image": "images/my-khe.jpg",
-      "imageAlt": "Hoàng hôn trên biển Mỹ Khê, Đà Nẵng"
+      "imageAlt": "Hoàng hôn trên biển Mỹ Khê, Đà Nẵng",
+      "city": "Đà Nẵng"
     },
     {
       "id": "linh-ung",
@@ -131,7 +134,8 @@
       "culture": "Chùa thờ Quan Thế Âm Bồ Tát, biểu tượng của lòng từ bi. Tượng quay mặt ra biển với ý nghĩa che chở cho ngư dân và tàu thuyền, người dân địa phương thường đến cầu bình an.",
       "image": "images/linh-ung.jpg",
       "imageAlt": "Chùa Linh Ứng Bãi Bụt",
-      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "ngu-hanh-son",
@@ -163,7 +167,8 @@
       "culture": "Năm ngọn núi đá vôi mang tên ngũ hành Kim, Mộc, Thuỷ, Hoả, Thổ theo quan niệm phương Đông. Trong núi có nhiều chùa và hang động thờ Phật, dưới chân là làng nghề điêu khắc đá Non Nước nổi tiếng.",
       "image": "images/ngu-hanh-son.jpg",
       "imageAlt": "Ngũ Hành Sơn",
-      "imageCredit": "Ảnh: Kuroczynski · CC BY-SA 4.0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Kuroczynski · CC BY-SA 4.0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "bao-tang-cham",
@@ -195,7 +200,8 @@
       "culture": "Nơi lưu giữ bộ sưu tập điêu khắc Chăm lớn nhất cả nước. Vương quốc Chăm Pa phát triển từ khoảng thế kỷ 4 đến thế kỷ 15, chịu ảnh hưởng Ấn Độ giáo với các hình tượng thần Shiva, Vishnu và vũ nữ Apsara.",
       "image": "images/bao-tang-cham.jpg",
       "imageAlt": "Bảo tàng Điêu khắc Chăm",
-      "imageCredit": "Ảnh: Jean-Pierre Dalbéra from Paris, France · CC BY 2.0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Jean-Pierre Dalbéra from Paris, France · CC BY 2.0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "cho-han",
@@ -228,7 +234,8 @@
       "culture": "Chợ truyền thống lâu đời ở trung tâm, bán đồ ăn vặt, hải sản khô, đặc sản mua về làm quà như mực khô, nước mắm, bánh khô mè.",
       "image": "images/cho-han.jpg",
       "imageAlt": "Chợ Hàn",
-      "imageCredit": "Ảnh: Daderot · CC0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Daderot · CC0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "cau-tinh-yeu",
@@ -259,7 +266,8 @@
       "culture": "Cầu có nhiều ổ khoá của các cặp đôi. Cuối cầu là tượng Cá chép hoá rồng, gắn với truyền thuyết cá chép vượt vũ môn thành rồng, tượng trưng cho ý chí vượt khó.",
       "image": "images/cau-tinh-yeu.jpg",
       "imageAlt": "Cầu Tình Yêu",
-      "imageCredit": "Ảnh: Supanut Arunoprayote · CC BY 4.0 · Wikimedia Commons"
+      "imageCredit": "Ảnh: Supanut Arunoprayote · CC BY 4.0 · Wikimedia Commons",
+      "city": "Đà Nẵng"
     },
     {
       "id": "art-paradise",
@@ -291,7 +299,8 @@
       "culture": "Bảo tàng tranh 3D, nơi người xem đứng vào tranh để tạo hình ảnh vui mắt. Có nhiều cảnh mô phỏng danh thắng Việt Nam và thế giới.",
       "image": "images/art-paradise.jpg",
       "imageAlt": "Art In Paradise – Bảo tàng tranh 3D",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại bảo tàng"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại bảo tàng",
+      "city": "Đà Nẵng"
     },
     {
       "id": "asia-park",
@@ -323,7 +332,8 @@
       "culture": "Công viên giải trí chủ đề châu Á, nổi bật với vòng quay Sun Wheel cao khoảng 115 m nhìn ra sông Hàn và trung tâm thành phố.",
       "image": "images/asia-park.jpg",
       "imageAlt": "Công viên Châu Á (Sun World)",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · vòng quay Sun Wheel"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · vòng quay Sun Wheel",
+      "city": "Đà Nẵng"
     },
     {
       "id": "cf-hoang-hon",
@@ -364,7 +374,8 @@
       "sample": true,
       "image": "images/cf-hoang-hon.jpg",
       "imageAlt": "Quán cà phê ngắm hoàng hôn (mẫu)",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "mi-quang",
@@ -408,7 +419,8 @@
       "sample": true,
       "image": "images/mi-quang.jpg",
       "imageAlt": "Mì Quảng (mẫu)",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng",
+      "city": "Đà Nẵng"
     },
     {
       "id": "banh-xeo",
@@ -452,7 +464,8 @@
       "sample": true,
       "image": "images/banh-xeo.jpg",
       "imageAlt": "Bánh xèo (mẫu)",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo",
+      "city": "Đà Nẵng"
     },
     {
       "id": "hai-san",
@@ -495,7 +508,8 @@
       "sample": true,
       "image": "images/hai-san.jpg",
       "imageAlt": "Quán hải sản bên biển (mẫu)",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "cho-con-cu",
@@ -523,7 +537,8 @@
       "highlights": [
         "Đã đóng cửa, không dùng"
       ],
-      "culture": ""
+      "culture": "",
+      "city": "Đà Nẵng"
     },
     {
       "id": "an-thoi",
@@ -564,7 +579,8 @@
       "approx": true,
       "image": "images/an-thoi.jpg",
       "imageAlt": "Ăn Thôi",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "banh-xeo-ba-duong",
@@ -605,7 +621,8 @@
       "approx": true,
       "image": "images/banh-xeo-ba-duong.jpg",
       "imageAlt": "Bánh xèo Bà Dưỡng",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh xèo, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "mi-quang-ba-mua",
@@ -647,7 +664,8 @@
       "approx": true,
       "image": "images/mi-quang-ba-mua.jpg",
       "imageAlt": "Mì Quảng Bà Mua",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món mì Quảng, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "banh-trang-thit-heo-tran",
@@ -689,7 +707,8 @@
       "approx": true,
       "image": "images/banh-trang-thit-heo-tran.jpg",
       "imageAlt": "Bánh tráng cuốn thịt heo Trần",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh tráng cuốn thịt heo (nguồn ảnh có logo HiDaNang)"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh tráng cuốn thịt heo (nguồn ảnh có logo HiDaNang)",
+      "city": "Đà Nẵng"
     },
     {
       "id": "bun-cha-ca-109",
@@ -730,7 +749,8 @@
       "approx": true,
       "image": "images/bun-cha-ca-109.jpg",
       "imageAlt": "Bún chả cá 109",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bún chả cá, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bún chả cá, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "com-ga-ba-buoi",
@@ -772,7 +792,8 @@
       "approx": true,
       "image": "images/com-ga-ba-buoi.jpg",
       "imageAlt": "Cơm gà Bà Buội",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món cơm gà, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món cơm gà, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "banh-mi-ba-lan",
@@ -813,7 +834,8 @@
       "approx": true,
       "image": "images/banh-mi-ba-lan.jpg",
       "imageAlt": "Bánh mì Bà Lan",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh mì, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món bánh mì, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "hai-san-be-man",
@@ -854,7 +876,8 @@
       "approx": true,
       "image": "images/hai-san-be-man.jpg",
       "imageAlt": "Hải sản Bé Mặn",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món hải sản, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ món hải sản, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
     },
     {
       "id": "highlands-coffee",
@@ -895,7 +918,8 @@
       "approx": true,
       "image": "images/highlands-coffee.jpg",
       "imageAlt": "Highlands Coffee",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Highlands Coffee"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Highlands Coffee",
+      "city": "Đà Nẵng"
     },
     {
       "id": "starbucks",
@@ -935,7 +959,8 @@
       "approx": true,
       "image": "images/starbucks.jpg",
       "imageAlt": "Starbucks",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Starbucks"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh thương hiệu Starbucks",
+      "city": "Đà Nẵng"
     },
     {
       "id": "phe-la",
@@ -976,7 +1001,8 @@
       "approx": true,
       "image": "images/phe-la.jpg",
       "imageAlt": "Phê La",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh cửa hàng Phê La"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh cửa hàng Phê La",
+      "city": "Đà Nẵng"
     },
     {
       "id": "ca-phe-trinh",
@@ -1016,7 +1042,1477 @@
       "approx": true,
       "image": "images/ca-phe-trinh.jpg",
       "imageAlt": "Cà phê Trình",
-      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán"
+      "imageCredit": "Ảnh do chủ dự án cung cấp · ảnh minh hoạ, không phải ảnh tại quán",
+      "city": "Đà Nẵng"
+    },
+    {
+      "id": "pho-co-hoi-an",
+      "name": "Phố cổ Hội An",
+      "type": "checkin",
+      "city": "Hội An",
+      "lat": 15.8772,
+      "lng": 108.328,
+      "duration": 150,
+      "open": "07:00",
+      "close": "22:00",
+      "price": 0,
+      "walking": 2,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "lantern",
+      "highlights": [
+        "Mua vé tham quan phố cổ ở các quầy vé gần Chùa Cầu, góc Lê Lợi – Trần Phú hoặc gần chợ; vé có giá trị suốt thời gian lưu trú",
+        "Giá 120.000 đ khách quốc tế, 80.000 đ khách Việt; vé cho vào một số di tích để chọn, hỏi quầy vé danh sách hiện hành",
+        "Đi sớm hoặc sau 16h cho đỡ nắng và đỡ đông; buổi tối đèn lồng lên rất đẹp",
+        "Khu trung tâm đi bộ, nhiều đoạn cấm xe máy ban ngày",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Hội An là thương cảng quốc tế sầm uất thế kỷ 16–17, nơi thương nhân Nhật, Hoa, Hà Lan, Bồ Đào Nha qua lại buôn bán. Phố cổ được UNESCO công nhận Di sản văn hoá thế giới năm 1999 nhờ hơn một nghìn công trình kiến trúc cổ còn giữ nguyên dáng, từ nhà phố, hội quán đến chùa miếu.",
+      "approx": true,
+      "address": "Khu phố cổ Hội An, Minh An",
+      "ticketGroup": "pho-co",
+      "image": "images/pho-co-hoi-an.jpg",
+      "imageAlt": "Phố cổ Hội An",
+      "imageCredit": "Ảnh: Alexkom000 · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "chua-cau",
+      "name": "Chùa Cầu (Cầu Nhật Bản)",
+      "type": "checkin",
+      "city": "Hội An",
+      "lat": 15.8774,
+      "lng": 108.326,
+      "duration": 30,
+      "open": "07:00",
+      "close": "21:00",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "bridge",
+      "highlights": [
+        "Biểu tượng của Hội An, đông nhất khoảng 9h–11h, nên đến sớm hoặc lúc chiều muộn",
+        "Chụp ảnh ở bờ đường Trần Phú hoặc đứng trên bậc thềm nhìn cầu",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cầu có mái che do thương nhân Nhật xây từ thế kỷ 17, nối khu người Nhật với khu người Hoa. Hai đầu cầu có tượng chó và khỉ, gắn với tuổi của các vị vua và thời điểm khởi công. Hình ảnh Chùa Cầu được in trên tờ tiền 20.000 đồng.",
+      "approx": true,
+      "address": "Giao lộ Trần Phú và Nguyễn Thị Minh Khai",
+      "ticketGroup": "pho-co",
+      "image": "images/chua-cau.jpg",
+      "imageAlt": "Chùa Cầu (Cầu Nhật Bản)",
+      "imageCredit": "Ảnh: Steffen Schmitz (more photos) · CC BY-SA 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "hoi-quan-phuc-kien",
+      "name": "Hội quán Phúc Kiến",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8774,
+      "lng": 108.3277,
+      "duration": 30,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "temple",
+      "highlights": [
+        "Cổng tam quan, sân vườn có bình phong rồng đẹp để chụp ảnh",
+        "Mặc kín đáo khi vào khu thờ",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Hội quán của người Hoa gốc Phúc Kiến, xây từ cuối thế kỷ 17, thờ Thiên Hậu Thánh Mẫu, vị nữ thần che chở người đi biển. Trong sân có những cuộn hương lớn treo lơ lửng, mỗi cuộn là một lời cầu bình an.",
+      "approx": true,
+      "address": "46 Trần Phú",
+      "ticketGroup": "pho-co",
+      "image": "images/hoi-quan-phuc-kien.jpg",
+      "imageAlt": "Hội quán Phúc Kiến",
+      "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "nha-co-tan-ky",
+      "name": "Nhà cổ Tấn Ký",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8769,
+      "lng": 108.3288,
+      "duration": 30,
+      "open": "08:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Chủ nhà thường mời trà, hỏi han và giới thiệu ngôi nhà",
+        "Nhìn kỹ các câu đối khảm xà cừ trên cột gỗ",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Ngôi nhà hơn 200 năm tuổi của một dòng họ thương nhân, truyền qua nhiều thế hệ. Kiến trúc kết hợp Việt, Hoa, Nhật: cột gỗ lim, trần ba lớp, sân trời lấy sáng và thoát nước.",
+      "approx": true,
+      "address": "101 Nguyễn Thái Học",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "nha-co-phung-hung",
+      "name": "Nhà cổ Phùng Hưng",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8775,
+      "lng": 108.3255,
+      "duration": 30,
+      "open": "08:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Gần Chùa Cầu, ghé trước hoặc sau khi chụp cầu",
+        "Có thể lên tầng hai nhìn xuống phố",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Ngôi nhà gỗ hai tầng nằm sát Chùa Cầu, lâu đời hơn hai thế kỷ, mang kiến trúc pha Nhật và Việt. Tầng trên có ban công nhìn ra phố, từng là nơi gia đình thương nhân vừa ở vừa buôn bán.",
+      "approx": true,
+      "address": "4 Nguyễn Thị Minh Khai",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "nha-co-quan-thang",
+      "name": "Nhà cổ Quân Thắng",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8775,
+      "lng": 108.3283,
+      "duration": 30,
+      "open": "08:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Nhìn kỹ nội thất gỗ chạm khắc tinh xảo",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Ngôi nhà gỗ của một thương nhân Hoa, hơn 150 năm tuổi, nổi bật với hệ thống cột kèo chạm trổ, sân trời và gian thờ trang nghiêm, cho thấy nếp sống khá giả của giới buôn bán Hội An xưa.",
+      "approx": true,
+      "address": "77 Trần Phú",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "hoi-quan-quang-dong",
+      "name": "Hội quán Quảng Đông",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8778,
+      "lng": 108.3306,
+      "duration": 30,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "temple",
+      "highlights": [
+        "Sân trong có vườn non bộ và tượng cá chép hoá rồng bằng gốm",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Hội quán của cộng đồng người Quảng Đông, dựng năm 1885, thờ Quan Công, biểu tượng của sự trung nghĩa. Mái ngói âm dương, gốm tượng rồng và cá chép rất công phu.",
+      "approx": true,
+      "address": "176 Trần Phú",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "hoi-quan-trieu-chau",
+      "name": "Hội quán Triều Châu",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8781,
+      "lng": 108.331,
+      "duration": 25,
+      "open": "07:30",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "temple",
+      "highlights": [
+        "Chạm khắc gỗ sơn son thếp vàng rất đẹp, ít khách hơn các hội quán khác",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Hội quán của người Hoa gốc Triều Châu, xây giữa thế kỷ 19, nổi bật với những bức chạm gỗ thếp vàng mô tả điển tích Trung Hoa và đôi cột kèo chạm nổi.",
+      "approx": true,
+      "address": "157 Nguyễn Duy Hiệu",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "chua-ong",
+      "name": "Chùa Ông (miếu Quan Công)",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8772,
+      "lng": 108.3268,
+      "duration": 25,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "temple",
+      "highlights": [
+        "Có thể thắp hương cầu bình an, khói hương nghi ngút",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Ngôi miếu thờ Quan Công, dựng từ giữa thế kỷ 17, là nơi người Hội An và người Hoa cầu bình an, buôn may bán đắt. Hai bên cổng có tượng linh vật và những bức tranh gỗ cổ.",
+      "approx": true,
+      "address": "24 Trần Phú",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "bao-tang-sa-huynh",
+      "name": "Bảo tàng Văn hoá Sa Huỳnh",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8778,
+      "lng": 108.3299,
+      "duration": 40,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Có máy lạnh, hợp nghỉ trưa nắng",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Trưng bày hiện vật của nền văn hoá Sa Huỳnh, một nền văn hoá cổ ở miền Trung có niên đại cách nay hơn hai nghìn năm, nổi tiếng với mộ chum, đồ trang sức và đồ gốm. Giúp hiểu Hội An đã có người sinh sống từ rất sớm.",
+      "approx": true,
+      "address": "149 Trần Phú",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "bao-tang-gom-su",
+      "name": "Bảo tàng Gốm sứ Mậu dịch",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8773,
+      "lng": 108.3284,
+      "duration": 30,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Nhà cổ hai tầng, mát và yên tĩnh",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Nơi trưng bày gốm sứ từ nhiều nước (Nhật, Trung Hoa, Việt Nam, Trung Đông) tìm thấy ở Hội An, minh chứng cho vị thế cảng buôn bán quốc tế của thành phố qua nhiều thế kỷ.",
+      "approx": true,
+      "address": "80 Trần Phú",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "bao-tang-dan-gian",
+      "name": "Bảo tàng Văn hoá dân gian Hội An",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8767,
+      "lng": 108.3273,
+      "duration": 35,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Có biểu diễn nghề thủ công, lễ hội và đời sống dân gian xưa",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Ngôi nhà gỗ hai tầng giới thiệu đời sống thường ngày, nghề thủ công, lễ hội và tín ngưỡng của người Hội An. Cửa sổ tầng hai nhìn xuống sông Hoài.",
+      "approx": true,
+      "address": "33 Nguyễn Thái Học",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "nha-tho-toc-tran",
+      "name": "Nhà thờ tộc Trần",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8796,
+      "lng": 108.3266,
+      "duration": 30,
+      "open": "08:00",
+      "close": "17:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "temple",
+      "highlights": [
+        "Mua vật lưu niệm nhỏ, chủ nhà thường gói quà tận tay",
+        "Nằm trong vé tham quan phố cổ (120.000 đ khách quốc tế, 80.000 đ khách Việt), vé chọn một số điểm trong danh sách di tích",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Nhà thờ của dòng họ Trần xây năm 1802, dành thờ tổ tiên, kết hợp kiến trúc Việt, Hoa và Nhật. Gian giữa còn giữ gia phả và nhiều đồ thờ cổ của dòng họ.",
+      "approx": true,
+      "address": "21 Lê Lợi",
+      "ticketGroup": "pho-co"
+    },
+    {
+      "id": "goc-pho-hoa-giay",
+      "name": "Góc phố vàng hoa giấy",
+      "type": "checkin",
+      "city": "Hội An",
+      "lat": 15.8781,
+      "lng": 108.329,
+      "duration": 30,
+      "open": "00:00",
+      "close": "23:59",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "lantern",
+      "highlights": [
+        "Tường vàng rêu phong cùng giàn hoa giấy, đẹp nhất sáng sớm khi chưa đông khách",
+        "Đi bộ qua các hẻm quanh Phan Châu Trinh, Nguyễn Thái Học",
+        "Mùa hoa giấy rộ khoảng tháng 3 đến tháng 8",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Những bức tường vàng cũ kỹ phủ hoa giấy hồng đã thành hình ảnh quen thuộc của Hội An, nhờ vôi vàng truyền thống và khí hậu nắng ấm miền Trung.",
+      "approx": true,
+      "address": "Khu phố Phan Châu Trinh, Nguyễn Thái Học"
+    },
+    {
+      "id": "cau-an-hoi",
+      "name": "Cầu An Hội và bờ sông Hoài về đêm",
+      "type": "show",
+      "city": "Hội An",
+      "lat": 15.8761,
+      "lng": 108.3299,
+      "duration": 60,
+      "open": "17:00",
+      "close": "23:00",
+      "price": 0,
+      "walking": 1,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "lantern",
+      "highlights": [
+        "Đèn lồng soi mặt nước sông Hoài từ khoảng 18h, đẹp nhất lúc chạng vạng",
+        "Đêm rằm (14 âm lịch) phố cổ tắt đèn điện, chỉ thắp đèn lồng",
+        "Cuối tuần và lễ rất đông, giữ gìn đồ cá nhân",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Sông Hoài là mạch sống của Hội An từ thời thương cảng. Mỗi tối, những chiếc đèn lồng nhiều màu soi bóng xuống nước, người dân và du khách thả hoa đăng cầu may theo tập tục địa phương.",
+      "approx": true,
+      "address": "Bờ sông Bạch Đằng",
+      "image": "images/cau-an-hoi.jpg",
+      "imageAlt": "Cầu An Hội và bờ sông Hoài về đêm",
+      "imageCredit": "Ảnh: lumoplank · CC0 · Wikimedia Commons"
+    },
+    {
+      "id": "tha-hoa-dang",
+      "name": "Thuyền thả hoa đăng sông Hoài",
+      "type": "show",
+      "city": "Hội An",
+      "lat": 15.8765,
+      "lng": 108.3296,
+      "duration": 45,
+      "open": "18:00",
+      "close": "22:30",
+      "price": 50000,
+      "walking": 0,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "boat",
+      "highlights": [
+        "Mặc cả hoặc hỏi giá thuyền trước khi lên (giá thường tính theo thuyền, chia đều cho cả nhóm)",
+        "Ước nguyện và thả đèn hoa đăng xuống sông",
+        "Đi lúc chưa quá đông, tránh đỉnh điểm sau 19h",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Thả hoa đăng là tập tục cầu bình an và ước nguyện của người Việt. Ở Hội An, đèn giấy có nến được thả xuống sông Hoài, tạo nên dòng sáng lung linh về đêm.",
+      "approx": true,
+      "address": "Bến thuyền bờ sông Bạch Đằng"
+    },
+    {
+      "id": "cho-hoi-an",
+      "name": "Chợ Hội An",
+      "type": "checkin",
+      "city": "Hội An",
+      "lat": 15.8761,
+      "lng": 108.3328,
+      "duration": 60,
+      "open": "05:30",
+      "close": "18:00",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "market",
+      "highlights": [
+        "Đi sáng sớm để thấy chợ nhộn nhịp nhất và ăn sáng tại các quầy",
+        "Hỏi giá và trả giá nhẹ trước khi mua",
+        "Giữ kỹ ví và điện thoại ở chỗ đông",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Chợ truyền thống lâu đời gần bến sông, nơi bán rau củ, hải sản, đặc sản và quà lưu niệm. Khu ẩm thực trong chợ có cao lầu, mì Quảng, chè và nhiều món ăn vặt địa phương.",
+      "approx": true,
+      "address": "Đường Trần Quý Cáp, gần bờ sông",
+      "image": "images/cho-hoi-an.jpg",
+      "imageAlt": "Chợ Hội An",
+      "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "cho-dem-nguyen-hoang",
+      "name": "Chợ đêm Nguyễn Hoàng",
+      "type": "show",
+      "city": "Hội An",
+      "lat": 15.8752,
+      "lng": 108.33,
+      "duration": 75,
+      "open": "17:00",
+      "close": "22:30",
+      "price": 0,
+      "walking": 1,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "market",
+      "highlights": [
+        "Nhiều gian hàng quà lưu niệm, đèn lồng, đồ ăn vặt",
+        "Thử bánh tráng nướng, chè, nước mía trước khi dạo",
+        "Cẩn thận ví và hỏi giá trước khi mua",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Khu chợ đêm bên kia cầu An Hội sáng đèn mỗi tối, bán đèn lồng thủ công, đồ lưu niệm và món ăn đường phố, là nơi dạo chơi quen thuộc của du khách sau bữa tối.",
+      "approx": true,
+      "address": "Đường Nguyễn Hoàng, bên kia cầu An Hội"
+    },
+    {
+      "id": "xuong-den-long",
+      "name": "Xưởng làm đèn lồng Hội An",
+      "type": "checkin",
+      "city": "Hội An",
+      "lat": 15.8764,
+      "lng": 108.3318,
+      "duration": 90,
+      "open": "09:00",
+      "close": "20:00",
+      "price": 150000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "lantern",
+      "highlights": [
+        "Tự tay làm một chiếc đèn lồng nhỏ mang về",
+        "Hỏi giá và thời lượng của lớp học trước khi đặt, mỗi nơi một khác",
+        "Chọn xưởng gần phố cổ trên Google Maps",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Đèn lồng Hội An làm từ khung tre bọc lụa hoặc vải, vốn là thủ công của người Hoa và người Việt ở thương cảng. Lớp học ngắn giúp du khách hiểu cách uốn khung và dán lụa.",
+      "approx": true,
+      "address": "Khu phố cổ Hội An (nhiều xưởng, tự chọn trên Google Maps)"
+    },
+    {
+      "id": "lop-nau-an",
+      "name": "Lớp học nấu ăn Hội An (đi chợ, nấu món địa phương)",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.8765,
+      "lng": 108.3335,
+      "duration": 180,
+      "open": "08:00",
+      "close": "13:00",
+      "price": 500000,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": false,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Thường gồm đi chợ cùng đầu bếp, rồi nấu 3 đến 4 món như cao lầu, gỏi, bánh xèo",
+        "Đặt trước 1 ngày, hỏi rõ giá và thực đơn của từng lớp",
+        "Hợp cặp đôi, nhóm bạn và gia đình có trẻ lớn",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Ẩm thực Hội An là sự giao thoa giữa món Việt, Hoa và Nhật. Lớp nấu ăn là cách thú vị để tìm hiểu rau thơm Trà Quế, nước Bá Lễ và cách làm sợi cao lầu, mì Quảng.",
+      "approx": true,
+      "address": "Nhiều lớp học trong và quanh phố cổ (tự chọn trên Google Maps)"
+    },
+    {
+      "id": "rap-ky-uc",
+      "name": "Show Ký ức Hội An (Đảo Ký ức)",
+      "type": "show",
+      "city": "Hội An",
+      "lat": 15.87,
+      "lng": 108.339,
+      "duration": 150,
+      "open": "15:00",
+      "close": "22:00",
+      "price": 600000,
+      "walking": 1,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "boat",
+      "highlights": [
+        "Vé thường gồm xem show ngoài trời với hơn 500 diễn viên và khu phố cổ mô phỏng",
+        "Đặt vé trước, hỏi khung giờ mỗi buổi tối",
+        "Cách phố cổ vài km, đi xe điện hoặc taxi",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Chương trình nghệ thuật lớn tái hiện lịch sử thương cảng Hội An bằng âm nhạc, múa và sân khấu ngoài trời bên bờ sông Thu Bồn, hợp ai muốn tìm hiểu lịch sử qua nghệ thuật biểu diễn.",
+      "approx": true,
+      "address": "Đảo Ký ức Hội An, Cẩm Châu"
+    },
+    {
+      "id": "lang-rau-tra-que",
+      "name": "Làng rau Trà Quế",
+      "type": "park",
+      "city": "Hội An",
+      "lat": 15.903,
+      "lng": 108.333,
+      "duration": 100,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 50000,
+      "walking": 2,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "field",
+      "highlights": [
+        "Đạp xe qua các luống rau xanh mướt, đẹp nhất sáng sớm",
+        "Có thể thuê xe đạp ở phố cổ (khoảng 2 km)",
+        "Thường có hoạt động tưới rau, làm vườn hoặc nấu ăn tại làng, hỏi giá trước",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Làng trồng rau thơm hữu cơ hơn 300 năm, nổi tiếng vì rau thơm được tưới bằng rong tảo nên thơm đậm, là nguồn rau cho nhiều món ăn Hội An như cao lầu, mì Quảng. Du khách có thể xuống ruộng làm nông dân một buổi.",
+      "approx": true,
+      "address": "Xã Cẩm Hà, cách phố cổ khoảng 2 km",
+      "image": "images/lang-rau-tra-que.jpg",
+      "imageAlt": "Làng rau Trà Quế",
+      "imageCredit": "Ảnh: Isabell Schulz · CC BY-SA 2.0 · Wikimedia Commons"
+    },
+    {
+      "id": "rung-dua-bay-mau",
+      "name": "Rừng dừa nước Bảy Mẫu (Cẩm Thanh)",
+      "type": "park",
+      "city": "Hội An",
+      "lat": 15.869,
+      "lng": 108.372,
+      "duration": 120,
+      "open": "07:00",
+      "close": "17:30",
+      "price": 150000,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": false,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "boat",
+      "highlights": [
+        "Ngồi thuyền thúng, xem biểu diễn quay thuyền và hát bài chòi",
+        "Mang nón, kem chống nắng",
+        "Giá thuyền thúng thường tính theo thuyền, hỏi trước khi lên thuyền",
+        "Trẻ nhỏ phải mặc áo phao",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Rừng dừa nước ven sông Thu Bồn ở Cẩm Thanh, nơi người dân chèo thuyền thúng lách qua các tán dừa, bắt cua, đan lát và biểu diễn quay thuyền thúng, gắn với đời sống làng chài và đồng bãi.",
+      "approx": true,
+      "address": "Cẩm Thanh, cách phố cổ khoảng 5 km"
+    },
+    {
+      "id": "lang-gom-thanh-ha",
+      "name": "Làng gốm Thanh Hà",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.876,
+      "lng": 108.306,
+      "duration": 90,
+      "open": "07:00",
+      "close": "17:00",
+      "price": 35000,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "museum",
+      "highlights": [
+        "Có thể tự tay nặn gốm trên bàn xoay",
+        "Có công viên đất nung với các mô hình nhỏ nổi tiếng của làng",
+        "Thích hợp đi cùng trẻ em",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Làng gốm hơn 500 năm tuổi bên sông Thu Bồn, nổi tiếng với đồ gốm đất nung, gạch ngói và đồ chơi gốm. Nghề gốm Thanh Hà từng cung cấp ngói cho nhiều công trình trong phố cổ.",
+      "approx": true,
+      "address": "Phường Thanh Hà, cách phố cổ khoảng 3 km"
+    },
+    {
+      "id": "lang-moc-kim-bong",
+      "name": "Làng mộc Kim Bồng",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.868,
+      "lng": 108.314,
+      "duration": 75,
+      "open": "08:00",
+      "close": "17:00",
+      "price": 0,
+      "walking": 1,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "boat",
+      "highlights": [
+        "Đi đò từ bến phố cổ khoảng 10 phút, thường kèm thăm xưởng mộc và nhà dân",
+        "Có thể xem thợ chạm khắc, ghé nhà cổ trong làng",
+        "Hỏi giá đò khứ hồi trước khi đi",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Làng nghề mộc của những người thợ nổi tiếng, nhiều thế hệ góp tay dựng nên phố cổ Hội An và các công trình ở Huế. Sản phẩm là đồ gỗ chạm khắc, tượng gỗ và mô hình nhà cổ.",
+      "approx": true,
+      "address": "Xã Cẩm Kim, bên kia sông Thu Bồn",
+      "image": "images/lang-moc-kim-bong.jpg",
+      "imageAlt": "Làng mộc Kim Bồng",
+      "imageCredit": "Ảnh: Dragfyre · CC BY-SA 3.0 · Wikimedia Commons"
+    },
+    {
+      "id": "bien-an-bang",
+      "name": "Biển An Bàng",
+      "type": "beach",
+      "city": "Hội An",
+      "lat": 15.901,
+      "lng": 108.357,
+      "duration": 150,
+      "open": "00:00",
+      "close": "23:59",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "beach",
+      "highlights": [
+        "Hợp tắm biển, thư giãn ở quán ven biển, cách phố cổ khoảng 3 km",
+        "Chỉ tắm trong khu có cờ và nhân viên cứu hộ",
+        "Mùa bão (tháng 9 đến 12) sóng có thể mạnh, xem dự báo",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bãi biển hiền hoà gần phố cổ, nhiều quán ăn, quán cà phê và nhà hàng hải sản ngay trên cát, được cả người địa phương và khách quốc tế yêu thích để thư giãn sau những ngày tham quan.",
+      "approx": true,
+      "address": "An Bàng, cách phố cổ khoảng 3 km",
+      "image": "images/bien-an-bang.jpg",
+      "imageAlt": "Biển An Bàng",
+      "imageCredit": "Ảnh: Alexkom000 · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "bien-cua-dai",
+      "name": "Biển Cửa Đại",
+      "type": "beach",
+      "city": "Hội An",
+      "lat": 15.8786,
+      "lng": 108.388,
+      "duration": 120,
+      "open": "00:00",
+      "close": "23:59",
+      "price": 0,
+      "walking": 1,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "beach",
+      "highlights": [
+        "Bến tàu đi Cù Lao Chàm nằm ở khu Cửa Đại",
+        "Có đoạn bờ bị xói lở, đi vào khu bãi có biển báo và nơi an toàn",
+        "Chỉ tắm trong khu có cờ và cứu hộ",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bãi biển nằm ở cửa sông Thu Bồn đổ ra biển Đông, nơi từng là cửa ngõ buôn bán của thương cảng. Từ đây có tàu đi Cù Lao Chàm.",
+      "approx": true,
+      "address": "Cửa Đại, cách phố cổ khoảng 5 km"
+    },
+    {
+      "id": "cu-lao-cham",
+      "name": "Cù Lao Chàm",
+      "type": "park",
+      "city": "Hội An",
+      "lat": 15.952,
+      "lng": 108.512,
+      "duration": 450,
+      "open": "07:00",
+      "close": "17:00",
+      "price": 400000,
+      "walking": 3,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": false,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "boat",
+      "highlights": [
+        "Đi ca nô từ bến Cửa Đại khoảng 30 phút, nên đặt tour trong ngày",
+        "Tour thường gồm lặn ngắm san hô, bãi biển và bữa trưa hải sản, hỏi rõ trước khi đặt",
+        "Không đi khi biển động hoặc có bão, hỏi thời tiết trước",
+        "Mang áo phao cho trẻ nhỏ",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cụm đảo ngoài khơi Hội An được UNESCO công nhận là Khu dự trữ sinh quyển thế giới năm 2009. Nổi tiếng với san hô, bãi biển trong xanh, rừng nguyên sinh và làng chài yên bình.",
+      "approx": true,
+      "address": "Bến tàu Cửa Đại, cách đảo khoảng 18 km đường biển",
+      "image": "images/cu-lao-cham.jpg",
+      "imageAlt": "Cù Lao Chàm",
+      "imageCredit": "Ảnh: Soupybev · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "thanh-dia-my-son",
+      "name": "Thánh địa Mỹ Sơn",
+      "type": "culture",
+      "city": "Hội An",
+      "lat": 15.764,
+      "lng": 108.124,
+      "duration": 210,
+      "open": "06:30",
+      "close": "16:30",
+      "price": 150000,
+      "walking": 3,
+      "slot": "morning",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": false,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "temple",
+      "highlights": [
+        "Cách phố cổ khoảng 40 km, đi xe khoảng 1 giờ, nên đi sáng sớm cho mát và đỡ đông",
+        "Mang nón, nước uống và giày thoải mái, có đoạn đi bộ trong rừng",
+        "Thường có biểu diễn múa Chăm ở khu giữa, hỏi giờ",
+        "Giá vé khoảng 150.000 đ, kiểm tra lại khi đi",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Quần thể đền tháp Chăm Pa được UNESCO công nhận Di sản văn hoá thế giới năm 1999, được xây từ thế kỷ 4 đến khoảng thế kỷ 14 để thờ các vị thần Ấn Độ giáo như Shiva. Gạch nung kết dính bằng kỹ thuật cổ vẫn là điều khiến nhiều nhà nghiên cứu ngạc nhiên.",
+      "approx": true,
+      "address": "Xã Duy Phú, Duy Xuyên, cách Hội An khoảng 40 km",
+      "image": "images/thanh-dia-my-son.jpg",
+      "imageAlt": "Thánh địa Mỹ Sơn",
+      "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "cao-lau-thanh",
+      "name": "Cao lầu Thanh",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.88,
+      "lng": 108.3258,
+      "duration": 50,
+      "open": "07:00",
+      "close": "19:30",
+      "price": 45000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Cao lầu là món phải thử ở Hội An, ăn lúc còn nóng với rau sống",
+        "Trưa đông, nên đến trước 11h30 hoặc sau 13h30",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cao lầu có sợi mì dày, dai, vàng nâu nhờ ngâm nước tro cây và nấu từ nước giếng Bá Lễ theo tương truyền, ăn với thịt xíu, bánh tráng giòn và rau sống Trà Quế. Đây là món đặc sản chỉ có ở Hội An.",
+      "approx": true,
+      "address": "26 Thái Phiên",
+      "meal": "lunch",
+      "desc": "Quán cao lầu quen thuộc, mở từ sáng.",
+      "dishes": [
+        "Cao lầu",
+        "Mì Quảng",
+        "Hoành thánh"
+      ],
+      "image": "images/cao-lau-thanh.jpg",
+      "imageAlt": "Cao lầu Thanh",
+      "imageCredit": "Ảnh minh hoạ món cao lầu (không phải ảnh tại quán): avlxyz · CC BY-SA 2.0 · Wikimedia Commons"
+    },
+    {
+      "id": "banh-mi-phuong",
+      "name": "Bánh mì Phượng",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.8786,
+      "lng": 108.3285,
+      "duration": 30,
+      "open": "07:00",
+      "close": "20:00",
+      "price": 25000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Rất đông, đến sớm hoặc chấp nhận xếp hàng",
+        "Có thể gọi nhiều loại nhân, hỏi nhân viên nhân đặc biệt",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bánh mì Hội An nổi tiếng nhờ vỏ giòn, nhân đa dạng và nước sốt đặc trưng. Quán được nhiều thực khách nước ngoài nhắc tới và là điểm dừng quen thuộc khi đi dạo phố cổ.",
+      "approx": true,
+      "address": "2B Phan Châu Trinh",
+      "meal": "lunch",
+      "desc": "Tiệm bánh mì nổi tiếng nhất nhì Hội An.",
+      "dishes": [
+        "Bánh mì thịt",
+        "Bánh mì trứng",
+        "Nước ép"
+      ],
+      "image": "images/banh-mi-phuong.jpg",
+      "imageAlt": "Bánh mì Phượng",
+      "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "banh-mi-madam-khanh",
+      "name": "Bánh mì Madam Khánh",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.8803,
+      "lng": 108.3231,
+      "duration": 30,
+      "open": "06:30",
+      "close": "19:30",
+      "price": 25000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Bánh mì lớn, nhiều nhân, ăn tại chỗ hoặc mang đi",
+        "Hỏi trước nếu không ăn được một số loại nhân",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Tiệm bánh mì nổi tiếng được gọi là \"Nữ hoàng bánh mì\", phục vụ ổ bánh nhiều nhân, kèm đồ chua và nước chấm đậm đà.",
+      "approx": true,
+      "address": "115 Trần Cao Vân",
+      "meal": "lunch",
+      "desc": "Bánh mì ổ lớn đầy nhân, giá bình dân.",
+      "dishes": [
+        "Bánh mì thịt nướng",
+        "Bánh mì pate"
+      ]
+    },
+    {
+      "id": "com-ga-ba-buoi-hoi-an",
+      "name": "Cơm gà Bà Buội (Hội An)",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.8789,
+      "lng": 108.3277,
+      "duration": 50,
+      "open": "10:00",
+      "close": "21:00",
+      "price": 40000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Quán có từ những năm 1950, món cơm gà xé phay nổi tiếng",
+        "Giờ trưa đông, chấp nhận chờ một chút",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Cơm gà Hội An nấu bằng nước luộc gà, hạt cơm vàng thơm, ăn với gà xé, hành tây, rau răm và nước mắm gừng, là món ăn dân dã của người Quảng Nam.",
+      "approx": true,
+      "address": "22 Phan Châu Trinh",
+      "meal": "lunch",
+      "desc": "Quán cơm gà lâu đời, nằm trong phố cổ.",
+      "dishes": [
+        "Cơm gà xé",
+        "Gỏi gà",
+        "Canh gà"
+      ]
+    },
+    {
+      "id": "banh-bao-banh-vac",
+      "name": "Nhà hàng Hoa Hồng Trắng (bánh bao, bánh vạc)",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.8832,
+      "lng": 108.3208,
+      "duration": 60,
+      "open": "09:00",
+      "close": "21:00",
+      "price": 90000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Nổi tiếng với bánh bao, bánh vạc, hoành thánh chiên",
+        "Có thể ăn tại quán hoặc mua mang về",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Bánh bao bánh vạc (hay \"white rose\") là món đặc sản Hội An làm từ bột gạo trong, gói tôm thịt hình bông hồng, ăn kèm nước chấm. Công thức được giữ kín qua nhiều năm.",
+      "approx": true,
+      "address": "533 Hai Bà Trưng",
+      "meal": "lunch",
+      "desc": "Quán chuyên các loại bánh đặc sản của Hội An.",
+      "dishes": [
+        "Bánh bao bánh vạc",
+        "Hoành thánh chiên",
+        "Cao lầu"
+      ],
+      "image": "images/banh-bao-banh-vac.jpg",
+      "imageAlt": "Nhà hàng Hoa Hồng Trắng (bánh bao, bánh vạc)",
+      "imageCredit": "Ảnh minh hoạ món bánh bao bánh vạc (không phải ảnh tại quán): Chainwit. · CC BY 4.0 · Wikimedia Commons"
+    },
+    {
+      "id": "mi-quang-ong-hai",
+      "name": "Mì Quảng Ông Hai",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.8798,
+      "lng": 108.3335,
+      "duration": 45,
+      "open": "07:00",
+      "close": "20:00",
+      "price": 45000,
+      "walking": 0,
+      "slot": "midday",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Mì Quảng ít nước đậm đà, ăn với rau sống và bánh tráng",
+        "Địa chỉ chỉ có một nguồn ghi, nên kiểm tra lại trên bản đồ",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Mì Quảng là món đặc sản miền Trung, sợi mì bản to, ít nước, ăn kèm đậu phộng và bánh tráng nướng. Mỗi quán có nước nhân và cách trình bày riêng.",
+      "approx": true,
+      "address": "6A Trương Minh Lượng",
+      "meal": "lunch",
+      "desc": "Quán mì Quảng bình dân gần phố cổ.",
+      "dishes": [
+        "Mì Quảng gà",
+        "Mì Quảng tôm thịt",
+        "Bánh tráng"
+      ]
+    },
+    {
+      "id": "morning-glory",
+      "name": "Nhà hàng Morning Glory",
+      "type": "food",
+      "city": "Hội An",
+      "lat": 15.8769,
+      "lng": 108.329,
+      "duration": 90,
+      "open": "10:00",
+      "close": "22:00",
+      "price": 250000,
+      "walking": 0,
+      "slot": "evening",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "food",
+      "highlights": [
+        "Thực đơn ẩm thực Hội An trong ngôi nhà cổ, hợp ăn tối nhẹ nhàng",
+        "Nên đặt bàn trước vào tối cuối tuần",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Nhà hàng của đầu bếp Trịnh Diễm Vy, giới thiệu các món Hội An và Việt Nam trong ngôi nhà cổ, từ cao lầu, bánh xèo đến cá nướng lá chuối, nổi tiếng với du khách quốc tế.",
+      "approx": true,
+      "address": "106 Nguyễn Thái Học",
+      "meal": "dinner",
+      "desc": "Nhà hàng món Hội An trong nhà cổ, không gian ấm cúng.",
+      "dishes": [
+        "Cao lầu",
+        "Bánh xèo",
+        "Cá nướng lá chuối"
+      ]
+    },
+    {
+      "id": "faifo-coffee",
+      "name": "Faifo Coffee",
+      "type": "cafe",
+      "city": "Hội An",
+      "lat": 15.8777,
+      "lng": 108.33,
+      "duration": 60,
+      "open": "07:00",
+      "close": "22:00",
+      "price": 55000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Lên sân thượng nhìn mái ngói phố cổ, đẹp nhất lúc chiều muộn",
+        "Cuối tuần đông, nên đến sớm để chọn chỗ",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Quán cà phê trong nhà cổ, nổi tiếng vì sân thượng nhìn ra những mái ngói rêu phong của phố cổ, nơi ngắm hoàng hôn buông trên Hội An.",
+      "approx": true,
+      "address": "130 Trần Phú",
+      "desc": "Quán cà phê có sân thượng nhìn toàn cảnh phố cổ.",
+      "dishes": [
+        "Cà phê muối",
+        "Cà phê sữa",
+        "Trà"
+      ]
+    },
+    {
+      "id": "reaching-out",
+      "name": "Reaching Out Tea House",
+      "type": "cafe",
+      "city": "Hội An",
+      "lat": 15.8777,
+      "lng": 108.3297,
+      "duration": 60,
+      "open": "08:00",
+      "close": "21:00",
+      "price": 50000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Quán yên tĩnh, nhân viên là người khiếm thính, giao tiếp bằng thẻ và cử chỉ",
+        "Có thể mua đồ thủ công của các nghệ nhân ở cửa hàng cạnh bên",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Quán trà do doanh nghiệp xã hội điều hành, tạo việc làm cho người khiếm thính và khuyết tật, không gian chậm rãi, ít ồn, thích hợp nghỉ chân giữa buổi tham quan.",
+      "approx": true,
+      "address": "131 Trần Phú",
+      "desc": "Tiệm trà yên tĩnh, mang ý nghĩa xã hội.",
+      "dishes": [
+        "Trà",
+        "Cà phê",
+        "Bánh ngọt"
+      ]
+    },
+    {
+      "id": "hoi-an-roastery",
+      "name": "Hội An Roastery",
+      "type": "cafe",
+      "city": "Hội An",
+      "lat": 15.8778,
+      "lng": 108.3299,
+      "duration": 50,
+      "open": "07:00",
+      "close": "21:00",
+      "price": 55000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Cà phê rang xay tại chỗ, có thể mua hạt về làm quà",
+        "Quán nhỏ, đông giờ chiều",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Thương hiệu cà phê rang xay từ hạt Việt Nam, có nhiều chi nhánh ở Hội An. Quán nhỏ gọn, hương rang thơm đậm.",
+      "approx": true,
+      "address": "135 Trần Phú",
+      "desc": "Quán cà phê rang xay tại chỗ.",
+      "dishes": [
+        "Cà phê phin",
+        "Cà phê muối",
+        "Cold brew"
+      ]
+    },
+    {
+      "id": "cong-ca-phe-hoi-an",
+      "name": "Cộng Cà Phê (Hội An)",
+      "type": "cafe",
+      "city": "Hội An",
+      "lat": 15.8775,
+      "lng": 108.332,
+      "duration": 60,
+      "open": "07:00",
+      "close": "22:00",
+      "price": 45000,
+      "walking": 0,
+      "slot": "afternoon",
+      "audiences": [
+        "cap_doi",
+        "nhom_ban",
+        "gia_dinh",
+        "mot_minh"
+      ],
+      "kids": true,
+      "elderly": true,
+      "status": "open",
+      "freshness": "fresh",
+      "scene": "cafe",
+      "highlights": [
+        "Cà phê cốt dừa là món nổi tiếng của Cộng",
+        "Chọn chi nhánh gần phố cổ trên Google Maps",
+        "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
+      ],
+      "culture": "Chuỗi cà phê phong cách thời bao cấp, nổi tiếng với cà phê cốt dừa. Không gian cũ kỹ, màu xanh quân đội, hợp chụp ảnh và nghỉ chân.",
+      "approx": true,
+      "address": "Khu phố cổ Hội An (xem chi nhánh gần nhất)",
+      "desc": "Cà phê phong cách bao cấp, cốt dừa đặc trưng.",
+      "dishes": [
+        "Cà phê cốt dừa",
+        "Cà phê sữa",
+        "Sinh tố"
+      ]
     }
   ]
 }
