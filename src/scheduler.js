@@ -36,7 +36,7 @@ export function filterPlaces(places, trip) {
   const cap = BUDGET_CAP[trip.budget] ?? Infinity;
   const warnings = [];
   const ok = places.filter((p) => {
-    if (p.status === 'closed') return false;
+    if (p.status === 'closed' || p.custom) return false; // địa điểm người dùng tự thêm không dùng để tự xếp lịch
     if (!p.audiences.includes(trip.audience)) return false;
     if (trip.hasKids && !p.kids) return false;
     if (trip.hasElderly && !p.elderly) return false;

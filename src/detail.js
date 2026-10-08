@@ -117,6 +117,6 @@ export function placeDetailHtml(place, dayPlaces = []) {
     h += `<h3>Nét đặc trưng văn hoá</h3><p>${esc(place.culture)}</p>`;
   }
   h += `${place.address ? `<h3>Địa chỉ</h3><p>${esc(place.address)}</p>` : ''}<h3>Bản đồ</h3>${miniMapSvg(place, dayPlaces)}${legendHtml(place, dayPlaces)}<p class="hint">Số trên bản đồ là thứ tự đi trong ngày. ${place.approx ? 'Vị trí chỉ là ước lượng, xem lại trên Google Maps.' : 'Vị trí tính từ toạ độ mẫu.'}</p>`;
-  h += `<a class="pd-link" href="https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}" target="_blank" rel="noopener">Mở trong Google Maps</a></div>`;
+  h += `<a class="pd-link" href="${esc(place.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${place.lat},${place.lng}`)}" target="_blank" rel="noopener">Mở trong Google Maps</a></div>`;
   return h;
 }

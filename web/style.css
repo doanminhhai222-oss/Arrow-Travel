@@ -419,3 +419,19 @@ textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--lin
 .opt.opt-img::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.1) 10%,rgba(0,0,0,.78) 100%)}
 .opt.opt-img b,.opt.opt-img span{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.55)}
 .opt.opt-img[aria-pressed=true]{box-shadow:0 0 0 3px var(--teal),0 0 14px 2px color-mix(in srgb,var(--teal) 55%,transparent)}
+
+/* Kéo thả đổi thứ tự trong ngày */
+.leg{grid-template-columns:28px 52px 1fr auto;align-items:start}
+.grip{width:28px;height:44px;margin:-10px 0;padding:0;border:0;background:none;color:var(--muted);cursor:grab;touch-action:none;display:grid;place-items:center;border-radius:8px}
+.grip svg{width:18px;height:18px;fill:currentColor}
+.grip:hover{color:var(--teal);background:var(--teal-soft)}
+.grip:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+section.day.sorting .drive,section.day.sorting .sug{display:none}
+section.day.sorting{user-select:none}
+.leg.dragging{background:var(--teal-soft);border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.15);position:relative;z-index:2}
+.leg.dragging .grip{cursor:grabbing}
+/* Thêm từ Google Maps */
+.addmode{margin-top:8px}
+.cpform{margin-top:12px}
+.cpform .btn{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
+.cprow{display:grid;grid-template-columns:1fr 1fr;gap:10px}

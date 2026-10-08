@@ -327,5 +327,15 @@ export const EN = {
   "Địa chỉ": "Address",
   "Vị trí chỉ là ước lượng, xem lại trên Google Maps.": "Location is approximate, check it on Google Maps.",
   "Hồng nhạt": "Light pink",
-  "Vàng nhạt": "Light yellow"
+  "Vàng nhạt": "Light yellow",
+  "Gợi ý của app": "App suggestions",
+  "Bất kỳ trên Google Maps": "Anywhere on Google Maps",
+  "Mở Google Maps để tìm": "Search on Google Maps",
+  "Link Google Maps hoặc toạ độ": "Google Maps link or coordinates",
+  "Tên địa điểm": "Place name",
+  "Ở lại (phút)": "Stay (minutes)",
+  "Chi phí mỗi người (đ)": "Cost per person (VND)",
+  "Thêm vào lịch": "Add to plan",
+  "Không thấy địa điểm? Thêm từ Google Maps": "Can't find it? Add from Google Maps",
+  "Đã đổi thứ tự, giờ giấc tự tính lại": "Order changed, times recalculated"
 };

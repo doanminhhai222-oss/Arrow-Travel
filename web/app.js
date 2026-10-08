@@ -7,6 +7,7 @@ import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/p
 import { transportOptions } from '../src/transport.js';
 import { straightKm, fmtDist, reachedStop, catalogNearby, fetchOverpass, mapsSearchUrl, mapsDirectionsUrl, mapsPlaceUrl, NEARBY_CATS } from '../src/nearby.js';
 import { trackMapSvg } from '../src/trackmap.js';
+import { parseMapsInput, mapsSearchLink } from '../src/gmaps.js';
 import { placeDetailHtml, sceneSvg, TYPE_LABEL } from '../src/detail.js';
 import { money, moneyVnd, vnd, setCurrency, getCurrency, CURRENCIES } from '../src/format.js';
 import { tr, setLang, getLang } from '../src/i18n.js';
@@ -30,7 +31,7 @@ const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g
 
 /* ---------- Lưu trữ trên thiết bị (không có tài khoản, không có máy chủ) ---------- */
 const STORE_KEY = 'arrow-travel-v1';
-const baseStore = () => ({ settings: { theme: 'light', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null });
+const baseStore = () => ({ settings: { theme: 'light', lang: 'vi', currency: 'VND' }, favorites: [], moments: {}, track: null, points: newPoints(), vouchers: [], friends: [], review: null, customPlaces: [] });
 function seedStore() {
   const now = Date.now();
   return { ...baseStore(), trips: [], bookings: [], prefs: {}, notifs: [
@@ -43,6 +44,8 @@ function loadStore() {
   return seedStore();
 }
 let store = loadStore();
+// Địa điểm người dùng tự thêm từ Google Maps: lưu trên thiết bị, gộp vào danh sách để mở lại lịch đã lưu, xem chi tiết, khoảnh khắc
+(store.customPlaces || []).forEach((p) => { if (!DATA.places.some((x) => x.id === p.id)) DATA.places.push(p); });
 function persist() { try { localStorage.setItem(STORE_KEY, JSON.stringify(store)); } catch (e) { /* trình duyệt chặn lưu */ } }
 function addNotif(title, body) { store.notifs.unshift({ id: 'n' + Date.now().toString(36), title, body, at: Date.now(), read: false }); persist(); updateBadge(); }
 function updateBadge() {
@@ -201,7 +204,7 @@ function render() {
   renderDayTabs();
   plan.days.forEach((d, di) => {
     if (dayTab !== 'all' && dayTab !== di) return;
-    h += '<section class="panel day"><h2>Ngày ' + d.dayIndex + ' · ' + d.date.split('-').reverse().join('/') + '</h2><div class="meta">' + d.placeCount + ' điểm · ' + d.totalKm + ' km</div>';
+    h += '<section class="panel day" data-day="' + di + '"><h2>Ngày ' + d.dayIndex + ' · ' + d.date.split('-').reverse().join('/') + '</h2><div class="meta">' + d.placeCount + ' điểm · ' + d.totalKm + ' km</div>';
     if (!d.items.length) h += '<p class="hint">Ngày này đang trống.</p>';
     d.items.forEach((it, ii) => {
       const isOpen = swapOpen && swapOpen.d === di && swapOpen.i === ii;
@@ -211,7 +214,7 @@ function render() {
       const sub = it.place ? dur(it.dur) + ' · ' + vnd(it.place.price) + (it.kind === 'meal' ? ' · ' + esc(it.note) : '') : dur(it.dur);
       const tools = '<div class="tools">' + (it.place ? '<button type="button" class="ib" data-act="swap"' + at + ' aria-label="Đổi địa điểm" aria-expanded="' + !!isOpen + '"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg></button>' : '') +
         '<button type="button" class="ib" data-act="del"' + at + ' aria-label="Xoá"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/></svg></button></div>';
-      h += '<div class="leg ' + it.kind + '"><div class="t">' + it.time + '</div><div><div class="n">' + name + '</div><div class="s">' + sub + '</div>' + (it.late ? '<div class="late">Có thể quá giờ đóng cửa hoặc giờ kết thúc ngày</div>' : '') + '</div>' + tools + '</div>';
+      h += '<div class="leg ' + it.kind + '"' + at + '><button type="button" class="grip" data-grip' + at + ' aria-label="Kéo để đổi thứ tự (hoặc dùng phím mũi tên lên, xuống)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg></button><div class="t">' + it.time + '</div><div><div class="n">' + name + '</div><div class="s">' + sub + '</div>' + (it.late ? '<div class="late">Có thể quá giờ đóng cửa hoặc giờ kết thúc ngày</div>' : '') + '</div>' + tools + '</div>';
       if (isOpen) {
         const sg = suggestions(di, ii);
         h += '<div class="sug"><h3>Đề xuất thay thế</h3>' + (sg.length ? sg.map((x, n) => '<button type="button" class="pick" data-act="pick"' + at + ' data-id="' + x.p.id + '">' + (n === 0 ? '<span class="star">TỐT NHẤT</span>' : '') + esc(x.p.name) + '<span class="why">' + dur(x.p.duration) + ' · ' + vnd(x.p.price) + ' · ' + esc(x.why) + '</span></button>').join('') : '<span class="hint">Không còn địa điểm phù hợp để thay.</span>') + '</div>';
@@ -415,16 +418,19 @@ function renderAdd() {
   const day = plan.days[addCtx.d], n = day.items.length;
   const opts = [[n, 'Cuối ngày'], [0, 'Đầu ngày']];
   day.items.forEach((it, i) => { if (i + 1 < n) opts.push([i + 1, 'Sau ' + (it.place ? it.place.name : it.note)]); });
-  $('sheetBody').innerHTML = '<div class="pd"><h2>Thêm địa điểm · Ngày ' + day.dayIndex + '</h2>' +
-    '<div class="search" style="margin:8px 0"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="addQ" type="search" value="' + esc(addCtx.q) + '" placeholder="Tìm địa điểm" aria-label="Tìm địa điểm" autocomplete="off"></div>' +
+  const modes = '<div class="seg addmode" role="group" aria-label="Nguồn địa điểm">' + [['list', 'Gợi ý của app'], ['maps', 'Bất kỳ trên Google Maps']].map(([v, l]) => '<button type="button" data-add="mode" data-v="' + v + '" aria-pressed="' + (addCtx.mode === v) + '">' + l + '</button>').join('') + '</div>';
+  const posSel = '<label for="addPos" style="margin-top:12px">Thêm vào</label><select id="addPos">' + opts.map(([v, l]) => '<option value="' + v + '"' + (v === addCtx.pos ? ' selected' : '') + '>' + esc(l) + '</option>').join('') + '</select>';
+  $('sheetBody').innerHTML = '<div class="pd"><h2>Thêm địa điểm · Ngày ' + day.dayIndex + '</h2>' + modes + posSel +
+    (addCtx.mode === 'maps' ? customFormHtml() :
+    '<div class="search" style="margin:12px 0 8px"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="addQ" type="search" value="' + esc(addCtx.q) + '" placeholder="Tìm địa điểm" aria-label="Tìm địa điểm" autocomplete="off"></div>' +
     '<div class="chips" role="group" aria-label="Loại">' + ADD_CATS.map(([v, l]) => '<button type="button" data-add="cat" data-v="' + v + '" aria-pressed="' + (addCtx.cat === v) + '">' + esc(l) + '</button>').join('') + '</div>' +
-    '<label for="addPos" style="margin-top:12px">Thêm vào</label><select id="addPos">' + opts.map(([v, l]) => '<option value="' + v + '"' + (v === addCtx.pos ? ' selected' : '') + '>' + esc(l) + '</option>').join('') + '</select>' +
     '<label class="check"><input type="checkbox" id="addAll"' + (addCtx.all ? ' checked' : '') + '> Hiện cả địa điểm ít phù hợp với nhóm này</label>' +
-    '<div id="addList" class="list">' + addListHtml() + '</div></div>';
+    '<div id="addList" class="list">' + addListHtml() + '</div>' +
+    '<button type="button" class="btn quiet" data-add="mode" data-v="maps" style="margin-top:12px;width:100%">Không thấy địa điểm? Thêm từ Google Maps</button>') + '</div>';
 }
 function openAddPlace(di) {
   detailPlace = null; detailHotel = null; lastFocus = document.activeElement;
-  addCtx = { d: di, pos: plan.days[di].items.length, q: '', cat: 'all', all: false };
+  addCtx = { d: di, pos: plan.days[di].items.length, q: '', cat: 'all', all: false, mode: 'list', cp: { link: '', name: '', type: 'checkin', dur: 60, price: 0 } };
   renderAdd(); sheet.hidden = false; $('sheetClose').focus();
 }
 function addPlace(id) {
@@ -438,14 +444,113 @@ function addPlace(id) {
 $('sheetBody').addEventListener('click', (e) => {
   const b = e.target.closest('[data-add]'); if (!b || !addCtx) return;
   if (b.dataset.add === 'cat') { addCtx.cat = b.dataset.v; renderAdd(); }
+  if (b.dataset.add === 'mode') { addCtx.mode = b.dataset.v; renderAdd(); const f = $(addCtx.mode === 'maps' ? 'cpLink' : 'addQ'); if (f) f.focus(); }
+  if (b.dataset.add === 'custom') addCustomPlace();
   if (b.dataset.add === 'pick') addPlace(b.dataset.id);
 });
-$('sheetBody').addEventListener('input', (e) => { if (e.target.id === 'addQ' && addCtx) { addCtx.q = e.target.value; $('addList').innerHTML = addListHtml(); } });
+$('sheetBody').addEventListener('input', (e) => {
+  if (!addCtx) return;
+  if (e.target.id === 'addQ') { addCtx.q = e.target.value; $('addList').innerHTML = addListHtml(); }
+  const cpKey = { cpLink: 'link', cpName: 'name', cpDur: 'dur', cpPrice: 'price', cpType: 'type' }[e.target.id];
+  if (cpKey) {
+    addCtx.cp[cpKey] = e.target.value;
+    if (cpKey === 'link') {
+      $('cpStatus').innerHTML = cpStatusHtml();
+      const r = parseMapsInput(e.target.value);
+      if (r.ok && r.name && !addCtx.cp.name) { addCtx.cp.name = r.name; $('cpName').value = r.name; }
+    }
+  }
+});
 $('sheetBody').addEventListener('change', (e) => {
   if (!addCtx) return;
-  if (e.target.id === 'addPos') { addCtx.pos = +e.target.value; $('addList').innerHTML = addListHtml(); }
+  if (e.target.id === 'addPos') { addCtx.pos = +e.target.value; if ($('addList')) $('addList').innerHTML = addListHtml(); }
   if (e.target.id === 'addAll') { addCtx.all = e.target.checked; $('addList').innerHTML = addListHtml(); }
+  if (e.target.id === 'cpType') addCtx.cp.type = e.target.value;
 });
+
+
+/* ---------- Kéo thả đổi thứ tự địa điểm trong ngày (chuột, cảm ứng, bàn phím) ---------- */
+function moveItem(di, from, to) {
+  const day = plan.days[di];
+  if (to < 0 || to >= day.items.length || to === from) return false;
+  snap(); dirtyEdits = true; savedOk = false; swapOpen = null;
+  const [it] = day.items.splice(from, 1); day.items.splice(to, 0, it);
+  undoStack[undoStack.length - 1].msg = 'Đã chuyển "' + (it.place ? it.place.name : it.note) + '" lên vị trí ' + (to + 1) + '.';
+  retime(day); render(); return true;
+}
+let drag = null;
+$('out').addEventListener('pointerdown', (e) => {
+  const g = e.target.closest('[data-grip]'); if (!g || e.button > 0) return;
+  const leg = g.closest('.leg'), sec = leg.closest('section.day');
+  e.preventDefault(); g.setPointerCapture(e.pointerId);
+  sec.classList.add('sorting'); leg.classList.add('dragging');
+  drag = { di: +g.dataset.d, from: +g.dataset.i, leg, sec, startY: e.clientY, moved: false };
+});
+$('out').addEventListener('pointermove', (e) => {
+  if (!drag) return;
+  if (Math.abs(e.clientY - drag.startY) > 4) drag.moved = true;
+  const legs = [...drag.sec.querySelectorAll('.leg')].filter((x) => x !== drag.leg);
+  const before = legs.find((x) => { const r = x.getBoundingClientRect(); return e.clientY < r.top + r.height / 2; });
+  const add = drag.sec.querySelector('.addbtn');
+  if (before) { if (before.previousElementSibling !== drag.leg) drag.sec.insertBefore(drag.leg, before); }
+  else if (add && add.previousElementSibling !== drag.leg) drag.sec.insertBefore(drag.leg, add);
+});
+function endDrag(cancel) {
+  if (!drag) return;
+  const d = drag; drag = null;
+  d.sec.classList.remove('sorting'); d.leg.classList.remove('dragging');
+  const to = [...d.sec.querySelectorAll('.leg')].indexOf(d.leg);
+  if (cancel || !d.moved || !moveItem(d.di, d.from, to)) render();
+  else { const g = document.querySelector('[data-grip][data-d="' + d.di + '"][data-i="' + to + '"]'); if (g) g.focus(); toast('Đã đổi thứ tự, giờ giấc tự tính lại'); }
+}
+$('out').addEventListener('pointerup', () => endDrag(false));
+$('out').addEventListener('pointercancel', () => endDrag(true));
+$('out').addEventListener('keydown', (e) => {
+  const g = e.target.closest && e.target.closest('[data-grip]'); if (!g || (e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+  e.preventDefault();
+  const di = +g.dataset.d, i = +g.dataset.i, to = i + (e.key === 'ArrowUp' ? -1 : 1);
+  if (moveItem(di, i, to)) { const n = document.querySelector('[data-grip][data-d="' + di + '"][data-i="' + to + '"]'); if (n) n.focus(); }
+});
+
+/* ---------- Thêm địa điểm bất kỳ từ Google Maps (dán link hoặc toạ độ) ---------- */
+const CUSTOM_TYPES = [['checkin', 'Tham quan, check-in'], ['food', 'Quán ăn'], ['cafe', 'Cà phê, trà sữa']];
+const CP_REASON = {
+  empty: 'Dán link Google Maps hoặc toạ độ, ví dụ 16.0612, 108.2271.',
+  short: 'Link rút gọn (maps.app.goo.gl) không đọc được toạ độ. Mở link đó, rồi chép link đầy đủ trên thanh địa chỉ, hoặc nhấn giữ trên bản đồ để chép toạ độ.',
+  nocoords: 'Chưa thấy toạ độ trong nội dung này. Dán link đầy đủ của địa điểm hoặc toạ độ dạng 16.0612, 108.2271.',
+  range: 'Toạ độ không hợp lệ.',
+};
+function customFormHtml() {
+  const c = addCtx.cp;
+  return '<div class="panel cpform"><p class="hint" style="margin-top:0">Địa điểm không có trong gợi ý? Tìm trên Google Maps, chép link (hoặc nhấn giữ trên bản đồ để lấy toạ độ) rồi dán vào đây.</p>' +
+    '<a class="btn" id="cpOpen" href="' + esc(mapsSearchLink((addCtx.q || '') + ' ' + plan.trip.destination)) + '" target="_blank" rel="noopener">Mở Google Maps để tìm</a>' +
+    '<label for="cpLink">Link Google Maps hoặc toạ độ</label><input id="cpLink" type="text" inputmode="url" autocomplete="off" value="' + esc(c.link) + '" placeholder="https://www.google.com/maps/place/… hoặc 16.0612, 108.2271">' +
+    '<p id="cpStatus" class="hint" aria-live="polite">' + cpStatusHtml() + '</p>' +
+    '<label for="cpName">Tên địa điểm</label><input id="cpName" type="text" autocomplete="off" value="' + esc(c.name) + '" placeholder="Ví dụ: Quán bún mắm cô Vân">' +
+    '<label for="cpType">Loại</label><select id="cpType">' + CUSTOM_TYPES.map(([v, l]) => '<option value="' + v + '"' + (v === c.type ? ' selected' : '') + '>' + esc(l) + '</option>').join('') + '</select>' +
+    '<div class="cprow"><div><label for="cpDur">Ở lại (phút)</label><input id="cpDur" type="number" min="15" max="480" step="15" value="' + c.dur + '"></div>' +
+    '<div><label for="cpPrice">Chi phí mỗi người (đ)</label><input id="cpPrice" type="number" min="0" step="1000" value="' + c.price + '"></div></div>' +
+    '<button type="button" class="go" data-add="custom" style="margin-top:12px">Thêm vào lịch</button></div>';
+}
+function cpStatusHtml() {
+  const r = parseMapsInput(addCtx.cp.link);
+  if (!r.ok) return esc(CP_REASON[r.reason]);
+  const ref = DATA.places.find((p) => !p.custom) || r, km = straightKm(ref, r);
+  return '✓ Đã đọc toạ độ ' + r.lat.toFixed(5) + ', ' + r.lng.toFixed(5) + (km > 80 ? ' · <span style="color:var(--orange)">cách ' + esc(plan.trip.destination) + ' khoảng ' + Math.round(km) + ' km, kiểm tra lại</span>' : '');
+}
+function addCustomPlace() {
+  const c = addCtx.cp, r = parseMapsInput(c.link);
+  if (!r.ok) { $('cpStatus').textContent = CP_REASON[r.reason]; $('cpLink').focus(); return; }
+  const name = (c.name || r.name).trim();
+  if (!name) { toast('Nhập tên địa điểm'); $('cpName').focus(); return; }
+  const isUrl = /^https?:\/\//i.test(c.link.trim());
+  const p = { id: 'u-' + Date.now().toString(36), name, type: c.type, lat: r.lat, lng: r.lng, duration: Math.min(480, Math.max(15, +c.dur || 60)), open: '00:00', close: '23:59',
+    price: Math.max(0, +c.price || 0), walking: 0, slot: 'afternoon', audiences: [], kids: true, elderly: true, status: 'open', freshness: 'fresh', custom: true,
+    scene: c.type === 'food' ? 'food' : c.type === 'cafe' ? 'cafe' : 'mountain', mapsUrl: isUrl ? c.link.trim() : '',
+    highlights: ['Địa điểm bạn tự thêm từ Google Maps. Giờ mở cửa và chi phí là do bạn nhập hoặc chưa rõ, xem lại trên Google Maps.'] };
+  store.customPlaces = [...(store.customPlaces || []), p]; DATA.places.push(p); persist();
+  addPlace(p.id);
+}
 
 /* ---------- Chi tiết khách sạn: loại phòng, ảnh, đánh giá (mẫu hoặc Google Maps) ---------- */
 function renderHotelDetail() {
