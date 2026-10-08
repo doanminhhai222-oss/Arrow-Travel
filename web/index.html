@@ -3,19 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Arrow Travel</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+  <title>Arrow Travel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="detail.css">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="logo-sym" viewBox="0 0 64 64"><defs>
+    <linearGradient id="lg-bg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0A4F4A"/><stop offset=".6" stop-color="#0F766E"/><stop offset="1" stop-color="#2DD4BF"/></linearGradient>
+    <linearGradient id="lg-fold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE3B0"/><stop offset="1" stop-color="#FBBF24"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#lg-bg)"/>
+  <g transform="translate(32 32) scale(1.1) translate(-33.5 -30.5)">
+  <path d="M15 51C15 39 31 43 31.5 32C32 25 37 24 41.5 23.5" fill="none" stroke="#04332F" stroke-opacity=".25" stroke-width="6" stroke-linecap="round" transform="translate(0 1.6)"/>
+  <path d="M15 51C15 39 31 43 31.5 32C32 25 37 24 41.5 23.5" fill="none" stroke="#fff" stroke-width="5.4" stroke-linecap="round"/>
+  <path d="M54 10L33.5 16.5L43.5 24.5Z" fill="#fff"/>
+  <path d="M54 10L43.5 24.5L48.5 33.5Z" fill="url(#lg-fold)"/>
+  <circle cx="15" cy="51" r="4.4" fill="#F59E0B" stroke="#fff" stroke-width="2.6"/>
+  </g>
+</symbol></svg>
 <div id="splash" class="splash" role="dialog" aria-label="Arrow Travel">
   <img class="splash-bg" src="images/splash.jpg" alt="">
   <div class="splash-shade"></div>
   <div class="splash-in">
-    <svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" style="fill:var(--teal)" stroke="#fff" stroke-width="3"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-    <h1>Arrow Travel</h1>
+    <svg class="logo" aria-hidden="true"><use href="#logo-sym"/></svg>
+    <h1>Arrow Travel<span class="vn-mini" data-vnmap></span></h1>
     <p class="slogan">Chuyến đi đúng người, đúng nhịp.</p>
   </div>
   <button type="button" id="splashGo" class="splash-go">Bắt đầu</button>
@@ -26,7 +40,7 @@
   <!-- 1. Khám phá -->
   <section id="scr-home" class="scr home">
     <div class="home-top">
-      <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" style="fill:var(--teal)"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg><b>Arrow Travel</b></div>
+      <div class="brand"><svg aria-hidden="true"><use href="#logo-sym"/></svg><b>Arrow Travel</b><span class="vn-mini" data-vnmap></span></div>
       <button type="button" class="pts" id="homePts" data-page="rewards"></button>
     </div>
 

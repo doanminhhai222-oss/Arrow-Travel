@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512" role="img" aria-label="Arrow Travel">
+  <defs>
+    <linearGradient id="al-bg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0A4F4A"/><stop offset=".6" stop-color="#0F766E"/><stop offset="1" stop-color="#2DD4BF"/></linearGradient>
+    <linearGradient id="al-fold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE3B0"/><stop offset="1" stop-color="#FBBF24"/></linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#al-bg)"/>
+  <g transform="translate(32 32) scale(1.1) translate(-33.5 -30.5)">
+  <path d="M15 51C15 39 31 43 31.5 32C32 25 37 24 41.5 23.5" fill="none" stroke="#04332F" stroke-opacity=".25" stroke-width="6" stroke-linecap="round" transform="translate(0 1.6)"/>
+  <path d="M15 51C15 39 31 43 31.5 32C32 25 37 24 41.5 23.5" fill="none" stroke="#fff" stroke-width="5.4" stroke-linecap="round"/>
+  <path d="M54 10L33.5 16.5L43.5 24.5Z" fill="#fff"/>
+  <path d="M54 10L43.5 24.5L48.5 33.5Z" fill="url(#al-fold)"/>
+  <circle cx="15" cy="51" r="4.4" fill="#F59E0B" stroke="#fff" stroke-width="2.6"/>
+  </g>
+</svg>

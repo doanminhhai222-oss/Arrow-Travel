@@ -171,7 +171,7 @@ export const EN = {
   "Tiền tệ": "Currency",
   "Mặc định khi tạo lịch trình": "Defaults for new trips",
   "Đi cùng": "Traveling with",
-  "Bản tiếng Anh mới dịch phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.": "The English version only covers the main interface. Itineraries, places and policies are still in Vietnamese.",
+  "Bản dịch mới phủ phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.": "Translation only covers the main interface. Itineraries, places and policies are still in Vietnamese.",
   "Tìm khuyến mãi, ví dụ: Bà Nà, Vietjet": "Search deals, e.g. Ba Na, Vietjet",
   "Tìm khuyến mãi": "Search deals",
   "Địa điểm": "Places",

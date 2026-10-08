@@ -10,12 +10,12 @@ import { trackMapSvg } from '../src/trackmap.js';
 import { parseMapsInput, mapsSearchLink } from '../src/gmaps.js';
 import { placeDetailHtml, sceneSvg, TYPE_LABEL } from '../src/detail.js';
 import { money, moneyVnd, vnd, setCurrency, getCurrency, CURRENCIES } from '../src/format.js';
-import { tr, setLang, getLang } from '../src/i18n.js';
-import { EN } from '../src/i18n-en.js';
+import { tr, setLang, getLang, lookup, LANGS } from '../src/i18n.js';
 import { searchPromos, findByCode, applyPromo, isValid, daysLeft } from '../src/promos.js';
 import { EARN, CATALOG, newPoints, award, redeem, voucherCheck } from '../src/loyalty.js';
 import { matchTravelers } from '../src/friends.js';
 import { planReel, TRACKS } from '../src/reel.js';
+import { vnMapSvg } from '../src/vnmap.js';
 import { verifyLicense, proStatus, startTrial, limitsFor } from '../src/pro.js';
 import { optimizeDayOrder, routeKm } from '../src/optimize.js';
 import { loadReelImages, createReelPlayer, exportReel, reelMime } from './reel.js';
@@ -1496,17 +1496,21 @@ document.addEventListener('click', (e) => {
   }
 });
 
+document.querySelectorAll('[data-vnmap]').forEach((el) => { el.innerHTML = vnMapSvg({}); });
+
 /* ---------- Dịch giao diện (tiếng Anh) ---------- */
 // Dịch mọi đoạn chữ khớp nguyên câu trong bản dịch, kể cả nội dung vẽ sau này; câu chưa có bản dịch giữ tiếng Việt.
 const origText = new Map(), origAttr = new Map(), ATTRS = ['placeholder', 'aria-label', 'title'];
 function trNode(n) {
   if (n.nodeType === 3) {
     const v = n.nodeValue, k = v.trim();
-    if (k && EN[k] && EN[k] !== k && getLang() === 'en') { if (!origText.has(n)) origText.set(n, v); n.nodeValue = v.replace(k, EN[k]); }
+    const t = k && getLang() !== 'vi' ? lookup(k) : null;
+    if (t && t !== k) { if (!origText.has(n)) origText.set(n, v); n.nodeValue = v.replace(k, t); }
   } else if (n.nodeType === 1 && !['SCRIPT', 'STYLE', 'TEXTAREA'].includes(n.tagName)) {
     for (const a of ATTRS) {
       const v = n.getAttribute(a);
-      if (v && EN[v] && EN[v] !== v && getLang() === 'en') { if (!origAttr.has(n)) origAttr.set(n, {}); origAttr.get(n)[a] = v; n.setAttribute(a, EN[v]); }
+      const t = v && getLang() !== 'vi' ? lookup(v) : null;
+      if (t && t !== v) { if (!origAttr.has(n)) origAttr.set(n, {}); origAttr.get(n)[a] = v; n.setAttribute(a, t); }
     }
     n.childNodes.forEach(trNode);
   }
@@ -1514,10 +1518,10 @@ function trNode(n) {
 function retranslate() {
   origText.forEach((v, n) => { if (n.isConnected) n.nodeValue = v; }); origText.clear();
   origAttr.forEach((o, el) => { for (const a in o) el.setAttribute(a, o[a]); }); origAttr.clear();
-  if (getLang() === 'en') trNode(document.body);
+  if (getLang() !== 'vi') trNode(document.body);
 }
 new MutationObserver((recs) => {
-  if (getLang() !== 'en') return;
+  if (getLang() === 'vi') return;
   for (const r of recs) { r.addedNodes.forEach(trNode); if (r.type === 'characterData') trNode(r.target); }
 }).observe(document.body, { childList: true, subtree: true, characterData: true });
 
@@ -1598,8 +1602,8 @@ function pageSettings() {
   const st = store.settings, p = store.prefs;
   const o = (v, l, cur) => '<option value="' + v + '"' + (v === cur ? ' selected' : '') + '>' + esc(l) + '</option>';
   return '<div class="panel setting"><b>Giao diện</b>' + seg('theme', Object.entries(THEMES).map(([k, l]) => [k, k === 'pink' && !isPro() ? l + ' · Pro 🔒' : l]), st.theme) + '</div>' +
-    '<div class="panel setting"><b>Ngôn ngữ</b>' + seg('lang', [['vi', 'Tiếng Việt'], ['en', 'English']], st.lang) +
-    '<p class="hint">Bản tiếng Anh mới dịch phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.</p></div>' +
+    '<div class="panel setting"><b>Ngôn ngữ</b>' + seg('lang', Object.entries(LANGS), st.lang) +
+    '<p class="hint">Bản dịch mới phủ phần giao diện chính. Nội dung lịch trình, địa điểm, chính sách vẫn là tiếng Việt.</p></div>' +
     '<div class="panel setting"><b>Tiền tệ hiển thị</b><select id="curSel" aria-label="Tiền tệ">' + Object.entries(CURRENCIES).map(([c, v]) => o(c, v.label, st.currency)).join('') + '</select>' +
     '<p class="hint">Chỉ đổi cách hiển thị theo tỉ giá mẫu (1 USD ≈ ' + moneyVnd(CURRENCIES.USD.rate) + '). Thanh toán luôn bằng VND.</p></div>' +
     '<div class="panel setting"><b>Mặc định khi tạo lịch trình</b><div><label for="prefAud">Đi cùng</label><select id="prefAud">' +
@@ -1682,8 +1686,8 @@ function pageRate() {
 
 /* Giới thiệu */
 function pageAbout() {
-  return '<div class="panel" style="text-align:center"><svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#0F766E"/><path d="M20 44L44 20M44 20H27M44 20V37" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>' +
-    '<h2 style="margin:8px 0 0">' + esc(APP.name) + '</h2><p style="margin:4px 0;color:var(--teal);font-weight:600">' + esc(APP.slogan) + '</p><p class="hint">Phiên bản ' + esc(APP.version) + ' · bản thử nghiệm</p></div>' +
+  return '<div class="panel" style="text-align:center"><svg width="72" height="72" aria-hidden="true"><use href="#logo-sym"/></svg>' +
+    '<h2 style="margin:8px 0 0">' + esc(APP.name) + '</h2><div class="vn-about">' + vnMapSvg({ labels: true }) + '</div><p style="margin:4px 0;color:var(--teal);font-weight:600">' + esc(APP.slogan) + '</p><p class="hint">Phiên bản ' + esc(APP.version) + ' · bản thử nghiệm</p></div>' +
     '<div class="panel"><b>Arrow Travel là gì?</b><p style="margin:6px 0 0">Ứng dụng lên lịch trình du lịch theo người đi cùng. Gia đình có trẻ nhỏ có giờ nghỉ trưa dài và ít đi bộ, cặp đôi có quán yên tĩnh và hoàng hôn, nhóm bạn trẻ có lịch dày và nhiều điểm check-in. Từ lịch trình, bạn tìm chuyến bay, khách sạn, chọn phương tiện và xem tổng chi phí cả chuyến.</p></div>' +
     '<div class="panel menu"><button class="mi" data-page="privacy"><span>Chính sách bảo mật</span><span class="chev">›</span></button><button class="mi" data-page="terms"><span>Điều khoản sử dụng</span><span class="chev">›</span></button><button class="mi" data-page="payguide"><span>Hướng dẫn thanh toán</span><span class="chev">›</span></button></div>' +
     '<p class="foot">Mã nguồn: <a href="' + esc(APP.repoUrl) + '" target="_blank" rel="noopener" style="color:var(--teal)">' + esc(APP.repoUrl.replace('https://', '')) + '</a>. Dữ liệu địa điểm, giá, khuyến mãi, đánh giá đang là dữ liệu mẫu.</p>';
@@ -1697,7 +1701,7 @@ function renderAccount() {
     '<div class="panel me"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/></svg></div><div><b>Khách</b><span>Chưa đăng nhập</span></div></div>' +
     proCardHtml() +
     '<div class="menu-h">Của tôi</div><div class="panel menu">' + mi('rewards', 'Điểm thưởng và voucher', store.points.balance + ' điểm · ' + store.vouchers.filter((v) => !v.used).length + ' voucher') + mi('friends', 'Bạn đồng hành', store.friends.length + ' đã kết nối') + mi('promos', 'Khuyến mãi') + '</div>' +
-    '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', (THEMES[st.theme] || THEMES.light) + ' · ' + (st.lang === 'en' ? 'English' : 'Tiếng Việt') + ' · ' + st.currency) + '</div>' +
+    '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', (THEMES[st.theme] || THEMES.light) + ' · ' + (LANGS[st.lang] || LANGS.vi) + ' · ' + st.currency) + '</div>' +
     '<div class="menu-h">Hỗ trợ</div><div class="panel menu">' + mi('payguide', 'Hướng dẫn thanh toán') + mi('rate', 'Đánh giá Arrow Travel', store.review ? 'Bạn đã đánh giá ' + store.review.stars + ' sao' : '') + mi('about', 'Giới thiệu') + mi('privacy', 'Chính sách bảo mật') + mi('terms', 'Điều khoản sử dụng') + '</div>' +
     '<div class="panel"><b>Dữ liệu của bạn</b><p class="hint" style="margin:6px 0 12px">Bản đầu chưa cần đăng nhập. Lịch trình, ảnh và thông báo chỉ lưu trên thiết bị này, không lưu mật khẩu hay thông tin thanh toán. Đăng nhập để đồng bộ nhiều thiết bị sẽ có ở bản sau.</p>' +
     '<button class="btn danger" type="button" data-clearall>' + (armedClear ? 'Bấm lại để xoá hết' : 'Xoá dữ liệu trên thiết bị này') + '</button></div>' +

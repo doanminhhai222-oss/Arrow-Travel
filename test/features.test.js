@@ -7,6 +7,10 @@ import { matchTravelers } from '../src/friends.js';
 import { money, moneyVnd, setCurrency, vnd } from '../src/format.js';
 import { tr, setLang } from '../src/i18n.js';
 import { EN } from '../src/i18n-en.js';
+import { ZH } from '../src/i18n-zh.js';
+import { JA } from '../src/i18n-ja.js';
+import { KO } from '../src/i18n-ko.js';
+import { lookup } from '../src/i18n.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
 const promos = read('../data/promos.json').promos, travelers = read('../data/travelers.json').travelers, legal = read('../data/legal.json');
@@ -116,4 +120,27 @@ test('mã ưu đãi ArrowPro chỉ dùng được khi là thành viên Pro, áp 
   assert.deepEqual(applyPromo(p, { ...ctx, pro: true }), { ok: true, discount: 200000, reason: '' });
   assert.equal(applyPromo(findByCode(promos, 'PROXE15', '2026-10-10'), { ...ctx, pro: true }).ok, false, 'ưu đãi thuê xe nhận tại chỗ');
   assert.ok(searchPromos(promos, { type: 'flight', today: '2026-10-10' }).some((x) => x.code === 'PROBAY10'));
+});
+
+test('tiếng Trung, Nhật, Hàn: đủ mọi câu như bản tiếng Anh, đúng chữ, không có chỗ trống', () => {
+  const keys = Object.keys(EN);
+  const has = (s, re) => re.test(s);
+  for (const [name, D, script] of [['zh', ZH, /[\u4e00-\u9fff]/], ['ja', JA, /[\u3040-\u30ff\u4e00-\u9fff]/], ['ko', KO, /[\uac00-\ud7af]/]]) {
+    assert.deepEqual(Object.keys(D), keys, name + ' thiếu hoặc thừa khoá so với bản tiếng Anh');
+    for (const k of keys) {
+      const v = D[k];
+      assert.ok(v && v.trim() && v === v.trim(), `${name}: bản dịch trống hoặc thừa khoảng trắng: "${k}"`);
+      if (/[A-Za-zÀ-ỹ]{4,}/.test(k) && !/^(ATM|Check-in)$/.test(k)) assert.ok(has(v, script) || /^[\W\d_]*$/.test(v) || /^[A-Z]{2,5}$/.test(v), `${name}: chưa dịch "${k}" -> "${v}"`);
+      if (v !== k) assert.equal(D[v], undefined, `${name}: bản dịch "${v}" lại là khoá khác`);
+    }
+  }
+});
+
+test('chọn ngôn ngữ: Anh, Trung, Nhật, Hàn; thiếu bản dịch thì dùng tiếng Anh; ngôn ngữ lạ về tiếng Việt', () => {
+  setLang('zh'); assert.equal(tr('Khám phá'), ZH['Khám phá']); assert.equal(lookup('Khám phá'), '探索');
+  setLang('ja'); assert.equal(tr('Khám phá'), '探す');
+  setLang('ko'); assert.equal(tr('Khám phá'), '탐색'); assert.equal(tr('Câu chưa dịch xyz'), 'Câu chưa dịch xyz');
+  setLang('en'); assert.equal(tr('Khám phá'), 'Explore');
+  setLang('xx'); assert.equal(tr('Khám phá'), 'Khám phá'); assert.equal(lookup('Khám phá'), undefined);
+  setLang('vi');
 });

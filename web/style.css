@@ -205,7 +205,7 @@ textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--lin
 .home{gap:20px}
 .home-top{display:flex;align-items:center;justify-content:space-between;padding-top:14px}
 .brand{display:flex;align-items:center;gap:10px;font-size:18px;letter-spacing:-.01em}
-.brand svg{width:32px;height:32px}
+.brand>svg{width:34px;height:34px;flex:none}
 .pts{min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--fg);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .pts::before{content:"★ ";color:var(--orange)}
 .hero2{position:relative;border-radius:28px;overflow:hidden;min-height:300px;display:flex;align-items:flex-end;color:#fff;background:#0b3b37}
@@ -479,3 +479,13 @@ section.day.sorting{user-select:none}
 .att-i img{width:100%;height:100%;object-fit:cover}
 .att a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .file-go{display:flex;align-items:center;justify-content:center;cursor:pointer;margin-top:12px}
+
+/* Logo mới và bản đồ Việt Nam thu nhỏ sau tiêu đề */
+.vn-mini{display:inline-flex;align-items:center;margin-left:8px;color:var(--teal);vertical-align:middle}
+.vn-mini svg{height:26px;width:auto;display:block}
+.splash-in h1 .vn-mini{color:#fff;margin-left:12px}.splash-in h1 .vn-mini svg{height:44px}
+.vn-about{margin:6px auto 0;width:min(100%,200px);color:var(--teal)}.vn-about svg{display:block;width:100%;height:auto}
+.brand b{white-space:nowrap}
+.brand .vn-mini{margin-left:6px}.brand .vn-mini svg{height:24px}
+.pts{white-space:nowrap}
+@media (max-width:360px){.brand .vn-mini{display:none}}
