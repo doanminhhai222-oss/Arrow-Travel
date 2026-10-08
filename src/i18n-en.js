@@ -337,5 +337,18 @@ export const EN = {
   "Chi phí mỗi người (đ)": "Cost per person (VND)",
   "Thêm vào lịch": "Add to plan",
   "Không thấy địa điểm? Thêm từ Google Maps": "Can't find it? Add from Google Maps",
-  "Đã đổi thứ tự, giờ giấc tự tính lại": "Order changed, times recalculated"
+  "Đã đổi thứ tự, giờ giấc tự tính lại": "Order changed, times recalculated",
+  "Video kỷ niệm": "Memory video",
+  "▶ Tạo video kỷ niệm có nhạc": "▶ Make a memory video with music",
+  "Đăng ít nhất một ảnh để tạo video.": "Post at least one photo to make a video.",
+  "Nhạc nền": "Background music",
+  "Nhẹ nhàng": "Gentle",
+  "Sôi động": "Upbeat",
+  "Hoài niệm": "Nostalgic",
+  "Chọn nhạc từ máy": "Pick music from device",
+  "Không nhạc": "No music",
+  "Mỗi ảnh hiện": "Each photo shows for",
+  "Video đã sẵn sàng": "Your video is ready",
+  "Chia sẻ": "Share",
+  "Đã tạo video kỷ niệm": "Memory video created"
 };

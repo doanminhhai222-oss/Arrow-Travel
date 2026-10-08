@@ -15,6 +15,8 @@ import { EN } from '../src/i18n-en.js';
 import { searchPromos, findByCode, applyPromo, isValid, daysLeft } from '../src/promos.js';
 import { EARN, CATALOG, newPoints, award, redeem, voucherCheck } from '../src/loyalty.js';
 import { matchTravelers } from '../src/friends.js';
+import { planReel, TRACKS } from '../src/reel.js';
+import { loadReelImages, createReelPlayer, exportReel, reelMime } from './reel.js';
 import { addPhoto, listPhotos, listPhotosByPrefix, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
 
 // <DATA>
@@ -68,7 +70,7 @@ const TAB_OF = { create: 'home', notifs: '' }; // thông báo mở bằng chuôn
 let notifFrom = 'home'; // màn tạo lịch trình không có tab riêng, tô sáng tab Khám phá
 function go(name) {
   if (name === 'notifs' && currentScreen !== 'notifs') notifFrom = currentScreen === 'page' ? pageFrom : currentScreen;
-  armedTrip = null; armedClear = false; currentScreen = name; pageName = null; $('scr-page').hidden = true;
+  stopReel(); armedTrip = null; armedClear = false; currentScreen = name; pageName = null; $('scr-page').hidden = true;
   SCREENS.forEach((s) => { $('scr-' + s).hidden = s !== name; });
   document.querySelectorAll('.tab').forEach((t) => { if (t.dataset.go === (TAB_OF[name] || name)) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current'); });
   if (name === 'home') renderHome();
@@ -920,7 +922,8 @@ function momStats(info, key) {
 function momStatsHtml(info, key) {
   const st = momStats(info, key);
   return '<div><b>' + st.photos + ' ảnh · ' + st.touched + '/' + st.places + ' nơi có khoảnh khắc</b>' + (momPending(key) ? '<span class="pending">Có ' + momPending(key) + ' khoảnh khắc chưa đăng, mở thẻ và bấm Đăng</span>' : '') + '<span>' + (st.rated ? 'Điểm trung bình ' + st.avg.toFixed(1) + ' ★ trên ' + st.rated + ' nơi' : 'Chưa chấm sao nơi nào') + '</span></div>' +
-    '<button type="button" class="go" data-album' + (st.touched ? '' : ' disabled') + '>Xem album kỷ niệm</button>';
+    '<button type="button" class="go" data-album' + (st.touched ? '' : ' disabled') + '>Xem album kỷ niệm</button>' +
+    '<button type="button" class="btn reel-btn" data-reel' + (st.photos ? '' : ' disabled') + '>▶ Tạo video kỷ niệm có nhạc</button>' + (st.photos ? '' : '<span class="hint">Đăng ít nhất một ảnh để tạo video.</span>');
 }
 
 // Bản nháp theo từng địa điểm: ảnh, sao, nhận xét chỉ được lưu khi bấm "Đăng khoảnh khắc"
@@ -995,7 +998,7 @@ async function postMoment(pid) {
   dropDraft(momTrip, pid); momOpen.add(pid); toast('Đã đăng khoảnh khắc'); renderMomBody();
 }
 $('momBody').addEventListener('click', (e) => {
-  const t = e.target.closest('[data-momtrip],[data-momstar],[data-momadd],[data-momdel],[data-mompost],[data-momcancel],[data-momunstage],[data-album]'); if (!t) return;
+  const t = e.target.closest('[data-momtrip],[data-momstar],[data-momadd],[data-momdel],[data-mompost],[data-momcancel],[data-momunstage],[data-album],[data-reel]'); if (!t) return;
   if (t.dataset.momtrip) { momTrip = t.dataset.momtrip; momChosen = true; renderMomBody(); return; }
   if (t.dataset.momstar) {
     const pid = t.closest('[data-momstars]').dataset.momstars, v = +t.dataset.momstar, cur = momEff(momTrip, pid).rating;
@@ -1007,6 +1010,7 @@ $('momBody').addEventListener('click', (e) => {
   if (t.dataset.momcancel) { dropDraft(momTrip, t.dataset.momcancel); renderMomBody(); return; }
   if (t.dataset.momunstage !== undefined) { const dr = getDraft(momTrip, t.dataset.p); const [f] = dr.files.splice(+t.dataset.momunstage, 1); if (f) URL.revokeObjectURL(f.url); renderMomBody(); return; }
   if (t.hasAttribute('data-album')) openPage('album');
+  if (t.hasAttribute('data-reel')) openPage('reel');
 });
 $('momBody').addEventListener('change', async (e) => {
   if (e.target.id !== 'momFile') return;
@@ -1054,6 +1058,110 @@ async function fillAlbum() {
   box.innerHTML = h + '<p class="hint" style="text-align:center">Album lưu trên thiết bị này. Chia sẻ album cho người khác cần máy chủ, sẽ có ở bản sau.</p></div>';
 }
 function pageAlbum() { return '<div id="albumBody"><p class="hint">Đang tạo album…</p></div>'; }
+
+
+/* ---------- Video kỷ niệm: ảnh đã đăng + nhạc nền, tạo ngay trên máy ---------- */
+var reel = null; // var: go() gọi stopReel() trước khi tới dòng này lúc khởi động. { plan, imgs, urls, music, userBuf, userName, perPhoto, player, outUrl, busy }
+function stopReel() {
+  if (!reel) return;
+  if (reel.player) reel.player.destroy();
+  reel.urls.forEach((u) => URL.revokeObjectURL(u)); if (reel.outUrl) URL.revokeObjectURL(reel.outUrl);
+  reel = null;
+}
+const fmtSec = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+function pageReel() { return '<div id="reelBody"><p class="hint">Đang chuẩn bị video…</p></div>'; }
+async function fillReel() {
+  const box = $('reelBody'); if (!box) return;
+  let photos = [];
+  try { photos = await listPhotosByPrefix(momTrip + ':'); } catch (e) { box.innerHTML = '<div class="warn">' + esc(e.message) + '</div>'; return; }
+  const urls = [], by = {};
+  photos.forEach((p) => { const pid = p.key.slice(momTrip.length + 1), u = URL.createObjectURL(p.blob); urls.push(u); (by[pid] = by[pid] || []).push(u); });
+  const info = momInfo(momTrip);
+  const entries = info.groups.map((g) => ({ label: g.label, items: g.places.map((p) => ({ p, d: momData(momTrip, p.id), urls: by[p.id] || [] })).filter((x) => x.urls.length) })).filter((g) => g.items.length);
+  if (!entries.length) { urls.forEach((u) => URL.revokeObjectURL(u)); box.innerHTML = '<div class="panel empty"><b>Chưa có ảnh nào</b>Đăng ảnh cho các địa điểm trong Khoảnh khắc để tạo video.</div>'; return; }
+  const imgList = await loadReelImages(urls), imgs = new Map();
+  urls.forEach((u, i) => { if (imgList[i]) imgs.set(u, imgList[i]); });
+  if ($('reelBody') !== box) { urls.forEach((u) => URL.revokeObjectURL(u)); return; } // đã rời trang trong lúc tải ảnh
+  reel = { entries, info, imgs, urls, music: 'nhe_nhang', userBuf: null, userName: '', perPhoto: 3, outUrl: null, busy: false };
+  reel.plan = planReel(entries, info, { perPhoto: reel.perPhoto });
+  box.innerHTML = reelHtml();
+  reel.player = createReelPlayer($('reelCv'), () => ({ plan: reel.plan, imgs: reel.imgs, music: reel.music === 'file' ? reel.userBuf : reel.music === 'none' ? null : reel.music, accent: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0F766E' }), (t) => {
+    const el = $('reelT'); if (el) el.textContent = fmtSec(t) + ' / ' + fmtSec(reel.plan.duration);
+    const b = $('reelPlay'); if (b) { const on = !!(reel.player && reel.player.isPlaying()); b.classList.toggle('on', on); b.setAttribute('aria-label', on ? 'Tạm dừng' : 'Phát xem trước'); }
+  });
+  reel.player.redraw();
+}
+function reelHtml() {
+  const musics = [...Object.entries(TRACKS).map(([k, v]) => [k, v.label]), ['file', reel.userName ? 'Của bạn: ' + reel.userName : 'Chọn nhạc từ máy'], ['none', 'Không nhạc']];
+  return '<div class="reel">' +
+    '<div class="reel-stage"><canvas id="reelCv" width="720" height="1280" aria-label="Xem trước video kỷ niệm"></canvas><button type="button" id="reelPlay" class="reel-play" data-reelact="play" aria-label="Phát xem trước"><span aria-hidden="true">▶</span></button></div>' +
+    '<p class="reel-time"><span id="reelT">0:00 / ' + fmtSec(reel.plan.duration) + '</span> · ' + reel.plan.photos + ' ảnh</p>' +
+    '<h3>Nhạc nền</h3><div class="seg" role="group" aria-label="Nhạc nền">' + musics.map(([k, l]) => '<button type="button" data-reelmusic="' + k + '" aria-pressed="' + (reel.music === k) + '">' + esc(l) + '</button>').join('') + '</div>' +
+    '<input type="file" id="reelFile" accept="audio/*" hidden>' +
+    '<p class="hint">Nhạc có sẵn do app tự soạn, dùng thoải mái. Nhạc của bạn chỉ nằm trên máy này; khi đăng video lên mạng, hãy chắc là bạn có quyền dùng bài đó.</p>' +
+    '<h3>Mỗi ảnh hiện</h3><div class="seg" role="group" aria-label="Thời gian mỗi ảnh">' + [2, 3, 4].map((n) => '<button type="button" data-reelsec="' + n + '" aria-pressed="' + (reel.perPhoto === n) + '">' + n + ' giây</button>').join('') + '</div>' +
+    '<button type="button" class="go" id="reelMake" data-reelact="make" style="margin-top:16px"' + (reel.busy ? ' disabled' : '') + '>Tạo video (' + fmtSec(reel.plan.duration) + ')</button>' +
+    '<div id="reelProg" class="reel-prog" hidden><div class="bar"><i style="width:0%"></i></div><span>Đang ghi video, giữ màn hình mở…</span></div>' +
+    '<div id="reelOut"></div>' +
+    '<p class="hint">Video dọc 9:16, tạo ngay trên máy theo thời gian thực (video 30 giây thì mất khoảng 30 giây), không tải ảnh lên đâu cả.' + (reelMime() ? '' : ' Trình duyệt này chưa hỗ trợ tạo video, bạn vẫn xem trước được.') + '</p></div>';
+}
+$('pageBody').addEventListener('click', async (e) => {
+  if (pageName !== 'reel' || !reel) return;
+  const b = e.target.closest('[data-reelact],[data-reelmusic],[data-reelsec]'); if (!b || b.disabled) return;
+  if (b.dataset.reelmusic) {
+    if (b.dataset.reelmusic === 'file') { $('reelFile').click(); return; }
+    reel.music = b.dataset.reelmusic; reel.player.pause();
+    document.querySelectorAll('[data-reelmusic]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    return;
+  }
+  if (b.dataset.reelsec) { reel.perPhoto = +b.dataset.reelsec; reel.player.reset(); reel.plan = planReel(reel.entries, reel.info, { perPhoto: reel.perPhoto }); refreshReelUi(); return; }
+  if (b.dataset.reelact === 'play') { if (reel.player.isPlaying()) reel.player.pause(); else reel.player.play(); return; }
+  if (b.dataset.reelact === 'make') makeReel();
+});
+function refreshReelUi() {
+  document.querySelectorAll('[data-reelsec]').forEach((x) => x.setAttribute('aria-pressed', String(+x.dataset.reelsec === reel.perPhoto)));
+  $('reelMake').textContent = 'Tạo video (' + fmtSec(reel.plan.duration) + ')';
+  $('reelT').textContent = '0:00 / ' + fmtSec(reel.plan.duration); reel.player.redraw();
+}
+$('pageBody').addEventListener('change', async (e) => {
+  if (e.target.id !== 'reelFile' || !reel) return;
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const ac = new (window.AudioContext || window.webkitAudioContext)();
+    reel.userBuf = await ac.decodeAudioData(await f.arrayBuffer()); ac.close().catch(() => {});
+    reel.userName = f.name.replace(/\.[^.]+$/, '').slice(0, 24); reel.music = 'file'; reel.player.pause();
+    const b = document.querySelector('[data-reelmusic="file"]'); if (b) b.textContent = 'Của bạn: ' + reel.userName;
+    document.querySelectorAll('[data-reelmusic]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.reelmusic === 'file')));
+    toast('Đã chọn nhạc: ' + reel.userName);
+  } catch (err) { toast('Không đọc được file nhạc này'); }
+  e.target.value = '';
+});
+async function makeReel() {
+  const r = reel; if (!r || r.busy) return;
+  r.busy = true; r.player.pause(); $('reelMake').disabled = true;
+  const prog = $('reelProg'), bar = prog.querySelector('i'); prog.hidden = false; $('reelOut').innerHTML = '';
+  try {
+    const blob = await exportReel({ plan: r.plan, imgs: r.imgs, music: r.music === 'file' ? r.userBuf : r.music === 'none' ? null : r.music, accent: getComputedStyle(document.documentElement).getPropertyValue('--teal').trim() || '#0F766E' }, (p) => { bar.style.width = Math.round(p * 100) + '%'; });
+    if (reel !== r) return; // đã rời trang
+    if (r.outUrl) URL.revokeObjectURL(r.outUrl);
+    r.outUrl = URL.createObjectURL(blob);
+    const ext = blob.type.includes('mp4') ? 'mp4' : 'webm', name = 'arrow-travel-' + (r.info.title || 'ky-niem').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[đĐ]/g, 'd').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() + '.' + ext;
+    r.file = new File([blob], name, { type: blob.type });
+    $('reelOut').innerHTML = '<div class="panel reel-done"><b>Video đã sẵn sàng</b><video src="' + r.outUrl + '" controls playsinline></video>' +
+      '<a class="go" href="' + r.outUrl + '" download="' + esc(name) + '">Tải video (' + (blob.size / 1048576).toFixed(1) + ' MB, .' + ext + ')</a>' +
+      (navigator.canShare && navigator.canShare({ files: [r.file] }) ? '<button type="button" class="btn" data-reelact="share" style="width:100%;margin-top:8px">Chia sẻ</button>' : '') +
+      (ext === 'webm' ? '<p class="hint">File .webm xem được trên Chrome, Android, YouTube. Một số app trên iPhone cần đổi sang .mp4 trước khi đăng.</p>' : '') + '</div>';
+    toast('Đã tạo video kỷ niệm');
+  } catch (err) {
+    if (reel === r) $('reelOut').innerHTML = '<div class="warn">' + esc(err.message || 'Không tạo được video') + '</div>';
+  } finally {
+    if (reel === r) { r.busy = false; prog.hidden = true; $('reelMake').disabled = false; }
+  }
+}
+$('pageBody').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-reelact="share"]'); if (!b || !reel || !reel.file) return;
+  navigator.share({ files: [reel.file], title: reel.info.title || 'Video kỷ niệm' }).catch(() => {});
+});
 
 /* ---------- Lịch trình nổi bật từ cộng đồng (mẫu) ---------- */
 const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: 'Đà Nẵng', startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
@@ -1301,6 +1409,7 @@ const legalPage = (key) => () => {
 };
 const PAGES = {
   album: { title: 'Album kỷ niệm', render: () => pageAlbum() },
+  reel: { title: 'Video kỷ niệm', render: () => pageReel() },
   settings: { title: 'Cài đặt', render: () => pageSettings() },
   promos: { title: 'Khuyến mãi', render: () => pagePromos() },
   rewards: { title: 'Điểm thưởng và voucher', render: () => pageRewards() },
@@ -1311,7 +1420,7 @@ const PAGES = {
   terms: { title: LEGAL.terms.title, render: legalPage('terms') },
   payguide: { title: LEGAL.payguide.title, render: legalPage('payguide') },
 };
-function renderPage() { $('pageBody').innerHTML = PAGES[pageName].render(); if (pageName === 'album') fillAlbum(); }
+function renderPage() { stopReel(); $('pageBody').innerHTML = PAGES[pageName].render(); if (pageName === 'album') fillAlbum(); if (pageName === 'reel') fillReel(); }
 function openPage(name) {
   if (!PAGES[name]) return;
   if (currentScreen !== 'page') pageFrom = currentScreen;
