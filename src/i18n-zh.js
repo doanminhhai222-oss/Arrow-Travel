@@ -385,5 +385,14 @@ export const ZH = {
   "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "芽庄的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
   "Đà Lạt": "大叻",
   "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "大叻的一天，四种节奏",
-  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "大叻的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "大叻的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
+  "Huế": "顺化",
+  "Một ngày ở Huế, bốn nhịp khác nhau": "顺化的一天，四种节奏",
+  "Địa điểm Huế là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "顺化的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
+  "Sa Pa": "沙巴",
+  "Một ngày ở Sa Pa, bốn nhịp khác nhau": "沙巴的一天，四种节奏",
+  "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "沙巴的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
+  "Ninh Bình": "宁平",
+  "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "宁平的一天，四种节奏",
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "宁平的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
 };

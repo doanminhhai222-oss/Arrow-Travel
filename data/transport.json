@@ -140,6 +140,21 @@
       "name": "Sân bay Liên Khương",
       "lat": 11.7504,
       "lng": 108.3672
+    },
+    "Huế": {
+      "name": "Sân bay quốc tế Phú Bài",
+      "lat": 16.4015,
+      "lng": 107.7026
+    },
+    "Sa Pa": {
+      "name": "Sân bay Nội Bài (Hà Nội)",
+      "lat": 21.2212,
+      "lng": 105.8072
+    },
+    "Ninh Bình": {
+      "name": "Sân bay Nội Bài (Hà Nội)",
+      "lat": 21.2212,
+      "lng": 105.8072
     }
   }
 }

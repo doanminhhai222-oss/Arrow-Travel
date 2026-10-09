@@ -385,5 +385,14 @@ export const JA = {
   "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ニャチャンのスポットは実在しますが、座標と価格は目安で、ホテルはサンプルデータです。",
   "Đà Lạt": "ダラット",
   "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "ダラットの一日、四つのペース",
-  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ダラットのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。"
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ダラットのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。",
+  "Huế": "フエ",
+  "Một ngày ở Huế, bốn nhịp khác nhau": "フエの一日、四つのペース",
+  "Địa điểm Huế là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "フエのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。",
+  "Sa Pa": "サパ",
+  "Một ngày ở Sa Pa, bốn nhịp khác nhau": "サパの一日、四つのペース",
+  "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "サパのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。",
+  "Ninh Bình": "ニンビン",
+  "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "ニンビンの一日、四つのペース",
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ニンビンのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。"
 };

@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""Thêm điểm đến Ninh Bình: Tràng An, Tam Cốc, Bái Đính, cố đô Hoa Lư, Hang Múa, Vân Long, ẩm thực dê núi, cơm cháy.
+Địa điểm là nơi có thật nhưng toạ độ, giá, giờ mở cửa là ƯỚC LƯỢNG (cờ "approx"), khách sạn là dữ liệu MẪU. Chạy lại được, không trùng.
+Chạy: python3 scripts/add-ninhbinh.py"""
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+from _dest import make_place, run, ALL
+CITY = "Ninh Bình"
+place = make_place(CITY)
+H = lambda *a: list(a)
+NEW = [
+ place("trang-an", "Khu danh thắng Tràng An (đi thuyền)", "park", "morning", 20.2540, 105.9040, 180, 250000, "07:00", "16:00", "boat",
+   H("Đi thuyền chèo tay qua các hang động xuyên núi, giá khoảng 250.000 đ/người (ước lượng), kiểm tra lại", "Đi sáng sớm cho đỡ đông và mát", "Mang áo mưa hoặc nón khi trời mưa, trẻ nhỏ mặc áo phao"),
+   "Quần thể danh thắng được UNESCO công nhận là Di sản thế giới hỗn hợp, với những dãy núi đá vôi, sông, hang động xuyên núi, thuyền đi qua nhiều hang dài và đền, chùa cổ.",
+   "Xã Trường Yên, Hoa Lư", 1),
+ place("tam-coc", "Tam Cốc (đi thuyền)", "park", "morning", 20.2150, 105.9390, 150, 280000, "06:30", "16:30", "boat",
+   H("Đi thuyền dọc sông Ngô Đồng qua ba hang Cả, Hai, Ba, giá khoảng 150.000 đ thuyền + 120.000 đ vé (ước lượng)", "Mùa lúa chín (tháng 5–6) đẹp nhất", "Người chèo thuyền dùng chân là nét đặc biệt"),
+   "Tam Cốc nghĩa là ba hang, khu du lịch nổi tiếng với dòng sông Ngô Đồng uốn quanh cánh đồng lúa và núi đá, được mệnh danh là Hạ Long trên cạn.",
+   "Xã Ninh Hải, Hoa Lư", 1),
+ place("hang-mua", "Hang Múa (leo 500 bậc)", "checkin", "afternoon", 20.2200, 105.9400, 90, 100000, "06:00", "18:00", "mountain",
+   H("Leo khoảng 500 bậc đá lên đỉnh, ngắm toàn cảnh Tam Cốc và con rồng đá", "Giá vé khoảng 100.000 đ (ước lượng), kiểm tra lại", "Đi chiều muộn để ngắm hoàng hôn, mang nước và giày bám tốt"),
+   "Đỉnh núi nhìn xuống Tam Cốc với con rồng đá nổi tiếng, nơi nhiều du khách thích chụp ảnh và ngắm hoàng hôn trên cánh đồng lúa.",
+   "Xã Ninh Xuân, Hoa Lư", 3, elderly=False),
+ place("chua-bai-dinh", "Chùa Bái Đính", "culture", "morning", 20.2750, 105.8650, 150, 0, "07:00", "18:00", "temple",
+   H("Quần thể chùa lớn nhất Đông Nam Á, nhiều tượng Phật bằng đồng và hành lang La Hán", "Có xe điện đưa đón trong khuôn viên, giá vài chục nghìn", "Vào cổng miễn phí, ăn mặc kín đáo"),
+   "Quần thể chùa rộng hàng trăm hecta với tượng Phật bằng đồng nặng hàng trăm tấn, hành lang chứa hàng trăm tượng La Hán và tháp chuông cao, là điểm tâm linh nổi bật của miền Bắc.",
+   "Xã Gia Sinh, Gia Viễn", 3),
+ place("co-do-hoa-lu", "Cố đô Hoa Lư (đền vua Đinh, vua Lê)", "culture", "afternoon", 20.2870, 105.9020, 75, 20000, "07:30", "17:00", "temple",
+   H("Đền thờ vua Đinh Tiên Hoàng và vua Lê Đại Hành, giá vé khoảng 20.000 đ (ước lượng)", "Ăn mặc kín đáo, giữ yên lặng", "Gần Tràng An, đi kết hợp"),
+   "Kinh đô đầu tiên của nhà nước Đại Cồ Việt (968–1010) với đền vua Đinh, vua Lê, núi đá và hồ, là di tích lịch sử nổi tiếng của Ninh Bình.",
+   "Xã Trường Yên, Hoa Lư", 1),
+ place("khu-du-lich-van-long", "Khu bảo tồn đất ngập nước Vân Long", "park", "morning", 20.3600, 105.8300, 120, 150000, "07:30", "16:30", "boat",
+   H("Đi thuyền ngắm voọc mông trắng và chim, giá vé khoảng 150.000 đ (ước lượng)", "Yên tĩnh, ít đông hơn Tràng An", "Mang ống nhòm nếu thích ngắm chim"),
+   "Khu bảo tồn đất ngập nước lớn nhất đồng bằng sông Hồng, với đầm nước, núi đá và nhiều loài chim, nổi tiếng với voọc mông trắng quý hiếm.",
+   "Xã Gia Vân, Gia Viễn", 1),
+ place("chua-bich-dong", "Chùa Bích Động", "culture", "afternoon", 20.2260, 105.9200, 60, 0, "06:00", "17:30", "temple",
+   H("Ngôi chùa xây vào vách núi, nhiều bậc thang tới chùa Thượng", "Vào cổng miễn phí, có thể phải đi bộ khoảng 300 m", "Đi sau Tam Cốc, trên đường quay về"),
+   "Chùa nằm trên vách núi đá, kiến trúc ba cấp hạ, trung, thượng, được vua Lê Thánh Tông ca ngợi là Nam thiên đệ nhị động.",
+   "Xã Ninh Hải, Hoa Lư", 2),
+ place("thung-nham", "Thung Nham (vườn chim)", "park", "afternoon", 20.3300, 105.8600, 120, 120000, "07:00", "17:00", "boat",
+   H("Vườn chim, hang Bụt, thuyền trên sông, có thể kết hợp bữa trưa", "Giá vé là ước lượng, kiểm tra lại", "Hợp đi nhóm bạn hoặc gia đình"),
+   "Khu du lịch sinh thái với vườn chim, hang động, ao hồ và đường thuyền yên tĩnh, cách trung tâm khoảng 15 km.",
+   "Xã Ninh Hoà, Hoa Lư", 1),
+ place("pho-dem-ninh-binh", "Phố trung tâm Ninh Bình về đêm", "checkin", "evening", 20.2530, 105.9750, 60, 0, "17:00", "23:00", "market",
+   H("Dạo phố, ăn vặt, mua đồ lưu niệm, vị trí chưa xác minh", "Phố nhỏ, đi nhanh trong một buổi tối", "Cuối tuần đông hơn"),
+   "Khu phố nhỏ ở trung tâm thành phố với quán ăn vặt, cà phê và các gian hàng đồ lưu niệm, nơi nghỉ chân sau ngày đi thuyền.",
+   "Khu trung tâm thành phố Ninh Bình", 1),
+ place("de-nui-ninh-binh", "Dê núi Ninh Bình", "food", "midday", 20.2600, 105.9600, 75, 200000, "10:00", "21:30", "food",
+   H("Dê núi tái chanh, dê nướng, dê xào lăn, lẩu dê", "Nên đi nhóm 3 đến 4 người", "Địa chỉ chưa xác minh, tra trên Google Maps"),
+   "Dê núi là đặc sản nổi tiếng của Ninh Bình, nuôi trên núi đá vôi, thịt thơm, ít mỡ, chế biến thành nhiều món như tái chanh, nướng, hấp.",
+   "Khu trung tâm (chưa xác minh số nhà)", 0, meal="lunch", desc="Quán dê núi quen thuộc.", dishes=["Dê tái chanh", "Dê xào lăn", "Lẩu dê"], kids=False),
+ place("com-chay-ninh-binh", "Cơm cháy Ninh Bình", "checkin", "afternoon", 20.2550, 105.9700, 40, 60000, "08:00", "20:00", "food",
+   H("Cơm cháy giòn rụm, ăn kèm chà bông hoặc sốt thịt", "Mua làm quà, có thể ăn thử trước", "Địa chỉ chưa xác minh, tra trên Google Maps"),
+   "Cơm cháy là đặc sản nổi tiếng nhất của Ninh Bình, cơm nén rồi rán giòn, ăn với chà bông hoặc thịt dê, thường mua làm quà.",
+   "Khu trung tâm (chưa xác minh số nhà)", 0, desc="Cửa hàng cơm cháy.", dishes=["Cơm cháy chà bông", "Cơm cháy sốt", "Mắm tép"]),
+ place("mien-luon-ninh-binh", "Miến lươn và ốc núi", "food", "midday", 20.2560, 105.9680, 45, 70000, "07:00", "20:00", "food",
+   H("Miến lươn giòn, ốc núi chấm mắm gừng", "Có thể gọi cả hai món chia sẻ", "Địa chỉ chưa xác minh, tra trên Google Maps"),
+   "Miến lươn, ốc núi và các món đồng quê là bữa ăn quen thuộc của người Ninh Bình, nấu đậm đà, ăn kèm rau thơm.",
+   "Khu trung tâm (chưa xác minh số nhà)", 0, meal="lunch", desc="Quán miến lươn.", dishes=["Miến lươn", "Ốc núi", "Cá rô đồng"]),
+ place("com-chieu-ninh-binh", "Bữa tối đồng quê (gà, cá, rau vườn)", "food", "evening", 20.2570, 105.9700, 90, 200000, "17:00", "21:30", "food",
+   H("Nhà hàng vườn với gà ta, cá nướng, rau sạch từ vườn", "Quán mẫu, chưa phải quán thật"),
+   "Bữa tối kiểu đồng quê với nguyên liệu địa phương thường là ký ức đáng nhớ nhất của chuyến đi Ninh Bình.",
+   "Khu trung tâm (quán mẫu)", 0, meal="dinner", desc="Quán đặc sản đồng quê.", dishes=["Gà ta", "Cá nướng", "Rau vườn"], aud=["nhom_ban", "gia_dinh", "cap_doi", "mot_minh"]),
+ place("cf-dong-que-ninh-binh", "Quán cà phê nhìn núi đá vôi (mẫu)", "cafe", "afternoon", 20.2400, 105.9500, 75, 55000, "07:00", "21:30", "cafe",
+   H("Ngồi sân vườn nhìn núi đá, thích hợp nghỉ sau tour thuyền", "Quán mẫu, chưa phải quán thật"),
+   "Nhiều quán cà phê ở Ninh Bình tận dụng cảnh núi đá vôi và đồng lúa để khách ngồi nghỉ ngắm cảnh.",
+   "Ngoại ô thành phố (quán mẫu)", 0, desc="Quán cà phê ngắm núi đá.", dishes=["Cà phê", "Trà đá", "Nước dừa"]),
+ place("cf-pho-ninh-binh", "Quán trà và cà phê phố cổ (mẫu)", "cafe", "morning", 20.2530, 105.9750, 60, 50000, "07:00", "21:00", "cafe",
+   H("Quán nhỏ gần chợ, uống trà, ăn bánh", "Quán mẫu, chưa phải quán thật"),
+   "Quán trà và cà phê nhỏ ở trung tâm là nơi nghỉ chân quen thuộc của người địa phương và du khách.",
+   "Khu trung tâm (quán mẫu)", 0, desc="Quán trà cà phê nhỏ.", dishes=["Trà", "Cà phê", "Bánh"]),
+]
+HOTELS = [
+ ("nb-hostel", "hostel-bien", "Hostel gần ga Ninh Bình (mẫu)", "Trung tâm", 180000, 20.2530, 105.9750, "Hostel nhỏ gần ga, có thuê xe đạp, phù hợp đi tiết kiệm.", ["Wifi", "Bếp chung"]),
+ ("nb-homestay", "homestay", "Homestay nhìn núi Tam Cốc (mẫu)", "Tam Cốc", 350000, 20.2200, 105.9400, "Homestay giữa cánh đồng, ban công nhìn núi đá vôi.", ["Wifi", "Ăn sáng"]),
+ ("nb-3sao", "3sao-tt", "Khách sạn 3 sao trung tâm (mẫu)", "Trung tâm", 600000, 20.2540, 105.9760, "Khách sạn 3 sao trung tâm thành phố, cách Tràng An khoảng 8 km.", ["Wifi", "Ăn sáng"]),
+ ("nb-3sao-trang-an", "3sao-bien", "Khách sạn 3 sao gần Tràng An (mẫu)", "Tràng An", 750000, 20.2560, 105.9100, "Khách sạn 3 sao gần bến thuyền Tràng An.", ["Wifi", "Ăn sáng", "Hồ bơi"]),
+ ("nb-4sao", "4sao-tt", "Khách sạn 4 sao trung tâm (mẫu)", "Trung tâm", 1200000, 20.2500, 105.9720, "Khách sạn 4 sao có hồ bơi và nhà hàng.", ["Wifi", "Ăn sáng", "Hồ bơi"]),
+ ("nb-4sao-tam-coc", "4sao-bien", "Khách sạn 4 sao Tam Cốc (mẫu)", "Tam Cốc", 1500000, 20.2180, 105.9380, "Khách sạn 4 sao giữa vùng núi đá vôi, gần bến thuyền Tam Cốc.", ["Wifi", "Ăn sáng", "Hồ bơi", "Spa"]),
+ ("nb-resort", "resort-nhs", "Resort 5 sao giữa đồng lúa (mẫu)", "Tam Cốc", 3000000, 20.2250, 105.9450, "Resort 5 sao kiểu bungalow giữa đồng lúa, có spa và hồ bơi lớn.", ["Wifi", "Ăn sáng", "Hồ bơi", "Spa"]),
+ ("nb-villa", "villa", "Villa vườn nhìn núi đá (mẫu)", "Tràng An", 3200000, 20.2580, 105.9080, "Villa riêng có sân vườn nhìn núi đá vôi, hợp nhóm bạn hoặc gia đình đông người.", ["Wifi", "Ăn sáng", "Hồ bơi riêng", "Bếp"]),
+]
+run(CITY, NEW, HOTELS)

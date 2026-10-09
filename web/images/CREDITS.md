@@ -97,3 +97,38 @@
 - **Dinh Bảo Đại (Dinh III)** (`dinh-bao-dai-da-lat.jpg`): Diane Selwyn (talk), Public domain, [Bao Dai's Summer Palace 08.jpg](https://commons.wikimedia.org/wiki/File:Bao_Dai%27s_Summer_Palace_08.jpg)
 - **Thiền viện Trúc Lâm** (`thien-vien-truc-lam.jpg`): Diane Selwyn, Public domain, [Truc Lam Zen Monastery 28.jpg](https://commons.wikimedia.org/wiki/File:Truc_Lam_Zen_Monastery_28.jpg)
 - **Chợ Đà Lạt** (`cho-da-lat.jpg`): Diane Selwyn, Public domain, [Da Lat Market 10.jpg](https://commons.wikimedia.org/wiki/File:Da_Lat_Market_10.jpg)
+- **Đỉnh Fansipan (cáp treo)** (`fansipan.jpg`): Ảnh minh hoạ: cột mốc trên đỉnh Fansipan, NKSTTSSHNVN, CC BY-SA 4.0, Wikimedia Commons, [Fansipan summit 2.jpg](https://commons.wikimedia.org/wiki/File:Fansipan_summit_2.jpg)
+- **Thung lũng Mường Hoa (ruộng bậc thang)** (`thung-lung-muong-hoa.jpg`): Andre Hospers, CC BY 4.0, [Ta Van Muong Ha vallei (70294).jpg](https://commons.wikimedia.org/wiki/File:Ta_Van_Muong_Ha_vallei_(70294).jpg)
+- **Bản Tả Van** (`ban-ta-van.jpg`): Ảnh minh hoạ: cầu treo ở thung lũng Mường Hoa (Sa Pa), Andre Hospers, CC BY 4.0, Wikimedia Commons, [Ta Van Muong Ha vallei (12011).jpg](https://commons.wikimedia.org/wiki/File:Ta_Van_Muong_Ha_vallei_(12011).jpg)
+- **Đèo Ô Quy Hồ và Cổng Trời** (`cong-troi-o-quy-ho.jpg`): Kiếm Anh, CC BY-SA 4.0, [O Quy Ho pass.jpg](https://commons.wikimedia.org/wiki/File:O_Quy_Ho_pass.jpg)
+- **Núi Hàm Rồng** (`nui-ham-rong.jpg`): Zeugma fr (talk) (Antoine FLEURY-GOBERT), CC BY-SA 3.0, [Sapa vu du mont Ham Rong.jpg](https://commons.wikimedia.org/wiki/File:Sapa_vu_du_mont_Ham_Rong.jpg)
+- **Bản Lao Chải** (`ban-lao-chai.jpg`): Ảnh minh hoạ cảnh thung lũng Mường Hoa (Sa Pa), Andre Hospers, CC BY 4.0, Wikimedia Commons, [Ta Van Muong Ha vallei (98742).jpg](https://commons.wikimedia.org/wiki/File:Ta_Van_Muong_Ha_vallei_(98742).jpg)
+- **Đại Nội Huế (Hoàng thành)** (`dai-noi-hue.jpg`): This Photo was taken by Supanut Arunoprayote.
+
+Feel free to use any of my images, but please mention me as the author and may send me a message.  (สามารถใช้ภาพได้อิสระ แต่กรุณาใส่เครดิตผู้ถ่ายและอาจส่งข้อความบอกกล่าวด้วย) 
+
+
+
+Please do not upload an updated image here without consultation with the Author. The author would like to make corrections only at his own source. This ensures that the changes are preserved.Please if you think that any changes should be required, please inform the author.Otherwise you can upload a new image with a new name. Please use one of the templates derivative or extract., CC BY 4.0, [Meridian Gate, Hue (I).jpg](https://commons.wikimedia.org/wiki/File:Meridian_Gate,_Hue_(I).jpg)
+- **Lăng Khải Định** (`lang-khai-dinh.jpg`): Mig Gilbert from Brighton, CC BY-SA 2.0, [Khai Dinh Tomb (38687487370).jpg](https://commons.wikimedia.org/wiki/File:Khai_Dinh_Tomb_(38687487370).jpg)
+- **Lăng Minh Mạng** (`lang-minh-mang.jpg`): CEphoto, Uwe Aranas, CC BY-SA 3.0, [Hue Vietnam Tomb-of-Emperor-Minh-Mang-01.jpg](https://commons.wikimedia.org/wiki/File:Hue_Vietnam_Tomb-of-Emperor-Minh-Mang-01.jpg)
+- **Lăng Tự Đức** (`lang-tu-duc.jpg`): CEphoto, Uwe Aranas, CC BY-SA 3.0, [Hue Vietnam Tomb-of-Emperor-Tu-Duc-05.jpg](https://commons.wikimedia.org/wiki/File:Hue_Vietnam_Tomb-of-Emperor-Tu-Duc-05.jpg)
+- **Chùa Thiên Mụ** (`chua-thien-mu.jpg`): Ảnh minh hoạ: điện thờ trong chùa Thiên Mụ, Jean-Etienne Minh-Duy Poirrier from Bruxelles, Belgium, CC BY-SA 2.0, Wikimedia Commons, [Thien Mu Pagoda 2011.jpg](https://commons.wikimedia.org/wiki/File:Thien_Mu_Pagoda_2011.jpg)
+- **Cầu Trường Tiền** (`cau-truong-tien.jpg`): This Photo was taken by Supanut Arunoprayote.
+
+Feel free to use any of my images, but please mention me as the author and may send me a message.  (สามารถใช้ภาพได้อิสระ แต่กรุณาใส่เครดิตผู้ถ่ายและอาจส่งข้อความบอกกล่าวด้วย) 
+
+
+
+Please do not upload an updated image here without consultation with the Author. The author would like to make corrections only at his own source. This ensures that the changes are preserved.Please if you think that any changes should be required, please inform the author.Otherwise you can upload a new image with a new name. Please use one of the templates derivative or extract., CC BY 4.0, [Truong Tien bridge (I).jpg](https://commons.wikimedia.org/wiki/File:Truong_Tien_bridge_(I).jpg)
+- **Du thuyền sông Hương (thuyền rồng)** (`song-huong-thuyen-rong.jpg`): Nowic, CC BY-SA 3.0, [Hue - Perfume River - Dragon Boat.jpg](https://commons.wikimedia.org/wiki/File:Hue_-_Perfume_River_-_Dragon_Boat.jpg)
+- **Chợ Đông Ba** (`cho-dong-ba.jpg`): Chainwit., CC BY 4.0, [Dong Ba Market (Hue) - Chợ Đông Ba Huế (July 2024) - img 02.jpg](https://commons.wikimedia.org/wiki/File:Dong_Ba_Market_(Hue)_-_Ch%E1%BB%A3_%C4%90%C3%B4ng_Ba_Hu%E1%BA%BF_(July_2024)_-_img_02.jpg)
+- **Cầu ngói Thanh Toàn** (`cau-ngoi-thanh-toan.jpg`): Lưu Ly at Vietnamese Wikipedia, Public domain, [Cầu ngói Thanh Toàn1.jpg](https://commons.wikimedia.org/wiki/File:C%E1%BA%A7u_ng%C3%B3i_Thanh_To%C3%A0n1.jpg)
+- **Biển Thuận An** (`bien-thuan-an.jpg`): Ảnh minh hoạ: biển Thuận An, Ayane Fumihiro, CC BY 4.0, Wikimedia Commons, [Thuan An Beach, 2023.jpg](https://commons.wikimedia.org/wiki/File:Thuan_An_Beach,_2023.jpg)
+- **Khu danh thắng Tràng An (đi thuyền)** (`trang-an.jpg`): Jakub Hałun, CC BY 4.0, [Trang An Landscape Complex, Ninh Binh Province, Vietnam, 20240202 1456 5313.jpg](https://commons.wikimedia.org/wiki/File:Trang_An_Landscape_Complex,_Ninh_Binh_Province,_Vietnam,_20240202_1456_5313.jpg)
+- **Tam Cốc (đi thuyền)** (`tam-coc.jpg`): GilVon, CC BY-SA 3.0, [Tam Coc, Ninh Binh ,Vietnam.jpg](https://commons.wikimedia.org/wiki/File:Tam_Coc,_Ninh_Binh_,Vietnam.jpg)
+- **Hang Múa (leo 500 bậc)** (`hang-mua.jpg`): Shyamal, CC BY-SA 4.0, [View from Hang Mua.jpg](https://commons.wikimedia.org/wiki/File:View_from_Hang_Mua.jpg)
+- **Chùa Bái Đính** (`chua-bai-dinh.jpg`): Kien1980v (thảo luận) 01:40, ngày 3 tháng 9 năm 2017 (UTC), Public domain, [Chua Bai Dinh X8.JPG](https://commons.wikimedia.org/wiki/File:Chua_Bai_Dinh_X8.JPG)
+- **Cố đô Hoa Lư (đền vua Đinh, vua Lê)** (`co-do-hoa-lu.jpg`): Richard Mortel from Riyadh, Saudi Arabia, CC BY 2.0, [Ancient capital of Hoa Lu, 10th century (1) (38445751276).jpg](https://commons.wikimedia.org/wiki/File:Ancient_capital_of_Hoa_Lu,_10th_century_(1)_(38445751276).jpg)
+- **Khu bảo tồn đất ngập nước Vân Long** (`khu-du-lich-van-long.jpg`): Andre Hospers, CC BY 4.0, [Van Long Nature Reserve Riet Grotten Kalksteen Ninh Binh.jpg](https://commons.wikimedia.org/wiki/File:Van_Long_Nature_Reserve_Riet_Grotten_Kalksteen_Ninh_Binh.jpg)
+- **Chùa Bích Động** (`chua-bich-dong.jpg`): Tupham, Public domain, [Bich dong.jpg](https://commons.wikimedia.org/wiki/File:Bich_dong.jpg)

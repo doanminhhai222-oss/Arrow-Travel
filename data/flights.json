@@ -251,6 +251,104 @@
           }
         }
       }
+    },
+    "Huế": {
+      "airport": "HUI",
+      "name": "Huế (sân bay Phú Bài)",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 80,
+          "base": {
+            "vn": 1200000,
+            "vj": 700000,
+            "qh": 850000
+          }
+        },
+        "ha-noi": {
+          "airport": "HAN",
+          "durationMin": 80,
+          "base": {
+            "vn": 1300000,
+            "vj": 750000,
+            "qh": 900000
+          }
+        },
+        "can-tho": {
+          "airport": "VCA",
+          "durationMin": 110,
+          "base": {
+            "vn": 1500000,
+            "vj": 900000
+          }
+        }
+      }
+    },
+    "Sa Pa": {
+      "airport": "HAN",
+      "name": "Hà Nội",
+      "note": "Sa Pa không có sân bay, từ Nội Bài đi tàu hoặc xe khách khoảng 5 đến 6 giờ",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 125,
+          "base": {
+            "vn": 1500000,
+            "vj": 850000,
+            "qh": 1000000
+          }
+        },
+        "da-nang": {
+          "airport": "DAD",
+          "durationMin": 80,
+          "base": {
+            "vn": 1500000,
+            "vj": 850000,
+            "qh": 1000000
+          }
+        },
+        "can-tho": {
+          "airport": "VCA",
+          "durationMin": 120,
+          "base": {
+            "vn": 1700000,
+            "vj": 1000000
+          }
+        }
+      }
+    },
+    "Ninh Bình": {
+      "airport": "HAN",
+      "name": "Hà Nội",
+      "note": "Ninh Bình không có sân bay, từ Nội Bài đi tàu hoặc xe khoảng 2 giờ",
+      "routes": {
+        "ho-chi-minh": {
+          "airport": "SGN",
+          "durationMin": 125,
+          "base": {
+            "vn": 1500000,
+            "vj": 850000,
+            "qh": 1000000
+          }
+        },
+        "da-nang": {
+          "airport": "DAD",
+          "durationMin": 80,
+          "base": {
+            "vn": 1500000,
+            "vj": 850000,
+            "qh": 1000000
+          }
+        },
+        "can-tho": {
+          "airport": "VCA",
+          "durationMin": 120,
+          "base": {
+            "vn": 1700000,
+            "vj": 1000000
+          }
+        }
+      }
     }
   }
 }

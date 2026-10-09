@@ -234,3 +234,46 @@ test('Đà Lạt: dữ liệu hợp lệ, lịch trình, khách sạn, sân bay 
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
   }
 });
+
+// ---- Huế, Sa Pa, Ninh Bình
+const NEWDEST = [
+  { city: 'Huế', min: 18, lat: [16.2, 16.6], lng: [107.4, 107.75], airport: 'HUI', from: ['ho-chi-minh', 'ha-noi'], notFrom: ['da-nang'], types: ['culture', 'checkin', 'food', 'cafe'] },
+  { city: 'Sa Pa', min: 15, lat: [22.2, 22.5], lng: [103.7, 104.0], airport: 'HAN', from: ['ho-chi-minh', 'da-nang'], notFrom: ['ha-noi'], types: ['park', 'culture', 'food', 'cafe'], note: true },
+  { city: 'Ninh Bình', min: 14, lat: [20.15, 20.45], lng: [105.6, 106.0], airport: 'HAN', from: ['ho-chi-minh', 'da-nang'], notFrom: ['ha-noi'], types: ['park', 'culture', 'food', 'cafe'], note: true },
+];
+for (const d of NEWDEST) {
+  test(`${d.city}: dữ liệu hợp lệ, lịch trình, khách sạn, chuyến bay và lịch trình nổi bật`, async () => {
+    const { flightDataFor, originsFor } = await import('../src/search.js');
+    const pl = data.places.filter((p) => p.city === d.city);
+    assert.ok(pl.length >= d.min, 'hiện ' + pl.length);
+    const types = new Set(pl.map((p) => p.type));
+    for (const t of d.types) assert.ok(types.has(t), 'thiếu loại ' + t);
+    for (const p of pl) {
+      assert.ok(p.lat > d.lat[0] && p.lat < d.lat[1] && p.lng > d.lng[0] && p.lng < d.lng[1], `${p.id} nằm ngoài vùng ${d.city}`);
+      assert.ok(p.audiences.length && p.highlights.length && p.culture, p.id);
+      if (p.type === 'food') assert.ok(['lunch', 'dinner'].includes(p.meal), p.id);
+    }
+    for (const audience of ['cap_doi', 'gia_dinh', 'nhom_ban', 'mot_minh']) {
+      const p = buildItinerary(base({ destination: d.city, audience, hasKids: audience === 'gia_dinh' }), data, rules);
+      const used = p.days.flatMap((x) => x.items.filter((i) => i.place));
+      assert.ok(used.length > 0 && used.every((i) => i.place.city === d.city), audience);
+    }
+    const hotels = hotelsFor(opts.hotels, { destination: d.city });
+    assert.ok(hotels.length >= 8 && hotels.every((h) => h.city === d.city));
+    for (const tier of ['tiet_kiem', 'vua_phai', 'thoai_mai']) assert.ok(hotels.some((h) => h.tier === tier));
+    const fd = flightDataFor(flights, d.city);
+    assert.equal(fd.destination.airport, d.airport);
+    if (d.note) assert.ok(fd.destination.note, 'cần ghi chú không có sân bay');
+    const o = originsFor(flights, opts.origins, d.city).map((x) => x.id);
+    for (const k of d.from) assert.ok(o.includes(k), k);
+    for (const k of d.notFrom) assert.ok(!o.includes(k), k);
+    assert.ok(transport.airports[d.city].lat);
+    const list = featured.featured.filter((f) => f.destination === d.city);
+    assert.ok(list.length >= 3);
+    for (const f of list) for (const id of f.days.flat()) {
+      const p = data.places.find((x) => x.id === id);
+      assert.ok(p && p.city === d.city && p.audiences.includes(f.audience), f.id + ': ' + id);
+      if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
+    }
+  });
+}

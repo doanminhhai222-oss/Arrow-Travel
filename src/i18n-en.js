@@ -385,5 +385,14 @@ export const EN = {
   "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Nha Trang places are real, but coordinates and prices are estimates; hotels are sample data.",
   "Đà Lạt": "Da Lat",
   "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "One day in Da Lat, four different paces",
-  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Da Lat places are real, but coordinates and prices are estimates; hotels are sample data."
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Da Lat places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Huế": "Hue",
+  "Một ngày ở Huế, bốn nhịp khác nhau": "One day in Hue, four different paces",
+  "Địa điểm Huế là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Hue places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Sa Pa": "Sapa",
+  "Một ngày ở Sa Pa, bốn nhịp khác nhau": "One day in Sapa, four different paces",
+  "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Sapa places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Ninh Bình": "Ninh Binh",
+  "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "One day in Ninh Binh, four different paces",
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Ninh Binh places are real, but coordinates and prices are estimates; hotels are sample data."
 };

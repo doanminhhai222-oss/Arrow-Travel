@@ -569,6 +569,256 @@
         ]
       ],
       "cover": "doi-che-cau-dat"
+    },
+    {
+      "id": "f-hue-couple",
+      "destination": "Huế",
+      "title": "Huế cho cặp đôi: Đại Nội, sông Hương và ẩm thực cung đình",
+      "author": "Mai Linh (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "van_hoa",
+        "thu_gian"
+      ],
+      "scene": "temple",
+      "desc": "Sáng đi Đại Nội, chiều lăng Tự Đức, tối du thuyền sông Hương. Ngày sau chùa Thiên Mụ, chợ Đông Ba và bữa cơm cung đình.",
+      "days": [
+        [
+          "dai-noi-hue",
+          "lang-tu-duc",
+          "song-huong-thuyen-rong"
+        ],
+        [
+          "chua-thien-mu",
+          "cho-dong-ba",
+          "com-cung-dinh-hue",
+          "cau-truong-tien"
+        ]
+      ],
+      "cover": "dai-noi-hue"
+    },
+    {
+      "id": "f-hue-family",
+      "destination": "Huế",
+      "title": "Huế cho gia đình: di sản, biển Thuận An và món Huế",
+      "author": "Thanh Tùng (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "van_hoa",
+        "thien_nhien"
+      ],
+      "scene": "bridge",
+      "desc": "Ngày một Đại Nội, bún bò Huế và cầu Trường Tiền. Ngày sau chùa Thiên Mụ và biển Thuận An.",
+      "days": [
+        [
+          "dai-noi-hue",
+          "bun-bo-hue-ba-tuyet",
+          "cau-truong-tien"
+        ],
+        [
+          "chua-thien-mu",
+          "bien-thuan-an"
+        ]
+      ],
+      "cover": "cau-truong-tien"
+    },
+    {
+      "id": "f-hue-friends",
+      "destination": "Huế",
+      "title": "Huế cho nhóm bạn: lăng tẩm, đồi Vọng Cảnh và nem lụi",
+      "author": "Đức Anh (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "tiet_kiem",
+      "styles": [
+        "van_hoa",
+        "am_thuc"
+      ],
+      "scene": "temple",
+      "desc": "Đi lăng Khải Định và Minh Mạng buổi sáng, chiều đồi Vọng Cảnh ngắm hoàng hôn, tối nem lụi và dạo cầu Trường Tiền.",
+      "days": [
+        [
+          "lang-khai-dinh",
+          "lang-minh-mang",
+          "doi-vong-canh",
+          "nem-lui-hue"
+        ],
+        [
+          "cho-dong-ba",
+          "che-hem-hue",
+          "cau-truong-tien"
+        ]
+      ],
+      "cover": "lang-khai-dinh"
+    },
+    {
+      "id": "f-sp-couple",
+      "destination": "Sa Pa",
+      "title": "Sa Pa se lạnh cho cặp đôi: Cát Cát, Mường Hoa và chợ đêm",
+      "author": "Hồng Nhung (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thien_nhien",
+        "thu_gian"
+      ],
+      "scene": "field",
+      "desc": "Sáng đi bản Cát Cát, chiều ngắm ruộng bậc thang Mường Hoa, tối lẩu cá tầm. Ngày sau lên đỉnh Fansipan và cà phê ngắm mây.",
+      "days": [
+        [
+          "ban-cat-cat",
+          "thung-lung-muong-hoa",
+          "lau-ca-tam-sapa",
+          "nha-tho-da-sapa"
+        ],
+        [
+          "fansipan",
+          "cf-may-sapa"
+        ]
+      ],
+      "cover": "thung-lung-muong-hoa"
+    },
+    {
+      "id": "f-sp-family",
+      "destination": "Sa Pa",
+      "title": "Sa Pa cho gia đình: núi Hàm Rồng, chợ và cơm lam",
+      "author": "Quỳnh Anh (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "van_hoa"
+      ],
+      "scene": "mountain",
+      "desc": "Ngày một núi Hàm Rồng, ăn cơm lam rồi dạo chợ Sa Pa. Ngày sau thác Bạc và đèo Ô Quy Hồ.",
+      "days": [
+        [
+          "nui-ham-rong",
+          "com-lam-ga-nuong-sapa",
+          "cho-sapa"
+        ],
+        [
+          "thac-bac",
+          "cong-troi-o-quy-ho"
+        ]
+      ],
+      "cover": "nui-ham-rong"
+    },
+    {
+      "id": "f-sp-friends",
+      "destination": "Sa Pa",
+      "title": "Sa Pa cho nhóm bạn: Fansipan, trekking bản và thắng cố",
+      "author": "Việt Hoàng (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "tiet_kiem",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "scene": "mountain",
+      "desc": "Ngày một Fansipan, tối chợ đêm. Ngày sau trekking Lao Chải – Tả Van, ăn thắng cố và lẩu cá hồi.",
+      "days": [
+        [
+          "fansipan",
+          "cho-dem-sapa"
+        ],
+        [
+          "ban-lao-chai",
+          "ban-ta-van",
+          "thang-co-sapa",
+          "lau-ca-tam-sapa"
+        ]
+      ],
+      "cover": "fansipan"
+    },
+    {
+      "id": "f-nb-couple",
+      "destination": "Ninh Bình",
+      "title": "Ninh Bình thong thả cho cặp đôi: Tràng An, Hang Múa và dê núi",
+      "author": "Thuỳ Dương (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thien_nhien",
+        "thu_gian"
+      ],
+      "scene": "boat",
+      "desc": "Sáng đi thuyền Tràng An, trưa dê núi, chiều Hang Múa ngắm hoàng hôn. Ngày sau cố đô Hoa Lư và cơm cháy làm quà.",
+      "days": [
+        [
+          "trang-an",
+          "de-nui-ninh-binh",
+          "hang-mua"
+        ],
+        [
+          "co-do-hoa-lu",
+          "com-chay-ninh-binh",
+          "cf-dong-que-ninh-binh"
+        ]
+      ],
+      "cover": "trang-an"
+    },
+    {
+      "id": "f-nb-family",
+      "destination": "Ninh Bình",
+      "title": "Ninh Bình cho gia đình: Tam Cốc, Bích Động và đồng quê",
+      "author": "Minh Châu (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "van_hoa"
+      ],
+      "scene": "boat",
+      "desc": "Đi thuyền Tam Cốc, ăn miến lươn rồi vào chùa Bích Động. Ngày sau chùa Bái Đính và Thung Nham.",
+      "days": [
+        [
+          "tam-coc",
+          "mien-luon-ninh-binh",
+          "chua-bich-dong"
+        ],
+        [
+          "chua-bai-dinh",
+          "thung-nham"
+        ]
+      ],
+      "cover": "tam-coc"
+    },
+    {
+      "id": "f-nb-friends",
+      "destination": "Ninh Bình",
+      "title": "Ninh Bình cho nhóm bạn: Tràng An, Hang Múa và dê núi",
+      "author": "Hải Nam (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "tiet_kiem",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "scene": "mountain",
+      "desc": "Sáng đi thuyền Tràng An, chiều leo Hang Múa, tối ăn dê núi. Ngày sau đi Vân Long ngắm voọc và chùa Bái Đính.",
+      "days": [
+        [
+          "trang-an",
+          "hang-mua",
+          "de-nui-ninh-binh"
+        ],
+        [
+          "khu-du-lich-van-long",
+          "chua-bai-dinh"
+        ]
+      ],
+      "cover": "hang-mua"
     }
   ]
 }

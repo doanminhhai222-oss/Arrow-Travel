@@ -385,5 +385,14 @@ export const KO = {
   "Địa điểm Nha Trang là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "나트랑 장소는 실제로 있는 곳이지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
   "Đà Lạt": "달랏",
   "Một ngày ở Đà Lạt, bốn nhịp khác nhau": "달랏의 하루, 네 가지 속도",
-  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "달랏의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
+  "Địa điểm Đà Lạt là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "달랏의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
+  "Huế": "후에",
+  "Một ngày ở Huế, bốn nhịp khác nhau": "후에의 하루, 네 가지 속도",
+  "Địa điểm Huế là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "후에의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
+  "Sa Pa": "사파",
+  "Một ngày ở Sa Pa, bốn nhịp khác nhau": "사파의 하루, 네 가지 속도",
+  "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "사파의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
+  "Ninh Bình": "닌빈",
+  "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "닌빈의 하루, 네 가지 속도",
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "닌빈의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
 };
