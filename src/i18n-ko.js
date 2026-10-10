@@ -394,5 +394,10 @@ export const KO = {
   "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "사파의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
   "Ninh Bình": "닌빈",
   "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "닌빈의 하루, 네 가지 속도",
-  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "닌빈의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다."
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "닌빈의 장소는 실제로 존재하지만 좌표와 가격은 추정치이며 호텔은 샘플 데이터입니다.",
+  "Kết hợp thêm Hội An": "호이안 함께 가기",
+  "Kết hợp thêm Đà Nẵng": "다낭 함께 가기",
+  "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "하루에 한 도시만 다니며 두 곳은 약 30km 떨어져 있습니다. 3일 이상 권장.",
+  "Đà Nẵng + Hội An": "다낭 + 호이안",
+  "Hội An + Đà Nẵng": "호이안 + 다낭"
 };

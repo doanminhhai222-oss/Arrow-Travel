@@ -819,6 +819,82 @@
         ]
       ],
       "cover": "hang-mua"
+    },
+    {
+      "id": "f-dnha-couple",
+      "destination": "Đà Nẵng",
+      "alsoVisit": [
+        "Hội An"
+      ],
+      "title": "Đà Nẵng + Hội An 4 ngày cho cặp đôi: biển, cầu Rồng và phố cổ đèn lồng",
+      "author": "Ngọc Bích (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "thu_gian",
+        "am_thuc"
+      ],
+      "scene": "lantern",
+      "desc": "Hai ngày đầu ở Đà Nẵng: biển Mỹ Khê, Linh Ứng, cầu Rồng buổi tối. Hai ngày sau chuyển sang Hội An: phố cổ, chùa Cầu, thả hoa đăng và biển An Bàng.",
+      "days": [
+        [
+          "my-khe",
+          "linh-ung",
+          "cau-rong"
+        ],
+        [
+          "bao-tang-cham",
+          "cau-tinh-yeu"
+        ],
+        [
+          "chua-cau",
+          "pho-co-hoi-an",
+          "tha-hoa-dang"
+        ],
+        [
+          "bien-an-bang",
+          "xuong-den-long",
+          "cau-an-hoi"
+        ]
+      ],
+      "cover": "pho-co-hoi-an"
+    },
+    {
+      "id": "f-dnha-family",
+      "destination": "Đà Nẵng",
+      "alsoVisit": [
+        "Hội An"
+      ],
+      "title": "Đà Nẵng + Hội An 3 ngày cho gia đình: Linh Ứng, làng rau và phố cổ",
+      "author": "Khánh Vy (mẫu)",
+      "audience": "gia_dinh",
+      "people": 4,
+      "budget": "vua_phai",
+      "styles": [
+        "thien_nhien",
+        "van_hoa"
+      ],
+      "scene": "beach",
+      "desc": "Ngày một ở Đà Nẵng đi biển Mỹ Khê và chùa Linh Ứng. Hai ngày sau ở Hội An: làng rau Trà Quế, phố cổ và đèn lồng.",
+      "days": [
+        [
+          "my-khe",
+          "linh-ung",
+          "cau-rong"
+        ],
+        [
+          "lang-rau-tra-que",
+          "cho-hoi-an",
+          "pho-co-hoi-an"
+        ],
+        [
+          "chua-cau",
+          "xuong-den-long",
+          "cho-dem-nguyen-hoang"
+        ]
+      ],
+      "cover": "my-khe"
     }
   ]
 }

@@ -97,9 +97,20 @@ function go(name) {
 let destName = 'Đà Nẵng';
 const DEST_HERO = { 'Đà Nẵng': 'my-khe', 'Hội An': 'pho-co-hoi-an', 'Phú Quốc': 'bai-sao', 'Hà Nội': 'ho-hoan-kiem', 'Nha Trang': 'bien-nha-trang', 'Đà Lạt': 'ho-xuan-huong', 'Huế': 'dai-noi-hue', 'Sa Pa': 'thung-lung-muong-hoa', 'Ninh Bình': 'trang-an' };
 const heroDefault = { src: $('heroImg').getAttribute('src'), alt: $('heroImg').alt };
+// Đà Nẵng và Hội An cách nhau khoảng 30 km nên cho kết hợp trong một lịch trình nhiều ngày
+const NEIGHBOR = { 'Đà Nẵng': 'Hội An', 'Hội An': 'Đà Nẵng' };
+const destLabel = (t) => [t.destination, ...(t.alsoVisit || [])].join(' + ');
+function syncCombo() {
+  const nb = NEIGHBOR[destName];
+  $('comboRow').hidden = !nb;
+  if (nb) $('comboTxt').textContent = 'Kết hợp thêm ' + nb;
+  else $('combo').checked = false;
+}
+// Tên thành phố của một ngày, chỉ có khi chuyến đi kết hợp nhiều thành phố
+const cityTag = (d) => (plan && plan.trip.alsoVisit && plan.trip.alsoVisit.length ? (d.city || ((d.items.find((i) => i.place) || {}).place || {}).city || '') : '');
 function setDest(name, { render = true } = {}) {
   if (!DESTS.some((d) => d.name === name && d.ok)) name = 'Đà Nẵng';
-  destName = name; store.prefs.dest = name;
+  destName = name; store.prefs.dest = name; syncCombo();
   $('destSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.v === name)));
   $('homeDest').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.homedest === name)));
   const hp = DATA.places.find((p) => p.id === DEST_HERO[name]);
@@ -124,6 +135,7 @@ function applyForm(p = {}) {
   $('kids').checked = !!t.hasKids || t.audience === 'gia_dinh'; $('elder').checked = !!t.hasElderly;
   setAud(t.audience); setStyles(t.styles); updateNights();
   setDest(t.destination || destName, { render: false });
+  $('combo').checked = !!(NEIGHBOR[destName] && (t.alsoVisit || []).includes(NEIGHBOR[destName]));
 }
 function openCreate(p, runNow, collapse = true) { applyForm(p); go('create'); if (runNow) run(collapse); }
 
@@ -139,7 +151,7 @@ function setFormOpen(open) {
   const fs = $('formSummary'); fs.hidden = open || !plan;
   if (!open && plan) {
     const t = plan.trip;
-    fs.innerHTML = '<div><b>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</b><span>' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + t.people + ' người · ' + esc(plan.audienceLabel) + '</span></div><button type="button" class="btn" data-editform>Sửa</button>';
+    fs.innerHTML = '<div><b>' + esc(destLabel(t)) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</b><span>' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + t.people + ' người · ' + esc(plan.audienceLabel) + '</span></div><button type="button" class="btn" data-editform>Sửa</button>';
   }
 }
 // Đổi form: tự xếp lại lịch, trừ khi đã chỉnh tay hoặc đã chốt thì hỏi trước để không mất chỉnh sửa
@@ -163,7 +175,7 @@ $('budgetSeg').addEventListener('click', (e) => { const b = e.target.closest('bu
 document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => {
   $('people').value = Math.min(30, Math.max(1, (+$('people').value || 1) + +b.dataset.step)); formChanged();
 }));
-['kids', 'elder', 'start', 'end', 'people'].forEach((id) => $(id).addEventListener('change', formChanged));
+['kids', 'elder', 'start', 'end', 'people', 'combo'].forEach((id) => $(id).addEventListener('change', formChanged));
 $('form').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(formTimer); run(true); });
 
 function resetPlanState() {
@@ -173,6 +185,7 @@ function run(collapse = false) {
   const trip = { destination: destName, startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
     budget: $('budget').value, audience: aud, hasKids: $('kids').checked, hasElderly: $('elder').checked,
     styles: [...document.querySelectorAll('#styles [aria-pressed="true"]')].map((x) => x.dataset.v) };
+  if ($('combo').checked && NEIGHBOR[destName]) trip.alsoVisit = [NEIGHBOR[destName]];
   if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; $('dayTabs').hidden = true; setFormOpen(true); return; }
   plan = buildItinerary(trip, DATA, RULES);
   rule = effectiveRules(RULES[aud], trip);
@@ -228,7 +241,7 @@ function renderDayTabs() {
   const stops = plan.days.reduce((x, d) => x + d.placeCount, 0), km = Math.round(plan.days.reduce((x, d) => x + d.totalKm, 0) * 10) / 10;
   tabs.hidden = false;
   tabs.innerHTML = '<div class="dt-row" role="tablist" aria-label="Chọn ngày"><button type="button" role="tab" data-daytab="all" aria-selected="' + (dayTab === 'all') + '">Tất cả</button>' +
-    plan.days.map((d, i) => '<button type="button" role="tab" data-daytab="' + i + '" aria-selected="' + (dayTab === i) + '">Ngày ' + d.dayIndex + '<small>' + fmtDate(d.date) + '</small></button>').join('') + '</div>' +
+    plan.days.map((d, i) => '<button type="button" role="tab" data-daytab="' + i + '" aria-selected="' + (dayTab === i) + '">Ngày ' + d.dayIndex + '<small>' + fmtDate(d.date) + (cityTag(d) ? ' · ' + cityTag(d) : '') + '</small></button>').join('') + '</div>' +
     '<div class="dt-stat">' + plan.days.length + ' ngày · ' + stops + ' điểm · ' + km + ' km · ' + esc(plan.audienceLabel) + '</div>';
 }
 function render() {
@@ -238,7 +251,7 @@ function render() {
   renderDayTabs();
   plan.days.forEach((d, di) => {
     if (dayTab !== 'all' && dayTab !== di) return;
-    h += '<section class="panel day" data-day="' + di + '"><h2>Ngày ' + d.dayIndex + ' · ' + d.date.split('-').reverse().join('/') + '</h2><div class="meta">' + d.placeCount + ' điểm · ' + d.totalKm + ' km</div>';
+    h += '<section class="panel day" data-day="' + di + '"><h2>Ngày ' + d.dayIndex + ' · ' + d.date.split('-').reverse().join('/') + (cityTag(d) ? ' · ' + esc(cityTag(d)) : '') + '</h2><div class="meta">' + d.placeCount + ' điểm · ' + d.totalKm + ' km</div>';
     if (!d.items.length) h += '<p class="hint">Ngày này đang trống.</p>';
     d.items.forEach((it, ii) => {
       const isOpen = swapOpen && swapOpen.d === di && swapOpen.i === ii;
@@ -797,7 +810,7 @@ function startTrack(id) {
   store.track = { tripId: id, startedAt: Date.now(), visited: {}, day: null };
   store.track.day = Math.max(0, s.days.findIndex((d) => d.date === todayStr()));
   persist(); nearbyItems = []; nearbyFrom = null; trackArmedEnd = false;
-  addNotif('Đã bắt đầu chuyến đi', s.trip.destination + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + '. Bật vị trí để app đánh dấu những nơi bạn đã đến.');
+  addNotif('Đã bắt đầu chuyến đi', destLabel(s.trip) + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + '. Bật vị trí để app đánh dấu những nơi bạn đã đến.');
   go('track');
 }
 function endTrack() {
@@ -862,7 +875,7 @@ function renderTrack() {
   if (store.track && !s) { store.track = null; persist(); }
   if (!store.track) {
     box.innerHTML = '<div class="panel"><b>Bắt đầu chuyến đi</b><p class="hint" style="margin:6px 0 0">Chọn một lịch trình đã lưu. Khi bắt đầu, app đánh dấu những nơi bạn đã đến, hiện vị trí của bạn trên bản đồ và gợi ý điểm check-in, quán ăn, cây xăng, ATM ở gần.</p></div>' +
-      (store.trips.length ? store.trips.map((x) => '<div class="panel trip"><h3>' + esc(x.trip.destination) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</h3><div class="sub">' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</div><div class="acts"><button type="button" class="go" style="width:auto;padding:0 20px" data-trackstart="' + x.id + '">Bắt đầu chuyến này</button></div></div>').join('')
+      (store.trips.length ? store.trips.map((x) => '<div class="panel trip"><h3>' + esc(destLabel(x.trip)) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</h3><div class="sub">' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</div><div class="acts"><button type="button" class="go" style="width:auto;padding:0 20px" data-trackstart="' + x.id + '">Bắt đầu chuyến này</button></div></div>').join('')
         : '<div class="panel empty"><b>Chưa có lịch trình đã lưu</b>Tạo và lưu một lịch trình để bắt đầu theo dõi.<button class="go" type="button" data-go="create">Lên lịch trình</button></div>') +
       (plan && !currentTripId ? '<p class="hint">Bạn đang soạn một lịch trình chưa lưu. Hãy lưu lịch trình trước khi bắt đầu.</p>' : '');
     return;
@@ -870,7 +883,7 @@ function renderTrack() {
   const di = trackDayIdx(s), stops = trackStops(s, di), nxt = nextStop(stops), done = stops.filter((x) => x.visited).length;
   const c = trackCenter(stops), pct = stops.length ? Math.round((done / stops.length) * 100) : 0;
   const poiShown = nearbyItems.slice(0, 8);
-  let h = '<div class="panel"><div class="trip-top"><div><b>' + esc(s.trip.destination) + ' · ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + '</b><div class="hint">Bắt đầu lúc ' + hhmm(store.track.startedAt) + ' · ' + fmtDate(iso(new Date(store.track.startedAt))) + '</div></div></div>' +
+  let h = '<div class="panel"><div class="trip-top"><div><b>' + esc(destLabel(s.trip)) + ' · ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + '</b><div class="hint">Bắt đầu lúc ' + hhmm(store.track.startedAt) + ' · ' + fmtDate(iso(new Date(store.track.startedAt))) + '</div></div></div>' +
     '<div class="chips" style="margin-top:10px" role="group" aria-label="Chọn ngày">' + s.days.map((d, i) => '<button type="button" data-trk="day" data-v="' + i + '" aria-pressed="' + (i === di) + '">Ngày ' + d.dayIndex + ' · ' + fmtDate(d.date) + '</button>').join('') + '</div>' +
     '<div style="margin-top:12px"><b>' + done + '/' + stops.length + ' điểm đã qua</b><div class="bar trkbar" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ"><i style="width:' + pct + '%"></i></div></div></div>';
   // vị trí
@@ -945,7 +958,7 @@ function placeById(id) { return DATA.places.find((p) => p.id === id); }
 
 // Các chuyến có thể ghi lại khoảnh khắc: chuyến đã lưu, lịch đang soạn chưa lưu, hoặc chọn địa điểm bất kỳ
 function momTrips() {
-  const list = store.trips.map((s) => ({ key: s.id, label: s.trip.destination + ' ' + fmtDate(s.trip.startDate) + '–' + fmtDate(s.trip.endDate) }));
+  const list = store.trips.map((s) => ({ key: s.id, label: destLabel(s.trip) + ' ' + fmtDate(s.trip.startDate) + '–' + fmtDate(s.trip.endDate) }));
   if (plan && !currentTripId) list.unshift({ key: 'draft', label: 'Lịch đang soạn' });
   list.push({ key: 'free', label: 'Chọn địa điểm khác' });
   return list;
@@ -961,12 +974,12 @@ function momInfo(key) {
   }
   if (key === 'draft') {
     plan.days.forEach((d) => take('Ngày ' + d.dayIndex + ' · ' + fmtDate(d.date), d.items.filter((i) => i.place).map((i) => i.place.id)));
-    return { title: plan.trip.destination + ' ' + fmtDate(plan.trip.startDate) + ' – ' + fmtDate(plan.trip.endDate), sub: 'Lịch đang soạn', groups };
+    return { title: destLabel(plan.trip) + ' ' + fmtDate(plan.trip.startDate) + ' – ' + fmtDate(plan.trip.endDate), sub: 'Lịch đang soạn', groups };
   }
   const s = store.trips.find((x) => x.id === key);
   if (!s) return { title: '', sub: '', groups };
   s.days.forEach((d) => take('Ngày ' + d.dayIndex + ' · ' + fmtDate(d.date), d.items.filter((i) => i.placeId).map((i) => i.placeId)));
-  return { title: s.trip.destination + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate), sub: daysBetween(s.trip.startDate, s.trip.endDate) + ' ngày · ' + RULES[s.trip.audience].label, groups };
+  return { title: destLabel(s.trip) + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate), sub: daysBetween(s.trip.startDate, s.trip.endDate) + ' ngày · ' + RULES[s.trip.audience].label, groups };
 }
 function momStats(info, key) {
   const places = info.groups.flatMap((g) => g.places);
@@ -1355,7 +1368,7 @@ $('pageBody').addEventListener('click', (e) => {
 });
 
 /* ---------- Lịch trình nổi bật từ cộng đồng (mẫu) ---------- */
-const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: f.destination || 'Đà Nẵng', startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
+const featuredTrip = (f) => { const start = addDays(todayStr(), 7); return { destination: f.destination || 'Đà Nẵng', alsoVisit: f.alsoVisit, startDate: start, endDate: addDays(start, f.days.length - 1), people: f.people, budget: f.budget, audience: f.audience, hasKids: f.audience === 'gia_dinh', hasElderly: false, styles: f.styles }; };
 function buildFeaturedPlan(f) {
   const trip = featuredTrip(f);
   return { trip, audienceLabel: RULES[f.audience].label, warnings: [], days: f.days.map((ids, i) => ({ date: addDays(trip.startDate, i), dayIndex: i + 1, items: ids.map((id) => placeItem(DATA.places.find((x) => x.id === id))) })) };
@@ -1368,7 +1381,7 @@ function featuredStats(f) {
 // Ảnh bìa lịch trình nổi bật: dùng ảnh thật của một điểm trong lịch (ảnh của chủ dự án hoặc ảnh Wikimedia có giấy phép)
 const featuredCover = (f) => DATA.places.find((p) => p.id === f.cover && p.image) || null;
 function renderFeatured() {
-  $('homeFeatured').innerHTML = FEATURED.featured.filter((f) => (f.destination || 'Đà Nẵng') === destName).map((f) => {
+  $('homeFeatured').innerHTML = FEATURED.featured.filter((f) => (f.destination || 'Đà Nẵng') === destName || (f.alsoVisit || []).includes(destName)).map((f) => {
     const st = featuredStats(f);
     const cv = featuredCover(f);
     return '<button type="button" class="pcard fcard' + (cv ? ' has-cover' : '') + '" data-featured="' + f.id + '">' + (cv ? '<img class="fc-img" src="' + esc(cv.image) + '" alt="" loading="lazy">' : sceneSvg({ scene: f.scene, name: f.title })) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
@@ -1434,7 +1447,7 @@ $('notifBack').addEventListener('click', () => go(notifFrom && notifFrom !== 'no
 function renderHome() {
   renderGu(); renderFeatured();
   const ts = trackTrip();
-  $('homeTrack').innerHTML = ts ? '<button type="button" class="track-banner" data-go="track"><span><b>Đang theo dõi chuyến đi</b><span>' + esc(ts.trip.destination) + ' · ' + Object.keys(store.track.visited).length + ' điểm đã qua</span></span><span>Mở ›</span></button>' : '';
+  $('homeTrack').innerHTML = ts ? '<button type="button" class="track-banner" data-go="track"><span><b>Đang theo dõi chuyến đi</b><span>' + esc(destLabel(ts.trip)) + ' · ' + Object.keys(store.track.visited).length + ' điểm đã qua</span></span><span>Mở ›</span></button>' : '';
   const pt = store.points.balance;
   $('homePts').textContent = pt + ' ' + tr('điểm');
   // Một ngày, bốn nhịp
@@ -1450,7 +1463,7 @@ function renderHome() {
   // Đã lưu gần đây
   const r = store.trips.slice(0, 5);
   $('homeRecent').innerHTML = r.length ? '<div class="sec-h"><h2 class="h2">Đã lưu gần đây</h2><button type="button" data-go="trips">Tất cả</button></div><div class="cards" style="margin-top:12px">' +
-    r.map((x) => '<button type="button" class="pcard" style="width:220px" data-trip="' + x.id + '"><div><b>' + esc(x.trip.destination) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</b><span>' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</span><span style="display:block;color:var(--fg);font-weight:600">' + money(x.total) + '</span></div></button>').join('') + '</div>' : '';
+    r.map((x) => '<button type="button" class="pcard" style="width:220px" data-trip="' + x.id + '"><div><b>' + esc(destLabel(x.trip)) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</b><span>' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</span><span style="display:block;color:var(--fg);font-weight:600">' + money(x.total) + '</span></div></button>').join('') + '</div>' : '';
   // Ưu đãi
   $('homeDeals').innerHTML = searchPromos(PROMOS.promos, { today: todayStr() }).slice(0, 5).map((p) => '<button type="button" class="deal" data-page="promos"><b>' + esc(p.title) + '</b><span>' + esc(p.target.name || tr(TYPE_NAME[p.target.type])) + ' · mẫu</span>' + (p.code ? '<em>' + esc(p.code) + '</em>' : '') + '</button>').join('');
   // Tiến độ điểm thưởng
@@ -1486,7 +1499,7 @@ function renderTrips() {
   el.innerHTML = '<button type="button" class="btn" data-go="create" style="align-self:flex-start">+ Lịch trình mới</button><div class="chips" role="group" aria-label="Lọc lịch trình"><button type="button" data-tripfilter="all" aria-pressed="' + (tripFilter === 'all') + '">Tất cả</button><button type="button" data-tripfilter="fav" aria-pressed="' + (tripFilter === 'fav') + '">Yêu thích (' + favN + ')</button></div>' +
     (list.length ? list.map((s) => {
       const t = s.trip, armed = armedTrip === s.id, fav = store.favorites.includes(s.id);
-      return '<div class="panel trip"><div class="trip-top"><h3>' + esc(t.destination) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
+      return '<div class="panel trip"><div class="trip-top"><h3>' + esc(destLabel(t)) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
         '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-trackstart="' + s.id + '">' + (store.track && store.track.tripId === s.id ? 'Đang đi' : 'Bắt đầu chuyến') + '</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" data-attach="' + s.id + '">Tệp</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
     }).join('') : '<div class="panel empty"><b>Chưa có lịch trình yêu thích</b>Bấm ♥ ở một lịch trình để đánh dấu.</div>');
 }

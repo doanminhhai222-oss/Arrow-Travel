@@ -394,5 +394,10 @@ export const EN = {
   "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Sapa places are real, but coordinates and prices are estimates; hotels are sample data.",
   "Ninh Bình": "Ninh Binh",
   "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "One day in Ninh Binh, four different paces",
-  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Ninh Binh places are real, but coordinates and prices are estimates; hotels are sample data."
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "Ninh Binh places are real, but coordinates and prices are estimates; hotels are sample data.",
+  "Kết hợp thêm Hội An": "Combine Hoi An",
+  "Kết hợp thêm Đà Nẵng": "Combine Da Nang",
+  "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "Each day stays in one city, the two are about 30 km apart. Best from 3 days.",
+  "Đà Nẵng + Hội An": "Da Nang + Hoi An",
+  "Hội An + Đà Nẵng": "Hoi An + Da Nang"
 };

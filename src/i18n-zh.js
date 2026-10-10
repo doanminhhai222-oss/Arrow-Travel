@@ -394,5 +394,10 @@ export const ZH = {
   "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "沙巴的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
   "Ninh Bình": "宁平",
   "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "宁平的一天，四种节奏",
-  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "宁平的景点是真实存在的，坐标和价格为估算；酒店为示例数据。"
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "宁平的景点是真实存在的，坐标和价格为估算；酒店为示例数据。",
+  "Kết hợp thêm Hội An": "加上会安",
+  "Kết hợp thêm Đà Nẵng": "加上岘港",
+  "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "每天只在一个城市，两地相距约30公里。建议至少3天。",
+  "Đà Nẵng + Hội An": "岘港 + 会安",
+  "Hội An + Đà Nẵng": "会安 + 岘港"
 };

@@ -31,12 +31,16 @@ export function addDays(date, n) {
   return t.toISOString().slice(0, 10);
 }
 
+// Các thành phố của chuyến đi: điểm đến chính và (tuỳ chọn) điểm đến kết hợp, ví dụ Đà Nẵng + Hội An
+export const tripCities = (trip) => [trip.destination || 'Đà Nẵng', ...(trip.alsoVisit || [])];
+
 // Bước 1-2: lọc địa điểm
 export function filterPlaces(places, trip) {
   const cap = BUDGET_CAP[trip.budget] ?? Infinity;
+  const cities = tripCities(trip);
   const warnings = [];
   const ok = places.filter((p) => {
-    if ((p.city || 'Đà Nẵng') !== (trip.destination || 'Đà Nẵng')) return false; // mỗi điểm đến có danh sách riêng
+    if (!cities.includes(p.city || 'Đà Nẵng')) return false; // mỗi điểm đến có danh sách riêng
     if (p.status === 'closed' || p.custom) return false; // địa điểm người dùng tự thêm không dùng để tự xếp lịch
     if (!p.audiences.includes(trip.audience)) return false;
     if (trip.hasKids && !p.kids) return false;
@@ -166,9 +170,15 @@ export function buildItinerary(trip, data, rules) {
   const nDays = daysBetween(trip.startDate, trip.endDate);
   const visited = new Set();
   const days = [];
+  const cities = tripCities(trip);
+  // Nhiều thành phố: mỗi ngày ở trọn một thành phố (nửa đầu thành phố chính, nửa sau thành phố kết hợp), không chạy qua lại trong ngày
+  const cityOfDay = (i) => (cities.length < 2 || nDays < 2 ? cities[0] : cities[Math.min(cities.length - 1, Math.floor((i * cities.length) / nDays))]);
+  if (cities.length > 1 && nDays < 2) warnings.push(`Chuyến 1 ngày chỉ đủ cho ${cities[0]}, hãy chọn từ 2 ngày để đi cả ${cities.slice(1).join(', ')}.`);
   for (let i = 0; i < nDays; i++) {
-    const day = planDay(addDays(trip.startDate, i), places, rule, trip, visited);
-    day.dayIndex = i + 1;
+    const city = cityOfDay(i);
+    const dayPool = cities.length > 1 ? places.filter((p) => (p.city || 'Đà Nẵng') === city) : places;
+    const day = planDay(addDays(trip.startDate, i), dayPool, rule, trip, visited);
+    day.dayIndex = i + 1; day.city = city;
     if (day.placeCount === 0) warnings.push(`Ngày ${i + 1}: không còn đủ địa điểm phù hợp.`);
     days.push(day);
   }

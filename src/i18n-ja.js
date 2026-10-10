@@ -394,5 +394,10 @@ export const JA = {
   "Địa điểm Sa Pa là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "サパのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。",
   "Ninh Bình": "ニンビン",
   "Một ngày ở Ninh Bình, bốn nhịp khác nhau": "ニンビンの一日、四つのペース",
-  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ニンビンのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。"
+  "Địa điểm Ninh Bình là nơi có thật, toạ độ và giá là ước lượng; khách sạn là dữ liệu mẫu.": "ニンビンのスポットは実在しますが、座標と価格は概算で、ホテルはサンプルデータです。",
+  "Kết hợp thêm Hội An": "ホイアンも組み合わせる",
+  "Kết hợp thêm Đà Nẵng": "ダナンも組み合わせる",
+  "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "1日につき1都市で、2か所は約30km離れています。3日以上がおすすめ。",
+  "Đà Nẵng + Hội An": "ダナン + ホイアン",
+  "Hội An + Đà Nẵng": "ホイアン + ダナン"
 };

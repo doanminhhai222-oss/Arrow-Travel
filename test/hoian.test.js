@@ -277,3 +277,22 @@ for (const d of NEWDEST) {
     }
   });
 }
+
+// ---- Kết hợp Đà Nẵng + Hội An trong một lịch trình nhiều ngày
+test('Đà Nẵng + Hội An: mỗi ngày ở trọn một thành phố, khách sạn của cả hai nơi', () => {
+  const t = base({ destination: 'Đà Nẵng', alsoVisit: ['Hội An'], endDate: '2026-10-16', audience: 'cap_doi' });
+  const p = buildItinerary(t, data, rules);
+  assert.equal(p.days.length, 4);
+  assert.deepEqual(p.days.map((d) => d.city), ['Đà Nẵng', 'Đà Nẵng', 'Hội An', 'Hội An']);
+  for (const d of p.days) {
+    const used = d.items.filter((i) => i.place);
+    assert.ok(used.length > 0, 'ngày ' + d.dayIndex);
+    assert.ok(used.every((i) => i.place.city === d.city), 'ngày ' + d.dayIndex + ' lẫn thành phố');
+  }
+  const cities = new Set(hotelsFor(opts.hotels, t).map((h) => h.city));
+  assert.ok(cities.has('Đà Nẵng') && cities.has('Hội An'));
+  const one = buildItinerary(base({ destination: 'Hội An', alsoVisit: ['Đà Nẵng'], endDate: '2026-10-13' }), data, rules);
+  assert.ok(one.warnings.some((w) => w.includes('1 ngày')) && one.days[0].city === 'Hội An');
+  const solo = buildItinerary(base({ destination: 'Đà Nẵng' }), data, rules);
+  assert.ok(solo.days.every((d) => d.city === undefined || d.city === 'Đà Nẵng'));
+});

@@ -1,5 +1,5 @@
 // Ước tính chi phí chuyến đi sau khi chốt lịch trình. Giá lấy từ data/travel-options.json (dữ liệu mẫu).
-import { daysBetween } from './scheduler.js';
+import { daysBetween, tripCities } from './scheduler.js';
 import { money } from './format.js';
 
 export const FOOD_PER_PERSON_DAY = { tiet_kiem: 150000, vua_phai: 350000, thoai_mai: 700000 }; // ăn uống mỗi người mỗi ngày
@@ -7,7 +7,7 @@ export const LOCAL_TRANSPORT_PER_KM = 10000; // taxi / xe công nghệ trong th�
 
 export function hotelsFor(hotels, trip) {
   return hotels
-    .filter((h) => (h.city || 'Đà Nẵng') === (trip.destination || 'Đà Nẵng') && (!trip.hasKids || h.kids) && (!trip.hasElderly || h.elderly))
+    .filter((h) => tripCities(trip).includes(h.city || 'Đà Nẵng') && (!trip.hasKids || h.kids) && (!trip.hasElderly || h.elderly))
     .sort((a, b) => a.pricePerRoom - b.pricePerRoom);
 }
 
