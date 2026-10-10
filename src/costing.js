@@ -25,7 +25,7 @@ export function defaultFlight(flights, trip) {
 export const TICKET_GROUPS = { 'pho-co': { label: 'Vé tham quan phố cổ Hội An', price: 120000 } };
 
 // plan: kết quả buildItinerary (có thể đã chỉnh sửa). flight = null nghĩa là tự túc, không tính vé máy bay.
-export function estimateCost({ trip, plan, flight, hotel, hotel2 = null, transport = null }) {
+export function estimateCost({ trip, plan, flight, hotel, hotels = null, transport = null }) {
   const people = trip.people;
   const nDays = daysBetween(trip.startDate, trip.endDate);
   const nights = Math.max(0, nDays - 1);
@@ -37,13 +37,14 @@ export function estimateCost({ trip, plan, flight, hotel, hotel2 = null, transpo
   const lines = [];
   if (flight) lines.push({ key: 'flight', label: 'Vé máy bay khứ hồi', amount: flight.priceRoundTrip * people, note: `${people} người × ${money(flight.priceRoundTrip)}` });
   // chuyến kết hợp nhiều thành phố: mỗi thành phố một khách sạn, số đêm lấy theo từng lần lưu trú
-  for (const [h, key] of [[hotel, 'hotel'], [hotel2, 'hotel2']]) {
-    const n = h && h.nights != null ? h.nights : nights;
-    if (!h || n <= 0) continue;
+  const stayList = (hotels || [hotel]).filter(Boolean);
+  stayList.forEach((h, k) => {
+    const n = h.nights != null ? h.nights : nights, key = k ? 'hotel' + (k + 1) : 'hotel';
+    if (n <= 0) return;
     const rooms = Math.ceil(people / h.capacity);
     const perRoom = h.stayPerRoom ?? h.pricePerRoom * n; // giá từng đêm đã tính theo ngày nếu có
-    lines.push({ key, label: hotel2 ? 'Khách sạn · ' + (h.city || '') : 'Khách sạn', amount: perRoom * rooms, note: `${rooms} phòng × ${n} đêm` });
-  }
+    lines.push({ key, label: stayList.length > 1 ? 'Khách sạn · ' + (h.city || '') : 'Khách sạn', amount: perRoom * rooms, note: `${rooms} phòng × ${n} đêm` });
+  });
   lines.push({ key: 'food', label: 'Ăn uống', amount: (FOOD_PER_PERSON_DAY[trip.budget] ?? 0) * people * nDays, note: `${people} người × ${nDays} ngày` });
   lines.push({ key: 'tickets', label: 'Vé tham quan', amount: tickets, note: `${items.length} điểm` + (groups.length ? ` (gồm ${groups.map((g) => TICKET_GROUPS[g].label.toLowerCase()).join(', ')})` : '') });
   if (transport && transport.skip) { /* đã có phương tiện riêng: không tính phí di chuyển */ }

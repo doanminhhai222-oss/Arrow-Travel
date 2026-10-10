@@ -162,7 +162,7 @@ test('Hà Nội: lịch trình, khách sạn, sân bay và tuyến bay đúng đ
   assert.ok(list.length >= 3);
   for (const f of list) for (const id of f.days.flat()) {
     const p = data.places.find((x) => x.id === id);
-    assert.ok(p && p.city === 'Hà Nội' && p.audiences.includes(f.audience), f.id + ': ' + id);
+    assert.ok(p && [f.destination, ...(f.alsoVisit || [])].includes(p.city) && p.audiences.includes(f.audience), f.id + ': ' + id);
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
   }
 });
@@ -196,7 +196,7 @@ test('Nha Trang: dữ liệu hợp lệ, lịch trình, khách sạn, sân bay C
   assert.ok(list.length >= 3);
   for (const f of list) for (const id of f.days.flat()) {
     const p = data.places.find((x) => x.id === id);
-    assert.ok(p && p.city === 'Nha Trang' && p.audiences.includes(f.audience), f.id + ': ' + id);
+    assert.ok(p && [f.destination, ...(f.alsoVisit || [])].includes(p.city) && p.audiences.includes(f.audience), f.id + ': ' + id);
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
   }
 });
@@ -230,7 +230,7 @@ test('Đà Lạt: dữ liệu hợp lệ, lịch trình, khách sạn, sân bay 
   assert.ok(list.length >= 3);
   for (const f of list) for (const id of f.days.flat()) {
     const p = data.places.find((x) => x.id === id);
-    assert.ok(p && p.city === 'Đà Lạt' && p.audiences.includes(f.audience), f.id + ': ' + id);
+    assert.ok(p && [f.destination, ...(f.alsoVisit || [])].includes(p.city) && p.audiences.includes(f.audience), f.id + ': ' + id);
     if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
   }
 });
@@ -272,7 +272,7 @@ for (const d of NEWDEST) {
     assert.ok(list.length >= 3);
     for (const f of list) for (const id of f.days.flat()) {
       const p = data.places.find((x) => x.id === id);
-      assert.ok(p && p.city === d.city && p.audiences.includes(f.audience), f.id + ': ' + id);
+      assert.ok(p && [f.destination, ...(f.alsoVisit || [])].includes(p.city) && p.audiences.includes(f.audience), f.id + ': ' + id);
       if (f.audience === 'gia_dinh') assert.ok(p.kids, `${f.id}: ${id}`);
     }
   });
@@ -317,7 +317,7 @@ test('Đà Nẵng + Hội An: mỗi thành phố một khách sạn, có chặng
   const inter = legs.filter((l) => l.kind === 'intercity');
   assert.equal(inter.length, 1);
   assert.ok(inter[0].km > 15 && inter[0].km < 45, 'Đà Nẵng – Hội An cách nhau khoảng 30 km, hiện ' + inter[0].km);
-  const cost = estimateCost({ trip: t, plan, flight: null, hotel: h1, hotel2: h2 });
+  const cost = estimateCost({ trip: t, plan, flight: null, hotel: h1, hotels: [h1, h2] });
   const hl = cost.lines.filter((l) => l.key.startsWith('hotel'));
   assert.equal(hl.length, 2);
   assert.ok(hl[0].note.includes('2 đêm') && hl[1].note.includes('1 đêm'));
@@ -326,4 +326,26 @@ test('Đà Nẵng + Hội An: mỗi thành phố một khách sạn, có chặng
   // chuyến một thành phố không đổi
   const one = buildItinerary(base({ destination: 'Hội An' }), data, rules);
   assert.equal(tripLegs(one, {}).filter((l) => l.kind === 'intercity').length, 0);
+});
+
+test('Kết hợp nhiều thành phố: nhóm hợp lệ, thứ tự đi theo khoảng cách, 3 thành phố, cảnh báo thiếu ngày', async () => {
+  const { COMBO_GROUPS, neighborsOf, orderCities, CITY_CENTER } = await import('../src/regions.js');
+  const { tripStays } = await import('../src/stays.js');
+  for (const g of COMBO_GROUPS) for (const c of g) {
+    assert.ok(CITY_CENTER[c], c);
+    assert.ok(data.places.some((p) => p.city === c), c + ' chưa có địa điểm');
+    assert.equal(neighborsOf(c).length, g.length - 1);
+  }
+  assert.deepEqual(neighborsOf('Phú Quốc'), []);
+  assert.deepEqual(orderCities('Đà Nẵng', ['Huế', 'Hội An']), ['Hội An', 'Huế']);
+  assert.deepEqual(orderCities('Hà Nội', ['Sa Pa', 'Ninh Bình']), ['Ninh Bình', 'Sa Pa']);
+  const t = base({ destination: 'Đà Nẵng', alsoVisit: ['Hội An', 'Huế'], endDate: '2026-10-17', audience: 'cap_doi' });
+  const p = buildItinerary(t, data, rules);
+  assert.deepEqual(p.days.map((d) => d.city), ['Đà Nẵng', 'Đà Nẵng', 'Hội An', 'Hội An', 'Huế']);
+  for (const d of p.days) assert.ok(d.items.some((i) => i.place), 'ngày ' + d.dayIndex);
+  const st = tripStays(p);
+  assert.deepEqual(st.map((s) => [s.city, s.nights]), [['Đà Nẵng', 2], ['Hội An', 2]]);
+  const short = buildItinerary(base({ destination: 'Hà Nội', alsoVisit: ['Ninh Bình', 'Sa Pa'], endDate: '2026-10-14' }), data, rules);
+  assert.ok(short.warnings.some((w) => w.includes('ít nhất 3 ngày')));
+  assert.deepEqual(short.days.map((d) => d.city), ['Hà Nội', 'Ninh Bình']);
 });

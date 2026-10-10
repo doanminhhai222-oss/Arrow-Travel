@@ -399,5 +399,7 @@ export const KO = {
   "Kết hợp thêm Đà Nẵng": "다낭 함께 가기",
   "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "하루에 한 도시만 다니며 두 곳은 약 30km 떨어져 있습니다. 3일 이상 권장.",
   "Đà Nẵng + Hội An": "다낭 + 호이안",
-  "Hội An + Đà Nẵng": "호이안 + 다낭"
+  "Hội An + Đà Nẵng": "호이안 + 다낭",
+  "Kết hợp thêm": "함께 방문",
+  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "하루에 한 도시만 다니며 도시마다 호텔을 하나 고릅니다. 각 도시에 2일 이상 권장합니다."
 };

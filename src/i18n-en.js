@@ -399,5 +399,7 @@ export const EN = {
   "Kết hợp thêm Đà Nẵng": "Combine Da Nang",
   "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "Each day stays in one city, the two are about 30 km apart. Best from 3 days.",
   "Đà Nẵng + Hội An": "Da Nang + Hoi An",
-  "Hội An + Đà Nẵng": "Hoi An + Da Nang"
+  "Hội An + Đà Nẵng": "Hoi An + Da Nang",
+  "Kết hợp thêm": "Also visit",
+  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "Each day stays in one city, with one hotel per city. Allow at least 2 days for each place."
 };

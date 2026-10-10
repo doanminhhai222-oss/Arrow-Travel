@@ -399,5 +399,7 @@ export const JA = {
   "Kết hợp thêm Đà Nẵng": "ダナンも組み合わせる",
   "Mỗi ngày ở trọn một thành phố, hai nơi cách nhau khoảng 30 km. Nên chọn từ 3 ngày.": "1日につき1都市で、2か所は約30km離れています。3日以上がおすすめ。",
   "Đà Nẵng + Hội An": "ダナン + ホイアン",
-  "Hội An + Đà Nẵng": "ホイアン + ダナン"
+  "Hội An + Đà Nẵng": "ホイアン + ダナン",
+  "Kết hợp thêm": "あわせて訪れる",
+  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "1日につき1都市で、都市ごとにホテルを1つ選びます。各地に2日以上をおすすめします。"
 };

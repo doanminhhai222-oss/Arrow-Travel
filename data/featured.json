@@ -895,6 +895,129 @@
         ]
       ],
       "cover": "my-khe"
+    },
+    {
+      "id": "f-hnnb-couple",
+      "destination": "Hà Nội",
+      "alsoVisit": [
+        "Ninh Bình"
+      ],
+      "title": "Hà Nội + Ninh Bình 4 ngày cho cặp đôi: phố cổ, Tràng An và Hang Múa",
+      "author": "Thảo Vy (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "van_hoa",
+        "thien_nhien"
+      ],
+      "scene": "boat",
+      "desc": "Hai ngày đầu ở Hà Nội: Hồ Gươm, phố cổ, Văn Miếu. Hai ngày sau chuyển xuống Ninh Bình: thuyền Tràng An, Hang Múa lúc hoàng hôn.",
+      "days": [
+        [
+          "ho-hoan-kiem",
+          "pho-co-ha-noi"
+        ],
+        [
+          "van-mieu",
+          "chua-mot-cot"
+        ],
+        [
+          "trang-an",
+          "de-nui-ninh-binh",
+          "hang-mua"
+        ],
+        [
+          "co-do-hoa-lu",
+          "com-chay-ninh-binh"
+        ]
+      ],
+      "cover": "trang-an"
+    },
+    {
+      "id": "f-ntdl-friends",
+      "destination": "Nha Trang",
+      "alsoVisit": [
+        "Đà Lạt"
+      ],
+      "title": "Nha Trang + Đà Lạt 4 ngày cho nhóm bạn: biển rồi lên núi",
+      "author": "Tiến Đạt (mẫu)",
+      "audience": "nhom_ban",
+      "people": 5,
+      "budget": "tiet_kiem",
+      "styles": [
+        "thien_nhien",
+        "check_in"
+      ],
+      "scene": "field",
+      "desc": "Hai ngày đầu ở Nha Trang: tour đảo, biển, hải sản. Hai ngày sau lên Đà Lạt: hồ Xuân Hương, chợ đêm, Crazy House và săn mây.",
+      "days": [
+        [
+          "tour-4-dao-nha-trang",
+          "hai-san-bo-ke"
+        ],
+        [
+          "bien-nha-trang",
+          "hon-chong",
+          "thap-tram-huong"
+        ],
+        [
+          "ho-xuan-huong",
+          "crazy-house",
+          "cho-dem-da-lat"
+        ],
+        [
+          "doi-che-cau-dat",
+          "thac-datanla",
+          "lau-ga-la-e"
+        ]
+      ],
+      "cover": "ho-xuan-huong"
+    },
+    {
+      "id": "f-mien-trung-couple",
+      "destination": "Đà Nẵng",
+      "alsoVisit": [
+        "Hội An",
+        "Huế"
+      ],
+      "title": "Miền Trung 5 ngày cho cặp đôi: Đà Nẵng, Hội An và Huế",
+      "author": "Hà My (mẫu)",
+      "audience": "cap_doi",
+      "people": 2,
+      "budget": "thoai_mai",
+      "styles": [
+        "van_hoa",
+        "thu_gian"
+      ],
+      "scene": "lantern",
+      "desc": "Hai ngày đầu Đà Nẵng: biển Mỹ Khê, Linh Ứng, cầu Rồng. Hai ngày sau Hội An: phố cổ, đèn lồng, biển An Bàng. Ngày cuối ra Huế: Đại Nội, chùa Thiên Mụ, du thuyền sông Hương.",
+      "days": [
+        [
+          "my-khe",
+          "linh-ung",
+          "cau-rong"
+        ],
+        [
+          "bao-tang-cham",
+          "cau-tinh-yeu"
+        ],
+        [
+          "chua-cau",
+          "pho-co-hoi-an",
+          "tha-hoa-dang"
+        ],
+        [
+          "bien-an-bang",
+          "xuong-den-long"
+        ],
+        [
+          "dai-noi-hue",
+          "chua-thien-mu",
+          "song-huong-thuyen-rong"
+        ]
+      ],
+      "cover": "pho-co-hoi-an"
     }
   ]
 }

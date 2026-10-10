@@ -172,8 +172,8 @@ export function buildItinerary(trip, data, rules) {
   const days = [];
   const cities = tripCities(trip);
   // Nhiều thành phố: mỗi ngày ở trọn một thành phố (nửa đầu thành phố chính, nửa sau thành phố kết hợp), không chạy qua lại trong ngày
-  const cityOfDay = (i) => (cities.length < 2 || nDays < 2 ? cities[0] : cities[Math.min(cities.length - 1, Math.floor((i * cities.length) / nDays))]);
-  if (cities.length > 1 && nDays < 2) warnings.push(`Chuyến 1 ngày chỉ đủ cho ${cities[0]}, hãy chọn từ 2 ngày để đi cả ${cities.slice(1).join(', ')}.`);
+  const cityOfDay = (i) => (cities.length < 2 || nDays < 2 ? cities[0] : nDays < cities.length ? cities[i] : cities[Math.floor((i * cities.length) / nDays)]);
+  if (cities.length > 1 && nDays < cities.length) warnings.push(`Chuyến ${nDays} ngày chỉ đủ cho ${cities.slice(0, nDays).join(' và ')}, hãy chọn ít nhất ${cities.length} ngày để đi cả ${cities.join(', ')}.`);
   for (let i = 0; i < nDays; i++) {
     const city = cityOfDay(i);
     const dayPool = cities.length > 1 ? places.filter((p) => (p.city || 'Đà Nẵng') === city) : places;
