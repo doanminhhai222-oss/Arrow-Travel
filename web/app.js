@@ -5,6 +5,7 @@ import { hotelDetailHtml } from '../src/hoteldetail.js';
 import { fetchPlaceReviews } from '../src/google.js';
 import { vietQrPayload, transferContent, bookingCode, canCharge } from '../src/payment.js';
 import { transportOptions } from '../src/transport.js';
+import { tripStays, dayCity } from '../src/stays.js';
 import { straightKm, fmtDist, reachedStop, catalogNearby, fetchOverpass, mapsSearchUrl, mapsDirectionsUrl, mapsPlaceUrl, NEARBY_CATS } from '../src/nearby.js';
 import { trackMapSvg } from '../src/trackmap.js';
 import { parseMapsInput, mapsSearchLink } from '../src/gmaps.js';
@@ -67,7 +68,7 @@ function updateBadge() {
 
 /* ---------- Trạng thái lịch trình đang soạn ---------- */
 let aud = 'nhom_ban', plan = null, rule = null, pool = [], swapOpen = null, undoStack = [];
-let finalized = false, originId = 'ho-chi-minh', flightOut = null, flightBack = null, hotelId = null, transportId = null, ownTransport = false, currentTripId = null, savedOk = false;
+let finalized = false, originId = 'ho-chi-minh', flightOut = null, flightBack = null, hotelId = null, hotelId2 = null, transportId = null, ownTransport = false, currentTripId = null, savedOk = false;
 let armedTrip = null, armedClear = false;
 let payBooking = null;
 let airlineFilter = [], flightSort = 'price', hotelStars = [], hotelSort = 'price';
@@ -179,7 +180,7 @@ document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('clic
 $('form').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(formTimer); run(true); });
 
 function resetPlanState() {
-  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; bookTab = null; $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
+  swapOpen = null; undoStack = []; dirtyEdits = false; dayTab = 'all'; bookTab = null; $('applyHint').hidden = true; finalized = false; flightOut = null; flightBack = null; hotelId = null; hotelId2 = null; airlineFilter = []; hotelStars = []; needFlight = true; needHotel = true; roomByHotel = {}; transportId = null; ownTransport = false; currentTripId = null; savedOk = false;
 }
 function run(collapse = false) {
   const trip = { destination: destName, startDate: $('start').value, endDate: $('end').value, people: +$('people').value || 1,
@@ -293,34 +294,40 @@ function flightLists() {
   const mk = (direction, date) => searchFlights({ data: flightsData(), originId, date, direction, people: t.people, today: todayStr() });
   return { out: mk('out', t.startDate), back: mk('back', t.endDate) };
 }
-function hotelList() {
+// Khách sạn theo từng lần lưu trú: chuyến một thành phố có một lần, chuyến kết hợp (Đà Nẵng + Hội An) mỗi thành phố một lần
+function hotelList(stay) {
   const t = plan.trip;
-  return searchHotels({ hotels: hotelsFor(OPTS.hotels, t), checkIn: t.startDate, checkOut: t.endDate, people: t.people, roomByHotel });
+  return searchHotels({ hotels: hotelsFor(OPTS.hotels, { ...t, destination: stay.city, alsoVisit: undefined }), checkIn: stay.checkIn, checkOut: stay.checkOut, people: t.people, roomByHotel });
+}
+function pickHotel(list, cur) {
+  if (list.some((x) => x.id === cur && x.available)) return cur;
+  const ok = list.filter((x) => x.available).sort((a, b) => a.total - b.total);
+  const pick = ok.find((x) => x.tier === plan.trip.budget) || ok[0];
+  return pick ? pick.id : null;
 }
 // Giữ lựa chọn hiện tại nếu còn hợp lệ, nếu không chọn mặc định (chuyến rẻ nhất, khách sạn hợp ngân sách)
-function ensureChoices(fl, hl) {
+function ensureChoices(fl, hl, hl2) {
   if (fl) {
     if (!(flightOut && fl.out.some((f) => f.id === flightOut.id && !f.soldOut))) flightOut = cheapestFlight(fl.out);
     if (!(flightBack && fl.back.some((f) => f.id === flightBack.id && !f.soldOut))) flightBack = cheapestFlight(fl.back);
   } else { flightOut = null; flightBack = null; }
-  if (!hl.some((x) => x.id === hotelId && x.available)) {
-    const ok = hl.filter((x) => x.available).sort((a, b) => a.total - b.total);
-    const pick = ok.find((x) => x.tier === plan.trip.budget) || ok[0];
-    hotelId = pick ? pick.id : null;
-  }
+  hotelId = pickHotel(hl, hotelId);
+  hotelId2 = hl2 ? pickHotel(hl2, hotelId2) : null;
 }
 function calc() {
   const t = plan.trip, nDays = daysBetween(t.startDate, t.endDate);
-  const fl = flightLists(), hl = nDays > 1 && needHotel ? hotelList() : [];
-  ensureChoices(fl, hl);
+  const stays = nDays > 1 && needHotel ? tripStays(plan) : [];
+  const fl = flightLists(), hl = stays[0] ? hotelList(stays[0]) : [], hl2 = stays[1] ? hotelList(stays[1]) : null;
+  ensureChoices(fl, hl, hl2);
   const flight = flightOut && flightBack ? { priceRoundTrip: flightOut.priceOne + flightBack.priceOne } : null;
-  const hotel = hl.find((x) => x.id === hotelId) || null;
-  const tp = transportOptions({ trip: t, plan, hotel, flight, modes: TRANSPORT.modes, airport: airportOf(t.destination), nDays });
+  const hotel = hl.find((x) => x.id === hotelId) || null, hotel2 = hl2 ? hl2.find((x) => x.id === hotelId2) || null : null;
+  const byCity = {}; if (hotel) byCity[stays[0].city] = hotel; if (hotel2) byCity[stays[1].city] = hotel2;
+  const tp = transportOptions({ trip: t, plan, hotel, hotels: hotel2 ? byCity : null, flight, modes: TRANSPORT.modes, airport: airportOf(t.destination), nDays });
   if (!tp.options.some((x) => x.id === transportId && x.suitable)) transportId = tp.defaultId;
   const selected = tp.options.find((x) => x.id === transportId) || null;
-  const cost = estimateCost({ trip: t, plan, flight, hotel, transport: ownTransport ? { skip: true } : selected });
-  const flightsTotal = flight ? flight.priceRoundTrip * t.people : 0, hotelTotal = hotel ? hotel.total : 0;
-  return { tp, selected, cost, fl, hl, flight, hotel, flightsTotal, hotelTotal, payAmount: flightsTotal + hotelTotal };
+  const cost = estimateCost({ trip: t, plan, flight, hotel, hotel2, transport: ownTransport ? { skip: true } : selected });
+  const flightsTotal = flight ? flight.priceRoundTrip * t.people : 0, hotelTotal = (hotel ? hotel.total : 0) + (hotel2 ? hotel2.total : 0);
+  return { tp, selected, cost, fl, hl, hl2, stays, flight, hotel, hotel2, flightsTotal, hotelTotal, payAmount: flightsTotal + hotelTotal };
 }
 
 function flightCard(f, act, selectedId, people) {
@@ -353,15 +360,17 @@ function flightsHtml(c) {
 function hotelsHtml(c) {
   const t = plan.trip;
   const keep = (x) => hotelStars.length === 0 || hotelStars.includes(x.stars);
-  const list = sortHotels(c.hl.filter(keep), hotelSort);
-  let h = '<p class="hint">Nhận phòng ' + fmtDate(t.startDate) + ' · trả phòng ' + fmtDate(t.endDate) + ' (theo ngày đã chọn). Phòng trống và giá là dữ liệu mẫu.</p>';
+  let h = (c.hl2 ? '<p class="hint">Chuyến kết hợp nhiều thành phố: chọn một khách sạn cho từng thành phố. Phòng trống và giá là dữ liệu mẫu.</p>' : '<p class="hint">Nhận phòng ' + fmtDate(t.startDate) + ' · trả phòng ' + fmtDate(t.endDate) + ' (theo ngày đã chọn). Phòng trống và giá là dữ liệu mẫu.</p>');
   h += '<div class="seg" role="group" aria-label="Hạng sao" style="margin:8px 0"><button type="button" data-act="hstar" data-id="all" aria-pressed="' + (hotelStars.length === 0) + '">Mọi hạng</button>' +
     [2, 3, 4, 5].map((s) => '<button type="button" data-act="hstar" data-id="' + s + '" aria-pressed="' + hotelStars.includes(s) + '">' + s + ' sao</button>').join('') + '</div>';
   h += '<label for="hsort">Sắp xếp</label><select id="hsort"><option value="price"' + (hotelSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="rating"' + (hotelSort === 'rating' ? ' selected' : '') + '>Đánh giá cao nhất</option></select>';
-  h += '<div class="opts" style="margin-top:8px">' + (list.map((x) =>
-    '<div class="opt-wrap"><button type="button" class="opt" data-act="hotel" data-id="' + x.id + '" aria-pressed="' + (x.id === hotelId) + '"' + (x.available ? '' : ' disabled aria-disabled="true"') + '><b>' + esc(x.name) + (hotelPromo(x.stars) ? ' <span class="pill">Khuyến mãi</span>' : '') + '</b>' +
+  const optsHtml = (list, selId, stay) => '<div class="opts" style="margin-top:8px">' + (list.map((x) =>
+    '<div class="opt-wrap"><button type="button" class="opt" data-act="hotel" data-stay="' + stay + '" data-id="' + x.id + '" aria-pressed="' + (x.id === selId) + '"' + (x.available ? '' : ' disabled aria-disabled="true"') + '><b>' + esc(x.name) + (hotelPromo(x.stars) ? ' <span class="pill">Khuyến mãi</span>' : '') + '</b>' +
     '<span>' + x.stars + ' sao · ' + esc(x.area) + ' · ' + x.rating.toFixed(1) + '/5 ★ (' + x.reviewCount + ')' + '</span><span>' + x.amenities.map(esc).join(' · ') + '</span>' +
     (x.available ? '<span>' + esc(x.room.name) + ' · ' + x.rooms + ' phòng × ' + x.nights + ' đêm · trung bình ' + money(x.avgNight) + '/phòng/đêm</span><span class="pr">' + money(x.total) + ' cả kỳ nghỉ</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button><button type="button" class="btn" data-act="hoteldetail" data-id="' + x.id + '">Xem chi tiết, loại phòng, đánh giá</button></div>').join('') || '<p class="hint">Không có khách sạn phù hợp bộ lọc.</p>') + '</div>';
+  if (c.hl2) {
+    h += c.stays.slice(0, 2).map((st, k) => '<h4 style="margin:12px 0 4px">Ở ' + esc(st.city) + ' · nhận phòng ' + fmtDate(st.checkIn) + ' · trả phòng ' + fmtDate(st.checkOut) + ' (' + st.nights + ' đêm)</h4>' + optsHtml(sortHotels((k ? c.hl2 : c.hl).filter(keep), hotelSort), k ? hotelId2 : hotelId, k)).join('');
+  } else h += optsHtml(sortHotels(c.hl.filter(keep), hotelSort), hotelId, 0);
   return h;
 }
 
@@ -388,12 +397,12 @@ function finalHtml() {
   if (needFlight) h += '<label for="origin" style="margin-top:12px">Khởi hành từ</label><select id="origin">' + tripOrigins().map((x) => '<option value="' + x.id + '"' + (x.id === originId ? ' selected' : '') + '>' + esc(x.name) + '</option>').join('') + '</select>';
   const tabs = [];
   if (c.fl) tabs.push({ id: 'flights', title: 'Vé máy bay', summary: flightOut && flightBack ? esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + money(c.flightsTotal) : 'Chưa chọn', body: flightsHtml(c) });
-  if (cost.nights > 0 && needHotel) tabs.push({ id: 'hotel', title: 'Khách sạn', summary: c.hotel ? esc(c.hotel.name) + ' · ' + money(c.hotelTotal) : 'Chưa chọn · ' + cost.nights + ' đêm', body: hotelsHtml(c) });
+  if (cost.nights > 0 && needHotel) tabs.push({ id: 'hotel', title: 'Khách sạn', summary: c.hotel ? esc(c.hotel.name) + (c.hotel2 ? ' + ' + esc(c.hotel2.name) : '') + ' · ' + money(c.hotelTotal) : 'Chưa chọn · ' + cost.nights + ' đêm', body: hotelsHtml(c) });
   let tb = '<button type="button" class="opt" data-act="owntransport" aria-pressed="' + ownTransport + '" style="width:100%;margin-bottom:8px"><b>Tôi đã có phương tiện riêng</b><span>Xe cá nhân, người quen đưa đón hoặc xe của khách sạn. Bỏ qua, không tính phí di chuyển.</span></button>';
   if (ownTransport) {
     tb += '<p class="hint">Đã bỏ qua phần di chuyển. Quãng đường của lịch trình là ' + tp.totalKm + ' km nếu bạn cần ước lượng xăng hoặc thời gian.</p>';
   } else {
-    tb += '<p class="hint" style="margin-bottom:8px">Tính theo ' + tp.totalKm + ' km trên ' + tp.legs.length + ' chặng (giữa các điểm' + (c.hotel ? ', từ và về khách sạn' : '') + (c.flight ? ', sân bay' : '') + ').</p><div class="opts">' +
+    tb += '<p class="hint" style="margin-bottom:8px">Tính theo ' + tp.totalKm + ' km trên ' + tp.legs.length + ' chặng (giữa các điểm' + (c.hotel ? ', từ và về khách sạn' : '') + (tp.legs.some((l) => l.kind === 'intercity') ? ', chặng sang thành phố khác' : '') + (c.flight ? ', sân bay' : '') + ').</p><div class="opts">' +
       tp.options.map((x) => '<button type="button" class="opt" data-act="transport" data-id="' + x.id + '" aria-pressed="' + (x.id === transportId) + '"' + (x.suitable ? '' : ' disabled aria-disabled="true"') + '>' +
         (x.tags.length ? '<span class="pill">' + x.tags.map(esc).join(' · ') + '</span>' : '') + '<b>' + esc(x.name) + '</b><span>' + esc(x.brand) + '</span><span>' + x.vehicles + ' xe' + (x.crowded && x.suitable ? ' (nhiều xe, nên chọn xe lớn)' : '') + ' · ' + esc(x.note) + '</span>' +
         (x.suitable ? '<span class="pr">' + money(x.total) + ' · ' + money(x.perPerson) + '/người</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button>').join('') +
@@ -407,7 +416,7 @@ function finalHtml() {
   if (c.payAmount > 0) {
     h += '<div class="paybox"><h3 style="margin-top:0">Chốt chuyến bay và khách sạn</h3><div class="cost">' +
       (c.flightsTotal ? '<div class="cl"><span>Vé máy bay<small>' + esc(flightOut.flightNo) + ' + ' + esc(flightBack.flightNo) + ' · ' + t.people + ' khách</small></span><b>' + money(c.flightsTotal) + '</b></div>' : '') +
-      (c.hotelTotal ? '<div class="cl"><span>Khách sạn<small>' + esc(c.hotel.name) + '</small></span><b>' + money(c.hotelTotal) + '</b></div>' : '') +
+      (c.hotelTotal ? '<div class="cl"><span>Khách sạn<small>' + esc(c.hotel.name) + (c.hotel2 ? ' + ' + esc(c.hotel2.name) : '') + '</small></span><b>' + money(c.hotelTotal) + '</b></div>' : '') +
       '<div class="cl tot"><span>Cần thanh toán</span><b>' + money(c.payAmount) + '</b></div></div>' +
       '<p class="hint">Thanh toán chuyển khoản qua mã QR, chỉ gồm vé máy bay và khách sạn. Ăn uống, vé tham quan, di chuyển trả trực tiếp tại chỗ.</p>' +
       '<button class="go" type="button" data-act="book" style="margin-top:8px">Chốt và thanh toán ' + money(c.payAmount) + '</button></div>';
@@ -420,7 +429,7 @@ function finalHtml() {
 
 function saveTrip() {
   const t = plan.trip, { cost } = calc();
-  const rec = { id: currentTripId || 't' + Date.now().toString(36), savedAt: Date.now(), trip: t, originId, needFlight, needHotel, roomByHotel, flightOut, flightBack, hotelId, transportId, ownTransport, total: cost.total,
+  const rec = { id: currentTripId || 't' + Date.now().toString(36), savedAt: Date.now(), trip: t, originId, needFlight, needHotel, roomByHotel, flightOut, flightBack, hotelId, hotelId2, transportId, ownTransport, total: cost.total,
     days: plan.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex, items: d.items.map((i) => ({ kind: i.kind, placeId: i.place ? i.place.id : null, note: i.note || '', dur: i.dur })) })) };
   const idx = store.trips.findIndex((x) => x.id === rec.id);
   if (idx >= 0) store.trips[idx] = rec;
@@ -435,7 +444,7 @@ function openTrip(id) {
   plan = { trip: t, audienceLabel: RULES[t.audience].label, warnings: [], days: s.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex,
     items: d.items.map((i) => ({ kind: i.kind, note: i.note, dur: i.dur, place: i.placeId ? DATA.places.find((p) => p.id === i.placeId) : null })).filter((i) => i.place || !i.kind || i.kind === 'break') })) };
   plan.days.forEach(retime);
-  finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; roomByHotel = s.roomByHotel || {}; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
+  finalized = true; originId = s.originId === 'none' ? 'ho-chi-minh' : s.originId; needFlight = s.needFlight !== false && s.originId !== 'none'; needHotel = s.needHotel !== false; roomByHotel = s.roomByHotel || {}; flightOut = s.flightOut || null; flightBack = s.flightBack || null; hotelId = s.hotelId; hotelId2 = s.hotelId2 || null; transportId = s.transportId || null; ownTransport = !!s.ownTransport;
   airlineFilter = []; hotelStars = []; currentTripId = id; savedOk = true; swapOpen = null; undoStack = [];
   dirtyEdits = false; dayTab = 'all'; bookTab = null; $('applyHint').hidden = true;
   go('create'); render(); setFormOpen(false);
@@ -626,9 +635,9 @@ function addCustomPlace() {
 
 /* ---------- Chi tiết khách sạn: loại phòng, ảnh, đánh giá (mẫu hoặc Google Maps) ---------- */
 function renderHotelDetail() {
-  const c = calc(), hotel = c.hl.find((x) => x.id === detailHotel); if (!hotel) return;
+  const c = calc(), hotel = c.hl.concat(c.hl2 || []).find((x) => x.id === detailHotel); if (!hotel) return;
   const g = googleCache[detailHotel];
-  $('sheetBody').innerHTML = hotelDetailHtml(hotel, { selected: hotel.id === hotelId, nights: hotel.nights,
+  $('sheetBody').innerHTML = hotelDetailHtml(hotel, { selected: hotel.id === hotelId || hotel.id === hotelId2, nights: hotel.nights,
     google: g && g.source === 'google' ? g : null, loading: g === 'loading', error: g && g.error ? g.error : '' }) +
     placePromosHtml(PROMOS.promos.filter((p) => p.target.type === 'hotel' && hotel.stars >= (p.target.minStars || 0)));
 }
@@ -662,7 +671,7 @@ function startBooking() {
   let b = store.bookings.find((x) => x.tripId === currentTripId && x.status === 'chua_chuyen' && (x.base ?? x.amount) === c.payAmount);
   if (!b) {
     b = { code: bookingCode(), tripId: currentTripId, createdAt: Date.now(), base: c.payAmount, amount: c.payAmount, discount: null, status: 'chua_chuyen', people: plan.trip.people,
-      flights: c.flight ? { out: flightOut, back: flightBack, total: c.flightsTotal } : null, hotel: c.hotel ? { id: c.hotel.id, name: c.hotel.name, stars: c.hotel.stars, total: c.hotelTotal, checkIn: plan.trip.startDate, checkOut: plan.trip.endDate } : null };
+      flights: c.flight ? { out: flightOut, back: flightBack, total: c.flightsTotal } : null, hotel: c.hotel ? { id: c.hotel.id + (c.hotel2 ? '+' + c.hotel2.id : ''), name: c.hotel.name + (c.hotel2 ? ' + ' + c.hotel2.name : ''), stars: c.hotel2 ? Math.min(c.hotel.stars, c.hotel2.stars) : c.hotel.stars, total: c.hotelTotal, checkIn: plan.trip.startDate, checkOut: plan.trip.endDate } : null };
     store.bookings.unshift(b); persist();
   }
   renderPay(b); sheet.hidden = false; lastFocus = document.activeElement; $('sheetClose').focus();
@@ -697,7 +706,7 @@ $('sheetBody').addEventListener('click', (e) => {
   const rm = e.target.closest('[data-room]');
   if (rm && detailHotel) { roomByHotel[detailHotel] = rm.dataset.room; savedOk = false; renderHotelDetail(); render(); return; }
   const hp = e.target.closest('[data-hotelpick]');
-  if (hp) { hotelId = hp.dataset.hotelpick; savedOk = false; closeSheet(); render(); return; }
+  if (hp) { const pc = calc(); if (pc.hl2 && pc.hl2.some((x) => x.id === hp.dataset.hotelpick)) hotelId2 = hp.dataset.hotelpick; else hotelId = hp.dataset.hotelpick; savedOk = false; closeSheet(); render(); return; }
   const pd = e.target.closest('[data-act=paid]'); if (!pd) return;
   const b = store.bookings.find((x) => x.code === pd.dataset.code); if (!b) return;
   b.status = live() ? 'cho_xac_nhan' : 'thu';
@@ -716,7 +725,7 @@ $('out').addEventListener('click', (e) => {
   if (act === 'final') { finalized = true; render(); const f = document.querySelector('section.final'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   if (act === 'fout') { flightOut = flightLists().out.find((f) => f.id === b.dataset.id) || flightOut; savedOk = false; render(); return; }
   if (act === 'fback') { flightBack = flightLists().back.find((f) => f.id === b.dataset.id) || flightBack; savedOk = false; render(); return; }
-  if (act === 'hotel') { hotelId = b.dataset.id; savedOk = false; render(); return; }
+  if (act === 'hotel') { if (b.dataset.stay === '1') hotelId2 = b.dataset.id; else hotelId = b.dataset.id; savedOk = false; render(); return; }
   if (act === 'airline') { const id = b.dataset.id; airlineFilter = id === 'all' ? [] : airlineFilter.includes(id) ? airlineFilter.filter((x) => x !== id) : [...airlineFilter, id]; render(); return; }
   if (act === 'hstar') { const id = b.dataset.id, n = +id; hotelStars = id === 'all' ? [] : hotelStars.includes(n) ? hotelStars.filter((x) => x !== n) : [...hotelStars, n]; render(); return; }
   if (act === 'addplace') { openAddPlace(di); return; }

@@ -296,3 +296,34 @@ test('Đà Nẵng + Hội An: mỗi ngày ở trọn một thành phố, khách 
   const solo = buildItinerary(base({ destination: 'Đà Nẵng' }), data, rules);
   assert.ok(solo.days.every((d) => d.city === undefined || d.city === 'Đà Nẵng'));
 });
+
+test('Đà Nẵng + Hội An: mỗi thành phố một khách sạn, có chặng giữa hai thành phố, chi phí tính theo từng lần lưu trú', async () => {
+  const { tripStays } = await import('../src/stays.js');
+  const { tripLegs } = await import('../src/transport.js');
+  const { searchHotels } = await import('../src/search.js');
+  const { estimateCost } = await import('../src/costing.js');
+  const t = base({ destination: 'Đà Nẵng', alsoVisit: ['Hội An'], endDate: '2026-10-16', audience: 'cap_doi' });
+  const plan = buildItinerary(t, data, rules);
+  const st = tripStays(plan);
+  assert.deepEqual(st.map((s) => [s.city, s.checkIn, s.checkOut, s.nights]), [['Đà Nẵng', '2026-10-13', '2026-10-15', 2], ['Hội An', '2026-10-15', '2026-10-16', 1]]);
+  assert.equal(st.reduce((s, x) => s + x.nights, 0), 3);
+  const single = tripStays(buildItinerary(base({ destination: 'Hội An', endDate: '2026-10-15' }), data, rules));
+  assert.deepEqual(single.map((s) => [s.city, s.nights]), [['Hội An', 2]]);
+  const mk = (stay) => searchHotels({ hotels: hotelsFor(opts.hotels, { ...t, destination: stay.city, alsoVisit: undefined }), checkIn: stay.checkIn, checkOut: stay.checkOut, people: 2 })[0];
+  const h1 = mk(st[0]), h2 = mk(st[1]);
+  assert.equal(h1.city, 'Đà Nẵng'); assert.equal(h2.city, 'Hội An');
+  assert.equal(h1.nights, 2); assert.equal(h2.nights, 1);
+  const legs = tripLegs(plan, { hotel: h1, hotels: { 'Đà Nẵng': h1, 'Hội An': h2 } });
+  const inter = legs.filter((l) => l.kind === 'intercity');
+  assert.equal(inter.length, 1);
+  assert.ok(inter[0].km > 15 && inter[0].km < 45, 'Đà Nẵng – Hội An cách nhau khoảng 30 km, hiện ' + inter[0].km);
+  const cost = estimateCost({ trip: t, plan, flight: null, hotel: h1, hotel2: h2 });
+  const hl = cost.lines.filter((l) => l.key.startsWith('hotel'));
+  assert.equal(hl.length, 2);
+  assert.ok(hl[0].note.includes('2 đêm') && hl[1].note.includes('1 đêm'));
+  // không có khách sạn: vẫn có chặng sang thành phố khác, tính từ điểm cuối hôm trước
+  assert.equal(tripLegs(plan, {}).filter((l) => l.kind === 'intercity').length, 1);
+  // chuyến một thành phố không đổi
+  const one = buildItinerary(base({ destination: 'Hội An' }), data, rules);
+  assert.equal(tripLegs(one, {}).filter((l) => l.kind === 'intercity').length, 0);
+});
