@@ -102,3 +102,10 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 - `web/index.html` và `index.html` có thẻ `description`, Open Graph, Twitter Card để liên kết hiện ảnh xem trước khi chia sẻ.
 - Tạo lại biểu tượng và ảnh chia sẻ từ `web/logo.svg` và slogan trong `data/app.json`: `PLAYWRIGHT_PATH=/duong-dan/toi/playwright node scripts/make-icons.cjs`.
 - Địa chỉ trang đang ghi tạm là `https://doanminhhai222-oss.github.io/Arrow-Travel/web/` (GitHub Pages). Khi có tên miền riêng, thay chuỗi đó trong hai file `index.html` (thẻ `canonical`, `og:url`, `og:image`, `twitter:image`). Ảnh chia sẻ cần địa chỉ đầy đủ, đường dẫn tương đối thì mạng xã hội không đọc được.
+
+## Kiểm thử và CI
+
+- `npm test`: 94 test đơn vị (logic xếp lịch, chi phí, chuyến bay, khách sạn, i18n, Pro…), không cần cài gì.
+- `npm run test:e2e`: kiểm thử trình duyệt thật bằng Playwright (thư mục `test/e2e/`), tự bật server thử và chạy: trang chủ và 9 điểm đến, tạo lịch trình, chuyến bay, khách sạn, chi phí cho từng điểm đến, kết hợp nhiều thành phố (hai khách sạn, chặng liên tỉnh, cảnh báo thiếu ngày), 5 ngôn ngữ, đổi thứ tự bằng phím, thêm địa điểm từ Google Maps, lưu và mở lại chuyến, ArrowPro (khoá, mã sai, dùng thử, hết hạn). Cần `npm ci` rồi `npx playwright install chromium`. Nếu Playwright đã cài ở chỗ khác, đặt `PLAYWRIGHT_PATH=/duong-dan/toi/playwright`.
+- `.github/workflows/ci.yml`: mỗi lần đẩy mã chạy cả hai bộ trên, rồi đóng gói một file, chạy `scripts/smoke-bundle.cjs` và báo lỗi nếu bản đóng gói vượt 16 MB.
+- Chưa có trong e2e: tạo video khoảnh khắc, ngoại tuyến (cần https), thanh toán, kích hoạt mã Pro thật (cần khoá bí mật).

@@ -78,7 +78,7 @@ Cập nhật 12/10/2026, dựa trên bản demo hiện tại (9 điểm đến, 
 ## 6. Tối ưu nên làm ngay (nhỏ, ít rủi ro)
 
 1. ~~Thêm `manifest`, biểu tượng, `description`, Open Graph~~ (đã làm 12/10/2026, xem README, mục "Cài như app và chia sẻ liên kết").
-2. Đưa kịch bản Playwright vào `test/e2e` và bật GitHub Actions (nửa ngày đến 1 ngày).
+2. ~~Đưa kịch bản Playwright vào `test/e2e` và bật GitHub Actions~~ (đã làm 12/10/2026: 19 bài e2e, `.github/workflows/ci.yml`).
 3. Đổi tên `da-nang.json` và tách dữ liệu theo điểm đến (1–2 ngày).
 4. Chuyển ảnh sang WebP, tạo bản nhỏ cho điện thoại (1 ngày).
 5. Rà ảnh theo bản quyền, lập bảng nguồn từng ảnh (nửa ngày, chủ yếu là việc của chủ dự án).

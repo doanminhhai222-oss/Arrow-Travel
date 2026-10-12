@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Test đơn vị
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
+  e2e:
+    name: Test trình duyệt và bản đóng gói
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Cài Chromium cho Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Test trình duyệt (9 điểm đến, kết hợp thành phố, ngôn ngữ, Pro, sửa lịch trình)
+        run: npm run test:e2e
+      - name: Đóng gói một file và chạy kiểm tra nhanh
+        run: |
+          python3 scripts/build-artifact.py dist/arrow-travel.html
+          node scripts/smoke-bundle.cjs dist/arrow-travel.html
+      - name: Kiểm tra dung lượng bản đóng gói (giới hạn 16 MB của artifact)
+        run: |
+          size=$(stat -c %s dist/arrow-travel.html)
+          echo "Bản đóng gói: $size byte"
+          test "$size" -lt 16000000 || { echo "::error::Bản đóng gói vượt 16 MB"; exit 1; }
