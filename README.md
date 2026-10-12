@@ -95,3 +95,10 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 - [ ] Chia sẻ bằng liên kết, xuất PDF
 - [ ] Nhập dữ liệu từ Excel → JSON
 - [ ] Giai đoạn 2: app (Expo) dùng lại `src/scheduler.js`
+
+## Cài như app và chia sẻ liên kết
+
+- `web/manifest.webmanifest` và thư mục `web/icons/` (biểu tượng 192, 512, maskable, iOS, ảnh chia sẻ 1200x630) giúp cài app lên màn hình chính trên Android, iOS và máy tính.
+- `web/index.html` và `index.html` có thẻ `description`, Open Graph, Twitter Card để liên kết hiện ảnh xem trước khi chia sẻ.
+- Tạo lại biểu tượng và ảnh chia sẻ từ `web/logo.svg` và slogan trong `data/app.json`: `PLAYWRIGHT_PATH=/duong-dan/toi/playwright node scripts/make-icons.cjs`.
+- Địa chỉ trang đang ghi tạm là `https://doanminhhai222-oss.github.io/Arrow-Travel/web/` (GitHub Pages). Khi có tên miền riêng, thay chuỗi đó trong hai file `index.html` (thẻ `canonical`, `og:url`, `og:image`, `twitter:image`). Ảnh chia sẻ cần địa chỉ đầy đủ, đường dẫn tương đối thì mạng xã hội không đọc được.

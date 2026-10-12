@@ -32,7 +32,7 @@ Cập nhật 12/10/2026, dựa trên bản demo hiện tại (9 điểm đến, 
 ## 3. Việc kỹ thuật cần làm (theo thứ tự)
 
 1. **Hạ tầng và đưa lên mạng:** tên miền riêng, HTTPS, hosting tĩnh có CDN và nén (Cloudflare Pages, Vercel, hoặc GitHub Pages khi còn nhỏ). Kho mã đã có `.nojekyll`, chạy được ngay trên GitHub Pages.
-2. **Khả năng cài và chia sẻ:** thêm `manifest.webmanifest` kèm biểu tượng nhiều kích cỡ (hiện chưa có), thẻ `description`, Open Graph và thẻ Twitter (hiện chưa có) để chia sẻ liên kết có ảnh đẹp, ảnh màn hình chia sẻ.
+2. **Khả năng cài và chia sẻ:** đã có `manifest.webmanifest`, biểu tượng nhiều kích cỡ, thẻ `description`, Open Graph và Twitter Card (12/10/2026). Còn lại: đổi địa chỉ trang sang tên miền thật, thêm ảnh chụp màn hình vào manifest để cửa hàng và trình duyệt hiện đẹp hơn.
 3. **Chia nhỏ dữ liệu theo điểm đến.** `data/da-nang.json` (320 KB) đang chứa mọi địa điểm của mọi điểm đến, và mọi điểm đến đều được tải ngay từ đầu. Tách thành mỗi điểm đến một file và chỉ tải khi chọn. Cần làm trước khi vượt 20 điểm đến. Tên file `da-nang.json` cũng nên đổi thành `places.json` hoặc tách thư mục.
 4. **Ảnh:** chuyển JPEG sang WebP hoặc AVIF (nhẹ hơn khoảng 30–40%), cấp nhiều kích cỡ theo màn hình, ảnh đặt trên CDN. 119 trên 233 địa điểm có ảnh, khoảng 114 địa điểm còn dùng ảnh vẽ minh hoạ.
 5. **Kiểm thử tự động trong kho mã:** đưa các kịch bản Playwright (hiện ở thư mục tạm) vào `test/e2e`, chạy bằng GitHub Actions cùng `npm test` ở mỗi lần đẩy mã. Thêm kiểm thử thử trên iPhone Safari thật (MediaRecorder tạo video, IndexedDB ở chế độ riêng tư, chế độ ngoại tuyến).
@@ -77,7 +77,7 @@ Cập nhật 12/10/2026, dựa trên bản demo hiện tại (9 điểm đến, 
 
 ## 6. Tối ưu nên làm ngay (nhỏ, ít rủi ro)
 
-1. Thêm `manifest`, biểu tượng, `description`, Open Graph (nửa ngày).
+1. ~~Thêm `manifest`, biểu tượng, `description`, Open Graph~~ (đã làm 12/10/2026, xem README, mục "Cài như app và chia sẻ liên kết").
 2. Đưa kịch bản Playwright vào `test/e2e` và bật GitHub Actions (nửa ngày đến 1 ngày).
 3. Đổi tên `da-nang.json` và tách dữ liệu theo điểm đến (1–2 ngày).
 4. Chuyển ảnh sang WebP, tạo bản nhỏ cho điện thoại (1 ngày).
