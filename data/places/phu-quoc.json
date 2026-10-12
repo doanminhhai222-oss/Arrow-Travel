@@ -35,7 +35,7 @@
       "culture": "Bãi biển nổi tiếng nhất phía nam đảo, cát trắng mịn như bột, nước trong xanh. Từ đây nhìn thấy các hòn đảo nhỏ của quần đảo An Thới.",
       "approx": true,
       "address": "Phía nam đảo, cách Dương Đông khoảng 25 km",
-      "image": "images/bai-sao.jpg",
+      "image": "images/bai-sao.webp",
       "imageAlt": "Bãi Sao",
       "imageCredit": "Ảnh: Trantuonglam · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -72,7 +72,7 @@
       "culture": "Bãi biển nhỏ xinh ở phía nam đảo với làn nước xanh ngọc bích, cát mịn và hàng dừa nghiêng ra biển, hợp nghỉ dưỡng yên tĩnh.",
       "approx": true,
       "address": "Phía nam đảo, gần An Thới",
-      "image": "images/bai-khem.jpg",
+      "image": "images/bai-khem.webp",
       "imageAlt": "Bãi Khem",
       "imageCredit": "Ảnh: Vivu Vietnam · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -143,7 +143,7 @@
       "culture": "Bãi biển dài nhất trên đảo chạy dọc bờ tây từ Dương Đông về phía nam, nơi tập trung nhiều khách sạn, resort và quán ăn, được coi là bãi ngắm hoàng hôn đẹp nhất của Phú Quốc.",
       "approx": true,
       "address": "Bờ tây, từ Dương Đông về phía nam",
-      "image": "images/bai-truong.jpg",
+      "image": "images/bai-truong.webp",
       "imageAlt": "Bãi Trường (Long Beach)",
       "imageCredit": "Ảnh: Alexey Komarov · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -249,7 +249,7 @@
       "culture": "Tuyến cáp treo ba dây nối đảo chính với đảo Hòn Thơm qua mặt biển, dài khoảng 7,9 km, là một trong những điểm nhấn của khu nam đảo. Trên đảo có công viên nước, bãi biển và khu vui chơi.",
       "approx": true,
       "address": "Ga đi tại An Thới, phía nam đảo",
-      "image": "images/cap-treo-hon-thom.jpg",
+      "image": "images/cap-treo-hon-thom.webp",
       "imageAlt": "Cáp treo Hòn Thơm và Sun World Hòn Thơm",
       "imageCredit": "Ảnh: Vivu Vietnam · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -286,7 +286,7 @@
       "culture": "Khu phố ven biển lấy cảm hứng từ các thị trấn Địa Trung Hải ở mũi nam đảo, nổi tiếng với Cầu Hôn gồm hai nhánh gặp nhau ở một điểm, phía trước là biển mở rộng như vô tận.",
       "approx": true,
       "address": "An Thới, mũi nam đảo",
-      "image": "images/thi-tran-hoang-hon.jpg",
+      "image": "images/thi-tran-hoang-hon.webp",
       "imageAlt": "Thị trấn Hoàng Hôn và Cầu Hôn (Sunset Town)",
       "imageCredit": "Ảnh: Vivu Vietnam · CC BY 4.0 · Wikimedia Commons"
     },
@@ -323,7 +323,7 @@
       "culture": "Công viên giải trí lớn ở phía bắc đảo gồm nhiều khu chủ đề, trò chơi cảm giác mạnh và khu vui chơi cho trẻ em.",
       "approx": true,
       "address": "Gành Dầu, phía bắc đảo",
-      "image": "images/vinwonders-phu-quoc.jpg",
+      "image": "images/vinwonders-phu-quoc.webp",
       "imageAlt": "VinWonders Phú Quốc",
       "imageCredit": "Ảnh: lol1VNIO · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -394,7 +394,7 @@
       "culture": "Tổ hợp giải trí ven biển phía bắc, mô phỏng thành phố kênh đào Venice với nhà cửa nhiều màu, thuyền trên kênh và các màn trình diễn về đêm.",
       "approx": true,
       "address": "Gành Dầu, phía bắc đảo",
-      "image": "images/grand-world.jpg",
+      "image": "images/grand-world.webp",
       "imageAlt": "Grand World Phú Quốc",
       "imageCredit": "Ảnh: 松岡明芳 · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -499,7 +499,7 @@
       "culture": "Làng chài cổ ở phía đông đảo với những chiếc thuyền và cầu cảng gỗ, nơi cung cấp ghẹ Hàm Ninh, đặc sản có thịt chắc ngọt.",
       "approx": true,
       "address": "Bờ đông đảo, cách Dương Đông khoảng 10 km",
-      "image": "images/lang-chai-ham-ninh.jpg",
+      "image": "images/lang-chai-ham-ninh.webp",
       "imageAlt": "Làng chài Hàm Ninh",
       "imageCredit": "Ảnh minh hoạ cảnh làng chài, chưa chắc đúng Hàm Ninh: No machine-readable author provided. Plicata assumed (based  · Public domain · Wikimedia Commons"
     },
@@ -536,7 +536,7 @@
       "culture": "Ngôi đền thờ nằm trên mỏm đá nhô ra biển ngay giữa thị trấn Dương Đông, nơi ngư dân cầu bình an cho những chuyến đi biển. Bên cạnh có ngọn hải đăng nhỏ, hoàng hôn nhìn từ đây rất đẹp.",
       "approx": true,
       "address": "Dương Đông, cạnh chợ đêm",
-      "image": "images/dinh-cau.jpg",
+      "image": "images/dinh-cau.webp",
       "imageAlt": "Dinh Cậu",
       "imageCredit": "Ảnh: Hoangvantoanajc · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -607,7 +607,7 @@
       "culture": "Nhà tù do chính quyền Pháp xây từ năm 1949 rồi tiếp tục sử dụng trong chiến tranh, từng giam giữ nhiều người tù chính trị. Nay là di tích lịch sử, có mô hình tái hiện cảnh giam giữ.",
       "approx": true,
       "address": "An Thới, phía nam đảo",
-      "image": "images/nha-tu-phu-quoc.jpg",
+      "image": "images/nha-tu-phu-quoc.webp",
       "imageAlt": "Nhà tù Phú Quốc (Cây Dừa)",
       "imageCredit": "Ảnh: Frank Fox · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -678,7 +678,7 @@
       "culture": "Tiêu Phú Quốc nổi tiếng thơm cay đậm, hạt chắc, là một trong những đặc sản của đảo. Các vườn tiêu mở cửa đón du khách tham quan miễn phí, nơi mua tiêu trực tiếp từ chủ vườn.",
       "approx": true,
       "address": "Khu Tượng, Cửa Dương (nhiều vườn, tự chọn trên Google Maps)",
-      "image": "images/vuon-tieu.jpg",
+      "image": "images/vuon-tieu.webp",
       "imageAlt": "Vườn tiêu Phú Quốc",
       "imageCredit": "Ảnh minh hoạ vườn tiêu, không phải đúng vườn: Tonbi ko · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -723,7 +723,7 @@
         "Chè",
         "Đặc sản làm quà"
       ],
-      "image": "images/cho-dem-phu-quoc.jpg",
+      "image": "images/cho-dem-phu-quoc.webp",
       "imageAlt": "Chợ đêm Phú Quốc (Dinh Cậu)",
       "imageCredit": "Ảnh quầy hải sản ở chợ đêm Phú Quốc: FrogsLegs71 · CC BY-SA 3.0 · Wikimedia Commons"
     },

@@ -35,7 +35,7 @@
       "culture": "Quần thể danh thắng được UNESCO công nhận là Di sản thế giới hỗn hợp, với những dãy núi đá vôi, sông, hang động xuyên núi, thuyền đi qua nhiều hang dài và đền, chùa cổ.",
       "approx": true,
       "address": "Xã Trường Yên, Hoa Lư",
-      "image": "images/trang-an.jpg",
+      "image": "images/trang-an.webp",
       "imageAlt": "Khu danh thắng Tràng An (đi thuyền)",
       "imageCredit": "Ảnh: Jakub Hałun · CC BY 4.0 · Wikimedia Commons"
     },
@@ -72,7 +72,7 @@
       "culture": "Tam Cốc nghĩa là ba hang, khu du lịch nổi tiếng với dòng sông Ngô Đồng uốn quanh cánh đồng lúa và núi đá, được mệnh danh là Hạ Long trên cạn.",
       "approx": true,
       "address": "Xã Ninh Hải, Hoa Lư",
-      "image": "images/tam-coc.jpg",
+      "image": "images/tam-coc.webp",
       "imageAlt": "Tam Cốc (đi thuyền)",
       "imageCredit": "Ảnh: GilVon · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -109,7 +109,7 @@
       "culture": "Đỉnh núi nhìn xuống Tam Cốc với con rồng đá nổi tiếng, nơi nhiều du khách thích chụp ảnh và ngắm hoàng hôn trên cánh đồng lúa.",
       "approx": true,
       "address": "Xã Ninh Xuân, Hoa Lư",
-      "image": "images/hang-mua.jpg",
+      "image": "images/hang-mua.webp",
       "imageAlt": "Hang Múa (leo 500 bậc)",
       "imageCredit": "Ảnh: Shyamal · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -146,7 +146,7 @@
       "culture": "Quần thể chùa rộng hàng trăm hecta với tượng Phật bằng đồng nặng hàng trăm tấn, hành lang chứa hàng trăm tượng La Hán và tháp chuông cao, là điểm tâm linh nổi bật của miền Bắc.",
       "approx": true,
       "address": "Xã Gia Sinh, Gia Viễn",
-      "image": "images/chua-bai-dinh.jpg",
+      "image": "images/chua-bai-dinh.webp",
       "imageAlt": "Chùa Bái Đính",
       "imageCredit": "Ảnh: Kien1980v (thảo luận) 01:40, ngày 3 tháng 9 năm 2017 (UTC) · Public domain · Wikimedia Commons"
     },
@@ -183,7 +183,7 @@
       "culture": "Kinh đô đầu tiên của nhà nước Đại Cồ Việt (968–1010) với đền vua Đinh, vua Lê, núi đá và hồ, là di tích lịch sử nổi tiếng của Ninh Bình.",
       "approx": true,
       "address": "Xã Trường Yên, Hoa Lư",
-      "image": "images/co-do-hoa-lu.jpg",
+      "image": "images/co-do-hoa-lu.webp",
       "imageAlt": "Cố đô Hoa Lư (đền vua Đinh, vua Lê)",
       "imageCredit": "Ảnh: Richard Mortel from Riyadh, Saudi Arabia · CC BY 2.0 · Wikimedia Commons"
     },
@@ -220,7 +220,7 @@
       "culture": "Khu bảo tồn đất ngập nước lớn nhất đồng bằng sông Hồng, với đầm nước, núi đá và nhiều loài chim, nổi tiếng với voọc mông trắng quý hiếm.",
       "approx": true,
       "address": "Xã Gia Vân, Gia Viễn",
-      "image": "images/khu-du-lich-van-long.jpg",
+      "image": "images/khu-du-lich-van-long.webp",
       "imageAlt": "Khu bảo tồn đất ngập nước Vân Long",
       "imageCredit": "Ảnh: Andre Hospers · CC BY 4.0 · Wikimedia Commons"
     },
@@ -257,7 +257,7 @@
       "culture": "Chùa nằm trên vách núi đá, kiến trúc ba cấp hạ, trung, thượng, được vua Lê Thánh Tông ca ngợi là Nam thiên đệ nhị động.",
       "approx": true,
       "address": "Xã Ninh Hải, Hoa Lư",
-      "image": "images/chua-bich-dong.jpg",
+      "image": "images/chua-bich-dong.webp",
       "imageAlt": "Chùa Bích Động",
       "imageCredit": "Ảnh: Tupham · Public domain · Wikimedia Commons"
     },

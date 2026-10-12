@@ -8,13 +8,13 @@
   "_note": "feedbackUrl: dán liên kết biểu mẫu (Google Form...) để nhận góp ý thật. Để trống thì đánh giá chỉ lưu trên thiết bị người dùng.",
   "bookingImages": {
     "flights": {
-      "image": "images/book-flight.jpg"
+      "image": "images/book-flight.webp"
     },
     "hotel": {
-      "image": "images/book-hotel.jpg"
+      "image": "images/book-hotel.webp"
     },
     "transport": {
-      "image": "images/book-transport.jpg"
+      "image": "images/book-transport.webp"
     }
   },
   "_noteImages": "bookingImages: ảnh nền 3 thẻ Vé máy bay / Khách sạn / Phương tiện, do chủ dự án cung cấp (có logo hãng, nên thay bằng ảnh tự chụp hoặc được phép dùng trước khi phát hành)."

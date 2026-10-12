@@ -35,7 +35,7 @@
       "culture": "Bãi biển trung tâm thành phố dài khoảng 6 km, nước xanh, cát mịn, nằm sát đường Trần Phú với hàng dừa và nhiều khách sạn, là nơi người dân và du khách tắm biển, đi dạo.",
       "approx": true,
       "address": "Đường Trần Phú, trung tâm Nha Trang",
-      "image": "images/bien-nha-trang.jpg",
+      "image": "images/bien-nha-trang.webp",
       "imageAlt": "Biển Nha Trang (Trần Phú)",
       "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -72,7 +72,7 @@
       "culture": "Vịnh Nha Trang được công nhận là một trong những vịnh biển đẹp nhất thế giới, với hơn chục hòn đảo lớn nhỏ. Hòn Mun là khu bảo tồn biển đầu tiên của Việt Nam, nổi tiếng với san hô và đa dạng sinh học.",
       "approx": true,
       "address": "Bến tàu Cầu Đá hoặc Vĩnh Trường",
-      "image": "images/tour-4-dao-nha-trang.jpg",
+      "image": "images/tour-4-dao-nha-trang.webp",
       "imageAlt": "Tour đảo Vịnh Nha Trang (Hòn Mun, Hòn Tằm…)",
       "imageCredit": "Ảnh minh hoạ vùng biển đảo Hòn Mun: Nguyen Hung Vu · CC BY 2.0 · Wikimedia Commons"
     },
@@ -143,7 +143,7 @@
       "culture": "Bãi biển hoang sơ ở phía bắc Nha Trang với cát trắng, nước trong và hàng dương, ít đông đúc, hợp ai thích nghỉ dưỡng yên tĩnh.",
       "approx": true,
       "address": "Ninh Hoà, cách trung tâm khoảng 40 km",
-      "image": "images/doc-let.jpg",
+      "image": "images/doc-let.webp",
       "imageAlt": "Bãi Dốc Lết",
       "imageCredit": "Ảnh: Michelle · CC BY-SA 2.0 · Wikimedia Commons"
     },
@@ -180,7 +180,7 @@
       "culture": "Công viên giải trí lớn trên đảo Hòn Tre, nối với đất liền bằng tuyến cáp treo vượt vịnh. Có khu vui chơi, công viên nước, thuỷ cung và các show buổi tối.",
       "approx": true,
       "address": "Đảo Hòn Tre, vượt biển bằng cáp treo từ bến Trần Phú",
-      "image": "images/vinwonders-nha-trang.jpg",
+      "image": "images/vinwonders-nha-trang.webp",
       "imageAlt": "VinWonders Nha Trang (Hòn Tre)",
       "imageCredit": "Ảnh minh hoạ tuyến cáp treo sang đảo Hòn Tre: Martin Lewison from Forest Hills, NY, U.S.A. · CC BY 2.0 · Wikimedia Commons"
     },
@@ -251,7 +251,7 @@
       "culture": "Quần thể tháp Chăm xây từ thế kỷ 8, thờ nữ thần Thiên Y A Na (Po Nagar), mẹ xứ sở của người Chăm. Gạch nung đỏ và các hoạ tiết chạm khắc cho thấy kỹ thuật kiến trúc tinh xảo, đến nay vẫn là nơi hành lễ của người Chăm.",
       "approx": true,
       "address": "2 Tháng 4, Vĩnh Phước",
-      "image": "images/thap-ba-ponagar.jpg",
+      "image": "images/thap-ba-ponagar.webp",
       "imageAlt": "Tháp Bà Ponagar",
       "imageCredit": "Ảnh: Ms Sarah Welch · CC0 · Wikimedia Commons"
     },
@@ -288,7 +288,7 @@
       "culture": "Cụm đá granit khổng lồ xếp chồng nhau nhô ra biển ở phía bắc thành phố, gắn với truyền thuyết người khổng lồ để lại dấu bàn tay trên đá, là điểm ngắm biển và bình minh quen thuộc.",
       "approx": true,
       "address": "Vĩnh Phước, phía bắc trung tâm",
-      "image": "images/hon-chong.jpg",
+      "image": "images/hon-chong.webp",
       "imageAlt": "Hòn Chồng",
       "imageCredit": "Ảnh: Udo Braunschweiger · Public domain · Wikimedia Commons"
     },
@@ -325,7 +325,7 @@
       "culture": "Một trong những viện nghiên cứu biển lâu đời của Việt Nam, bảo tàng và hồ thuỷ sinh trưng bày hàng nghìn mẫu vật biển, từ san hô, cá mập nhỏ đến bộ xương cá voi.",
       "approx": true,
       "address": "1 Cầu Đá, Vĩnh Nguyên",
-      "image": "images/vien-hai-duong-hoc.jpg",
+      "image": "images/vien-hai-duong-hoc.webp",
       "imageAlt": "Viện Hải dương học Nha Trang",
       "imageCredit": "Ảnh tư liệu cũ (1933) của Viện Hải dương học Nha Trang: Unknown photographer · Public domain · Wikimedia Commons"
     },
@@ -362,7 +362,7 @@
       "culture": "Ngôi chùa nổi tiếng với tượng Phật Thích Ca ngồi thiền bằng bê tông trắng cao 24 m trên đồi Trại Thuỷ, nhìn xuống thành phố và vịnh, là điểm tâm linh và ngắm cảnh quen thuộc.",
       "approx": true,
       "address": "22 Yersin, Phước Đồng",
-      "image": "images/chua-long-son.jpg",
+      "image": "images/chua-long-son.webp",
       "imageAlt": "Chùa Long Sơn (tượng Phật trắng)",
       "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -399,7 +399,7 @@
       "culture": "Nhà thờ xây bằng đá, theo kiến trúc Gothic, hoàn thành năm 1934, nằm trên ngọn đồi nhỏ giữa trung tâm thành phố với tháp chuông nhìn ra phố.",
       "approx": true,
       "address": "31 Thái Nguyên, Phước Tân",
-      "image": "images/nha-tho-nui.jpg",
+      "image": "images/nha-tho-nui.webp",
       "imageAlt": "Nhà thờ Chính toà Nha Trang (Nhà thờ Đá)",
       "imageCredit": "Ảnh: Leonid · CC BY-SA 2.0 · Wikimedia Commons"
     },
@@ -436,7 +436,7 @@
       "culture": "Biệt thự nghỉ mát của cựu hoàng Bảo Đại, vị vua cuối cùng triều Nguyễn, xây trên đồi ven biển, nay là điểm tham quan với nội thất, đồ dùng sinh hoạt thời bấy giờ.",
       "approx": true,
       "address": "Đường Trần Phú, phía nam trung tâm",
-      "image": "images/dinh-bao-dai.jpg",
+      "image": "images/dinh-bao-dai.webp",
       "imageAlt": "Dinh Bảo Đại (Villa Bảo Đại)",
       "imageCredit": "Ảnh: Lyn Gateley · CC BY 2.0 · Wikimedia Commons"
     },
@@ -473,7 +473,7 @@
       "culture": "Quảng trường ven biển với Tháp Trầm Hương cao khoảng 40 m hình đoá sen khép, biểu tượng của sự thanh cao, là nơi tụ tập của người dân và du khách mỗi tối.",
       "approx": true,
       "address": "Đường Trần Phú, trung tâm",
-      "image": "images/thap-tram-huong.jpg",
+      "image": "images/thap-tram-huong.webp",
       "imageAlt": "Quảng trường 2/4 và Tháp Trầm Hương",
       "imageCredit": "Ảnh: RG72 · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -796,7 +796,7 @@
         "Ốc",
         "Mực"
       ],
-      "image": "images/hai-san-bo-ke.jpg",
+      "image": "images/hai-san-bo-ke.webp",
       "imageAlt": "Hải sản Bờ Kè",
       "imageCredit": "Ảnh minh hoạ món hải sản Nha Trang (không phải ảnh tại quán): jetsun · CC BY-SA 3.0 · Wikimedia Commons"
     },

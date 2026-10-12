@@ -54,6 +54,8 @@ const citiesLoaded = (cities) => cities.every((c) => !SLUG[c] || loadedDests.has
 const loadFail = () => { toast('Không tải được dữ liệu điểm đến, hãy kiểm tra mạng rồi thử lại'); };
 
 const $ = (id) => document.getElementById(id);
+// Ảnh nhỏ (400 px) cho thẻ và ảnh nền, ảnh lớn (800 px) cho hero và chi tiết; ảnh nhúng sẵn (data:) giữ nguyên
+const smallImg = (src) => (typeof src === 'string' && /^images\/.+\.webp$/.test(src) ? src.replace(/\.webp$/, '-s.webp') : src);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 // Giá hiển thị của một điểm: điểm thuộc vé phố cổ không có giá riêng
 const priceText = (p) => (p.ticketGroup ? 'Trong vé phố cổ' : vnd(p.price));
@@ -420,7 +422,7 @@ function hotelsHtml(c) {
 // Ba mục vé máy bay / khách sạn / phương tiện gom thành các thẻ; bấm thẻ nào thì mở nội dung thẻ đó bên dưới, bấm lại để đóng.
 // nút bật/tắt đặt vé máy bay, khách sạn dùng chung ảnh nền với thẻ tương ứng
 const optImgCls = (id) => (APP.bookingImages?.[id] ? ' opt-img' : '');
-const optImg = (id) => (APP.bookingImages?.[id] ? '<img class="btab-img" src="' + esc(APP.bookingImages[id].image) + '" alt="">' : '');
+const optImg = (id) => (APP.bookingImages?.[id] ? '<img class="btab-img" src="' + esc(smallImg(APP.bookingImages[id].image)) + '" alt="">' : '');
 function bookTabsHtml(tabs) {
   if (!tabs.length) return '';
   const cur = tabs.find((t) => t.id === bookTab);
@@ -1091,7 +1093,7 @@ async function renderMomBody() {
   h += info.groups.map((g) => '<h3 class="mgroup">' + esc(g.label) + '</h3>' + g.places.map((p) => {
     const e = momEff(momTrip, p.id), ph = byPlace[p.id] || [], urls = ph.map((x) => { const u = URL.createObjectURL(x.blob); momUrls.push(u); return { id: x.id, u }; });
     // ảnh bên phải thẻ: ảnh bạn đã đăng / vừa chọn, nếu chưa có thì ảnh của địa điểm, không có thì hình minh hoạ
-    const bg = urls[0] ? urls[0].u : e.files[0] ? e.files[0].url : p.image || '';
+    const bg = urls[0] ? urls[0].u : e.files[0] ? e.files[0].url : smallImg(p.image) || '';
     const thumb = '<span class="mthumb">' + (bg ? '<img src="' + esc(bg) + '" alt="">' : sceneSvg({ scene: p.scene || 'mountain', name: p.name })) + '</span>';
     return '<details class="mom" data-mom="' + p.id + '"' + (momOpen.has(p.id) ? ' open' : '') + '><summary>' +
       '<span class="mt"><b>' + esc(p.name) + '</b><small data-line class="' + (e.dirty ? 'pending' : '') + '">' + momLine(e.rating, ph.length + e.files.length) + (e.dirty ? ' · chưa đăng' : '') + '</small></span>' + thumb + '<span class="chev">›</span></summary><div class="mbody">' +
@@ -1250,8 +1252,8 @@ async function enableOffline() {
     const reg = await navigator.serviceWorker.register('sw.js');
     await navigator.serviceWorker.ready;
     const urls = new Set([location.href.split('#')[0], ...performance.getEntriesByType('resource').map((e) => e.name).filter((u) => u.startsWith(location.origin))]);
-    DATA.places.forEach((p) => { if (p.image && !p.image.startsWith('data:')) urls.add(new URL(p.image, location.href).href); });
-    Object.values(APP.bookingImages || {}).forEach((x) => urls.add(new URL(x.image, location.href).href));
+    DATA.places.forEach((p) => { if (p.image && !p.image.startsWith('data:')) { urls.add(new URL(p.image, location.href).href); urls.add(new URL(smallImg(p.image), location.href).href); } });
+    Object.values(APP.bookingImages || {}).forEach((x) => urls.add(new URL(smallImg(x.image), location.href).href));
     const c = await caches.open('arrow-offline-v1');
     await Promise.all([...urls].map((u) => c.add(u).catch(() => {})));
     store.pro.offline = true; persist(); toast('Đã lưu ' + urls.size + ' tệp, dùng được khi mất mạng'); renderPage();
@@ -1446,7 +1448,7 @@ function renderFeatured() {
   $('homeFeatured').innerHTML = mine.filter((f) => citiesLoaded(featuredCities(f))).map((f) => {
     const st = featuredStats(f);
     const cv = featuredCover(f);
-    return '<button type="button" class="pcard fcard' + (cv ? ' has-cover' : '') + '" data-featured="' + f.id + '">' + (cv ? '<img class="fc-img" src="' + esc(cv.image) + '" alt="" loading="lazy">' : sceneSvg({ scene: f.scene, name: f.title })) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
+    return '<button type="button" class="pcard fcard' + (cv ? ' has-cover' : '') + '" data-featured="' + f.id + '">' + (cv ? '<img class="fc-img" src="' + esc(smallImg(cv.image)) + '" alt="" loading="lazy">' : sceneSvg({ scene: f.scene, name: f.title })) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
   }).join('');
 }
 function openFeatured(id) {

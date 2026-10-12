@@ -35,7 +35,7 @@
       "culture": "Đỉnh cao nhất Đông Dương (3.143 m), được gọi là nóc nhà Đông Dương. Hiện có tuyến cáp treo dài, tuyến tàu leo núi Mường Hoa và hệ thống bậc thang lên tới đỉnh.",
       "approx": true,
       "address": "Ga cáp treo Fansipan, thị xã Sa Pa",
-      "image": "images/fansipan.jpg",
+      "image": "images/fansipan.webp",
       "imageAlt": "Đỉnh Fansipan (cáp treo)",
       "imageCredit": "Ảnh minh hoạ: cột mốc trên đỉnh Fansipan, NKSTTSSHNVN, CC BY-SA 4.0, Wikimedia Commons"
     },
@@ -106,7 +106,7 @@
       "culture": "Thung lũng với những thửa ruộng bậc thang uốn quanh sườn núi và dòng suối Mường Hoa, nơi sinh sống của người H'Mông, Dao, Giáy, tạo nên bức tranh đẹp nhất của Sa Pa.",
       "approx": true,
       "address": "Xã Mường Hoa, cách trung tâm khoảng 8 km",
-      "image": "images/thung-lung-muong-hoa.jpg",
+      "image": "images/thung-lung-muong-hoa.webp",
       "imageAlt": "Thung lũng Mường Hoa (ruộng bậc thang)",
       "imageCredit": "Ảnh: Andre Hospers · CC BY 4.0 · Wikimedia Commons"
     },
@@ -143,7 +143,7 @@
       "culture": "Bản làng của người Giáy nằm sâu trong thung lũng, nhà sàn, ruộng lúa và dòng suối trong, yên tĩnh và đậm sắc văn hoá dân tộc.",
       "approx": true,
       "address": "Xã Tả Van, cách trung tâm khoảng 10 km",
-      "image": "images/ban-ta-van.jpg",
+      "image": "images/ban-ta-van.webp",
       "imageAlt": "Bản Tả Van",
       "imageCredit": "Ảnh minh hoạ: cầu treo ở thung lũng Mường Hoa (Sa Pa), Andre Hospers, CC BY 4.0, Wikimedia Commons"
     },
@@ -214,7 +214,7 @@
       "culture": "Một trong tứ đại đèo của miền Bắc, nối Lào Cai với Lai Châu, nổi tiếng với cảnh mây trôi dưới chân và dãy núi trùng điệp.",
       "approx": true,
       "address": "Đèo Ô Quy Hồ, cách trung tâm khoảng 15 km",
-      "image": "images/cong-troi-o-quy-ho.jpg",
+      "image": "images/cong-troi-o-quy-ho.webp",
       "imageAlt": "Đèo Ô Quy Hồ và Cổng Trời",
       "imageCredit": "Ảnh: Kiếm Anh · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -251,7 +251,7 @@
       "culture": "Ngọn núi nhỏ ngay sát thị xã với vườn hoa, vườn lan, cổng trời mây và nhiều điểm ngắm toàn cảnh thung lũng, hợp đi nhẹ nhàng.",
       "approx": true,
       "address": "Phố Phan Xi Păng, thị xã Sa Pa",
-      "image": "images/nui-ham-rong.jpg",
+      "image": "images/nui-ham-rong.webp",
       "imageAlt": "Núi Hàm Rồng",
       "imageCredit": "Ảnh: Zeugma fr (talk) (Antoine FLEURY-GOBERT) · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -519,7 +519,7 @@
       "culture": "Một trong những bản làng nổi tiếng nhất ở Sa Pa, nhà gỗ nằm giữa ruộng bậc thang, là điểm xuất phát quen thuộc cho các tuyến trekking tới Tả Van.",
       "approx": true,
       "address": "Xã Hoàng Liên, cách trung tâm khoảng 7 km",
-      "image": "images/ban-lao-chai.jpg",
+      "image": "images/ban-lao-chai.webp",
       "imageAlt": "Bản Lao Chải",
       "imageCredit": "Ảnh minh hoạ cảnh thung lũng Mường Hoa (Sa Pa), Andre Hospers, CC BY 4.0, Wikimedia Commons"
     },

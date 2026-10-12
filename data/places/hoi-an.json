@@ -37,7 +37,7 @@
       "approx": true,
       "address": "Khu phố cổ Hội An, Minh An",
       "ticketGroup": "pho-co",
-      "image": "images/pho-co-hoi-an.jpg",
+      "image": "images/pho-co-hoi-an.webp",
       "imageAlt": "Phố cổ Hội An",
       "imageCredit": "Ảnh: Alexkom000 · CC BY 4.0 · Wikimedia Commons"
     },
@@ -75,7 +75,7 @@
       "approx": true,
       "address": "Giao lộ Trần Phú và Nguyễn Thị Minh Khai",
       "ticketGroup": "pho-co",
-      "image": "images/chua-cau.jpg",
+      "image": "images/chua-cau.webp",
       "imageAlt": "Chùa Cầu (Cầu Nhật Bản)",
       "imageCredit": "Ảnh: Steffen Schmitz (more photos) · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -113,7 +113,7 @@
       "approx": true,
       "address": "46 Trần Phú",
       "ticketGroup": "pho-co",
-      "image": "images/hoi-quan-phuc-kien.jpg",
+      "image": "images/hoi-quan-phuc-kien.webp",
       "imageAlt": "Hội quán Phúc Kiến",
       "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
     },
@@ -526,7 +526,7 @@
       "culture": "Sông Hoài là mạch sống của Hội An từ thời thương cảng. Mỗi tối, những chiếc đèn lồng nhiều màu soi bóng xuống nước, người dân và du khách thả hoa đăng cầu may theo tập tục địa phương.",
       "approx": true,
       "address": "Bờ sông Bạch Đằng",
-      "image": "images/cau-an-hoi.jpg",
+      "image": "images/cau-an-hoi.webp",
       "imageAlt": "Cầu An Hội và bờ sông Hoài về đêm",
       "imageCredit": "Ảnh: lumoplank · CC0 · Wikimedia Commons"
     },
@@ -597,7 +597,7 @@
       "culture": "Chợ truyền thống lâu đời gần bến sông, nơi bán rau củ, hải sản, đặc sản và quà lưu niệm. Khu ẩm thực trong chợ có cao lầu, mì Quảng, chè và nhiều món ăn vặt địa phương.",
       "approx": true,
       "address": "Đường Trần Quý Cáp, gần bờ sông",
-      "image": "images/cho-hoi-an.jpg",
+      "image": "images/cho-hoi-an.webp",
       "imageAlt": "Chợ Hội An",
       "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
     },
@@ -770,7 +770,7 @@
       "culture": "Làng trồng rau thơm hữu cơ hơn 300 năm, nổi tiếng vì rau thơm được tưới bằng rong tảo nên thơm đậm, là nguồn rau cho nhiều món ăn Hội An như cao lầu, mì Quảng. Du khách có thể xuống ruộng làm nông dân một buổi.",
       "approx": true,
       "address": "Xã Cẩm Hà, cách phố cổ khoảng 2 km",
-      "image": "images/lang-rau-tra-que.jpg",
+      "image": "images/lang-rau-tra-que.webp",
       "imageAlt": "Làng rau Trà Quế",
       "imageCredit": "Ảnh: Isabell Schulz · CC BY-SA 2.0 · Wikimedia Commons"
     },
@@ -876,7 +876,7 @@
       "culture": "Làng nghề mộc của những người thợ nổi tiếng, nhiều thế hệ góp tay dựng nên phố cổ Hội An và các công trình ở Huế. Sản phẩm là đồ gỗ chạm khắc, tượng gỗ và mô hình nhà cổ.",
       "approx": true,
       "address": "Xã Cẩm Kim, bên kia sông Thu Bồn",
-      "image": "images/lang-moc-kim-bong.jpg",
+      "image": "images/lang-moc-kim-bong.webp",
       "imageAlt": "Làng mộc Kim Bồng",
       "imageCredit": "Ảnh: Dragfyre · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -913,7 +913,7 @@
       "culture": "Bãi biển hiền hoà gần phố cổ, nhiều quán ăn, quán cà phê và nhà hàng hải sản ngay trên cát, được cả người địa phương và khách quốc tế yêu thích để thư giãn sau những ngày tham quan.",
       "approx": true,
       "address": "An Bàng, cách phố cổ khoảng 3 km",
-      "image": "images/bien-an-bang.jpg",
+      "image": "images/bien-an-bang.webp",
       "imageAlt": "Biển An Bàng",
       "imageCredit": "Ảnh: Alexkom000 · CC BY 4.0 · Wikimedia Commons"
     },
@@ -985,7 +985,7 @@
       "culture": "Cụm đảo ngoài khơi Hội An được UNESCO công nhận là Khu dự trữ sinh quyển thế giới năm 2009. Nổi tiếng với san hô, bãi biển trong xanh, rừng nguyên sinh và làng chài yên bình.",
       "approx": true,
       "address": "Bến tàu Cửa Đại, cách đảo khoảng 18 km đường biển",
-      "image": "images/cu-lao-cham.jpg",
+      "image": "images/cu-lao-cham.webp",
       "imageAlt": "Cù Lao Chàm",
       "imageCredit": "Ảnh: Soupybev · CC BY 4.0 · Wikimedia Commons"
     },
@@ -1023,7 +1023,7 @@
       "culture": "Quần thể đền tháp Chăm Pa được UNESCO công nhận Di sản văn hoá thế giới năm 1999, được xây từ thế kỷ 4 đến khoảng thế kỷ 14 để thờ các vị thần Ấn Độ giáo như Shiva. Gạch nung kết dính bằng kỹ thuật cổ vẫn là điều khiến nhiều nhà nghiên cứu ngạc nhiên.",
       "approx": true,
       "address": "Xã Duy Phú, Duy Xuyên, cách Hội An khoảng 40 km",
-      "image": "images/thanh-dia-my-son.jpg",
+      "image": "images/thanh-dia-my-son.webp",
       "imageAlt": "Thánh địa Mỹ Sơn",
       "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
     },
@@ -1066,7 +1066,7 @@
         "Mì Quảng",
         "Hoành thánh"
       ],
-      "image": "images/cao-lau-thanh.jpg",
+      "image": "images/cao-lau-thanh.webp",
       "imageAlt": "Cao lầu Thanh",
       "imageCredit": "Ảnh minh hoạ món cao lầu (không phải ảnh tại quán): avlxyz · CC BY-SA 2.0 · Wikimedia Commons"
     },
@@ -1109,7 +1109,7 @@
         "Bánh mì trứng",
         "Nước ép"
       ],
-      "image": "images/banh-mi-phuong.jpg",
+      "image": "images/banh-mi-phuong.webp",
       "imageAlt": "Bánh mì Phượng",
       "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
     },
@@ -1231,7 +1231,7 @@
         "Hoành thánh chiên",
         "Cao lầu"
       ],
-      "image": "images/banh-bao-banh-vac.jpg",
+      "image": "images/banh-bao-banh-vac.webp",
       "imageAlt": "Nhà hàng Hoa Hồng Trắng (bánh bao, bánh vạc)",
       "imageCredit": "Ảnh minh hoạ món bánh bao bánh vạc (không phải ảnh tại quán): Chainwit. · CC BY 4.0 · Wikimedia Commons"
     },

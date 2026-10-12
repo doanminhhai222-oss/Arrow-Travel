@@ -35,7 +35,7 @@
       "culture": "Hồ nằm giữa lòng thủ đô, gắn với truyền thuyết vua Lê Lợi trả gươm thần cho rùa vàng nên có tên Hoàn Kiếm (trả gươm). Giữa hồ là Tháp Rùa nhỏ nhắn, là biểu tượng quen thuộc của Hà Nội.",
       "approx": true,
       "address": "Quận Hoàn Kiếm, trung tâm Hà Nội",
-      "image": "images/ho-hoan-kiem.jpg",
+      "image": "images/ho-hoan-kiem.webp",
       "imageAlt": "Hồ Hoàn Kiếm và Tháp Rùa",
       "imageCredit": "Ảnh: Vyacheslav Argenberg · CC BY 4.0 · Wikimedia Commons"
     },
@@ -72,7 +72,7 @@
       "culture": "Ngôi đền nằm trên đảo Ngọc ở phía bắc hồ Hoàn Kiếm, nối với bờ bằng cầu Thê Húc (nghĩa là nơi đậu ánh sáng buổi sớm), thờ Văn Xương Đế Quân và Trần Hưng Đạo, cùng nhiều nhà văn hoá cổ.",
       "approx": true,
       "address": "Hồ Hoàn Kiếm, đảo Ngọc",
-      "image": "images/den-ngoc-son.jpg",
+      "image": "images/den-ngoc-son.webp",
       "imageAlt": "Đền Ngọc Sơn và Cầu Thê Húc",
       "imageCredit": "Ảnh bưu thiếp cũ đầu thế kỷ 20 chụp cầu Thê Húc và đền Ngọc Sơn: Unknown · Public domain · Wikimedia Commons"
     },
@@ -109,7 +109,7 @@
       "culture": "Khu phố cổ mang tên 36 phố phường, mỗi phố từng chuyên một nghề hay một mặt hàng như bạc, đường, thiếc, lược, kể từ thời Thăng Long xưa. Nhiều tên phố bắt đầu bằng \"Hàng\" vẫn giữ dấu tích ấy.",
       "approx": true,
       "address": "Quận Hoàn Kiếm, quanh chợ Đồng Xuân",
-      "image": "images/pho-co-ha-noi.jpg",
+      "image": "images/pho-co-ha-noi.webp",
       "imageAlt": "Phố cổ Hà Nội (36 phố phường)",
       "imageCredit": "Ảnh: Jakub Hałun · CC BY 4.0 · Wikimedia Commons"
     },
@@ -248,7 +248,7 @@
       "culture": "Nhà thờ Chính toà thánh Giuse xây năm 1886–1887 theo kiến trúc Gothic, hai tháp chuông vuông nổi bật giữa khu phố sầm uất, là một trong những điểm chụp ảnh quen thuộc của Hà Nội.",
       "approx": true,
       "address": "40 Nhà Chung, Hoàn Kiếm",
-      "image": "images/nha-tho-lon.jpg",
+      "image": "images/nha-tho-lon.webp",
       "imageAlt": "Nhà thờ Lớn Hà Nội",
       "imageCredit": "Ảnh: Gryffindor · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -285,7 +285,7 @@
       "culture": "Công trình kiến trúc Pháp khánh thành năm 1911, lấy cảm hứng từ Nhà hát Garnier ở Paris. Nơi diễn ra các chương trình nghệ thuật lớn và là biểu tượng của khu phố Pháp.",
       "approx": true,
       "address": "1 Tràng Tiền, Hoàn Kiếm",
-      "image": "images/nha-hat-lon.jpg",
+      "image": "images/nha-hat-lon.webp",
       "imageAlt": "Nhà hát Lớn Hà Nội",
       "imageCredit": "Ảnh: xiquinhosilva · CC BY 2.0 · Wikimedia Commons"
     },
@@ -322,7 +322,7 @@
       "culture": "Cây cầu thép bắc qua sông Hồng do người Pháp xây (1899–1902), dài khoảng 1,7 km, từng là cây cầu dài nhất Đông Dương và là chứng nhân nhiều biến cố lịch sử của thủ đô.",
       "approx": true,
       "address": "Nối quận Hoàn Kiếm và Long Biên",
-      "image": "images/cau-long-bien.jpg",
+      "image": "images/cau-long-bien.webp",
       "imageAlt": "Cầu Long Biên",
       "imageCredit": "Ảnh: Quangpraha · CC0 · Wikimedia Commons"
     },
@@ -359,7 +359,7 @@
       "culture": "Khu dân cư mà đường sắt Bắc – Nam chạy xuyên qua với nhà hai bên sát đường ray, nổi tiếng nhờ cảnh tàu chạy sát nhà dân, phản ánh cuộc sống thường ngày độc đáo của thủ đô.",
       "approx": true,
       "address": "Phố Phùng Hưng và khu vực lân cận, Hoàn Kiếm",
-      "image": "images/pho-duong-tau.jpg",
+      "image": "images/pho-duong-tau.webp",
       "imageAlt": "Phố đường tàu Hà Nội",
       "imageCredit": "Ảnh: Shyamal · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -396,7 +396,7 @@
       "culture": "Xây từ năm 1070 thời nhà Lý để thờ Khổng Tử, đến năm 1076 mở Quốc Tử Giám, trường đại học đầu tiên của Việt Nam. Trong khuôn viên có 82 bia đá khắc tên các tiến sĩ, được UNESCO ghi nhận là Di sản tư liệu thế giới.",
       "approx": true,
       "address": "58 Quốc Tử Giám, Đống Đa",
-      "image": "images/van-mieu.jpg",
+      "image": "images/van-mieu.webp",
       "imageAlt": "Văn Miếu – Quốc Tử Giám",
       "imageCredit": "Ảnh: Jakub Hałun · CC BY 4.0 · Wikimedia Commons"
     },
@@ -433,7 +433,7 @@
       "culture": "Trung tâm quyền lực của nhiều triều đại từ khi vua Lý Thái Tổ dời đô về Thăng Long năm 1010, được UNESCO công nhận Di sản văn hoá thế giới năm 2010. Khu di tích có Đoan Môn, điện Kính Thiên và những dấu tích khảo cổ nhiều lớp.",
       "approx": true,
       "address": "19C Hoàng Diệu, Ba Đình",
-      "image": "images/hoang-thanh-thang-long.jpg",
+      "image": "images/hoang-thanh-thang-long.webp",
       "imageAlt": "Hoàng thành Thăng Long",
       "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -480,7 +480,7 @@
           "2026-11-02"
         ]
       ],
-      "image": "images/lang-bac.jpg",
+      "image": "images/lang-bac.webp",
       "imageAlt": "Lăng Chủ tịch Hồ Chí Minh và Quảng trường Ba Đình",
       "imageCredit": "Ảnh: Vyacheslav Argenberg · CC BY 4.0 · Wikimedia Commons"
     },
@@ -517,7 +517,7 @@
       "culture": "Ngôi chùa dựng năm 1049 dưới thời vua Lý Thái Tông, kiến trúc độc đáo như một đoá sen nở trên một cột đá giữa hồ, là biểu tượng của Hà Nội.",
       "approx": true,
       "address": "Phố Chùa Một Cột, Ba Đình",
-      "image": "images/chua-mot-cot.jpg",
+      "image": "images/chua-mot-cot.webp",
       "imageAlt": "Chùa Một Cột",
       "imageCredit": "Ảnh: thalling55 · CC BY 2.0 · Wikimedia Commons"
     },
@@ -554,7 +554,7 @@
       "culture": "Chùa được cho là cổ nhất Hà Nội, có lịch sử hơn 1.500 năm, nằm trên đảo nhỏ nhô ra hồ Tây. Tháp Bảo Tháp cao 11 tầng với tượng Phật trong ánh sáng ấm áp là hình ảnh quen thuộc của chùa.",
       "approx": true,
       "address": "Đường Thanh Niên, Tây Hồ",
-      "image": "images/chua-tran-quoc.jpg",
+      "image": "images/chua-tran-quoc.webp",
       "imageAlt": "Chùa Trấn Quốc",
       "imageCredit": "Ảnh: Jakub Hałun · CC BY 4.0 · Wikimedia Commons"
     },
@@ -625,7 +625,7 @@
       "culture": "Hồ nước ngọt lớn nhất Hà Nội, chu vi khoảng 17 km, là nơi người dân đi dạo, tập thể dục và thưởng thức hoàng hôn, xung quanh có nhiều đền chùa cổ.",
       "approx": true,
       "address": "Quận Tây Hồ",
-      "image": "images/ho-tay.jpg",
+      "image": "images/ho-tay.webp",
       "imageAlt": "Hồ Tây (dạo đường Thanh Niên)",
       "imageCredit": "Ảnh: Rungbachduong · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -662,7 +662,7 @@
       "culture": "Nhà tù do người Pháp xây từ năm 1896 để giam người yêu nước, về sau còn giam các phi công Mỹ trong chiến tranh và được gọi là \"Hanoi Hilton\". Nay là bảo tàng lịch sử.",
       "approx": true,
       "address": "1 Hoả Lò, Hoàn Kiếm",
-      "image": "images/nha-tu-hoa-lo.jpg",
+      "image": "images/nha-tu-hoa-lo.webp",
       "imageAlt": "Nhà tù Hỏa Lò",
       "imageCredit": "Ảnh: David McKelvey from Brisbane, Australia · CC BY 2.0 · Wikimedia Commons"
     },
@@ -699,7 +699,7 @@
       "culture": "Bảo tàng giới thiệu đời sống, văn hoá của 54 dân tộc Việt Nam qua hiện vật, trang phục, ảnh và khu trưng bày ngoài trời với các ngôi nhà truyền thống dựng lại nguyên bản.",
       "approx": true,
       "address": "Nguyễn Văn Huyên, Cầu Giấy",
-      "image": "images/bao-tang-dan-toc-hoc.jpg",
+      "image": "images/bao-tang-dan-toc-hoc.webp",
       "imageAlt": "Bảo tàng Dân tộc học Việt Nam",
       "imageCredit": "Ảnh: Nam Hy Hoàng Phong · CC BY 3.0 · Wikimedia Commons"
     },
@@ -803,7 +803,7 @@
       "culture": "Làng nghề gốm lâu đời ven sông Hồng, có lịch sử hàng trăm năm với những sản phẩm bát đĩa, bình lọ, đồ trang trí men trắng, men lam, rất được du khách mua làm quà.",
       "approx": true,
       "address": "Gia Lâm, cách trung tâm khoảng 13 km",
-      "image": "images/lang-gom-bat-trang.jpg",
+      "image": "images/lang-gom-bat-trang.webp",
       "imageAlt": "Làng gốm Bát Tràng",
       "imageCredit": "Ảnh: 松岡明芳 · CC BY-SA 3.0 · Wikimedia Commons"
     },
@@ -840,7 +840,7 @@
       "culture": "Làng lụa có truyền thống hơn nghìn năm ở Hà Đông, nổi tiếng với lụa tơ tằm mềm mại, mát, từng được dùng làm cống phẩm cho cung đình.",
       "approx": true,
       "address": "Hà Đông, cách trung tâm khoảng 10 km",
-      "image": "images/lang-lua-van-phuc.jpg",
+      "image": "images/lang-lua-van-phuc.webp",
       "imageAlt": "Làng lụa Vạn Phúc",
       "imageCredit": "Ảnh: Syced · CC0 · Wikimedia Commons"
     },
@@ -878,7 +878,7 @@
       "culture": "Quần thể chùa trong hang động núi đá vôi bên suối Yến, nổi tiếng với lễ hội kéo dài vài tháng đầu năm. Hành trình ngồi đò qua núi non rồi leo lên động Hương Tích là một trải nghiệm tâm linh và thiên nhiên.",
       "approx": true,
       "address": "Mỹ Đức, cách Hà Nội khoảng 60 km",
-      "image": "images/chua-huong.jpg",
+      "image": "images/chua-huong.webp",
       "imageAlt": "Chùa Hương (Hương Sơn)",
       "imageCredit": "Ảnh minh hoạ cảnh sông núi khu Hương Sơn: Hoàng Việt at vi.wikipedia · Public domain · Wikimedia Commons"
     },
@@ -1004,7 +1004,7 @@
         "Nem cua bể",
         "Bia Hà Nội"
       ],
-      "image": "images/bun-cha-huong-lien.jpg",
+      "image": "images/bun-cha-huong-lien.webp",
       "imageAlt": "Bún chả Hương Liên",
       "imageCredit": "Ảnh minh hoạ món bún chả (không phải ảnh tại quán): Weetjesman · CC BY-SA 4.0 · Wikimedia Commons"
     },
@@ -1088,7 +1088,7 @@
         "Bún",
         "Mắm tôm"
       ],
-      "image": "images/cha-ca-thang-long.jpg",
+      "image": "images/cha-ca-thang-long.webp",
       "imageAlt": "Chả cá Thăng Long",
       "imageCredit": "Ảnh minh hoạ món chả cá (quán Chả Cá Lã Vọng, không phải quán này): Yun Huang Yong · CC BY-SA 2.0 · Wikimedia Commons"
     },
@@ -1254,7 +1254,7 @@
         "Cà phê nâu",
         "Trà"
       ],
-      "image": "images/ca-phe-giang.jpg",
+      "image": "images/ca-phe-giang.webp",
       "imageAlt": "Cà phê Giảng (cà phê trứng)",
       "imageCredit": "Ảnh minh hoạ cà phê trứng (không phải ảnh tại quán): David McKelvey from Brisbane, Australia · CC BY 2.0 · Wikimedia Commons"
     },
