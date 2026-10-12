@@ -1,4 +1,4 @@
-import { buildItinerary, closedOn, effectiveRules, filterPlaces, STYLE_TYPES, styleList, BUDGET_CAP, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays } from '../src/scheduler.js';
+import { buildItinerary, closedOn, effectiveRules, filterPlaces, STYLE_TYPES, styleList, BUDGET_CAP, distanceKm, travelMinutes, toMin, toHHMM, daysBetween, addDays, tripCities } from '../src/scheduler.js';
 import { estimateCost, hotelsFor } from '../src/costing.js';
 import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels, flightDataFor, originsFor } from '../src/search.js';
 import { hotelDetailHtml } from '../src/hoteldetail.js';
@@ -26,11 +26,32 @@ import { addPhoto, listPhotos, listPhotosByPrefix, deletePhoto, movePhotos, dele
 // <DATA>
 const loadJson = (n) => fetch('../data/' + n + '.json').then((r) => r.json());
 const [DEST_FILES, RULES, OPTS_BASE, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED, PRO] = await Promise.all(['destinations', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured', 'pro'].map(loadJson));
-// Địa điểm và khách sạn nằm trong từng tệp theo điểm đến (data/places/<slug>.json, data/hotels/<slug>.json), hiện tải hết khi mở app
-const [placeFiles, hotelFiles] = await Promise.all(['places', 'hotels'].map((k) => Promise.all(DEST_FILES.destinations.map((d) => loadJson(k + '/' + d.slug)))));
-const DATA = { places: placeFiles.flatMap((f) => f.places) };
-const OPTS = { ...OPTS_BASE, hotels: hotelFiles.flatMap((f) => f.hotels) };
+// Địa điểm và khách sạn nằm trong từng tệp theo điểm đến (data/places/<slug>.json, data/hotels/<slug>.json), chỉ tải điểm đến đang dùng
+const LAZY = true;
+const DATA = { places: [] };
+const OPTS = { ...OPTS_BASE, hotels: [] };
 // </DATA>
+
+/* ---------- Tải dữ liệu theo điểm đến ---------- */
+const SLUG = Object.fromEntries(DEST_FILES.destinations.map((d) => [d.city, d.slug]));
+const loadedDests = new Set(LAZY ? [] : Object.keys(SLUG)); // bản đóng gói một file đã có sẵn mọi điểm đến
+const destLoads = new Map();
+function loadDest(city) {
+  if (!SLUG[city] || loadedDests.has(city)) return Promise.resolve();
+  if (!destLoads.has(city)) {
+    destLoads.set(city, Promise.all([loadJson('places/' + SLUG[city]), loadJson('hotels/' + SLUG[city])]).then(([p, h]) => {
+      const have = new Set(DATA.places.map((x) => x.id));
+      p.places.forEach((x) => { if (!have.has(x.id)) DATA.places.push(x); });
+      OPTS.hotels.push(...h.hotels);
+      loadedDests.add(city);
+    }).catch((err) => { destLoads.delete(city); throw err; }));
+  }
+  return destLoads.get(city);
+}
+const ensureDests = (cities) => Promise.all([...new Set(cities)].map(loadDest));
+const ensureAll = () => ensureDests(Object.keys(SLUG));
+const citiesLoaded = (cities) => cities.every((c) => !SLUG[c] || loadedDests.has(c));
+const loadFail = () => { toast('Không tải được dữ liệu điểm đến, hãy kiểm tra mạng rồi thử lại'); };
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -120,8 +141,13 @@ function setDest(name, { render = true } = {}) {
   destName = name; store.prefs.dest = name; syncCombo();
   $('destSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.v === name)));
   $('homeDest').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.homedest === name)));
-  const hp = DATA.places.find((p) => p.id === DEST_HERO[name]);
   $('heroTitle').textContent = name;
+  $('demoTitle').textContent = 'Một ngày ở ' + name + ', bốn nhịp khác nhau';
+  if (!citiesLoaded([name])) { // chọn điểm đến chưa tải: tải rồi dựng lại, trong lúc đó giữ màn hình hiện tại
+    ensureDests([name]).then(() => { if (destName === name) setDest(name, { render }); }).catch(loadFail);
+    return;
+  }
+  const hp = DATA.places.find((p) => p.id === DEST_HERO[name]);
   const img = $('heroImg');
   if (name === 'Đà Nẵng' || !hp || !hp.image) { img.src = heroDefault.src; img.alt = heroDefault.alt; }
   else { img.src = hp.image; img.alt = hp.imageAlt || hp.name; }
@@ -199,6 +225,7 @@ function run(collapse = false) {
     styles: [...document.querySelectorAll('#styles [aria-pressed="true"]')].map((x) => x.dataset.v) };
   if (comboSel.length) trip.alsoVisit = orderCities(destName, comboSel);
   if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; $('dayTabs').hidden = true; setFormOpen(true); return; }
+  if (!citiesLoaded(tripCities(trip))) { $('out').innerHTML = '<p class="hint">Đang tải dữ liệu điểm đến…</p>'; ensureDests(tripCities(trip)).then(() => run(collapse)).catch(loadFail); return; }
   plan = buildItinerary(trip, DATA, RULES);
   rule = effectiveRules(RULES[aud], trip);
   pool = filterPlaces(DATA.places, trip).places;
@@ -455,6 +482,7 @@ function saveTrip() {
 function openTrip(id) {
   const s = store.trips.find((x) => x.id === id); if (!s) return;
   const t = s.trip;
+  if (!citiesLoaded(tripCities(t))) { ensureDests(tripCities(t)).then(() => openTrip(id)).catch(loadFail); return; }
   applyForm({ ...t, styles: styleList(t) });
   rule = effectiveRules(RULES[t.audience], t); pool = filterPlaces(DATA.places, t).places;
   plan = { trip: t, audienceLabel: RULES[t.audience].label, warnings: [], days: s.days.map((d) => ({ date: d.date, dayIndex: d.dayIndex,
@@ -1042,6 +1070,10 @@ async function renderMomBody() {
   const token = ++momToken, keys = momTrips();
   // Chưa tự chọn chuyến thì luôn theo chuyến mới nhất, tự cập nhật khi vừa tạo hoặc lưu lịch trình
   if (!momChosen || !momTrip || !keys.some((k) => k.key === momTrip)) { momChosen = false; momTrip = currentTripId || (store.trips[0] && store.trips[0].id) || (plan ? 'draft' : 'free'); }
+  if (momTrip === 'free' && !citiesLoaded(Object.keys(SLUG))) { // chọn địa điểm bất kỳ cần dữ liệu mọi điểm đến
+    try { await ensureAll(); } catch (e) { loadFail(); }
+    if (token !== momToken) return;
+  }
   const hadFocus = document.activeElement && document.activeElement.id === 'momQ';
   let photos = [], err = '';
   try { photos = await listPhotosByPrefix(momTrip + ':'); } catch (e) { err = e.message; }
@@ -1214,6 +1246,7 @@ function offlineHtml() {
 async function enableOffline() {
   if (!isPro()) { needPro('Dùng ngoại tuyến'); return; }
   try {
+    await ensureAll(); // lưu ngoại tuyến cần dữ liệu và ảnh của mọi điểm đến
     const reg = await navigator.serviceWorker.register('sw.js');
     await navigator.serviceWorker.ready;
     const urls = new Set([location.href.split('#')[0], ...performance.getEntriesByType('resource').map((e) => e.name).filter((u) => u.startsWith(location.origin))]);
@@ -1405,8 +1438,12 @@ function featuredStats(f) {
 }
 // Ảnh bìa lịch trình nổi bật: dùng ảnh thật của một điểm trong lịch (ảnh của chủ dự án hoặc ảnh Wikimedia có giấy phép)
 const featuredCover = (f) => DATA.places.find((p) => p.id === f.cover && p.image) || null;
+const featuredCities = (f) => [f.destination || 'Đà Nẵng', ...(f.alsoVisit || [])];
 function renderFeatured() {
-  $('homeFeatured').innerHTML = FEATURED.featured.filter((f) => (f.destination || 'Đà Nẵng') === destName || (f.alsoVisit || []).includes(destName)).map((f) => {
+  const mine = FEATURED.featured.filter((f) => (f.destination || 'Đà Nẵng') === destName || (f.alsoVisit || []).includes(destName));
+  const missing = mine.flatMap(featuredCities).filter((c) => !citiesLoaded([c]));
+  if (missing.length) ensureDests(missing).then(renderFeatured).catch(loadFail); // lịch kết hợp cần dữ liệu của thành phố đi cùng
+  $('homeFeatured').innerHTML = mine.filter((f) => citiesLoaded(featuredCities(f))).map((f) => {
     const st = featuredStats(f);
     const cv = featuredCover(f);
     return '<button type="button" class="pcard fcard' + (cv ? ' has-cover' : '') + '" data-featured="' + f.id + '">' + (cv ? '<img class="fc-img" src="' + esc(cv.image) + '" alt="" loading="lazy">' : sceneSvg({ scene: f.scene, name: f.title })) + '<div><b>' + esc(f.title) + '</b><span>' + f.days.length + ' ngày · ' + st.stops + ' điểm · ' + esc(RULES[f.audience].label) + '</span><span style="display:block">Bởi ' + esc(f.author) + '</span></div></button>';
@@ -1414,6 +1451,7 @@ function renderFeatured() {
 }
 function openFeatured(id) {
   const f = FEATURED.featured.find((x) => x.id === id); if (!f) return;
+  if (!citiesLoaded(featuredCities(f))) { ensureDests(featuredCities(f)).then(() => openFeatured(id)).catch(loadFail); return; }
   const trip = featuredTrip(f), keep = rule; rule = effectiveRules(RULES[f.audience], trip);
   const p = buildFeaturedPlan(f); p.days.forEach(retime); rule = keep;
   const st = featuredStats(f);
@@ -1428,6 +1466,7 @@ function openFeatured(id) {
 }
 function useFeatured(id) {
   const f = FEATURED.featured.find((x) => x.id === id); if (!f) return;
+  if (!citiesLoaded(featuredCities(f))) { ensureDests(featuredCities(f)).then(() => useFeatured(id)).catch(loadFail); return; }
   const trip = featuredTrip(f);
   closeSheet(); applyForm({ ...trip, styles: f.styles });
   rule = effectiveRules(RULES[f.audience], trip); pool = filterPlaces(DATA.places, trip).places;
@@ -1880,6 +1919,10 @@ const hotelPromo = (stars) => PROMOS.promos.some((p) => p.target.type === 'hotel
 // nút chọn điểm đến sinh từ danh sách DESTS (chỉ điểm đến đã có dữ liệu)
 const destBtns = (attr) => DESTS.filter((d) => d.ok).map((d) => '<button type="button" ' + attr + '="' + esc(d.name) + '" aria-pressed="false">' + esc(d.name) + '</button>').join('');
 $('destSeg').innerHTML = destBtns('data-v'); $('homeDest').innerHTML = destBtns('data-homedest');
+// Mở app: chỉ tải điểm đến đang dùng và các điểm đến của chuyến đã lưu, những nơi khác tải khi chọn
+// <LOAD-START>
+try { await ensureDests([store.prefs.dest || 'Đà Nẵng', ...store.trips.flatMap((x) => tripCities(x.trip))]); } catch (e) { loadFail(); }
+// </LOAD-START>
 setDest(store.prefs.dest || 'Đà Nẵng', { render: false });
 applyForm({});
 applySettings();
