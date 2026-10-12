@@ -1,5 +1,5 @@
 /* Bố cục: một cột như app điện thoại, 5 màn hình chuyển bằng thanh công cụ dưới đáy */
-:root{--bg:#f4f8f7;--card:#fff;--fg:#17302d;--muted:#5a6f6c;--line:#d9e5e2;--teal:#0F766E;--teal-soft:#dff1ee;--orange:#D9480F;--warn-bg:#fff2ea;--warn-fg:#8a2f08;--font:'Be Vietnam Pro',system-ui,sans-serif}
+:root{--bg:#f4f8f7;--card:#fff;--fg:#17302d;--muted:#5a6f6c;--line:#d9e5e2;--teal:#0F766E;--teal-soft:#dff1ee;--orange:#C2410C;--warn-bg:#fff2ea;--warn-fg:#8a2f08;--font:'Be Vietnam Pro',system-ui,sans-serif}
 :root[data-theme="pink"]{--bg:#fff4f7;--card:#fff;--fg:#3b1f2b;--muted:#7a5566;--line:#f2d3df;--teal:#B8235A;--teal-soft:#fde3ec;--orange:#C2410C;--warn-bg:#fff0e6;--warn-fg:#8a2f08}
 :root[data-theme="yellow"]{--bg:#fffaeb;--card:#fff;--fg:#33290d;--muted:#6e6142;--line:#f0e2b6;--teal:#8F5A00;--teal-soft:#fdf0c6;--orange:#C2410C;--warn-bg:#fff0e6;--warn-fg:#8a2f08}
 *{box-sizing:border-box}
@@ -453,8 +453,8 @@ section.day.sorting{user-select:none}
 .reel-done a.go{display:flex;align-items:center;justify-content:center;text-decoration:none}
 
 /* ArrowPro */
-.pro-tag{display:inline-block;padding:1px 7px;border-radius:999px;background:linear-gradient(135deg,#f59e0b,#d9480f);color:#fff;font-size:11px;font-weight:700;letter-spacing:.03em;vertical-align:1px}
-.pro-logo{display:inline-block;padding:4px 12px;border-radius:999px;background:linear-gradient(135deg,#f59e0b,#d9480f);color:#fff;font-weight:800;letter-spacing:.02em;font-size:14px}
+.pro-tag{display:inline-block;padding:1px 7px;border-radius:999px;background:linear-gradient(135deg,#B45309,#C2410C);color:#fff;font-size:11px;font-weight:700;letter-spacing:.03em;vertical-align:1px}
+.pro-logo{display:inline-block;padding:4px 12px;border-radius:999px;background:linear-gradient(135deg,#B45309,#C2410C);color:#fff;font-weight:800;letter-spacing:.02em;font-size:14px}
 .pro-card{display:flex;align-items:center;gap:12px;width:100%;padding:14px 16px;border:0;border-radius:18px;background:linear-gradient(135deg,#1f2937,#0f766e);color:#fff;font:inherit;text-align:left;cursor:pointer;margin-bottom:4px}
 .pro-card b{display:block}.pro-card small{display:block;opacity:.85;font-size:13px}.pro-card .chev{margin-left:auto;font-size:20px}
 .pro-hero{padding:20px;border-radius:20px;background:linear-gradient(135deg,#1f2937,#0f766e);color:#fff}

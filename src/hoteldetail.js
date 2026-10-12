@@ -13,7 +13,7 @@ export function hotelDetailHtml(hotel, { selected = false, nights, google = null
   const rating = real ? google.rating : hotel.rating, count = real ? google.reviewCount : hotel.reviewCount;
   const reviews = real ? google.reviews : hotel.reviews || [];
   const mapsUrl = (real && google.mapsUrl) || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.googleQuery || hotel.name)}%20${hotel.lat},${hotel.lng}`;
-  let h = `<div class="pd hd"><div class="hd-photos" role="group" aria-label="Ảnh minh hoạ">${(hotel.photos || ['lobby']).map((p) => `<figure>${sceneSvg({ scene: p === 'beach' ? 'beach' : p, name: hotel.name })}<figcaption>${PHOTO_LABEL[p] || ''}</figcaption></figure>`).join('')}</div>`;
+  let h = `<div class="pd hd"><div class="hd-photos" role="group" tabindex="0" aria-label="Ảnh minh hoạ">${(hotel.photos || ['lobby']).map((p) => `<figure>${sceneSvg({ scene: p === 'beach' ? 'beach' : p, name: hotel.name })}<figcaption>${PHOTO_LABEL[p] || ''}</figcaption></figure>`).join('')}</div>`;
   h += `<p class="hint">Ảnh minh hoạ, chưa phải ảnh thật của khách sạn.</p><h2>${hEsc(hotel.name)}</h2>`;
   h += `<div class="pd-tags"><span class="tag">${hotel.stars} sao</span><span class="tag">${hEsc(hotel.area)}</span>${(hotel.amenities || []).map((a) => `<span class="tag">${hEsc(a)}</span>`).join('')}</div>`;
   if (hotel.description) h += `<p style="margin-top:8px">${hEsc(hotel.description)}</p>`;

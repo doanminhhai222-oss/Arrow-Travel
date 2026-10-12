@@ -401,5 +401,6 @@ export const EN = {
   "Đà Nẵng + Hội An": "Da Nang + Hoi An",
   "Hội An + Đà Nẵng": "Hoi An + Da Nang",
   "Kết hợp thêm": "Also visit",
-  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "Each day stays in one city, with one hotel per city. Allow at least 2 days for each place."
+  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "Each day stays in one city, with one hotel per city. Allow at least 2 days for each place.",
+  "thông báo chưa đọc": "unread notifications"
 };

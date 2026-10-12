@@ -29,6 +29,14 @@ export async function openApp(browser, url, { viewport = { width: 400, height: 8
   return page;
 }
 
+// Quét truy cập bằng axe-core (WCAG 2.0/2.1/2.2 A và AA, thêm các thực hành tốt); trả về danh sách vi phạm rút gọn
+const AXE_PATH = createRequire(import.meta.url).resolve('axe-core/axe.min.js');
+export async function axeScan(page, where) {
+  if ((await page.evaluate(() => typeof window.axe)) === 'undefined') await page.addScriptTag({ path: AXE_PATH });
+  const r = await page.evaluate(() => window.axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice'] } }));
+  return r.violations.map((v) => `${where}: ${v.id} [${v.impact}] ${v.nodes.length} chỗ, ví dụ ${v.nodes[0].target.join(' ').slice(0, 70)}`);
+}
+
 export const isoPlus = (s, n) => { const d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
 
 // Tạo lịch trình qua form: điểm đến, số ngày, các thành phố kết hợp

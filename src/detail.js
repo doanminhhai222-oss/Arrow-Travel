@@ -100,7 +100,7 @@ export function miniMapSvg(place, dayPlaces) {
     if (q === cur) return;
     s += `<circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="9" fill="#0F766E"/><text x="${q.x.toFixed(1)}" y="${(q.y + 4).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${i + 1}</text>`;
   });
-  s += `<circle cx="${cur.x.toFixed(1)}" cy="${cur.y.toFixed(1)}" r="13" fill="#D9480F" stroke="#fff" stroke-width="3"/><text x="${cur.x.toFixed(1)}" y="${(cur.y + 4.5).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${P.indexOf(cur) + 1}</text>`;
+  s += `<circle cx="${cur.x.toFixed(1)}" cy="${cur.y.toFixed(1)}" r="13" fill="#C2410C" stroke="#fff" stroke-width="3"/><text x="${cur.x.toFixed(1)}" y="${(cur.y + 4.5).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">${P.indexOf(cur) + 1}</text>`;
   const bw = bar / kmPerPx;
   s += `<path d="M12 ${H - 14}h${bw.toFixed(1)}" stroke="#17302d" stroke-width="3"/><text x="12" y="${H - 20}" font-size="10" fill="#17302d">${bar} km</text></svg>`;
   return s;

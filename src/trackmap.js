@@ -29,7 +29,7 @@ export function trackMapSvg({ stops, current, pois = [] }) {
     s += `<g><rect x="${f(q.x - 8)}" y="${f(q.y - 8)}" width="16" height="16" rx="4" fill="${c.color}" stroke="#fff" stroke-width="2" transform="rotate(45 ${f(q.x)} ${f(q.y)})"/><text x="${f(q.x)}" y="${f(q.y + 3.5)}" text-anchor="middle" font-size="9" font-weight="700" fill="#fff">${c.letter}</text></g>`;
   });
   stops.forEach((x, i) => {
-    const q = P(x.place), fill = x.visited ? '#15803d' : x.next ? '#D9480F' : '#0F766E';
+    const q = P(x.place), fill = x.visited ? '#15803d' : x.next ? '#C2410C' : '#0F766E';
     s += `<g><circle cx="${f(q.x)}" cy="${f(q.y)}" r="${x.next ? 13 : 11}" fill="${fill}" stroke="#fff" stroke-width="3"/><text x="${f(q.x)}" y="${f(q.y + 4)}" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">${x.visited ? '✓' : i + 1}</text><title>${tEsc(x.place.name)}</title></g>`;
   });
   if (current) {

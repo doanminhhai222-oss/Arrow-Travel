@@ -401,5 +401,6 @@ export const ZH = {
   "Đà Nẵng + Hội An": "岘港 + 会安",
   "Hội An + Đà Nẵng": "会安 + 岘港",
   "Kết hợp thêm": "同时前往",
-  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "每天只在一个城市，每个城市一间酒店。建议每个地方至少2天。"
+  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "每天只在一个城市，每个城市一间酒店。建议每个地方至少2天。",
+  "thông báo chưa đọc": "条未读通知"
 };

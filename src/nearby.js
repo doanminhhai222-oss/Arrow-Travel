@@ -4,7 +4,7 @@
 
 export const NEARBY_CATS = {
   checkin: { label: 'Check-in', color: '#7c3aed', letter: 'C', osm: [['tourism', 'attraction'], ['tourism', 'viewpoint'], ['tourism', 'artwork']], types: ['checkin', 'show', 'beach', 'park', 'culture'] },
-  food: { label: 'Quán ăn', color: '#d9480f', letter: 'A', osm: [['amenity', 'restaurant'], ['amenity', 'cafe']], types: ['food', 'cafe'] },
+  food: { label: 'Quán ăn', color: '#C2410C', letter: 'A', osm: [['amenity', 'restaurant'], ['amenity', 'cafe']], types: ['food', 'cafe'] },
   fuel: { label: 'Cây xăng', color: '#b45309', letter: 'X', osm: [['amenity', 'fuel']], types: [] },
   atm: { label: 'ATM', color: '#0369a1', letter: 'T', osm: [['amenity', 'atm']], types: [] },
   pharmacy: { label: 'Nhà thuốc', color: '#15803d', letter: 'N', osm: [['amenity', 'pharmacy']], types: [] },

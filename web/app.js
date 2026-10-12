@@ -93,6 +93,8 @@ function addNotif(title, body) { store.notifs.unshift({ id: 'n' + Date.now().toS
 function updateBadge() {
   const n = store.notifs.filter((x) => !x.read).length;
   $('badge').hidden = n === 0; $('badge').textContent = n > 9 ? '9+' : String(n);
+  // tên truy cập phải chứa chữ đang hiện trên nút (số trên huy hiệu)
+  $('bell').setAttribute('aria-label', n ? $('badge').textContent + ' ' + tr('thông báo chưa đọc') : tr('Thông báo'));
 }
 
 /* ---------- Trạng thái lịch trình đang soạn ---------- */
@@ -226,7 +228,7 @@ function run(collapse = false) {
     budget: $('budget').value, audience: aud, hasKids: $('kids').checked, hasElderly: $('elder').checked,
     styles: [...document.querySelectorAll('#styles [aria-pressed="true"]')].map((x) => x.dataset.v) };
   if (comboSel.length) trip.alsoVisit = orderCities(destName, comboSel);
-  if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn">Ngày về phải sau ngày đi.</div>'; $('dayTabs').hidden = true; setFormOpen(true); return; }
+  if (!trip.startDate || !trip.endDate || trip.endDate < trip.startDate) { $('out').innerHTML = '<div class="warn" role="alert">Ngày về phải sau ngày đi.</div>'; $('dayTabs').hidden = true; setFormOpen(true); return; }
   if (!citiesLoaded(tripCities(trip))) { $('out').innerHTML = '<p class="hint">Đang tải dữ liệu điểm đến…</p>'; ensureDests(tripCities(trip)).then(() => run(collapse)).catch(loadFail); return; }
   plan = buildItinerary(trip, DATA, RULES);
   rule = effectiveRules(RULES[aud], trip);
@@ -285,8 +287,15 @@ function renderDayTabs() {
     plan.days.map((d, i) => '<button type="button" role="tab" data-daytab="' + i + '" aria-selected="' + (dayTab === i) + '">Ngày ' + d.dayIndex + '<small>' + fmtDate(d.date) + (cityTag(d) ? ' · ' + cityTag(d) : '') + '</small></button>').join('') + '</div>' +
     '<div class="dt-stat">' + plan.days.length + ' ngày · ' + stops + ' điểm · ' + km + ' km · ' + esc(plan.audienceLabel) + '</div>';
 }
+// Báo cho trình đọc màn hình khi lịch trình đổi (xếp lại, hoàn tác, đổi chỗ), không đọc lại cả trang
+let announceTimer = null;
+function announce(msg) {
+  const el = $('srStatus'); el.textContent = '';
+  clearTimeout(announceTimer); announceTimer = setTimeout(() => { el.textContent = msg; }, 80);
+}
 function render() {
   let h = '';
+  if (plan) { const n = plan.days.reduce((s, d) => s + d.placeCount, 0) || plan.days.reduce((s, d) => s + d.items.filter((i) => i.place).length, 0); announce((undoStack.length && undoStack[undoStack.length - 1].msg ? undoStack[undoStack.length - 1].msg + ' ' : '') + 'Lịch trình ' + plan.days.length + ' ngày, ' + n + ' điểm.'); }
   if (plan.warnings.length) h += '<div class="warn">' + plan.warnings.map(esc).join('<br>') + '</div>';
   if (undoStack.length) h += '<div class="undo"><span>' + esc(undoStack[undoStack.length - 1].msg || '') + '</span><button data-act="undo" type="button">Hoàn tác</button></div>';
   renderDayTabs();
@@ -392,8 +401,8 @@ function flightsHtml(c) {
     carriers.map((k) => '<button type="button" data-act="airline" data-id="' + k.id + '" aria-pressed="' + airlineFilter.includes(k.id) + '">' + esc(k.name) + '</button>').join('') + '</div>';
   h += '<label for="fsort">Sắp xếp</label><select id="fsort"><option value="price"' + (flightSort === 'price' ? ' selected' : '') + '>Giá thấp nhất</option><option value="time"' + (flightSort === 'time' ? ' selected' : '') + '>Giờ khởi hành sớm nhất</option></select>';
   const sel = (f) => f ? '<p class="hint">Đang chọn: ' + esc(f.airline) + ' ' + f.flightNo + ' lúc ' + f.depart + ' · ' + money(f.priceOne) + '/người</p>' : '';
-  h += '<h4>Chiều đi · ' + fmtDate(t.startDate) + '</h4>' + sel(flightOut) + '<div class="opts">' + (out.map((f) => flightCard(f, 'fout', flightOut && flightOut.id, t.people)).join('') || '<p class="hint">Không có chuyến phù hợp bộ lọc.</p>') + '</div>';
-  h += '<h4>Chiều về · ' + fmtDate(t.endDate) + '</h4>' + sel(flightBack) + '<div class="opts">' + (back.map((f) => flightCard(f, 'fback', flightBack && flightBack.id, t.people)).join('') || '<p class="hint">Không có chuyến phù hợp bộ lọc.</p>') + '</div>';
+  h += '<h4 aria-level="3">Chiều đi · ' + fmtDate(t.startDate) + '</h4>' + sel(flightOut) + '<div class="opts">' + (out.map((f) => flightCard(f, 'fout', flightOut && flightOut.id, t.people)).join('') || '<p class="hint">Không có chuyến phù hợp bộ lọc.</p>') + '</div>';
+  h += '<h4 aria-level="3">Chiều về · ' + fmtDate(t.endDate) + '</h4>' + sel(flightBack) + '<div class="opts">' + (back.map((f) => flightCard(f, 'fback', flightBack && flightBack.id, t.people)).join('') || '<p class="hint">Không có chuyến phù hợp bộ lọc.</p>') + '</div>';
   h += liveFlightHtml();
   return h;
 }
@@ -414,7 +423,7 @@ function hotelsHtml(c) {
     '<span>' + x.stars + ' sao · ' + esc(x.area) + ' · ' + x.rating.toFixed(1) + '/5 ★ (' + x.reviewCount + ')' + '</span><span>' + x.amenities.map(esc).join(' · ') + '</span>' +
     (x.available ? '<span>' + esc(x.room.name) + ' · ' + x.rooms + ' phòng × ' + x.nights + ' đêm · trung bình ' + money(x.avgNight) + '/phòng/đêm</span><span class="pr">' + money(x.total) + ' cả kỳ nghỉ</span>' : '<span class="late">' + esc(x.reason) + '</span>') + '</button><button type="button" class="btn" data-act="hoteldetail" data-id="' + x.id + '">Xem chi tiết, loại phòng, đánh giá</button></div>').join('') || '<p class="hint">Không có khách sạn phù hợp bộ lọc.</p>') + '</div>';
   if (c.lists.length > 1) {
-    h += c.stays.map((st, k) => '<h4 style="margin:12px 0 4px">Ở ' + esc(st.city) + ' · nhận phòng ' + fmtDate(st.checkIn) + ' · trả phòng ' + fmtDate(st.checkOut) + ' (' + st.nights + ' đêm)</h4>' + optsHtml(sortHotels(c.lists[k].filter(keep), hotelSort), hotelIds[k], k)).join('');
+    h += c.stays.map((st, k) => '<h4 aria-level="3" style="margin:12px 0 4px">Ở ' + esc(st.city) + ' · nhận phòng ' + fmtDate(st.checkIn) + ' · trả phòng ' + fmtDate(st.checkOut) + ' (' + st.nights + ' đêm)</h4>' + optsHtml(sortHotels(c.lists[k].filter(keep), hotelSort), hotelIds[k], k)).join('');
   } else h += optsHtml(sortHotels(c.hl.filter(keep), hotelSort), hotelIds[0], 0);
   return h;
 }
@@ -807,6 +816,20 @@ $('out').addEventListener('change', (e) => {
 
 /* ---------- Chi tiết địa điểm ---------- */
 const sheet = $('sheet');
+// Hộp thoại là modal: khi mở, phần còn lại của trang không nhận focus và trình đọc màn hình không đọc phần nền; đóng thì trả focus về nút đã mở
+new MutationObserver(() => {
+  [...document.body.children].filter((e) => e !== sheet && e.id !== 'toast' && !/^(SCRIPT|STYLE|SVG)$/i.test(e.tagName)).forEach((e) => { if (sheet.hidden) e.removeAttribute('inert'); else e.setAttribute('inert', ''); });
+  if (sheet.hidden && lastFocus && lastFocus.isConnected && lastFocus.focus) lastFocus.focus();
+}).observe(sheet, { attributes: true, attributeFilter: ['hidden'] });
+// Tab và Shift+Tab xoay vòng trong hộp thoại, không thoát ra ngoài
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab' || sheet.hidden) return;
+  const f = [...sheet.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter((x) => x.offsetParent !== null);
+  if (!f.length) { e.preventDefault(); return; }
+  const i = f.indexOf(document.activeElement);
+  if (e.shiftKey && i <= 0) { e.preventDefault(); f[f.length - 1].focus(); }
+  else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); }
+});
 let lastFocus = null;
 function closeSheet() { sheet.hidden = true; addCtx = null; attTrip = null; attUrls.forEach((u) => URL.revokeObjectURL(u)); attUrls = []; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
 function openDetail(di, id) {
@@ -930,7 +953,7 @@ function renderTrack() {
   if (store.track && !s) { store.track = null; persist(); }
   if (!store.track) {
     box.innerHTML = '<div class="panel"><b>Bắt đầu chuyến đi</b><p class="hint" style="margin:6px 0 0">Chọn một lịch trình đã lưu. Khi bắt đầu, app đánh dấu những nơi bạn đã đến, hiện vị trí của bạn trên bản đồ và gợi ý điểm check-in, quán ăn, cây xăng, ATM ở gần.</p></div>' +
-      (store.trips.length ? store.trips.map((x) => '<div class="panel trip"><h3>' + esc(destLabel(x.trip)) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</h3><div class="sub">' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</div><div class="acts"><button type="button" class="go" style="width:auto;padding:0 20px" data-trackstart="' + x.id + '">Bắt đầu chuyến này</button></div></div>').join('')
+      (store.trips.length ? store.trips.map((x) => '<div class="panel trip"><h3 aria-level="2">' + esc(destLabel(x.trip)) + ' · ' + daysBetween(x.trip.startDate, x.trip.endDate) + ' ngày</h3><div class="sub">' + fmtDate(x.trip.startDate) + ' – ' + fmtDate(x.trip.endDate) + ' · ' + esc(RULES[x.trip.audience].label) + '</div><div class="acts"><button type="button" class="go" style="width:auto;padding:0 20px" data-trackstart="' + x.id + '">Bắt đầu chuyến này</button></div></div>').join('')
         : '<div class="panel empty"><b>Chưa có lịch trình đã lưu</b>Tạo và lưu một lịch trình để bắt đầu theo dõi.<button class="go" type="button" data-go="create">Lên lịch trình</button></div>') +
       (plan && !currentTripId ? '<p class="hint">Bạn đang soạn một lịch trình chưa lưu. Hãy lưu lịch trình trước khi bắt đầu.</p>' : '');
     return;
@@ -952,7 +975,7 @@ function renderTrack() {
     '<p class="hint" style="margin-top:8px">App dùng vị trí do thiết bị cung cấp (trên Android là dịch vụ vị trí của Google). Không cần đăng nhập Google, vị trí không được lưu và không gửi đi đâu.</p></div>';
   // bản đồ
   h += '<div class="panel" style="padding:12px">' + trackMapSvg({ stops: stops.map((x) => ({ place: x.place, visited: x.visited, next: nxt && nxt.place.id === x.place.id })), current: trackPos, pois: poiShown }) +
-    '<div class="legend" style="margin-top:8px"><span><i style="background:#2563eb;border-radius:50%"></i>Bạn</span><span><i style="background:#15803d;border-radius:50%"></i>Đã đến</span><span><i style="background:#D9480F;border-radius:50%"></i>Tiếp theo</span><span><i style="background:#7c3aed"></i>Gợi ý gần đó</span></div></div>';
+    '<div class="legend" style="margin-top:8px"><span><i style="background:#2563eb;border-radius:50%"></i>Bạn</span><span><i style="background:#15803d;border-radius:50%"></i>Đã đến</span><span><i style="background:#C2410C;border-radius:50%"></i>Tiếp theo</span><span><i style="background:#7c3aed"></i>Gợi ý gần đó</span></div></div>';
   // tiếp theo
   if (nxt) {
     h += '<div class="panel"><div class="hint">Điểm tiếp theo</div><b style="font-size:18px">' + esc(nxt.place.name) + '</b>' + (trackPos ? '<div class="hint">Cách bạn khoảng ' + fmtDist(straightKm(trackPos, nxt.place)) + ' (đường chim bay)</div>' : '') +
@@ -1090,7 +1113,7 @@ async function renderMomBody() {
   h += '<div class="panel mstats" id="momStats">' + momStatsHtml(info, momTrip) + '</div>';
   if (momTrip === 'free') h += '<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg><input id="momQ" type="search" value="' + esc(momQ) + '" placeholder="Tìm địa điểm" aria-label="Tìm địa điểm" autocomplete="off"></div>';
   if (!info.groups.length) h += '<div class="panel empty"><b>Chưa có địa điểm nào</b>Chuyến này chưa có điểm đến. Hãy chọn chuyến khác.</div>';
-  h += info.groups.map((g) => '<h3 class="mgroup">' + esc(g.label) + '</h3>' + g.places.map((p) => {
+  h += info.groups.map((g) => '<h3 class="mgroup" aria-level="2">' + esc(g.label) + '</h3>' + g.places.map((p) => {
     const e = momEff(momTrip, p.id), ph = byPlace[p.id] || [], urls = ph.map((x) => { const u = URL.createObjectURL(x.blob); momUrls.push(u); return { id: x.id, u }; });
     // ảnh bên phải thẻ: ảnh bạn đã đăng / vừa chọn, nếu chưa có thì ảnh của địa điểm, không có thì hình minh hoạ
     const bg = urls[0] ? urls[0].u : e.files[0] ? e.files[0].url : smallImg(p.image) || '';
@@ -1182,9 +1205,9 @@ async function fillAlbum() {
   let h = '<div class="album"><div class="cover">' + (best ? '<img src="' + best.urls[0] + '" alt="Ảnh bìa album">' : sceneSvg({ scene: 'beach', name: info.title })) + '<div class="cover-shade"></div><div class="cover-in"><small>Album kỷ niệm</small><h2>' + esc(info.title) + '</h2><p>' + esc(info.sub) + '</p></div></div>' +
     '<div class="a-stats"><span><b>' + photoN + '</b> ảnh</span><span><b>' + all.length + '</b> nơi đã ghé</span><span><b>' + (avg ? avg.toFixed(1) + ' ★' : '–') + '</b> trung bình</span></div>';
   entries.forEach((g) => {
-    h += '<h3 class="a-day">' + esc(g.label) + '</h3>';
+    h += '<h3 class="a-day" aria-level="2">' + esc(g.label) + '</h3>';
     g.items.forEach((x) => {
-      h += '<article class="a-page">' + (x.urls.length ? mosaic(x.urls) : '') + '<h4>' + esc(x.p.name) + '</h4>' + (x.d.rating ? '<div class="a-stars" aria-label="' + x.d.rating + ' sao">' + starsText(x.d.rating) + '</div>' : '') + (x.d.text ? '<blockquote>' + esc(x.d.text) + '</blockquote>' : '') + '</article>';
+      h += '<article class="a-page">' + (x.urls.length ? mosaic(x.urls) : '') + '<h4 aria-level="3">' + esc(x.p.name) + '</h4>' + (x.d.rating ? '<div class="a-stars" aria-label="' + x.d.rating + ' sao">' + starsText(x.d.rating) + '</div>' : '') + (x.d.text ? '<blockquote>' + esc(x.d.text) + '</blockquote>' : '') + '</article>';
     });
   });
   box.innerHTML = h + '<p class="hint" style="text-align:center">Album lưu trên thiết bị này. Chia sẻ album cho người khác cần máy chủ, sẽ có ở bản sau.</p></div>';
@@ -1534,7 +1557,7 @@ function renderHome() {
   $('homeDeals').innerHTML = searchPromos(PROMOS.promos, { today: todayStr() }).slice(0, 5).map((p) => '<button type="button" class="deal" data-page="promos"><b>' + esc(p.title) + '</b><span>' + esc(p.target.name || tr(TYPE_NAME[p.target.type])) + ' · mẫu</span>' + (p.code ? '<em>' + esc(p.code) + '</em>' : '') + '</button>').join('');
   // Tiến độ điểm thưởng
   const next = CATALOG.find((c) => c.cost > pt), tier = next || CATALOG[CATALOG.length - 1];
-  const pct = Math.min(100, Math.round((pt / tier.cost) * 100));
+  const pct = Math.max(0, Math.min(100, Math.round((pt / tier.cost) * 100) || 0));
   $('homeProg').innerHTML = '<b>' + (next ? pt + '/' + next.cost + ' điểm để đổi voucher ' + moneyVnd(next.value) : 'Bạn đủ điểm để đổi voucher ' + moneyVnd(tier.value)) + '</b>' +
     '<div class="bar" role="progressbar" aria-valuenow="' + pct + '" aria-valuemin="0" aria-valuemax="100" aria-label="Tiến độ điểm thưởng"><i style="width:' + pct + '%"></i></div>' +
     '<span style="font-size:14px;opacity:.9">Lưu lịch trình, đăng ảnh, đánh giá app để tích điểm.</span><button type="button" data-page="rewards">Xem điểm thưởng</button>';
@@ -1565,7 +1588,7 @@ function renderTrips() {
   el.innerHTML = '<button type="button" class="btn" data-go="create" style="align-self:flex-start">+ Lịch trình mới</button><div class="chips" role="group" aria-label="Lọc lịch trình"><button type="button" data-tripfilter="all" aria-pressed="' + (tripFilter === 'all') + '">Tất cả</button><button type="button" data-tripfilter="fav" aria-pressed="' + (tripFilter === 'fav') + '">Yêu thích (' + favN + ')</button></div>' +
     (list.length ? list.map((s) => {
       const t = s.trip, armed = armedTrip === s.id, fav = store.favorites.includes(s.id);
-      return '<div class="panel trip"><div class="trip-top"><h3>' + esc(destLabel(t)) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
+      return '<div class="panel trip"><div class="trip-top"><h3 aria-level="2">' + esc(destLabel(t)) + ' · ' + daysBetween(t.startDate, t.endDate) + ' ngày</h3><button type="button" class="fav" data-fav="' + s.id + '" aria-pressed="' + fav + '" aria-label="Yêu thích">♥</button></div><div class="sub">' + fmtDate(t.startDate) + ' – ' + fmtDate(t.endDate) + ' · ' + esc(RULES[t.audience].label) + ' · ' + t.people + ' người</div><div class="tot">Dự kiến ' + money(s.total) + '</div>' + bookingLine(s.id) +
         '<div class="acts"><button type="button" data-trip="' + s.id + '">Mở</button><button type="button" data-trackstart="' + s.id + '">' + (store.track && store.track.tripId === s.id ? 'Đang đi' : 'Bắt đầu chuyến') + '</button><button type="button" data-moments="' + s.id + '">Khoảnh khắc</button><button type="button" data-attach="' + s.id + '">Tệp</button><button type="button" class="' + (armed ? 'btn danger' : 'del') + '" data-deltrip="' + s.id + '">' + (armed ? 'Bấm lại để xoá' : 'Xoá') + '</button></div></div>';
     }).join('') : '<div class="panel empty"><b>Chưa có lịch trình yêu thích</b>Bấm ♥ ở một lịch trình để đánh dấu.</div>');
 }
@@ -1683,7 +1706,7 @@ let pageName = null, pageFrom = 'home', currentScreen = 'home';
 const legalPage = (key) => () => {
   const d = LEGAL[key];
   return '<div class="panel legal">' + (key !== 'payguide' ? '<div class="warn" style="margin-bottom:8px">Bản nháp, chưa được luật sư rà soát. Chủ app cần điền các mục [ĐIỀN] trước khi công khai.</div>' : '') +
-    (d.updated ? '<p class="hint">' + esc(d.updated) + '</p>' : '') + d.sections.map((s) => '<h3>' + esc(s.h) + '</h3><p>' + esc(s.p) + '</p>').join('') + '</div>';
+    (d.updated ? '<p class="hint">' + esc(d.updated) + '</p>' : '') + d.sections.map((s) => '<h3 aria-level="2">' + esc(s.h) + '</h3><p>' + esc(s.p) + '</p>').join('') + '</div>';
 };
 const PAGES = {
   album: { title: 'Album kỷ niệm', render: () => pageAlbum() },
@@ -1731,7 +1754,7 @@ const PROMO_TYPES = [['all', 'Tất cả'], ['place', 'Địa điểm'], ['fligh
 const TYPE_NAME = { all: 'Arrow Travel', place: 'Địa điểm', flight: 'Chuyến bay', flight_any: 'Chuyến bay', hotel: 'Khách sạn', transport: 'Thuê xe' };
 function promoCard(p) {
   const left = daysLeft(p, todayStr());
-  return '<div class="panel promo' + (p.pro ? ' promo-pro' : '') + '"><h3>' + (p.pro ? '<span class="pro-tag">Pro</span> ' : '') + esc(p.title) + '</h3><div class="meta">' + esc(tr(TYPE_NAME[p.target.type])) + (p.target.name ? ' · ' + esc(p.target.name) : '') +
+  return '<div class="panel promo' + (p.pro ? ' promo-pro' : '') + '"><h3 aria-level="2">' + (p.pro ? '<span class="pro-tag">Pro</span> ' : '') + esc(p.title) + '</h3><div class="meta">' + esc(tr(TYPE_NAME[p.target.type])) + (p.target.name ? ' · ' + esc(p.target.name) : '') +
     (left != null ? ' · còn ' + left + ' ngày' : '') + ' <span class="badge-demo">mẫu</span></div><p style="margin:6px 0 0">' + esc(p.desc) + '</p>' +
     (p.pro && !isPro() ? '<button type="button" class="btn" data-propage style="margin-top:8px">Mở khoá với ArrowPro</button>' : p.code ? '<div class="code">' + esc(p.code) + ' <button type="button" class="btn quiet" data-pg="copy" data-v="' + esc(p.code) + '">Chép</button></div>' : '') +
     (p.kind === 'perk' ? '<p class="hint" style="margin-top:6px">Nhận trực tiếp tại nơi sử dụng.</p>' : '<p class="hint" style="margin-top:6px">Nhập mã khi thanh toán chuyến bay và khách sạn.</p>') + '</div>';

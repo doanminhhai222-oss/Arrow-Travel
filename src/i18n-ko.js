@@ -401,5 +401,6 @@ export const KO = {
   "Đà Nẵng + Hội An": "다낭 + 호이안",
   "Hội An + Đà Nẵng": "호이안 + 다낭",
   "Kết hợp thêm": "함께 방문",
-  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "하루에 한 도시만 다니며 도시마다 호텔을 하나 고릅니다. 각 도시에 2일 이상 권장합니다."
+  "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "하루에 한 도시만 다니며 도시마다 호텔을 하나 고릅니다. 각 도시에 2일 이상 권장합니다.",
+  "thông báo chưa đọc": "개의 읽지 않은 알림"
 };

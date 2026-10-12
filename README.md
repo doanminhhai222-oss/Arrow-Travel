@@ -123,3 +123,15 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 - Ảnh gốc (JPEG hoặc PNG) nằm ở `assets-src/images/`. `python3 scripts/optimize-images.py` (cần `pip install pillow`) tạo ảnh WebP vào `web/images/`: `<tên>.webp` (tối đa 800 px, chất lượng 60) cho hero và chi tiết, `<tên>-s.webp` (tối đa 400 px) cho thẻ nhỏ, ảnh nền thẻ đối tượng, nền thẻ đặt vé, lịch trình nổi bật, thẻ khoảnh khắc (hàm `smallImg` trong `web/app.js`). Chỉ làm lại ảnh nào gốc mới hơn.
 - Thêm ảnh địa điểm mới: bỏ ảnh gốc vào `assets-src/images/<id>.jpg`, ghi nguồn vào `data/photo-credits.json`, chạy `optimize-images.py` rồi `apply-photos.py` (gắn ảnh vào dữ liệu và viết lại `web/images/CREDITS.md`).
 - Kết quả đo: ảnh lớn từ 8,4 MB còn 6,4 MB (ảnh gốc đã nén JPEG chất lượng thấp từ trước nên chỉ giảm khoảng 24%); ảnh trang chủ tải lần đầu từ 614 KB còn 190 KB; tải lần đầu cả trang từ 1,3 MB còn 915 KB; bản đóng gói một file từ 12,6 MB còn 9,4 MB. Muốn giảm thêm cần ảnh gốc độ phân giải cao tải lại từ nguồn rồi nén một lần từ đầu.
+
+## Truy cập (accessibility)
+
+Rà soát ngày 12/10/2026 bằng axe-core (WCAG 2.0, 2.1, 2.2 mức A và AA cùng các thực hành tốt) trên khoảng 20 màn hình và hộp thoại, ở 3 giao diện (mặc định, vàng nhạt, hồng nhạt), khổ điện thoại 400 px; kèm kiểm tra bàn phím, tràn ngang ở 320 px, giảm chuyển động. Đã sửa:
+- **Độ tương phản:** màu cam chính `#D9480F` (4,29:1) đổi thành `#C2410C` (5,2:1) cho nút chính, giờ ăn, nhãn, nút xoá dữ liệu; nhãn Pro đổi gradient cam nhạt sang tối hơn.
+- **Hộp thoại (modal):** trước đây Tab thoát được ra ngoài hộp thoại. Giờ Tab, Shift+Tab xoay vòng trong hộp thoại, phần nền bị khoá (`inert`) khi mở, Escape đóng và trả focus về nút đã mở.
+- **Tên nút chuông thông báo** chứa số đang hiện trên huy hiệu ("2 thông báo chưa đọc", có dịch 4 ngôn ngữ).
+- **Thứ tự tiêu đề** (h1, h2, h3 không nhảy cấp) ở danh sách chuyến, khoảnh khắc, album, khuyến mãi, trang pháp lý, tab chuyến bay và khách sạn.
+- **Vùng cuộn ảnh khách sạn** nhận focus bàn phím; thanh tiến độ điểm thưởng không còn có thể có giá trị `NaN`.
+- **Thông báo cho trình đọc màn hình:** vùng `#srStatus` đọc "Lịch trình N ngày, M điểm" và các thao tác đổi chỗ, thêm, xoá, hoàn tác; lỗi nhập ngày dùng `role="alert"`.
+- Kiểm tra tự động nằm ở `test/e2e/a11y.e2e.js`, chạy cùng CI (`npm run test:e2e`), yêu cầu 0 vi phạm.
+- Chưa kiểm tra: trình đọc màn hình thật (VoiceOver, TalkBack, NVDA), điều khiển bằng giọng nói, và người dùng thật có khuyết tật. Công cụ tự động chỉ bắt được khoảng một phần ba các lỗi truy cập; nên thử thủ công trước khi mở bán.
