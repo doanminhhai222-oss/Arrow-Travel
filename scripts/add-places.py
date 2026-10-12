@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Thêm quán ăn và quán cà phê/trà sữa nổi tiếng ở Đà Nẵng vào data/da-nang.json (chạy lại được, không trùng).
+"""Thêm quán ăn và quán cà phê/trà sữa nổi tiếng ở Đà Nẵng vào data/places/<điểm đến>.json (chạy lại được, không trùng).
 Quán thật nhưng toạ độ, giá, giờ mở cửa là ƯỚC LƯỢNG (cờ "approx"), app ghi rõ để người dùng kiểm tra lại trên Google Maps.
 Không có điểm đánh giá hay lượt đánh giá vì chưa có dữ liệu thật.
 Chạy: python3 scripts/add-places.py"""
 import json, pathlib
-path = pathlib.Path(__file__).resolve().parent.parent / "data" / "da-nang.json"
-data = json.loads(path.read_text(encoding="utf-8"))
+from _data import load_data, save_data, load_options, save_options
+data = load_data()
 ALL = ["cap_doi", "nhom_ban", "gia_dinh", "mot_minh"]
 CHECK = "Toạ độ, giá và giờ mở cửa là ước lượng, hãy kiểm tra lại trên Google Maps trước khi đi"
 
@@ -69,5 +69,5 @@ for p in NEW:
         data["places"] = [p if q["id"] == p["id"] else q for q in data["places"]]
     else:
         data["places"].append(p)
-path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+save_data(data)
 print("thêm", len(added), "quán, tổng", len(data["places"]))

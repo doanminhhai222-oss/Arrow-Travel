@@ -1,10 +1,11 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { straightKm, fmtDist, reachedStop, catalogNearby, overpassQuery, normalizeOverpass, fetchOverpass, mapsSearchUrl, mapsDirectionsUrl, NEARBY_CATS } from '../src/nearby.js';
 import { trackMapSvg } from '../src/trackmap.js';
 
-const data = JSON.parse(readFileSync(new URL('../data/da-nang.json', import.meta.url)));
+const data = loadData();
 const P = (id) => data.places.find((p) => p.id === id);
 const mykhe = P('my-khe'), rong = P('cau-rong');
 

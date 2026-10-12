@@ -1,10 +1,11 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { searchFlights, sortFlights, cheapestFlight, searchHotels, sortHotels } from '../src/search.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
-const fl = read('../data/flights.json'), opts = read('../data/travel-options.json');
+const fl = read('../data/flights.json'), opts = loadOptions();
 const TODAY = '2026-10-06';
 const q = { data: fl, originId: 'ho-chi-minh', date: '2026-10-20', direction: 'out', people: 2, today: TODAY };
 

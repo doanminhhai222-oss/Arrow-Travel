@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Gộp nội dung chi tiết (chú ý nổi bật, nét văn hoá, mô tả quán...) vào data/da-nang.json.
+"""Gộp nội dung chi tiết (chú ý nổi bật, nét văn hoá, mô tả quán...) vào data/places/<điểm đến>.json.
 Chạy: python3 scripts/enrich-places.py
 Phần văn hoá/lịch sử của điểm tham quan là kiến thức phổ biến. Quán ăn và đánh giá là DỮ LIỆU MẪU, phải thay bằng dữ liệu thật."""
 import json, pathlib
+from _data import load_data, save_data, load_options, save_options
 
-path = pathlib.Path(__file__).resolve().parent.parent / "data" / "da-nang.json"
-data = json.loads(path.read_text(encoding="utf-8"))
+data = load_data()
 
 E = {
   "ba-na": dict(scene="mountain",
@@ -61,5 +61,5 @@ for p in data["places"]:
     p.update(E.get(p["id"], {}))
     p.setdefault("lat", p["lat"])
 
-path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+save_data(data)
 print("đã gộp", len([p for p in data["places"] if "highlights" in p]), "địa điểm")

@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildItinerary } from '../src/scheduler.js';
@@ -6,7 +7,7 @@ import { estimateCost } from '../src/costing.js';
 import { priceMode, tripLegs, transportOptions } from '../src/transport.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
-const data = read('../data/da-nang.json'), rules = read('../data/rules.json'), opts = read('../data/travel-options.json'), tr = read('../data/transport.json');
+const data = loadData(), rules = read('../data/rules.json'), opts = loadOptions(), tr = read('../data/transport.json');
 const mode = (id) => tr.modes.find((m) => m.id === id);
 const base = { destination: 'Đà Nẵng', startDate: '2026-09-03', endDate: '2026-09-05', people: 2, budget: 'vua_phai', audience: 'cap_doi', styles: [] };
 

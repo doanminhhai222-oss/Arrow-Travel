@@ -1,9 +1,10 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { placeDetailHtml, miniMapSvg } from '../src/detail.js';
 
-const data = JSON.parse(readFileSync(new URL('../data/da-nang.json', import.meta.url)));
+const data = loadData();
 const open = data.places.filter((p) => p.status !== 'closed');
 const get = (id) => data.places.find((p) => p.id === id);
 

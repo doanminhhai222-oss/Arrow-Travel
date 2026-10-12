@@ -1,11 +1,12 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { searchHotels } from '../src/search.js';
 import { hotelDetailHtml } from '../src/hoteldetail.js';
 import { normalizePlace, fetchPlaceReviews } from '../src/google.js';
 
-const opts = JSON.parse(readFileSync(new URL('../data/travel-options.json', import.meta.url)));
+const opts = loadOptions();
 const q = { hotels: opts.hotels, checkIn: '2026-10-20', checkOut: '2026-10-22', people: 4 };
 const byId = (list, id) => list.find((h) => h.id === id);
 

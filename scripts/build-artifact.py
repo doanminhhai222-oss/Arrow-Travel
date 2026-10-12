@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Đóng gói web/ thành MỘT file HTML tự chứa (để đăng làm artifact trên claude.ai).
 web/ là nguồn duy nhất. Cách dùng: python3 scripts/build-artifact.py <đường dẫn file đầu ra>"""
-import base64, pathlib, re, sys
+import base64, json, pathlib, re, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import _data
 
 root = pathlib.Path(__file__).resolve().parent.parent
 out = pathlib.Path(sys.argv[1] if len(sys.argv) > 1 else root / "dist" / "arrow-travel.html")
@@ -30,8 +32,8 @@ def inline_images(json_text):
         return '"image": "data:%s;base64,%s"' % (mime, base64.b64encode(path.read_bytes()).decode())
     return re.sub(r'"image":\s*"(images/[^"]+)"', repl, json_text)
 
-data_block = ("const DATA = " + inline_images(read("data/da-nang.json")) + ";\nconst RULES = " + read("data/rules.json") +
-              ";\nconst OPTS = " + read("data/travel-options.json") + ";\nconst TRANSPORT = " + read("data/transport.json") + ";\nconst FLIGHTS = " + read("data/flights.json") + ";\nconst PAYMENT = " + read("data/payment.json") + ";\nconst GOOGLE = " + read("data/google.json") + ";\nconst PROMOS = " + read("data/promos.json") + ";\nconst TRAVELERS = " + read("data/travelers.json") + ";\nconst LEGAL = " + read("data/legal.json") + ";\nconst APP = " + inline_images(read("data/app.json")) + ";\nconst FEATURED = " + read("data/featured.json") + ";\nconst PRO = " + read("data/pro.json") + ";")
+data_block = ("const DATA = " + inline_images(json.dumps(_data.load_data(), ensure_ascii=False)) + ";\nconst RULES = " + read("data/rules.json") +
+              ";\nconst OPTS = " + json.dumps(_data.load_options(), ensure_ascii=False) + ";\nconst TRANSPORT = " + read("data/transport.json") + ";\nconst FLIGHTS = " + read("data/flights.json") + ";\nconst PAYMENT = " + read("data/payment.json") + ";\nconst GOOGLE = " + read("data/google.json") + ";\nconst PROMOS = " + read("data/promos.json") + ";\nconst TRAVELERS = " + read("data/travelers.json") + ";\nconst LEGAL = " + read("data/legal.json") + ";\nconst APP = " + inline_images(read("data/app.json")) + ";\nconst FEATURED = " + read("data/featured.json") + ";\nconst PRO = " + read("data/pro.json") + ";")
 app = re.sub(r"// <DATA>.*?// </DATA>", lambda m: data_block, read("web/app.js"), flags=re.S)
 vendor = read("vendor/qrcode-generator.js")
 js = vendor + "\n" + "\n".join(strip_module(s) for s in [read("src/i18n-en.js"), read("src/i18n-zh.js"), read("src/i18n-ja.js"), read("src/i18n-ko.js"), read("src/i18n.js"), read("src/format.js"), read("src/scheduler.js"), read("src/costing.js"), read("src/stays.js"), read("src/regions.js"), read("src/transport.js"), read("src/nearby.js"), read("src/gmaps.js"), read("src/reel.js"), read("src/vnmap.js"), read("src/pro.js"), read("src/optimize.js"), read("src/trackmap.js"), read("src/search.js"), read("src/payment.js"), read("src/google.js"), read("src/promos.js"), read("src/loyalty.js"), read("src/friends.js"), detail, read("src/hoteldetail.js"), read("web/photos.js"), read("web/reel.js"), app])

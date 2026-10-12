@@ -62,10 +62,10 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 | Đường dẫn | Việc |
 |---|---|
 | `src/scheduler.js` | Logic xếp lịch (dùng lại được cho app Expo sau này) |
-| `data/da-nang.json` | Địa điểm Đà Nẵng. **Dữ liệu mẫu**, cần kiểm lại toạ độ, giờ, giá |
+| `data/places/<điểm đến>.json` | Địa điểm Đà Nẵng. **Dữ liệu mẫu**, cần kiểm lại toạ độ, giờ, giá |
 | `data/travel-options.json` | Nơi khởi hành, vé máy bay, khách sạn (giá mẫu) |
 | `src/detail.js` | Trang chi tiết địa điểm (ảnh minh hoạ, bản đồ mini, văn hoá, đánh giá quán) |
-| `scripts/enrich-places.py` | Gộp nội dung chi tiết vào `data/da-nang.json` |
+| `scripts/enrich-places.py` | Gộp nội dung chi tiết vào `data/places/<điểm đến>.json` |
 | `src/transport.js` + `data/transport.json` | Đề xuất xe máy, Grab, Xanh SM, taxi... và tính chi phí theo quãng đường (giá mẫu) |
 | `src/search.js` | Tìm chuyến bay (mọi hãng) và khách sạn theo ngày, giá và chỗ trống mẫu |
 | `src/hoteldetail.js` + `src/google.js` | Trang chi tiết khách sạn; lấy và chuẩn hoá đánh giá từ Google Places API |
@@ -109,3 +109,10 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 - `npm run test:e2e`: kiểm thử trình duyệt thật bằng Playwright (thư mục `test/e2e/`), tự bật server thử và chạy: trang chủ và 9 điểm đến, tạo lịch trình, chuyến bay, khách sạn, chi phí cho từng điểm đến, kết hợp nhiều thành phố (hai khách sạn, chặng liên tỉnh, cảnh báo thiếu ngày), 5 ngôn ngữ, đổi thứ tự bằng phím, thêm địa điểm từ Google Maps, lưu và mở lại chuyến, ArrowPro (khoá, mã sai, dùng thử, hết hạn). Cần `npm ci` rồi `npx playwright install chromium`. Nếu Playwright đã cài ở chỗ khác, đặt `PLAYWRIGHT_PATH=/duong-dan/toi/playwright`.
 - `.github/workflows/ci.yml`: mỗi lần đẩy mã chạy cả hai bộ trên, rồi đóng gói một file, chạy `scripts/smoke-bundle.cjs` và báo lỗi nếu bản đóng gói vượt 16 MB.
 - Chưa có trong e2e: tạo video khoảnh khắc, ngoại tuyến (cần https), thanh toán, kích hoạt mã Pro thật (cần khoá bí mật).
+
+## Cấu trúc dữ liệu địa điểm
+
+- `data/destinations.json`: danh sách điểm đến (`city`, `slug`), cũng là thứ tự ghép dữ liệu.
+- `data/places/<slug>.json`: địa điểm của một điểm đến. `data/hotels/<slug>.json`: khách sạn mẫu của điểm đó. `data/travel-options.json` chỉ còn nơi khởi hành (`origins`).
+- App tải `destinations.json` rồi tải các tệp này và ghép lại (hiện tải hết khi mở app, bước tiếp theo sẽ chỉ tải điểm đang dùng). Bản đóng gói và test (`test/_data.js`) ghép theo cùng cách.
+- Script thêm hoặc sửa dữ liệu đọc, ghi qua `scripts/_data.py` (`load_data`, `save_data`, `load_options`, `save_options`), tự tách theo thành phố; điểm đến mới tự thêm vào `destinations.json`. Chạy lại script là idempotent (đã kiểm tra: chạy lại cả 10 script không làm đổi nội dung dữ liệu).

@@ -1,11 +1,12 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildItinerary } from '../src/scheduler.js';
 import { estimateCost, hotelsFor, defaultHotel } from '../src/costing.js';
 
 const read = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
-const data = read('../data/da-nang.json'), rules = read('../data/rules.json'), opts = read('../data/travel-options.json');
+const data = loadData(), rules = read('../data/rules.json'), opts = loadOptions();
 const trip = { destination: 'Đà Nẵng', startDate: '2026-09-03', endDate: '2026-09-05', people: 4, budget: 'vua_phai', audience: 'gia_dinh', hasKids: true, styles: [] };
 
 test('tổng = cộng các dòng, 2 đêm cho chuyến 3 ngày, số phòng theo sức chứa', () => {

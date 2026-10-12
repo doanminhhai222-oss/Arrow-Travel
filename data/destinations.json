@@ -1,0 +1,41 @@
+{
+  "_note": "Danh sách điểm đến và tên tệp dữ liệu (data/places/<slug>.json, data/hotels/<slug>.json). Thứ tự ở đây là thứ tự ghép dữ liệu.",
+  "destinations": [
+    {
+      "city": "Đà Nẵng",
+      "slug": "da-nang"
+    },
+    {
+      "city": "Hội An",
+      "slug": "hoi-an"
+    },
+    {
+      "city": "Phú Quốc",
+      "slug": "phu-quoc"
+    },
+    {
+      "city": "Hà Nội",
+      "slug": "ha-noi"
+    },
+    {
+      "city": "Nha Trang",
+      "slug": "nha-trang"
+    },
+    {
+      "city": "Đà Lạt",
+      "slug": "da-lat"
+    },
+    {
+      "city": "Huế",
+      "slug": "hue"
+    },
+    {
+      "city": "Sa Pa",
+      "slug": "sa-pa"
+    },
+    {
+      "city": "Ninh Bình",
+      "slug": "ninh-binh"
+    }
+  ]
+}

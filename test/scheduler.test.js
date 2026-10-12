@@ -1,9 +1,10 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildItinerary, toMin } from '../src/scheduler.js';
 
-const data = JSON.parse(readFileSync(new URL('../data/da-nang.json', import.meta.url)));
+const data = loadData();
 const rules = JSON.parse(readFileSync(new URL('../data/rules.json', import.meta.url)));
 const base = { destination: 'Đà Nẵng', startDate: '2026-09-03', endDate: '2026-09-05', people: 2, budget: 'vua_phai', style: 'thien_nhien' };
 const plan = (o) => buildItinerary({ ...base, ...o }, data, rules);

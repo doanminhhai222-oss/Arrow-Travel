@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Thêm điểm đến Phú Quốc: địa điểm (biển, đảo, vui chơi, tâm linh, làng chài, quán ăn, cà phê) vào data/da-nang.json và khách sạn MẪU vào data/travel-options.json.
+"""Thêm điểm đến Phú Quốc: địa điểm (biển, đảo, vui chơi, tâm linh, làng chài, quán ăn, cà phê) vào data/places/<điểm đến>.json và khách sạn MẪU vào data/travel-options.json.
 Địa điểm là nơi có thật nhưng toạ độ, giá, giờ mở cửa là ƯỚC LƯỢNG (cờ "approx"), khách sạn là dữ liệu MẪU. Chạy lại được, không trùng.
 Chạy: python3 scripts/add-phuquoc.py"""
 import json, pathlib, copy
+from _data import load_data, save_data, load_options, save_options
 root = pathlib.Path(__file__).resolve().parent.parent
 CITY = "Phú Quốc"
 ALL = ["cap_doi", "nhom_ban", "gia_dinh", "mot_minh"]
@@ -149,12 +150,12 @@ HOTELS = [
 ]
 
 def main():
-    dp = root / "data" / "da-nang.json"; data = json.loads(dp.read_text(encoding="utf-8"))
+    data = load_data()
     for p in data["places"]: p.setdefault("city", "Đà Nẵng")
     mine = {n["id"] for n in NEW}
     data["places"] = [p for p in data["places"] if p["id"] not in mine] + NEW
-    dp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    op = root / "data" / "travel-options.json"; opts = json.loads(op.read_text(encoding="utf-8"))
+    save_data(data)
+    opts = load_options()
     for h in opts["hotels"]: h.setdefault("city", "Đà Nẵng")
     base = {h["id"]: h for h in opts["hotels"] if h["city"] == "Đà Nẵng"}
     hm = {x[0] for x in HOTELS}
@@ -164,7 +165,7 @@ def main():
         for rt in h.get("roomTypes", []): rt["view"] = {"Mỹ Khê": area}.get(rt.get("view"), rt.get("view"))
         h["reviews"] = [dict(r, text=r["text"].replace("Đà Nẵng", "Phú Quốc")) for r in h.get("reviews", [])]
         opts["hotels"].append(h)
-    op.write_text(json.dumps(opts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    save_options(opts)
     print("Phú Quốc:", len(NEW), "địa điểm,", len(HOTELS), "khách sạn mẫu; tổng địa điểm", len(data["places"]))
 
 main()

@@ -1,11 +1,12 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildItinerary, filterPlaces } from '../src/scheduler.js';
 import { estimateCost, hotelsFor, TICKET_GROUPS } from '../src/costing.js';
 
 const read = (f) => JSON.parse(readFileSync(new URL('../data/' + f, import.meta.url)));
-const data = read('da-nang.json'), rules = read('rules.json'), opts = read('travel-options.json'), featured = read('featured.json');
+const data = loadData(), rules = read('rules.json'), opts = loadOptions(), featured = read('featured.json');
 const HA = data.places.filter((p) => p.city === 'Hội An'), DN = data.places.filter((p) => (p.city || 'Đà Nẵng') === 'Đà Nẵng');
 const base = (o) => ({ destination: 'Hội An', startDate: '2026-10-13', endDate: '2026-10-15', people: 2, budget: 'thoai_mai', audience: 'cap_doi', styles: ['check_in'], ...o });
 

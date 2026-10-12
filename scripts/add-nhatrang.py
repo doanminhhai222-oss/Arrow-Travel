@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Thêm điểm đến Nha Trang: địa điểm (biển, đảo, tháp Chăm, vui chơi, tắm bùn khoáng, quán ăn, cà phê) vào data/da-nang.json và khách sạn MẪU vào data/travel-options.json.
+"""Thêm điểm đến Nha Trang: địa điểm (biển, đảo, tháp Chăm, vui chơi, tắm bùn khoáng, quán ăn, cà phê) vào data/places/<điểm đến>.json và khách sạn MẪU vào data/travel-options.json.
 Địa điểm là nơi có thật nhưng toạ độ, giá, giờ mở cửa là ƯỚC LƯỢNG (cờ "approx"), khách sạn là dữ liệu MẪU. Chạy lại được, không trùng.
 Chạy: python3 scripts/add-nhatrang.py"""
 import json, pathlib, copy
+from _data import load_data, save_data, load_options, save_options
 root = pathlib.Path(__file__).resolve().parent.parent
 CITY = "Nha Trang"
 ALL = ["cap_doi", "nhom_ban", "gia_dinh", "mot_minh"]
@@ -137,12 +138,12 @@ HOTELS = [
 ]
 
 def main():
-    dp = root / "data" / "da-nang.json"; data = json.loads(dp.read_text(encoding="utf-8"))
+    data = load_data()
     for p in data["places"]: p.setdefault("city", "Đà Nẵng")
     mine = {n["id"] for n in NEW}
     data["places"] = [p for p in data["places"] if p["id"] not in mine] + NEW
-    dp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    op = root / "data" / "travel-options.json"; opts = json.loads(op.read_text(encoding="utf-8"))
+    save_data(data)
+    opts = load_options()
     for h in opts["hotels"]: h.setdefault("city", "Đà Nẵng")
     base = {h["id"]: h for h in opts["hotels"] if h["city"] == "Đà Nẵng"}
     hm = {x[0] for x in HOTELS}
@@ -154,7 +155,7 @@ def main():
         opts["hotels"].append(h)
     # thêm nơi khởi hành Đà Nẵng (dùng khi đi tới Nha Trang, Phú Quốc)
     if not any(o["id"] == "da-nang" for o in opts["origins"]): opts["origins"].append({"id": "da-nang", "name": "Đà Nẵng"})
-    op.write_text(json.dumps(opts, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    save_options(opts)
     print("Nha Trang:", len(NEW), "địa điểm,", len(HOTELS), "khách sạn mẫu; tổng địa điểm", len(data["places"]))
 
 main()

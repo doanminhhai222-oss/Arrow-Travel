@@ -24,7 +24,12 @@ import { loadReelImages, createReelPlayer, exportReel, reelMime } from './reel.j
 import { addPhoto, listPhotos, listPhotosByPrefix, deletePhoto, movePhotos, deleteTripPhotos, clearAllPhotos, resizeImage } from './photos.js';
 
 // <DATA>
-const [DATA, RULES, OPTS, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED, PRO] = await Promise.all(['da-nang', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured', 'pro'].map((n) => fetch('../data/' + n + '.json').then((r) => r.json())));
+const loadJson = (n) => fetch('../data/' + n + '.json').then((r) => r.json());
+const [DEST_FILES, RULES, OPTS_BASE, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED, PRO] = await Promise.all(['destinations', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured', 'pro'].map(loadJson));
+// Địa điểm và khách sạn nằm trong từng tệp theo điểm đến (data/places/<slug>.json, data/hotels/<slug>.json), hiện tải hết khi mở app
+const [placeFiles, hotelFiles] = await Promise.all(['places', 'hotels'].map((k) => Promise.all(DEST_FILES.destinations.map((d) => loadJson(k + '/' + d.slug)))));
+const DATA = { places: placeFiles.flatMap((f) => f.places) };
+const OPTS = { ...OPTS_BASE, hotels: hotelFiles.flatMap((f) => f.hotels) };
 // </DATA>
 
 const $ = (id) => document.getElementById(id);

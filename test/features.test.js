@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { loadData, loadOptions } from './_data.js';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { searchPromos, findByCode, applyPromo } from '../src/promos.js';
@@ -94,7 +95,7 @@ test('bản dịch tiếng Anh: không mục nào dịch ra chính nó, khoá kh
 });
 
 test('lịch trình nổi bật mẫu: địa điểm có thật, không đóng cửa, đúng đối tượng; ghi rõ là mẫu', async () => {
-  const feat = read('../data/featured.json'), data = read('../data/da-nang.json');
+  const feat = read('../data/featured.json'), data = loadData();
   assert.equal(feat.sample, true);
   assert.ok(feat.featured.length >= 4);
   for (const f of feat.featured) {
