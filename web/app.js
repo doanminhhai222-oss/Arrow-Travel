@@ -1943,11 +1943,11 @@ const hotelPromo = (stars) => PROMOS.promos.some((p) => p.target.type === 'hotel
 
 // nút chọn điểm đến sinh từ danh sách DESTS (chỉ điểm đến đã có dữ liệu)
 const destBtns = (attr) => DESTS.filter((d) => d.ok).map((d) => '<button type="button" ' + attr + '="' + esc(d.name) + '" aria-pressed="false">' + esc(d.name) + '</button>').join('');
-$('destSeg').innerHTML = destBtns('data-v'); $('homeDest').innerHTML = destBtns('data-homedest');
 // Mở app: chỉ tải điểm đến đang dùng và các điểm đến của chuyến đã lưu, những nơi khác tải khi chọn
 // <LOAD-START>
 try { await ensureDests([store.prefs.dest || 'Đà Nẵng', ...store.trips.flatMap((x) => tripCities(x.trip))]); } catch (e) { loadFail(); }
 // </LOAD-START>
+$('destSeg').innerHTML = destBtns('data-v'); $('homeDest').innerHTML = destBtns('data-homedest');
 setDest(store.prefs.dest || 'Đà Nẵng', { render: false });
 applyForm({});
 applySettings();

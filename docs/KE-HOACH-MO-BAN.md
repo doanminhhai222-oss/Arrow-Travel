@@ -75,7 +75,7 @@ Cập nhật 12/10/2026, dựa trên bản demo hiện tại (9 điểm đến, 
 
 **Giai đoạn 4 - Mở rộng.** Nguồn dữ liệu có giấy phép và quy trình kiểm duyệt cho điểm đến mới, người dịch bản ngữ, tiền tệ và múi giờ, dữ liệu bay quốc tế, nước ngoài theo từng nước một (thị trường gần như Thái Lan, Nhật, Hàn trước).
 
-## 6. Tối ưu nên làm ngay (nhỏ, ít rủi ro)
+## 6. Tối ưu nên làm ngay (đã xong: manifest và Open Graph, CI và e2e, tách dữ liệu, ảnh WebP, truy cập, nén JS và CSS) (nhỏ, ít rủi ro)
 
 1. ~~Thêm `manifest`, biểu tượng, `description`, Open Graph~~ (đã làm 12/10/2026, xem README, mục "Cài như app và chia sẻ liên kết").
 2. ~~Đưa kịch bản Playwright vào `test/e2e` và bật GitHub Actions~~ (đã làm 12/10/2026: 19 bài e2e, `.github/workflows/ci.yml`).

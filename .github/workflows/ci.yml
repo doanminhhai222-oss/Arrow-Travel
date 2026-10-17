@@ -32,6 +32,8 @@ jobs:
       - run: npm ci
       - name: Cài Chromium cho Playwright
         run: npx playwright install --with-deps chromium
+      - name: Kiểm tra tệp web nén (app.min.js, style.min.css) khớp mã nguồn
+        run: npm run check:web
       - name: Test trình duyệt (9 điểm đến, kết hợp thành phố, ngôn ngữ, Pro, sửa lịch trình)
         run: npm run test:e2e
       - name: Đóng gói một file và chạy kiểm tra nhanh

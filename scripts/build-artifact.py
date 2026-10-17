@@ -15,7 +15,7 @@ fonts = "\n".join(re.findall(r'<link (?:rel="preconnect"|href="https://fonts)[^>
 body_raw = html[html.index("<body>") + 6 : html.index('<script type="module"')].strip()
 import mimetypes
 body = re.sub(r'src="(images/[^"]+)"', lambda m: 'src="data:%s;base64,%s"' % (mimetypes.guess_type(m.group(1))[0] or "image/webp", base64.b64encode((root / "web" / m.group(1)).read_bytes()).decode()), body_raw)
-body = re.sub(r'<script src="[^"]*vendor[^"]*"></script>\s*', "", body)  # thư viện QR được nhúng thẳng vào script
+body = re.sub(r'<script src="[^"]*(?:vendor|qrcode)[^"]*"></script>\s*', "", body)  # thư viện QR được nhúng thẳng vào script
 css = read("web/style.css") + "\n" + read("web/detail.css")
 
 def strip_module(src):

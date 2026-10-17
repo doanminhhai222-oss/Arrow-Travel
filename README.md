@@ -135,3 +135,10 @@ Rà soát ngày 12/10/2026 bằng axe-core (WCAG 2.0, 2.1, 2.2 mức A và AA c�
 - **Thông báo cho trình đọc màn hình:** vùng `#srStatus` đọc "Lịch trình N ngày, M điểm" và các thao tác đổi chỗ, thêm, xoá, hoàn tác; lỗi nhập ngày dùng `role="alert"`.
 - Kiểm tra tự động nằm ở `test/e2e/a11y.e2e.js`, chạy cùng CI (`npm run test:e2e`), yêu cầu 0 vi phạm.
 - Chưa kiểm tra: trình đọc màn hình thật (VoiceOver, TalkBack, NVDA), điều khiển bằng giọng nói, và người dùng thật có khuyết tật. Công cụ tự động chỉ bắt được khoảng một phần ba các lỗi truy cập; nên thử thủ công trước khi mở bán.
+
+## Đóng gói và nén mã web
+
+- Mã nguồn để sửa là `web/app.js` cùng các module trong `src/`, `web/photos.js`, `web/reel.js` và CSS `web/style.css`, `web/detail.css`. Trang `web/index.html` nạp bản đã gộp và nén: `web/app.min.js`, `web/style.min.css`, `web/qrcode.min.js` (thư viện tạo mã QR của bên thứ ba, giữ nguyên dòng giấy phép MIT ở đầu tệp).
+- Sau khi sửa mã nguồn phải chạy `npm run build:web` (dùng esbuild) rồi commit cả các tệp `.min`, vì GitHub Pages phục vụ thẳng tệp trong repo. `npm start` và `npm run test:e2e` tự build trước khi chạy. CI chạy `npm run check:web` và báo lỗi nếu tệp nén đang cũ so với mã nguồn.
+- Bản đóng gói một file cho artifact (`scripts/build-artifact.py`) vẫn ghép từ mã nguồn, không dùng bản nén.
+- Kết quả đo (máy thử, chưa nén gzip của máy chủ): số yêu cầu khi mở trang từ 64 xuống 35, JS từ 420 KB xuống 291 KB (app 270 KB, QR 21 KB), DOMContentLoaded 0,6 giây xuống 0,36 giây, tải lần đầu cả trang 915 KB xuống khoảng 800 KB. Sau khi máy chủ nén gzip: JS khoảng 89 KB cho app và 7 KB cho QR (so với khoảng 110 KB trước), CSS 8 KB. Phần lớn dung lượng JS còn lại là 4 bộ từ điển dịch (khoảng 100 KB chưa nén); có thể chỉ tải khi người dùng đổi sang ngôn ngữ đó (chưa làm).

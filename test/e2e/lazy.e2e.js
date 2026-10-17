@@ -18,13 +18,15 @@ async function open(context) {
   const seen = track(page);
   await page.goto(srv.url);
   await page.waitForFunction(() => document.querySelectorAll('#homeDest button').length >= 9);
+  await page.waitForFunction(() => document.querySelectorAll('#homeFeatured .fcard').length >= 3); // trang chủ đã dựng xong
   return { page, seen };
 }
 
 test('mở app chỉ tải dữ liệu của điểm đến đang dùng; chọn điểm khác mới tải thêm, mỗi tệp một lần', async () => {
   const ctx = await browser.newContext({ viewport: { width: 400, height: 860 } });
   const { page, seen } = await open(ctx);
-  assert.deepEqual([...seen].sort(), ['hotels/da-nang', 'places/da-nang']);
+  // Đà Nẵng có lịch trình nổi bật kết hợp với Hội An và Huế nên cần dữ liệu hai nơi đó để dựng thẻ; điểm đến khác thì chưa tải
+  assert.deepEqual([...seen].sort(), ['hotels/da-nang', 'hotels/hoi-an', 'hotels/hue', 'places/da-nang', 'places/hoi-an', 'places/hue']);
   await page.click('[data-homedest="Huế"]');
   await page.waitForFunction(() => document.querySelector('#heroTitle').textContent.trim() === 'Huế' && document.querySelectorAll('#homeFeatured .fcard').length >= 3);
   assert.ok(seen.includes('places/hue') && seen.includes('hotels/hue'));
