@@ -538,7 +538,10 @@
         "Đã đóng cửa, không dùng"
       ],
       "culture": "",
-      "city": "Đà Nẵng"
+      "city": "Đà Nẵng",
+      "image": "images/cho-con-cu.webp",
+      "imageAlt": "Quán đã đóng cửa (mẫu, bị loại)",
+      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "an-thoi",

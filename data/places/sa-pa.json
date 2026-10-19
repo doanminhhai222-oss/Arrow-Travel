@@ -71,7 +71,10 @@
       ],
       "culture": "Bản làng người H'Mông cách trung tâm khoảng 2 km, có nghề dệt thổ cẩm, nhuộm chàm, thác Tiên Sa và những nếp nhà gỗ ven suối.",
       "approx": true,
-      "address": "Xã San Sả Hồ, cách trung tâm khoảng 2 km"
+      "address": "Xã San Sả Hồ, cách trung tâm khoảng 2 km",
+      "image": "images/ban-cat-cat.webp",
+      "imageAlt": "Bản Cát Cát",
+      "imageCredit": "Ảnh: Jakub Hałun · CC BY 4.0 · Wikimedia Commons"
     },
     {
       "id": "thung-lung-muong-hoa",
@@ -179,7 +182,10 @@
       ],
       "culture": "Thác nước trắng xoá đổ từ độ cao hàng chục mét giữa núi rừng Hoàng Liên Sơn, cách trung tâm thị xã khoảng 12 km.",
       "approx": true,
-      "address": "Quốc lộ 4D, cách trung tâm khoảng 12 km"
+      "address": "Quốc lộ 4D, cách trung tâm khoảng 12 km",
+      "image": "images/thac-bac.webp",
+      "imageAlt": "Thác Bạc",
+      "imageCredit": "Ảnh: Lori_NY · CC BY-SA 2.0 · Wikimedia Commons"
     },
     {
       "id": "cong-troi-o-quy-ho",
@@ -443,7 +449,10 @@
         "Thắng cố",
         "Thịt lợn cắp nách",
         "Xôi ngũ sắc"
-      ]
+      ],
+      "image": "images/thang-co-sapa.webp",
+      "imageAlt": "Thắng cố và món người H'Mông",
+      "imageCredit": "Ảnh minh hoạ món thắng cố, không phải ảnh tại địa điểm này · Alpha, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "com-lam-ga-nuong-sapa",
@@ -555,7 +564,10 @@
       ],
       "culture": "Bản làng người Dao đỏ có hang động Tả Phìn, nghề thêu thổ cẩm và tắm lá thuốc là nét văn hoá đặc trưng thu hút nhiều du khách.",
       "approx": true,
-      "address": "Xã Tả Phìn, cách trung tâm khoảng 12 km"
+      "address": "Xã Tả Phìn, cách trung tâm khoảng 12 km",
+      "image": "images/ban-ta-phin.webp",
+      "imageAlt": "Bản Tả Phìn (người Dao đỏ)",
+      "imageCredit": "Ảnh minh hoạ cảnh vùng núi Sa Pa, không phải ảnh tại địa điểm này · Christophe95, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "cf-may-sapa",

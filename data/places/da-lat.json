@@ -219,7 +219,10 @@
       ],
       "culture": "Vùng chè trên cao khoảng 1.500 m với những đồi chè xanh liền nhau, nổi tiếng với bình minh và biển mây vào buổi sáng sớm, cũng có nhà ga cũ Cầu Đất.",
       "approx": true,
-      "address": "Xã Xuân Trường, cách trung tâm khoảng 25 km"
+      "address": "Xã Xuân Trường, cách trung tâm khoảng 25 km",
+      "image": "images/doi-che-cau-dat.webp",
+      "imageAlt": "Đồi chè Cầu Đất (săn mây)",
+      "imageCredit": "Ảnh: ℍmoong · CC BY 2.0 · Wikimedia Commons"
     },
     {
       "id": "thung-lung-tinh-yeu",
@@ -289,7 +292,10 @@
       ],
       "culture": "Đồi thông với nhiều tiểu cảnh nhỏ, hồ và cầu gỗ, thích hợp đi nhẹ nhàng và chụp ảnh.",
       "approx": true,
-      "address": "Phường 8"
+      "address": "Phường 8",
+      "image": "images/doi-mong-mo.webp",
+      "imageAlt": "Đồi Mộng Mơ",
+      "imageCredit": "Ảnh: Liftold at Vietnamese Wikipedia · CC BY 3.0 · Wikimedia Commons"
     },
     {
       "id": "ho-tuyen-lam",
@@ -507,7 +513,10 @@
       ],
       "culture": "Ngôi chùa nổi tiếng với những tượng rồng và hoạ tiết khảm bằng hàng triệu mảnh sành, chai lọ, và tháp chuông nhiều tầng.",
       "approx": true,
-      "address": "120 Tự Phước"
+      "address": "120 Tự Phước",
+      "image": "images/chua-linh-phuoc.webp",
+      "imageAlt": "Chùa Linh Phước (Chùa Ve Chai)",
+      "imageCredit": "Ảnh: Diane Selwyn · Public domain · Wikimedia Commons"
     },
     {
       "id": "nha-tho-con-ga",
@@ -540,7 +549,10 @@
       ],
       "culture": "Nhà thờ xây từ năm 1931 theo kiến trúc Gothic, trên đỉnh tháp chuông có con gà trống, là một trong những biểu tượng kiến trúc của thành phố.",
       "approx": true,
-      "address": "15 Trần Phú"
+      "address": "15 Trần Phú",
+      "image": "images/nha-tho-con-ga.webp",
+      "imageAlt": "Nhà thờ Chính toà Đà Lạt (Nhà thờ Con Gà)",
+      "imageCredit": "Ảnh: Anh Khoa · CC BY-SA 2.0 · Wikimedia Commons"
     },
     {
       "id": "duong-ham-dieu-khac",
@@ -574,7 +586,10 @@
       ],
       "culture": "Công trình điêu khắc đất sét độc đáo trong đường hầm tự nhiên với những tượng người, con vật, hoạ tiết dân gian, mang tới trải nghiệm khác lạ.",
       "approx": true,
-      "address": "Phường 9, xa trung tâm"
+      "address": "Phường 9, xa trung tâm",
+      "image": "images/duong-ham-dieu-khac.webp",
+      "imageAlt": "Đường hầm Điêu khắc Đà Lạt",
+      "imageCredit": "Ảnh minh hoạ công trình điêu khắc đất sét ở Đà Lạt, không phải ảnh tại địa điểm này · Андрей Бобровский, CC BY 3.0, Wikimedia Commons"
     },
     {
       "id": "cho-da-lat",
@@ -652,7 +667,10 @@
         "Bánh tráng nướng",
         "Sữa đậu nành",
         "Khoai nướng"
-      ]
+      ],
+      "image": "images/cho-dem-da-lat.webp",
+      "imageAlt": "Chợ đêm Đà Lạt",
+      "imageCredit": "Ảnh: The Erica Chang · CC BY 3.0 · Wikimedia Commons"
     },
     {
       "id": "nem-nuong-ba-hung",
@@ -693,7 +711,10 @@
         "Nem nướng",
         "Chả giò",
         "Nước sốt"
-      ]
+      ],
+      "image": "images/nem-nuong-ba-hung.webp",
+      "imageAlt": "Nem nướng Bà Hùng",
+      "imageCredit": "Ảnh minh hoạ món nem nướng, không phải ảnh tại địa điểm này · Letruongan1122, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "banh-uot-long-ga",
@@ -774,7 +795,10 @@
         "Bánh căn",
         "Bánh căn trứng",
         "Bánh căn tôm"
-      ]
+      ],
+      "image": "images/banh-can-da-lat.webp",
+      "imageAlt": "Bánh căn Đà Lạt",
+      "imageCredit": "Ảnh minh hoạ món bánh căn, không phải ảnh tại địa điểm này · Saigon Time, CC0, Wikimedia Commons"
     },
     {
       "id": "lau-ga-la-e",
@@ -814,7 +838,10 @@
         "Lẩu gà lá é",
         "Gà nướng",
         "Rau rừng"
-      ]
+      ],
+      "image": "images/lau-ga-la-e.webp",
+      "imageAlt": "Lẩu gà lá é",
+      "imageCredit": "Ảnh minh hoạ món lẩu, không phải ảnh tại địa điểm này · Newone, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "rau-cu-nuong-da-lat",
@@ -893,7 +920,10 @@
         "Cà phê",
         "Trà",
         "Bánh ngọt"
-      ]
+      ],
+      "image": "images/me-linh-coffee-garden.webp",
+      "imageAlt": "Mê Linh Coffee Garden",
+      "imageCredit": "Ảnh minh hoạ cà phê phin ở Đà Lạt, không phải ảnh tại địa điểm này · Frank Fox, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "cf-san-may-da-lat",

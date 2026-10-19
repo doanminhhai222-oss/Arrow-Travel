@@ -214,7 +214,10 @@
       ],
       "culture": "Quần đảo An Thới ở phía nam Phú Quốc gồm hơn chục hòn đảo nhỏ, biển trong, san hô và bãi cát trắng. Tour trong ngày là cách phổ biến nhất để khám phá đảo.",
       "approx": true,
-      "address": "Cảng An Thới, phía nam đảo"
+      "address": "Cảng An Thới, phía nam đảo",
+      "image": "images/tour-4-dao.webp",
+      "imageAlt": "Tour 4 đảo và lặn ngắm san hô An Thới",
+      "imageCredit": "Ảnh minh hoạ toàn cảnh đảo Hòn Thơm, Phú Quốc, không phải ảnh tại địa điểm này · Vivu Vietnam, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "cap-treo-hon-thom",
@@ -359,7 +362,10 @@
       ],
       "culture": "Công viên bảo tồn động vật bán hoang dã lớn ở bắc đảo với hàng nghìn cá thể nhiều loài, có xe tham quan đi qua các khu sinh cảnh.",
       "approx": true,
-      "address": "Gành Dầu, phía bắc đảo"
+      "address": "Gành Dầu, phía bắc đảo",
+      "image": "images/vinpearl-safari.webp",
+      "imageAlt": "Vinpearl Safari Phú Quốc",
+      "imageCredit": "Ảnh: Khoitran1957 · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "grand-world",
@@ -464,7 +470,10 @@
       ],
       "culture": "Dòng suối chảy qua rừng nhiệt đới và những tảng đá lớn ở trung tâm đảo, một trong những điểm ngắm thác nhỏ đẹp nhất Phú Quốc.",
       "approx": true,
-      "address": "Khu vực Dương Tơ, trung tâm đảo"
+      "address": "Khu vực Dương Tơ, trung tâm đảo",
+      "image": "images/suoi-tranh.webp",
+      "imageAlt": "Suối Tranh",
+      "imageCredit": "Ảnh: ntt · CC BY-SA 3.0 · Wikimedia Commons"
     },
     {
       "id": "lang-chai-ham-ninh",
@@ -643,7 +652,10 @@
       ],
       "culture": "Nước mắm Phú Quốc làm từ cá cơm ủ muối nhiều tháng trong thùng gỗ lớn, được bảo hộ chỉ dẫn địa lý ở nhiều thị trường, là đặc sản và niềm tự hào của đảo.",
       "approx": true,
-      "address": "Khu vực Dương Đông (nhiều nhà thùng, tự chọn trên Google Maps)"
+      "address": "Khu vực Dương Đông (nhiều nhà thùng, tự chọn trên Google Maps)",
+      "image": "images/nha-thung-nuoc-mam.webp",
+      "imageAlt": "Nhà thùng nước mắm Phú Quốc",
+      "imageCredit": "Ảnh: ntt · CC BY-SA 3.0 · Wikimedia Commons"
     },
     {
       "id": "vuon-tieu",
@@ -766,7 +778,10 @@
         "Gỏi cá trích",
         "Hải sản nướng",
         "Bún quậy"
-      ]
+      ],
+      "image": "images/quan-viet-goi-ca-trich.webp",
+      "imageAlt": "Quán Việt (gỏi cá trích)",
+      "imageCredit": "Ảnh minh hoạ món gỏi cá trích, không phải ảnh tại địa điểm này · OlBoes, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "nha-hang-xin-chao",
@@ -807,7 +822,10 @@
         "Gỏi cá trích",
         "Gỏi cá nhồng",
         "Lẩu hải sản"
-      ]
+      ],
+      "image": "images/nha-hang-xin-chao.webp",
+      "imageAlt": "Nhà hàng Xin Chào (ngắm hoàng hôn)",
+      "imageCredit": "Ảnh minh hoạ hải sản tươi sống ở Phú Quốc, không phải ảnh tại địa điểm này · FrogsLegs71, CC BY-SA 3.0, Wikimedia Commons"
     },
     {
       "id": "nha-hang-ra-khoi",

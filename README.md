@@ -121,7 +121,8 @@ node scripts/smoke-bundle.cjs dist/arrow-travel.html   # cần Playwright
 ## Ảnh
 
 - Ảnh gốc (JPEG hoặc PNG) nằm ở `assets-src/images/`. `python3 scripts/optimize-images.py` (cần `pip install pillow`) tạo ảnh WebP vào `web/images/`: `<tên>.webp` (tối đa 800 px, chất lượng 60) cho hero và chi tiết, `<tên>-s.webp` (tối đa 400 px) cho thẻ nhỏ, ảnh nền thẻ đối tượng, nền thẻ đặt vé, lịch trình nổi bật, thẻ khoảnh khắc (hàm `smallImg` trong `web/app.js`). Chỉ làm lại ảnh nào gốc mới hơn.
-- Thêm ảnh địa điểm mới: bỏ ảnh gốc vào `assets-src/images/<id>.jpg`, ghi nguồn vào `data/photo-credits.json`, chạy `optimize-images.py` rồi `apply-photos.py` (gắn ảnh vào dữ liệu và viết lại `web/images/CREDITS.md`).
+- Thêm ảnh địa điểm từ Wikimedia Commons: ghi danh sách vào một tệp JSON như `data/photo-picks-2026-10.json` (`id`, `file`, và `illustrative` nếu chỉ là ảnh minh hoạ), chạy `python3 scripts/fetch-photos.py <tệp>` (tải ảnh, ghi tác giả và giấy phép, chỉ nhận CC0, CC BY, CC BY-SA, miền công cộng, tự chờ khi bị giới hạn tốc độ và chạy lại được), rồi `optimize-images.py` và `apply-photos.py` (gắn ảnh vào dữ liệu và viết lại `web/images/CREDITS.md`). Ảnh của riêng mày: bỏ vào `assets-src/images/<id>.jpg`, thêm mục có `note` vào `data/photo-credits.json`.
+- Kiểm kê ảnh và quyền sử dụng: `python3 scripts/photo-inventory.py` ghi `docs/KIEM-KE-ANH.md` và `docs/kiem-ke-anh.csv`.
 - Kết quả đo: ảnh lớn từ 8,4 MB còn 6,4 MB (ảnh gốc đã nén JPEG chất lượng thấp từ trước nên chỉ giảm khoảng 24%); ảnh trang chủ tải lần đầu từ 614 KB còn 190 KB; tải lần đầu cả trang từ 1,3 MB còn 915 KB; bản đóng gói một file từ 12,6 MB còn 9,4 MB. Muốn giảm thêm cần ảnh gốc độ phân giải cao tải lại từ nguồn rồi nén một lần từ đầu.
 
 ## Truy cập (accessibility)

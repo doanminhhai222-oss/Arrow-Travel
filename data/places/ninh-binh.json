@@ -293,7 +293,10 @@
       ],
       "culture": "Khu du lịch sinh thái với vườn chim, hang động, ao hồ và đường thuyền yên tĩnh, cách trung tâm khoảng 15 km.",
       "approx": true,
-      "address": "Xã Ninh Hoà, Hoa Lư"
+      "address": "Xã Ninh Hoà, Hoa Lư",
+      "image": "images/thung-nham.webp",
+      "imageAlt": "Thung Nham (vườn chim)",
+      "imageCredit": "Ảnh: Shyamal · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "pho-dem-ninh-binh",
@@ -368,7 +371,10 @@
         "Dê tái chanh",
         "Dê xào lăn",
         "Lẩu dê"
-      ]
+      ],
+      "image": "images/de-nui-ninh-binh.webp",
+      "imageAlt": "Dê núi Ninh Bình",
+      "imageCredit": "Ảnh minh hoạ món dê tái, không phải ảnh tại địa điểm này · Thịt_dê_Ninh_Bình.JPG: Nguyễn Thanh Quang\nderivative work: Phó Nháy (talk), CC BY-SA 3.0, Wikimedia Commons"
     },
     {
       "id": "com-chay-ninh-binh",
@@ -408,7 +414,10 @@
         "Cơm cháy chà bông",
         "Cơm cháy sốt",
         "Mắm tép"
-      ]
+      ],
+      "image": "images/com-chay-ninh-binh.webp",
+      "imageAlt": "Cơm cháy Ninh Bình",
+      "imageCredit": "Ảnh minh hoạ món cơm cháy, không phải ảnh tại địa điểm này · Nguyễn Thanh Quang, CC BY-SA 3.0, Wikimedia Commons"
     },
     {
       "id": "mien-luon-ninh-binh",
@@ -449,7 +458,10 @@
         "Miến lươn",
         "Ốc núi",
         "Cá rô đồng"
-      ]
+      ],
+      "image": "images/mien-luon-ninh-binh.webp",
+      "imageAlt": "Miến lươn và ốc núi",
+      "imageCredit": "Ảnh minh hoạ món miến lươn, không phải ảnh tại địa điểm này · vi:User:Rungbachduong, CC BY-SA 3.0, Wikimedia Commons"
     },
     {
       "id": "com-chieu-ninh-binh",

@@ -145,7 +145,10 @@
       ],
       "culture": "Chợ lớn nhất của khu phố cổ, được xây từ cuối thế kỷ 19, nơi bán buôn bán lẻ nhiều mặt hàng và là một ký ức quen thuộc của người Hà Nội.",
       "approx": true,
-      "address": "Phố Đồng Xuân, phố cổ"
+      "address": "Phố Đồng Xuân, phố cổ",
+      "image": "images/cho-dong-xuan.webp",
+      "imageAlt": "Chợ Đồng Xuân",
+      "imageCredit": "Ảnh: shankar s. from Dubai, united arab emirates · CC BY 2.0 · Wikimedia Commons"
     },
     {
       "id": "pho-ta-hien",
@@ -179,7 +182,10 @@
       ],
       "culture": "Con phố nhỏ ngay trong phố cổ nổi tiếng với bia hơi, đồ nhắm và không khí đường phố về đêm. Cùng với phố đi bộ quanh hồ, đây là nơi thấy rõ nhịp sống về đêm của thủ đô.",
       "approx": true,
-      "address": "Phố Tạ Hiện, phố cổ"
+      "address": "Phố Tạ Hiện, phố cổ",
+      "image": "images/pho-ta-hien.webp",
+      "imageAlt": "Phố Tạ Hiện và phố đi bộ Hồ Gươm",
+      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "nha-hat-mua-roi",
@@ -213,7 +219,10 @@
       ],
       "culture": "Múa rối nước là nghệ thuật dân gian của vùng đồng bằng sông Hồng, có từ hơn một nghìn năm, người điều khiển đứng trong nước sau bức mành, con rối \"múa\" trên mặt nước với nhạc dân tộc.",
       "approx": true,
-      "address": "57B Đinh Tiên Hoàng, cạnh Hồ Gươm"
+      "address": "57B Đinh Tiên Hoàng, cạnh Hồ Gươm",
+      "image": "images/nha-hat-mua-roi.webp",
+      "imageAlt": "Nhà hát Múa rối nước Thăng Long",
+      "imageCredit": "Ảnh: Gryffindor · CC BY-SA 3.0 · Wikimedia Commons"
     },
     {
       "id": "nha-tho-lon",
@@ -590,7 +599,10 @@
       ],
       "culture": "Phủ thờ Mẫu Liễu Hạnh, một trong Tứ bất tử của tín ngưỡng dân gian Việt Nam, nằm ngay bên hồ Tây và là nơi người Hà Nội đến cầu may đầu năm.",
       "approx": true,
-      "address": "Phố Thanh Niên, Tây Hồ"
+      "address": "Phố Thanh Niên, Tây Hồ",
+      "image": "images/phu-tay-ho.webp",
+      "imageAlt": "Phủ Tây Hồ",
+      "imageCredit": "Ảnh: Vuong Tri Binh · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "ho-tay",
@@ -734,7 +746,10 @@
       ],
       "culture": "Bảo tàng kể về vai trò, đời sống và đóng góp của người phụ nữ Việt Nam qua nhiều thời kỳ, từ nghề thủ công, phong tục cưới hỏi đến những người phụ nữ trong chiến tranh.",
       "approx": true,
-      "address": "36 Lý Thường Kiệt, Hoàn Kiếm"
+      "address": "36 Lý Thường Kiệt, Hoàn Kiếm",
+      "image": "images/bao-tang-phu-nu.webp",
+      "imageAlt": "Bảo tàng Phụ nữ Việt Nam",
+      "imageCredit": "Ảnh: Daderot · CC0 · Wikimedia Commons"
     },
     {
       "id": "bao-tang-my-thuat",
@@ -768,7 +783,10 @@
       ],
       "culture": "Bảo tàng nằm trong một toà nhà kiến trúc Pháp pha nét Á Đông, trưng bày nhiều bức tranh sơn mài, tranh lụa và điêu khắc nổi tiếng của mỹ thuật Việt Nam.",
       "approx": true,
-      "address": "66 Nguyễn Thái Học, Ba Đình"
+      "address": "66 Nguyễn Thái Học, Ba Đình",
+      "image": "images/bao-tang-my-thuat.webp",
+      "imageAlt": "Bảo tàng Mỹ thuật Việt Nam",
+      "imageCredit": "Ảnh: Smuconlaw. · CC BY-SA 3.0 · Wikimedia Commons"
     },
     {
       "id": "lang-gom-bat-trang",
@@ -921,7 +939,10 @@
         "Phở tái lăn",
         "Phở chín",
         "Quẩy"
-      ]
+      ],
+      "image": "images/pho-thin-lo-duc.webp",
+      "imageAlt": "Phở Thìn Lò Đúc",
+      "imageCredit": "Ảnh minh hoạ món phở bò, không phải ảnh tại địa điểm này · Andy Li, CC0, Wikimedia Commons"
     },
     {
       "id": "pho-bat-dan",
@@ -962,7 +983,10 @@
         "Phở bò chín",
         "Phở bò tái",
         "Quẩy"
-      ]
+      ],
+      "image": "images/pho-bat-dan.webp",
+      "imageAlt": "Phở Bát Đàn (Phở gia truyền)",
+      "imageCredit": "Ảnh minh hoạ món phở, không phải ảnh tại địa điểm này · avlxyz, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "bun-cha-huong-lien",
@@ -1046,7 +1070,10 @@
         "Bún chả",
         "Nem rán",
         "Chả chả"
-      ]
+      ],
+      "image": "images/bun-cha-dac-kim.webp",
+      "imageAlt": "Bún chả Đắc Kim",
+      "imageCredit": "Ảnh minh hoạ món bún chả, không phải ảnh tại địa điểm này · stu_spivack, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "cha-ca-thang-long",
@@ -1131,7 +1158,10 @@
         "Xôi xéo",
         "Xôi thịt kho",
         "Xôi pate"
-      ]
+      ],
+      "image": "images/xoi-yen.webp",
+      "imageAlt": "Xôi Yến",
+      "imageCredit": "Ảnh minh hoạ món xôi, không phải ảnh tại địa điểm này · Souradeep.Dasgupta, CC0, Wikimedia Commons"
     },
     {
       "id": "banh-mi-25",
@@ -1172,7 +1202,10 @@
         "Bánh mì thịt",
         "Bánh mì pate",
         "Bánh mì trứng"
-      ]
+      ],
+      "image": "images/banh-mi-25.webp",
+      "imageAlt": "Bánh mì 25",
+      "imageCredit": "Ảnh minh hoạ bánh mì, không phải ảnh tại địa điểm này · Vuong Tri Binh, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "bun-thang-ba-duc",
@@ -1213,7 +1246,10 @@
         "Bún thang",
         "Nem rán",
         "Chè"
-      ]
+      ],
+      "image": "images/bun-thang-ba-duc.webp",
+      "imageAlt": "Bún thang Bà Đức",
+      "imageCredit": "Ảnh minh hoạ món bún thang, không phải ảnh tại địa điểm này · HungryHuy, CC BY 2.0, Wikimedia Commons"
     },
     {
       "id": "ca-phe-giang",
@@ -1296,7 +1332,10 @@
         "Cà phê trứng",
         "Cà phê muối",
         "Cà phê nâu"
-      ]
+      ],
+      "image": "images/ca-phe-dinh.webp",
+      "imageAlt": "Cà phê Đinh",
+      "imageCredit": "Ảnh minh hoạ cà phê trứng, không phải ảnh tại địa điểm này · mmmmngai@rogers.com, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "cafe-pho-co",
@@ -1336,7 +1375,10 @@
         "Cà phê trứng",
         "Cà phê sữa",
         "Trà"
-      ]
+      ],
+      "image": "images/cafe-pho-co.webp",
+      "imageAlt": "Cafe Phố Cổ",
+      "imageCredit": "Ảnh minh hoạ quán cà phê ở phố cổ Hà Nội, không phải ảnh tại địa điểm này · Alexkom000, CC BY 4.0, Wikimedia Commons"
     },
     {
       "id": "kem-trang-tien",
@@ -1376,7 +1418,10 @@
         "Kem dừa",
         "Kem sô-cô-la",
         "Kem đậu xanh"
-      ]
+      ],
+      "image": "images/kem-trang-tien.webp",
+      "imageAlt": "Kem Tràng Tiền",
+      "imageCredit": "Ảnh minh hoạ món kem, không phải ảnh tại địa điểm này · David McKelvey from Brisbane, Australia, CC BY 2.0, Wikimedia Commons"
     }
   ]
 }

@@ -150,7 +150,10 @@
       "culture": "Ngôi nhà hơn 200 năm tuổi của một dòng họ thương nhân, truyền qua nhiều thế hệ. Kiến trúc kết hợp Việt, Hoa, Nhật: cột gỗ lim, trần ba lớp, sân trời lấy sáng và thoát nước.",
       "approx": true,
       "address": "101 Nguyễn Thái Học",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/nha-co-tan-ky.webp",
+      "imageAlt": "Nhà cổ Tấn Ký",
+      "imageCredit": "Ảnh: P. Hughes · CC BY 4.0 · Wikimedia Commons"
     },
     {
       "id": "nha-co-phung-hung",
@@ -185,7 +188,10 @@
       "culture": "Ngôi nhà gỗ hai tầng nằm sát Chùa Cầu, lâu đời hơn hai thế kỷ, mang kiến trúc pha Nhật và Việt. Tầng trên có ban công nhìn ra phố, từng là nơi gia đình thương nhân vừa ở vừa buôn bán.",
       "approx": true,
       "address": "4 Nguyễn Thị Minh Khai",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/nha-co-phung-hung.webp",
+      "imageAlt": "Nhà cổ Phùng Hưng",
+      "imageCredit": "Ảnh: Dennis G. Jarvis · CC BY-SA 2.0 · Wikimedia Commons"
     },
     {
       "id": "nha-co-quan-thang",
@@ -219,7 +225,10 @@
       "culture": "Ngôi nhà gỗ của một thương nhân Hoa, hơn 150 năm tuổi, nổi bật với hệ thống cột kèo chạm trổ, sân trời và gian thờ trang nghiêm, cho thấy nếp sống khá giả của giới buôn bán Hội An xưa.",
       "approx": true,
       "address": "77 Trần Phú",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/nha-co-quan-thang.webp",
+      "imageAlt": "Nhà cổ Quân Thắng",
+      "imageCredit": "Ảnh: Gary Todd from Xinzheng, China · CC0 · Wikimedia Commons"
     },
     {
       "id": "hoi-quan-quang-dong",
@@ -253,7 +262,10 @@
       "culture": "Hội quán của cộng đồng người Quảng Đông, dựng năm 1885, thờ Quan Công, biểu tượng của sự trung nghĩa. Mái ngói âm dương, gốm tượng rồng và cá chép rất công phu.",
       "approx": true,
       "address": "176 Trần Phú",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/hoi-quan-quang-dong.webp",
+      "imageAlt": "Hội quán Quảng Đông",
+      "imageCredit": "Ảnh: Chainwit. · CC BY 4.0 · Wikimedia Commons"
     },
     {
       "id": "hoi-quan-trieu-chau",
@@ -287,7 +299,10 @@
       "culture": "Hội quán của người Hoa gốc Triều Châu, xây giữa thế kỷ 19, nổi bật với những bức chạm gỗ thếp vàng mô tả điển tích Trung Hoa và đôi cột kèo chạm nổi.",
       "approx": true,
       "address": "157 Nguyễn Duy Hiệu",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/hoi-quan-trieu-chau.webp",
+      "imageAlt": "Hội quán Triều Châu",
+      "imageCredit": "Ảnh: Steffen Schmitz (more photos) · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "chua-ong",
@@ -355,7 +370,10 @@
       "culture": "Trưng bày hiện vật của nền văn hoá Sa Huỳnh, một nền văn hoá cổ ở miền Trung có niên đại cách nay hơn hai nghìn năm, nổi tiếng với mộ chum, đồ trang sức và đồ gốm. Giúp hiểu Hội An đã có người sinh sống từ rất sớm.",
       "approx": true,
       "address": "149 Trần Phú",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/bao-tang-sa-huynh.webp",
+      "imageAlt": "Bảo tàng Văn hoá Sa Huỳnh",
+      "imageCredit": "Ảnh minh hoạ hiện vật gốm Sa Huỳnh, không phải ảnh tại địa điểm này · Gary Todd from Xinzheng, China, CC0, Wikimedia Commons"
     },
     {
       "id": "bao-tang-gom-su",
@@ -389,7 +407,10 @@
       "culture": "Nơi trưng bày gốm sứ từ nhiều nước (Nhật, Trung Hoa, Việt Nam, Trung Đông) tìm thấy ở Hội An, minh chứng cho vị thế cảng buôn bán quốc tế của thành phố qua nhiều thế kỷ.",
       "approx": true,
       "address": "80 Trần Phú",
-      "ticketGroup": "pho-co"
+      "ticketGroup": "pho-co",
+      "image": "images/bao-tang-gom-su.webp",
+      "imageAlt": "Bảo tàng Gốm sứ Mậu dịch",
+      "imageCredit": "Ảnh: Steffen Schmitz (more photos) · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "bao-tang-dan-gian",
@@ -562,7 +583,10 @@
       ],
       "culture": "Thả hoa đăng là tập tục cầu bình an và ước nguyện của người Việt. Ở Hội An, đèn giấy có nến được thả xuống sông Hoài, tạo nên dòng sáng lung linh về đêm.",
       "approx": true,
-      "address": "Bến thuyền bờ sông Bạch Đằng"
+      "address": "Bến thuyền bờ sông Bạch Đằng",
+      "image": "images/tha-hoa-dang.webp",
+      "imageAlt": "Thuyền thả hoa đăng sông Hoài",
+      "imageCredit": "Ảnh: lumoplank · CC0 · Wikimedia Commons"
     },
     {
       "id": "cho-hoi-an",
@@ -667,7 +691,10 @@
       ],
       "culture": "Đèn lồng Hội An làm từ khung tre bọc lụa hoặc vải, vốn là thủ công của người Hoa và người Việt ở thương cảng. Lớp học ngắn giúp du khách hiểu cách uốn khung và dán lụa.",
       "approx": true,
-      "address": "Khu phố cổ Hội An (nhiều xưởng, tự chọn trên Google Maps)"
+      "address": "Khu phố cổ Hội An (nhiều xưởng, tự chọn trên Google Maps)",
+      "image": "images/xuong-den-long.webp",
+      "imageAlt": "Xưởng làm đèn lồng Hội An",
+      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "lop-nau-an",
@@ -701,7 +728,10 @@
       ],
       "culture": "Ẩm thực Hội An là sự giao thoa giữa món Việt, Hoa và Nhật. Lớp nấu ăn là cách thú vị để tìm hiểu rau thơm Trà Quế, nước Bá Lễ và cách làm sợi cao lầu, mì Quảng.",
       "approx": true,
-      "address": "Nhiều lớp học trong và quanh phố cổ (tự chọn trên Google Maps)"
+      "address": "Nhiều lớp học trong và quanh phố cổ (tự chọn trên Google Maps)",
+      "image": "images/lop-nau-an.webp",
+      "imageAlt": "Lớp học nấu ăn Hội An (đi chợ, nấu món địa phương)",
+      "imageCredit": "Ảnh minh hoạ lớp nấu ăn ở Hội An, không phải ảnh tại địa điểm này · Isabell Schulz, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "rap-ky-uc",
@@ -841,7 +871,10 @@
       ],
       "culture": "Làng gốm hơn 500 năm tuổi bên sông Thu Bồn, nổi tiếng với đồ gốm đất nung, gạch ngói và đồ chơi gốm. Nghề gốm Thanh Hà từng cung cấp ngói cho nhiều công trình trong phố cổ.",
       "approx": true,
-      "address": "Phường Thanh Hà, cách phố cổ khoảng 3 km"
+      "address": "Phường Thanh Hà, cách phố cổ khoảng 3 km",
+      "image": "images/lang-gom-thanh-ha.webp",
+      "imageAlt": "Làng gốm Thanh Hà",
+      "imageCredit": "Ảnh minh hoạ sản phẩm đất nung làng gốm Thanh Hà, không phải ảnh tại địa điểm này · LÊ TẤN LỘC, CC BY-SA 3.0, Wikimedia Commons"
     },
     {
       "id": "lang-moc-kim-bong",
@@ -949,7 +982,10 @@
       ],
       "culture": "Bãi biển nằm ở cửa sông Thu Bồn đổ ra biển Đông, nơi từng là cửa ngõ buôn bán của thương cảng. Từ đây có tàu đi Cù Lao Chàm.",
       "approx": true,
-      "address": "Cửa Đại, cách phố cổ khoảng 5 km"
+      "address": "Cửa Đại, cách phố cổ khoảng 5 km",
+      "image": "images/bien-cua-dai.webp",
+      "imageAlt": "Biển Cửa Đại",
+      "imageCredit": "Ảnh: Dragfyre · CC BY-SA 3.0 · Wikimedia Commons"
     },
     {
       "id": "cu-lao-cham",
@@ -1273,7 +1309,10 @@
         "Mì Quảng gà",
         "Mì Quảng tôm thịt",
         "Bánh tráng"
-      ]
+      ],
+      "image": "images/mi-quang-ong-hai.webp",
+      "imageAlt": "Mì Quảng Ông Hai",
+      "imageCredit": "Ảnh minh hoạ món mì Quảng, không phải ảnh tại địa điểm này · Christopher Crouzet, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "morning-glory",
@@ -1313,7 +1352,10 @@
         "Cao lầu",
         "Bánh xèo",
         "Cá nướng lá chuối"
-      ]
+      ],
+      "image": "images/morning-glory.webp",
+      "imageAlt": "Nhà hàng Morning Glory",
+      "imageCredit": "Ảnh minh hoạ món cao lầu, không phải ảnh tại địa điểm này · avlxyz, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "faifo-coffee",

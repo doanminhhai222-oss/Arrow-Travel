@@ -513,7 +513,10 @@
         "Bún bò Huế",
         "Giò heo",
         "Chả cua"
-      ]
+      ],
+      "image": "images/bun-bo-hue-ba-tuyet.webp",
+      "imageAlt": "Bún bò Huế Bà Tuyết",
+      "imageCredit": "Ảnh minh hoạ món bún bò Huế, không phải ảnh tại địa điểm này · Kham Tran - www.khamtran.com, CC BY 3.0, Wikimedia Commons"
     },
     {
       "id": "banh-khoai-lac-thien",
@@ -554,7 +557,10 @@
         "Bánh khoái",
         "Nem lụi",
         "Bánh bèo"
-      ]
+      ],
+      "image": "images/banh-khoai-lac-thien.webp",
+      "imageAlt": "Bánh khoái Lạc Thiện",
+      "imageCredit": "Ảnh minh hoạ món bánh xèo (gần với bánh khoái), không phải ảnh tại địa điểm này · Ser Amantio di Nicolao, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "com-hen-hue",
@@ -595,7 +601,10 @@
         "Cơm hến",
         "Bánh bèo",
         "Bánh nậm"
-      ]
+      ],
+      "image": "images/com-hen-hue.webp",
+      "imageAlt": "Cơm hến Huế",
+      "imageCredit": "Ảnh minh hoạ món cơm hến, không phải ảnh tại địa điểm này · Trinhthunga09, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "che-hem-hue",
@@ -635,7 +644,10 @@
         "Chè bắp",
         "Chè hạt sen",
         "Chè bột lọc"
-      ]
+      ],
+      "image": "images/che-hem-hue.webp",
+      "imageAlt": "Chè Hẻm",
+      "imageCredit": "Ảnh minh hoạ món chè Huế, không phải ảnh tại địa điểm này · Zxcvasdfqwer888, CC BY-SA 3.0, Wikimedia Commons"
     },
     {
       "id": "nem-lui-hue",
@@ -676,7 +688,10 @@
         "Nem lụi",
         "Bánh bèo",
         "Bánh nậm"
-      ]
+      ],
+      "image": "images/nem-lui-hue.webp",
+      "imageAlt": "Nem lụi Huế",
+      "imageCredit": "Ảnh minh hoạ món nem lụi, không phải ảnh tại địa điểm này · Phương Huy, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "com-cung-dinh-hue",

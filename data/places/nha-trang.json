@@ -108,7 +108,10 @@
       ],
       "culture": "Bãi biển dài ở phía nam thành phố, gần sân bay Cam Ranh, nổi tiếng với cát trắng, nước trong và không gian yên tĩnh hơn khu trung tâm; nhiều resort lớn nằm dọc bãi.",
       "approx": true,
-      "address": "Cam Lâm, gần sân bay Cam Ranh"
+      "address": "Cam Lâm, gần sân bay Cam Ranh",
+      "image": "images/bai-dai-cam-ranh.webp",
+      "imageAlt": "Bãi Dài (Cam Ranh)",
+      "imageCredit": "Ảnh minh hoạ bãi biển Bãi Dài, Cam Lâm, không phải ảnh tại địa điểm này · Bolyvn at vi.wikipedia, Public domain, Wikimedia Commons"
     },
     {
       "id": "doc-let",
@@ -509,7 +512,10 @@
       ],
       "culture": "Chợ truyền thống lớn nhất Nha Trang với mái vòm tròn đặc trưng, nơi bán hải sản tươi và khô, nước mắm, yến sào, trái cây và quà lưu niệm.",
       "approx": true,
-      "address": "Đường Hai Bà Trưng, Xương Huân"
+      "address": "Đường Hai Bà Trưng, Xương Huân",
+      "image": "images/cho-dam.webp",
+      "imageAlt": "Chợ Đầm",
+      "imageCredit": "Ảnh: Christophe95 · CC BY-SA 4.0 · Wikimedia Commons"
     },
     {
       "id": "nem-nuong-dang-van-quyen",
@@ -591,7 +597,10 @@
         "Bún chả cá",
         "Chả cá chiên",
         "Bánh canh chả cá"
-      ]
+      ],
+      "image": "images/hoa-suong-cha-ca.webp",
+      "imageAlt": "Hòa Sương – Chả cá Nha Trang",
+      "imageCredit": "Ảnh minh hoạ món bún chả cá, không phải ảnh tại địa điểm này · Nguyen Thi Quynh Tram, CC BY 3.0, Wikimedia Commons"
     },
     {
       "id": "banh-can-hoang-van-thu",
@@ -672,7 +681,10 @@
         "Bánh xèo",
         "Nem nướng",
         "Bánh ướt"
-      ]
+      ],
+      "image": "images/banh-xeo-to-hien-thanh.webp",
+      "imageAlt": "Bánh xèo chảo 85 Tô Hiến Thành",
+      "imageCredit": "Ảnh minh hoạ món bánh xèo, không phải ảnh tại địa điểm này · Vivian D Nguyen, CC BY-SA 2.0, Wikimedia Commons"
     },
     {
       "id": "bun-sua-han-thuyen",
@@ -754,7 +766,10 @@
         "Bò nướng",
         "Bò lá lốt",
         "Lẩu"
-      ]
+      ],
+      "image": "images/bo-nuong-lac-canh.webp",
+      "imageAlt": "Bò nướng Lạc Cảnh",
+      "imageCredit": "Ảnh minh hoạ món bò nướng, không phải ảnh tại địa điểm này · PattayaPatrol, CC BY-SA 4.0, Wikimedia Commons"
     },
     {
       "id": "hai-san-bo-ke",
