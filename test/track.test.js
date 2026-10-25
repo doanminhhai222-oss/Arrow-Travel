@@ -60,6 +60,17 @@ test('gọi Overpass: gửi POST đúng, lỗi thì ném ngoại lệ', async ()
   assert.equal(r.length, 3); assert.equal(call.url, 'https://overpass-api.de/api/interpreter'); assert.equal(call.init.method, 'POST'); assert.match(decodeURIComponent(call.init.body), /amenity"="fuel/);
   await assert.rejects(fetchOverpass({ cat: 'atm', lat: 0, lng: 0, fetchFn: async () => ({ ok: false, status: 429 }) }), /429/);
 });
+test('gọi Overpass: chỉ gửi toạ độ đã làm tròn khoảng 1 km, vẫn lọc và sắp theo vị trí thật', async () => {
+  let body = '';
+  const near = { elements: [{ type: 'node', id: 1, lat: 16.0612, lon: 108.2241, tags: { amenity: 'fuel', name: 'Gần' } }, { type: 'node', id: 2, lat: 16.0901, lon: 108.2240, tags: { amenity: 'fuel', name: 'Xa 3 km' } }] };
+  const f = async (url, init) => { body = decodeURIComponent(init.body); return { ok: true, status: 200, json: async () => near }; };
+  const r = await fetchOverpass({ cat: 'fuel', lat: 16.061234, lng: 108.223987, fetchFn: f });
+  assert.ok(body.includes('16.06,108.22'), 'phải gửi toạ độ đã làm tròn');
+  assert.ok(!body.includes('16.061234') && !body.includes('108.223987'), 'không được gửi toạ độ chính xác');
+  assert.match(body, /around:2800,/, 'bán kính hỏi rộng thêm phần sai lệch do làm tròn');
+  assert.deepEqual(r.map((x) => x.name), ['Gần'], 'lọc lại theo vị trí thật, bỏ điểm xa hơn 2 km');
+  assert.ok(r[0].km < 0.1, 'khoảng cách tính từ vị trí thật');
+});
 test('liên kết Google Maps: tìm gần đây và chỉ đường, đã mã hoá tiếng Việt', () => {
   assert.equal(mapsSearchUrl('fuel', 16.06, 108.22), 'https://www.google.com/maps/search/c%C3%A2y%20x%C4%83ng/@16.06,108.22,15z');
   assert.equal(mapsDirectionsUrl(16.06, 108.22), 'https://www.google.com/maps/dir/?api=1&destination=16.06,108.22&travelmode=driving');

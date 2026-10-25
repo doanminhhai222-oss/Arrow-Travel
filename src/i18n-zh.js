@@ -403,5 +403,18 @@ export const ZH = {
   "Kết hợp thêm": "同时前往",
   "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "每天只在一个城市，每个城市一间酒店。建议每个地方至少2天。",
   "thông báo chưa đọc": "条未读通知",
-  "Chính sách huỷ và hoàn tiền": "取消与退款政策"
+  "Chính sách huỷ và hoàn tiền": "取消与退款政策",
+  "Vị trí chỉ dùng ngay trên máy để đánh dấu nơi bạn đã đến, không được lưu lại. Mục Gợi ý gần đó gửi vị trí đã làm tròn khoảng 1 km tới dữ liệu bản đồ mở OpenStreetMap để tìm quán quanh bạn.": "位置仅在本设备上用于标记你已到达的地点，不会被保存。“附近推荐”会把约1公里精度的大致位置发送到 OpenStreetMap 开放地图数据，以查找你周围的地点。",
+  "Xem chính sách bảo mật": "查看隐私政策",
+  "Bấm bật để trình duyệt hỏi quyền vị trí. Bạn có thể từ chối và chọn nơi đang đứng ở bên dưới.": "点击后浏览器会请求位置权限。你可以拒绝，并在下方选择所在地点。",
+  "Tệp chỉ lưu trên thiết bị này và không được mã hoá. Đừng đính kèm căn cước, hộ chiếu, thẻ ngân hàng nếu thiết bị dùng chung.": "文件只保存在本设备上且未加密。如果设备与他人共用，请勿附上身份证、护照或银行卡。",
+  "Nguồn ảnh": "图片来源",
+  "Ảnh địa điểm lấy từ Wikimedia Commons theo giấy phép tự do hoặc do Arrow Travel cung cấp. Chỉ dùng lại ảnh theo đúng giấy phép ghi bên cạnh.": "地点图片来自 Wikimedia Commons 的自由许可图片，或由 Arrow Travel 提供。请按旁边标注的许可协议再次使用图片。",
+  "Ảnh do Arrow Travel cung cấp": "Arrow Travel 提供的图片",
+  "Phông chữ, dữ liệu và thư viện": "字体、数据与程序库",
+  "Dữ liệu bản đồ": "地图数据",
+  "Không tải được danh sách nguồn ảnh, hãy thử lại khi có mạng.": "无法加载图片来源，请联网后重试。",
+  "ảnh minh hoạ": "示意图",
+  "xem trang gốc": "查看原页面",
+  "Đang tải…": "加载中…"
 };

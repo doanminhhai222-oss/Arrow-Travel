@@ -496,3 +496,4 @@ section.day.sorting{user-select:none}
 .dest-switch,#destSeg{grid-template-columns:repeat(auto-fit,minmax(88px,1fr))}
 .dest-switch button,#destSeg button{padding:0 6px;white-space:nowrap}
 .legal mark{background:#ffe9a8;color:#3b2f00;padding:0 3px;border-radius:3px}
+.credits{padding-left:18px;margin:6px 0 10px}.credits li{margin:4px 0;line-height:1.45}

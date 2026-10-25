@@ -403,5 +403,18 @@ export const JA = {
   "Kết hợp thêm": "あわせて訪れる",
   "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "1日につき1都市で、都市ごとにホテルを1つ選びます。各地に2日以上をおすすめします。",
   "thông báo chưa đọc": "件の未読通知",
-  "Chính sách huỷ và hoàn tiền": "キャンセル・返金ポリシー"
+  "Chính sách huỷ và hoàn tiền": "キャンセル・返金ポリシー",
+  "Vị trí chỉ dùng ngay trên máy để đánh dấu nơi bạn đã đến, không được lưu lại. Mục Gợi ý gần đó gửi vị trí đã làm tròn khoảng 1 km tới dữ liệu bản đồ mở OpenStreetMap để tìm quán quanh bạn.": "位置情報はこの端末上で訪れた場所の記録にのみ使い、保存しません。「近くのおすすめ」では約1kmに丸めた位置を OpenStreetMap のオープン地図データに送り、周辺の場所を探します。",
+  "Xem chính sách bảo mật": "プライバシーポリシーを見る",
+  "Bấm bật để trình duyệt hỏi quyền vị trí. Bạn có thể từ chối và chọn nơi đang đứng ở bên dưới.": "タップするとブラウザが位置情報の許可を求めます。拒否して、下で現在地を選ぶこともできます。",
+  "Tệp chỉ lưu trên thiết bị này và không được mã hoá. Đừng đính kèm căn cước, hộ chiếu, thẻ ngân hàng nếu thiết bị dùng chung.": "ファイルはこの端末にのみ保存され、暗号化されません。共用の端末では身分証、パスポート、銀行カードを添付しないでください。",
+  "Nguồn ảnh": "画像のクレジット",
+  "Ảnh địa điểm lấy từ Wikimedia Commons theo giấy phép tự do hoặc do Arrow Travel cung cấp. Chỉ dùng lại ảnh theo đúng giấy phép ghi bên cạnh.": "スポットの写真は Wikimedia Commons の自由なライセンスの写真、または Arrow Travel 提供の写真です。再利用は横に記載のライセンスに従ってください。",
+  "Ảnh do Arrow Travel cung cấp": "Arrow Travel 提供の写真",
+  "Phông chữ, dữ liệu và thư viện": "フォント、データ、ライブラリ",
+  "Dữ liệu bản đồ": "地図データ",
+  "Không tải được danh sách nguồn ảnh, hãy thử lại khi có mạng.": "画像のクレジットを読み込めませんでした。オンライン時にもう一度お試しください。",
+  "ảnh minh hoạ": "イメージ写真",
+  "xem trang gốc": "元のページを見る",
+  "Đang tải…": "読み込み中…"
 };

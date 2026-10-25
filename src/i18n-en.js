@@ -403,5 +403,18 @@ export const EN = {
   "Kết hợp thêm": "Also visit",
   "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "Each day stays in one city, with one hotel per city. Allow at least 2 days for each place.",
   "thông báo chưa đọc": "unread notifications",
-  "Chính sách huỷ và hoàn tiền": "Cancellation and refund policy"
+  "Chính sách huỷ và hoàn tiền": "Cancellation and refund policy",
+  "Vị trí chỉ dùng ngay trên máy để đánh dấu nơi bạn đã đến, không được lưu lại. Mục Gợi ý gần đó gửi vị trí đã làm tròn khoảng 1 km tới dữ liệu bản đồ mở OpenStreetMap để tìm quán quanh bạn.": "Your location is used only on this device to mark places you have reached, and is not stored. Nearby suggestions send your location, rounded to about 1 km, to OpenStreetMap open map data to find places around you.",
+  "Xem chính sách bảo mật": "View privacy policy",
+  "Bấm bật để trình duyệt hỏi quyền vị trí. Bạn có thể từ chối và chọn nơi đang đứng ở bên dưới.": "Tap to let your browser ask for location permission. You can decline and pick where you are below.",
+  "Tệp chỉ lưu trên thiết bị này và không được mã hoá. Đừng đính kèm căn cước, hộ chiếu, thẻ ngân hàng nếu thiết bị dùng chung.": "Files are stored only on this device and are not encrypted. Do not attach ID cards, passports or bank cards if this device is shared.",
+  "Nguồn ảnh": "Photo credits",
+  "Ảnh địa điểm lấy từ Wikimedia Commons theo giấy phép tự do hoặc do Arrow Travel cung cấp. Chỉ dùng lại ảnh theo đúng giấy phép ghi bên cạnh.": "Place photos come from Wikimedia Commons under free licences or are provided by Arrow Travel. Reuse a photo only under the licence shown next to it.",
+  "Ảnh do Arrow Travel cung cấp": "Photos provided by Arrow Travel",
+  "Phông chữ, dữ liệu và thư viện": "Fonts, data and libraries",
+  "Dữ liệu bản đồ": "Map data",
+  "Không tải được danh sách nguồn ảnh, hãy thử lại khi có mạng.": "Could not load the photo credits, please try again when online.",
+  "ảnh minh hoạ": "illustrative photo",
+  "xem trang gốc": "see original page",
+  "Đang tải…": "Loading…"
 };

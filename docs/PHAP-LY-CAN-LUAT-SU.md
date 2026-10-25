@@ -17,8 +17,8 @@ Bản nháp ngày 25/10/2026. Các văn bản nằm trong app (Tài khoản, m�
 |---|---|---|---|
 | Lịch trình, cài đặt, yêu thích, đánh giá, điểm thưởng, voucher, thông báo, đơn đặt thử, địa điểm tự thêm | Bộ nhớ trình duyệt của người dùng | Không ai | Không mã hoá |
 | Ảnh, tệp đính kèm (vé, giấy tờ chuyến đi) | IndexedDB trong trình duyệt | Không ai | Không mã hoá, người dùng có thể đính kèm giấy tờ nhạy cảm |
-| Vị trí GPS | Bộ nhớ tạm khi app mở, không lưu | **Overpass API (overpass-api.de)** nhận toạ độ và IP khi mở "Gợi ý gần đó" | Sửa lại lời "không theo dõi vị trí" trong bản cũ cho đúng thực tế |
-| Địa chỉ IP, thông tin trình duyệt | Máy chủ phục vụ trang | Google Fonts, nhà cung cấp hosting (GitHub Pages) | Không có cookie theo dõi, không có công cụ thống kê |
+| Vị trí GPS | Bộ nhớ tạm khi app mở, không lưu | **Overpass API (overpass-api.de)** nhận toạ độ đã làm tròn khoảng 1 km và IP khi mở "Gợi ý gần đó" | Sửa lại lời "không theo dõi vị trí" trong bản cũ cho đúng thực tế |
+| Địa chỉ IP, thông tin trình duyệt | Máy chủ phục vụ trang | Nhà cung cấp hosting (GitHub Pages). Phông chữ đã tự lưu, không còn gọi Google Fonts | Không có cookie theo dõi, không có công cụ thống kê |
 | Số tiền, nội dung chuyển khoản, tên và số tài khoản người chuyển | Sao kê ngân hàng của chủ app | Ngân hàng | Chỉ khi thu tiền thật |
 | Mã kích hoạt ArrowPro đã cấp | Sổ của chủ app | Không | Dự kiến lưu để hỗ trợ và chống dùng sai |
 
@@ -40,7 +40,7 @@ Bản nháp ngày 25/10/2026. Các văn bản nằm trong app (Tài khoản, m�
 
 **Dữ liệu cá nhân (Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15, hiệu lực 1/1/2026, và nghị định hướng dẫn)**
 4. Vị trí có phải dữ liệu nhạy cảm cần đồng ý riêng, bằng văn bản hoặc hình thức tương đương, không? Cách xin quyền của trình duyệt cộng với lời giải thích trong chính sách có đủ không, hay cần hộp đồng ý trong app?
-5. Việc gửi toạ độ và IP tới Overpass API (OpenStreetMap, máy chủ ở nước ngoài) và IP tới Google Fonts có là chuyển dữ liệu cá nhân ra nước ngoài, cần hồ sơ đánh giá tác động không? Có nên làm tròn toạ độ hoặc bỏ Google Fonts (tự lưu phông chữ) để giảm rủi ro?
+5. Việc gửi toạ độ đã làm tròn khoảng 1 km và IP tới Overpass API (OpenStreetMap, máy chủ ở nước ngoài) có là chuyển dữ liệu cá nhân ra nước ngoài, cần hồ sơ đánh giá tác động không? (Đã làm tròn toạ độ và bỏ Google Fonts để giảm rủi ro.)
 6. Khi thêm tài khoản và đồng bộ: nghĩa vụ xin đồng ý, thời hạn phản hồi quyền của chủ thể, thông báo sự cố, hồ sơ đánh giá tác động, chỉ định bộ phận hoặc người phụ trách bảo vệ dữ liệu.
 7. Ngưỡng tuổi cho trẻ em (đang ghi dưới 16 tuổi cần người giám hộ) và cách xin đồng ý của cha mẹ.
 
@@ -65,10 +65,10 @@ Khi có từng thay đổi dưới đây, văn bản phải sửa trước khi b
 - **Quét Gmail, tiện ích Chrome (đang ghi "Sắp có"):** yêu cầu duyệt của Google, phạm vi quyền, lưu trữ nội dung email.
 - **Bán ra nước ngoài:** luật nước đó (ví dụ GDPR nếu có người dùng châu Âu), điều khoản bằng ngôn ngữ tương ứng.
 
-## 6. Đề xuất sửa nhỏ trong app để giảm rủi ro (chưa làm, chờ quyết định)
+## 6. Sửa nhỏ trong app để giảm rủi ro (đã làm 25/10/2026)
 
-1. Làm tròn toạ độ gửi cho Overpass API còn khoảng 1 km (2 chữ số thập phân), hoặc hỏi người dùng trước khi gọi.
-2. Tự lưu phông chữ trong repo thay vì tải từ Google Fonts để không gửi IP người dùng cho Google.
-3. Thêm một dòng giải thích trước nút bật theo dõi: vị trí dùng để làm gì, gợi ý gần đó có gửi toạ độ ra ngoài, xem chính sách ở đâu.
-4. Cảnh báo ngay ở màn hình thêm tệp đính kèm: không đính kèm căn cước, hộ chiếu, thẻ ngân hàng.
-5. Trang "Nguồn ảnh" trong app với liên kết giấy phép từng ảnh.
+1. ✅ Toạ độ gửi cho Overpass API làm tròn 2 chữ số thập phân (khoảng 1 km), bán kính hỏi nới thêm 800 m rồi lọc lại theo vị trí thật ngay trên máy.
+2. ✅ Tự lưu phông chữ trong repo thay vì tải từ Google Fonts để không gửi IP người dùng cho Google.
+3. ✅ Thêm một dòng giải thích trước nút bật theo dõi: vị trí dùng để làm gì, gợi ý gần đó có gửi toạ độ ra ngoài, xem chính sách ở đâu.
+4. ✅ Cảnh báo ngay ở màn hình thêm tệp đính kèm: không đính kèm căn cước, hộ chiếu, thẻ ngân hàng.
+5. ✅ Trang "Nguồn ảnh" trong app với liên kết giấy phép từng ảnh.

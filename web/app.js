@@ -28,6 +28,7 @@ const loadJson = (n) => fetch('../data/' + n + '.json').then((r) => r.json());
 const [DEST_FILES, RULES, OPTS_BASE, TRANSPORT, FLIGHTS, PAYMENT, GOOGLE, PROMOS, TRAVELERS, LEGAL, APP, FEATURED, PRO] = await Promise.all(['destinations', 'rules', 'travel-options', 'transport', 'flights', 'payment', 'google', 'promos', 'travelers', 'legal', 'app', 'featured', 'pro'].map(loadJson));
 // Địa điểm và khách sạn nằm trong từng tệp theo điểm đến (data/places/<slug>.json, data/hotels/<slug>.json), chỉ tải điểm đến đang dùng
 const LAZY = true;
+const PHOTO_CREDITS = null; // bản web tải data/photo-credits.json khi mở trang Nguồn ảnh
 const DATA = { places: [] };
 const OPTS = { ...OPTS_BASE, hotels: [] };
 // </DATA>
@@ -969,10 +970,12 @@ function renderTrack() {
   h += '<div class="panel"><b>Vị trí của bạn</b>' +
     '<p class="hint" style="margin:4px 0 8px">' + (trackStatus === 'on' && trackPos ? (trackPos.src === 'gps' ? 'Đang theo dõi bằng định vị thiết bị, sai số khoảng ' + Math.round(trackPos.acc) + ' m.' : 'Vị trí do bạn chọn tại ' + esc(trackPos.name || '') + '.') : trackStatus === 'asking' ? 'Đang chờ bạn cho phép vị trí…' : trackPos && trackPos.src === 'manual' ? 'Vị trí do bạn chọn tại ' + esc(trackPos.name || '') + '.' : 'Chưa bật vị trí.') + '</p>' +
     (trackErr ? '<div class="warn" style="margin-bottom:8px">' + esc(trackErr) + '</div>' : '') +
+    (gpsOn ? '' : '<p class="hint" style="margin:0 0 8px">Bấm bật để trình duyệt hỏi quyền vị trí. Bạn có thể từ chối và chọn nơi đang đứng ở bên dưới.</p>') +
     '<div class="acts" style="margin-top:0"><button type="button" class="' + (gpsOn ? 'btn danger' : 'go') + '" style="' + (gpsOn ? '' : 'width:auto;padding:0 20px;') + '" data-trk="' + (gpsOn ? 'gpsoff' : 'gps') + '">' + (gpsOn ? 'Tắt định vị' : 'Bật vị trí hiện tại') + '</button>' +
     (trackPos ? '<a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="' + mapsPlaceUrl(trackPos.lat, trackPos.lng) + '" target="_blank" rel="noopener">Mở trên Google Maps</a>' : '') + '</div>' +
     '<label for="trkAt" style="margin-top:12px">Hoặc chọn nơi bạn đang đứng</label><div class="row" style="grid-template-columns:1fr auto;gap:8px"><select id="trkAt">' + stops.map((x) => '<option value="' + x.place.id + '">' + esc(x.place.name) + '</option>').join('') + '</select><button type="button" class="btn" data-trk="here">Tôi ở đây</button></div>' +
-    '<p class="hint" style="margin-top:8px">App dùng vị trí do thiết bị cung cấp (trên Android là dịch vụ vị trí của Google). Không cần đăng nhập Google, vị trí không được lưu và không gửi đi đâu.</p></div>';
+    '<p class="hint" style="margin-top:8px">Vị trí chỉ dùng ngay trên máy để đánh dấu nơi bạn đã đến, không được lưu lại. Mục Gợi ý gần đó gửi vị trí đã làm tròn khoảng 1 km tới dữ liệu bản đồ mở OpenStreetMap để tìm quán quanh bạn.</p>' +
+    '<button type="button" class="btn quiet" data-page="privacy">Xem chính sách bảo mật</button></div>';
   // bản đồ
   h += '<div class="panel" style="padding:12px">' + trackMapSvg({ stops: stops.map((x) => ({ place: x.place, visited: x.visited, next: nxt && nxt.place.id === x.place.id })), current: trackPos, pois: poiShown }) +
     '<div class="legend" style="margin-top:8px"><span><i style="background:#2563eb;border-radius:50%"></i>Bạn</span><span><i style="background:#15803d;border-radius:50%"></i>Đã đến</span><span><i style="background:#C2410C;border-radius:50%"></i>Tiếp theo</span><span><i style="background:#7c3aed"></i>Gợi ý gần đó</span></div></div>';
@@ -1315,6 +1318,7 @@ async function renderAttach() {
   try { files = await listPhotos('att:' + attTrip); } catch (e) { $('sheetBody').innerHTML = '<div class="warn">' + esc(e.message) + '</div>'; return; }
   const cap = lim().attachmentsPerTrip, full = files.length >= cap;
   $('sheetBody').innerHTML = '<div class="pd"><h2>Tệp đính kèm</h2><p class="hint">' + esc(s.trip.destination) + ' ' + fmtDate(s.trip.startDate) + ' – ' + fmtDate(s.trip.endDate) + ' · ' + files.length + (cap === Infinity ? ' tệp' : '/' + cap + ' tệp (bản thường)') + '</p>' +
+    '<div class="warn" style="margin:8px 0">Tệp chỉ lưu trên thiết bị này và không được mã hoá. Đừng đính kèm căn cước, hộ chiếu, thẻ ngân hàng nếu thiết bị dùng chung.</div>' +
     '<div class="list">' + (files.length ? files.map((f) => {
       const u = URL.createObjectURL(f.blob); attUrls.push(u);
       const name = f.blob.name || 'tệp', kb = Math.max(1, Math.round(f.blob.size / 1024));
@@ -1723,9 +1727,38 @@ const PAGES = {
   privacy: { title: LEGAL.privacy.title, render: legalPage('privacy') },
   terms: { title: LEGAL.terms.title, render: legalPage('terms') },
   refund: { title: LEGAL.refund.title, render: legalPage('refund') },
+  credits: { title: 'Nguồn ảnh', render: () => '<div class="panel legal" id="creditsBody"><p class="hint">Đang tải…</p></div>' },
   payguide: { title: LEGAL.payguide.title, render: legalPage('payguide') },
 };
-function renderPage() { stopReel(); $('pageBody').innerHTML = PAGES[pageName].render(); if (pageName === 'album') fillAlbum(); if (pageName === 'reel') fillReel(); }
+function renderPage() { stopReel(); $('pageBody').innerHTML = PAGES[pageName].render(); if (pageName === 'album') fillAlbum(); if (pageName === 'reel') fillReel(); if (pageName === 'credits') fillCredits(); }
+// Liên kết tới văn bản giấy phép Creative Commons theo tên rút gọn (CC BY 4.0, CC BY-SA 3.0 nl, CC0 1.0…)
+function licenseUrl(l) {
+  const m = /^CC BY(-SA)? (\d\.\d)(?: ([a-z]{2}))?/.exec(l || '');
+  if (m) return 'https://creativecommons.org/licenses/by' + (m[1] ? '-sa' : '') + '/' + m[2] + '/' + (m[3] ? m[3] + '/' : '');
+  return /^CC0/.test(l || '') ? 'https://creativecommons.org/publicdomain/zero/1.0/' : '';
+}
+async function fillCredits() {
+  try {
+    const [credits] = await Promise.all([PHOTO_CREDITS ? Promise.resolve(PHOTO_CREDITS) : loadJson('photo-credits'), ensureAll()]);
+    if (pageName !== 'credits') return;
+    const byId = Object.fromEntries(DATA.places.map((p) => [p.id, p]));
+    const link = (href, text) => '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(text) + '</a>';
+    const wiki = [], own = [];
+    for (const [id, c] of Object.entries(credits)) {
+      const p = byId[id]; if (!p || !p.image) continue;
+      if (c.file) {
+        const lic = c.license || ((c.note || '').match(/CC BY(?:-SA)? \d\.\d(?: [a-z]{2})?|CC0[^,·]*|Public domain/) || [''])[0].trim();
+        const author = c.author || '';
+        wiki.push({ city: p.city, html: '<li><b>' + esc(p.name) + '</b>' + (author ? ' · ' + esc(author) : '') + ' · ' + (licenseUrl(lic) ? link(licenseUrl(lic), lic) : esc(lic || 'xem trang gốc')) + ' · ' + link(c.page, 'Wikimedia Commons') + (/minh hoạ/.test(c.note || '') ? ' · <span class="hint">ảnh minh hoạ</span>' : '') + '</li>' });
+      } else own.push('<li><b>' + esc(p.name) + '</b> · ' + esc(c.note || '') + '</li>');
+    }
+    const cities = [...new Set(wiki.map((x) => x.city))];
+    $('creditsBody').innerHTML = '<p>Ảnh địa điểm lấy từ Wikimedia Commons theo giấy phép tự do hoặc do Arrow Travel cung cấp. Chỉ dùng lại ảnh theo đúng giấy phép ghi bên cạnh.</p>' +
+      cities.map((c) => '<h3 aria-level="2">' + esc(c) + '</h3><ul class="credits">' + wiki.filter((x) => x.city === c).map((x) => x.html).join('') + '</ul>').join('') +
+      (own.length ? '<h3 aria-level="2">Ảnh do Arrow Travel cung cấp</h3><ul class="credits">' + own.join('') + '</ul>' : '') +
+      '<h3 aria-level="2">Phông chữ, dữ liệu và thư viện</h3><ul class="credits"><li><b>Be Vietnam Pro</b> · ' + link('fonts/OFL.txt', 'SIL Open Font License 1.1') + '</li><li><b>Dữ liệu bản đồ</b> · © OpenStreetMap contributors · ' + link('https://opendatacommons.org/licenses/odbl/', 'ODbL') + '</li><li><b>qrcode-generator</b> · Kazuhiko Arase · MIT</li></ul>';
+  } catch (e) { if (pageName === 'credits') $('creditsBody').innerHTML = '<div class="warn">Không tải được danh sách nguồn ảnh, hãy thử lại khi có mạng.</div>'; }
+}
 function openPage(name) {
   if (!PAGES[name]) return;
   if (currentScreen !== 'page') pageFrom = currentScreen;
@@ -1829,7 +1862,7 @@ function pageAbout() {
   return '<div class="panel" style="text-align:center"><svg width="72" height="72" aria-hidden="true"><use href="#logo-sym"/></svg>' +
     '<h2 style="margin:8px 0 0">' + esc(APP.name) + '</h2><div class="vn-about">' + vnMapSvg({ labels: true }) + '</div><p style="margin:4px 0;color:var(--teal);font-weight:600">' + esc(APP.slogan) + '</p><p class="hint">Phiên bản ' + esc(APP.version) + ' · bản thử nghiệm</p></div>' +
     '<div class="panel"><b>Arrow Travel là gì?</b><p style="margin:6px 0 0">Ứng dụng lên lịch trình du lịch theo người đi cùng. Gia đình có trẻ nhỏ có giờ nghỉ trưa dài và ít đi bộ, cặp đôi có quán yên tĩnh và hoàng hôn, nhóm bạn trẻ có lịch dày và nhiều điểm check-in. Từ lịch trình, bạn tìm chuyến bay, khách sạn, chọn phương tiện và xem tổng chi phí cả chuyến.</p></div>' +
-    '<div class="panel menu"><button class="mi" data-page="privacy"><span>Chính sách bảo mật</span><span class="chev">›</span></button><button class="mi" data-page="terms"><span>Điều khoản sử dụng</span><span class="chev">›</span></button><button class="mi" data-page="refund"><span>Chính sách huỷ và hoàn tiền</span><span class="chev">›</span></button><button class="mi" data-page="payguide"><span>Hướng dẫn thanh toán</span><span class="chev">›</span></button></div>' +
+    '<div class="panel menu"><button class="mi" data-page="privacy"><span>Chính sách bảo mật</span><span class="chev">›</span></button><button class="mi" data-page="terms"><span>Điều khoản sử dụng</span><span class="chev">›</span></button><button class="mi" data-page="refund"><span>Chính sách huỷ và hoàn tiền</span><span class="chev">›</span></button><button class="mi" data-page="credits"><span>Nguồn ảnh</span><span class="chev">›</span></button><button class="mi" data-page="payguide"><span>Hướng dẫn thanh toán</span><span class="chev">›</span></button></div>' +
     '<p class="foot">Mã nguồn: <a href="' + esc(APP.repoUrl) + '" target="_blank" rel="noopener" style="color:var(--teal)">' + esc(APP.repoUrl.replace('https://', '')) + '</a>. Dữ liệu địa điểm, giá, khuyến mãi, đánh giá đang là dữ liệu mẫu.</p>';
 }
 
@@ -1842,7 +1875,7 @@ function renderAccount() {
     proCardHtml() +
     '<div class="menu-h">Của tôi</div><div class="panel menu">' + mi('rewards', 'Điểm thưởng và voucher', store.points.balance + ' điểm · ' + store.vouchers.filter((v) => !v.used).length + ' voucher') + mi('friends', 'Bạn đồng hành', store.friends.length + ' đã kết nối') + mi('promos', 'Khuyến mãi') + '</div>' +
     '<div class="menu-h">Cài đặt</div><div class="panel menu">' + mi('settings', 'Giao diện, ngôn ngữ, tiền tệ', (THEMES[st.theme] || THEMES.light) + ' · ' + (LANGS[st.lang] || LANGS.vi) + ' · ' + st.currency) + '</div>' +
-    '<div class="menu-h">Hỗ trợ</div><div class="panel menu">' + mi('payguide', 'Hướng dẫn thanh toán') + mi('rate', 'Đánh giá Arrow Travel', store.review ? 'Bạn đã đánh giá ' + store.review.stars + ' sao' : '') + mi('about', 'Giới thiệu') + mi('privacy', 'Chính sách bảo mật') + mi('terms', 'Điều khoản sử dụng') + '</div>' +
+    '<div class="menu-h">Hỗ trợ</div><div class="panel menu">' + mi('payguide', 'Hướng dẫn thanh toán') + mi('rate', 'Đánh giá Arrow Travel', store.review ? 'Bạn đã đánh giá ' + store.review.stars + ' sao' : '') + mi('about', 'Giới thiệu') + mi('privacy', 'Chính sách bảo mật') + mi('terms', 'Điều khoản sử dụng') + mi('refund', 'Chính sách huỷ và hoàn tiền') + mi('credits', 'Nguồn ảnh') + '</div>' +
     '<div class="panel"><b>Dữ liệu của bạn</b><p class="hint" style="margin:6px 0 12px">Bản đầu chưa cần đăng nhập. Lịch trình, ảnh và thông báo chỉ lưu trên thiết bị này, không lưu mật khẩu hay thông tin thanh toán. Đăng nhập để đồng bộ nhiều thiết bị sẽ có ở bản sau.</p>' +
     '<button class="btn danger" type="button" data-clearall>' + (armedClear ? 'Bấm lại để xoá hết' : 'Xoá dữ liệu trên thiết bị này') + '</button></div>' +
     '<p class="foot">' + esc(APP.name) + ' · ' + esc(APP.slogan) + ' · bản thử nghiệm ' + esc(APP.version) + '</p>';

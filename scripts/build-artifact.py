@@ -16,7 +16,9 @@ body_raw = html[html.index("<body>") + 6 : html.index('<script type="module"')].
 import mimetypes
 body = re.sub(r'src="(images/[^"]+)"', lambda m: 'src="data:%s;base64,%s"' % (mimetypes.guess_type(m.group(1))[0] or "image/webp", base64.b64encode((root / "web" / m.group(1)).read_bytes()).decode()), body_raw)
 body = re.sub(r'<script src="[^"]*(?:vendor|qrcode)[^"]*"></script>\s*', "", body)  # thư viện QR được nhúng thẳng vào script
-css = read("web/style.css") + "\n" + read("web/detail.css")
+# phông tự lưu: nhúng thẳng tệp .woff2 vào CSS vì bản một file không có thư mục fonts/
+fonts_css = re.sub(r"url\((fonts/[^)]+\.woff2)\)", lambda m: "url(data:font/woff2;base64,%s)" % base64.b64encode((root / "web" / m.group(1)).read_bytes()).decode(), read("web/fonts.css"))
+css = fonts_css + "\n" + read("web/style.css") + "\n" + read("web/detail.css")
 
 def strip_module(src):
     if re.search(r"^import .*\bas\b.*;$", src, flags=re.M):
@@ -33,7 +35,7 @@ def inline_images(json_text):
         return '"image": "data:%s;base64,%s"' % (mime, base64.b64encode(path.read_bytes()).decode())
     return re.sub(r'"image":\s*"(images/[^"]+)"', repl, json_text)
 
-data_block = ("const LAZY = false;\nconst DEST_FILES = " + read("data/destinations.json") + ";\nconst DATA = " + inline_images(json.dumps(_data.load_data(), ensure_ascii=False)) + ";\nconst RULES = " + read("data/rules.json") +
+data_block = ("const LAZY = false;\nconst PHOTO_CREDITS = " + read("data/photo-credits.json") + ";\nconst DEST_FILES = " + read("data/destinations.json") + ";\nconst DATA = " + inline_images(json.dumps(_data.load_data(), ensure_ascii=False)) + ";\nconst RULES = " + read("data/rules.json") +
               ";\nconst OPTS = " + json.dumps(_data.load_options(), ensure_ascii=False) + ";\nconst TRANSPORT = " + read("data/transport.json") + ";\nconst FLIGHTS = " + read("data/flights.json") + ";\nconst PAYMENT = " + read("data/payment.json") + ";\nconst GOOGLE = " + read("data/google.json") + ";\nconst PROMOS = " + read("data/promos.json") + ";\nconst TRAVELERS = " + read("data/travelers.json") + ";\nconst LEGAL = " + read("data/legal.json") + ";\nconst APP = " + inline_images(read("data/app.json")) + ";\nconst FEATURED = " + read("data/featured.json") + ";\nconst PRO = " + read("data/pro.json") + ";")
 app = re.sub(r"// <DATA>.*?// </DATA>", lambda m: data_block, read("web/app.js"), flags=re.S)
 app = re.sub(r"// <LOAD-START>.*?// </LOAD-START>\n?", "", app, flags=re.S)  # bản một file đã có sẵn dữ liệu, không dùng await ở mức cao nhất (script thường)

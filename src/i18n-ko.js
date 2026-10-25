@@ -403,5 +403,18 @@ export const KO = {
   "Kết hợp thêm": "함께 방문",
   "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "하루에 한 도시만 다니며 도시마다 호텔을 하나 고릅니다. 각 도시에 2일 이상 권장합니다.",
   "thông báo chưa đọc": "개의 읽지 않은 알림",
-  "Chính sách huỷ và hoàn tiền": "취소 및 환불 정책"
+  "Chính sách huỷ và hoàn tiền": "취소 및 환불 정책",
+  "Vị trí chỉ dùng ngay trên máy để đánh dấu nơi bạn đã đến, không được lưu lại. Mục Gợi ý gần đó gửi vị trí đã làm tròn khoảng 1 km tới dữ liệu bản đồ mở OpenStreetMap để tìm quán quanh bạn.": "위치는 이 기기에서 방문한 곳을 표시하는 데만 쓰이며 저장되지 않습니다. 주변 추천은 약 1km로 반올림한 위치를 OpenStreetMap 오픈 지도 데이터로 보내 주변 장소를 찾습니다.",
+  "Xem chính sách bảo mật": "개인정보 처리방침 보기",
+  "Bấm bật để trình duyệt hỏi quyền vị trí. Bạn có thể từ chối và chọn nơi đang đứng ở bên dưới.": "누르면 브라우저가 위치 권한을 요청합니다. 거절하고 아래에서 현재 위치를 고를 수도 있습니다.",
+  "Tệp chỉ lưu trên thiết bị này và không được mã hoá. Đừng đính kèm căn cước, hộ chiếu, thẻ ngân hàng nếu thiết bị dùng chung.": "파일은 이 기기에만 저장되며 암호화되지 않습니다. 기기를 함께 쓴다면 신분증, 여권, 은행 카드를 첨부하지 마세요.",
+  "Nguồn ảnh": "사진 출처",
+  "Ảnh địa điểm lấy từ Wikimedia Commons theo giấy phép tự do hoặc do Arrow Travel cung cấp. Chỉ dùng lại ảnh theo đúng giấy phép ghi bên cạnh.": "장소 사진은 자유 이용 허락의 Wikimedia Commons 사진이거나 Arrow Travel이 제공한 사진입니다. 옆에 적힌 이용 허락에 따라서만 다시 사용하세요.",
+  "Ảnh do Arrow Travel cung cấp": "Arrow Travel 제공 사진",
+  "Phông chữ, dữ liệu và thư viện": "글꼴, 데이터, 라이브러리",
+  "Dữ liệu bản đồ": "지도 데이터",
+  "Không tải được danh sách nguồn ảnh, hãy thử lại khi có mạng.": "사진 출처를 불러오지 못했습니다. 온라인일 때 다시 시도하세요.",
+  "ảnh minh hoạ": "참고용 사진",
+  "xem trang gốc": "원본 페이지 보기",
+  "Đang tải…": "불러오는 중…"
 };

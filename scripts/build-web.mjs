@@ -11,8 +11,8 @@ const check = process.argv.includes('--check');
 const common = { absWorkingDir: root, bundle: true, minify: true, legalComments: 'none', write: false, logLevel: 'warning' };
 
 const js = await build({ ...common, entryPoints: ['web/app.js'], outfile: 'web/app.min.js', format: 'esm', target: 'es2022', charset: 'utf8' });
-// style.css và detail.css được trang nạp liền nhau; gộp để đỡ một yêu cầu
-const css = await build({ ...common, stdin: { contents: readFileSync(join(root, 'web/style.css'), 'utf8') + '\n' + readFileSync(join(root, 'web/detail.css'), 'utf8'), loader: 'css', resolveDir: join(root, 'web') }, outfile: 'web/style.min.css' });
+// fonts.css (phông tự lưu), style.css và detail.css gộp thành một tệp; tệp phông .woff2 giữ nguyên đường dẫn web/fonts/
+const css = await build({ ...common, external: ['*.woff2'], stdin: { contents: readFileSync(join(root, 'web/fonts.css'), 'utf8') + '\n' + readFileSync(join(root, 'web/style.css'), 'utf8') + '\n' + readFileSync(join(root, 'web/detail.css'), 'utf8'), loader: 'css', resolveDir: join(root, 'web') }, outfile: 'web/style.min.css' });
 
 // Thư viện tạo mã QR của bên thứ ba: nén, giữ nguyên dòng giấy phép ở đầu tệp
 const qr = await transform(readFileSync(join(root, 'vendor/qrcode-generator.js'), 'utf8'), { minify: true, legalComments: 'inline', charset: 'utf8' });

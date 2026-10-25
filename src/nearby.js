@@ -54,10 +54,16 @@ export function normalizeOverpass(json, center, cat, limit = 12) {
   }).filter(Boolean).sort((a, b) => a.km - b.km).slice(0, limit);
 }
 
-export async function fetchOverpass({ cat, lat, lng, radiusM = 2000, fetchFn = fetch }) {
-  const res = await fetchFn('https://overpass-api.de/api/interpreter', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'data=' + encodeURIComponent(overpassQuery(cat, lat, lng, radiusM)) });
+// Làm tròn toạ độ trước khi gửi ra ngoài: 2 chữ số thập phân, sai lệch tối đa khoảng 0,8 km, không lộ vị trí chính xác của người dùng
+export const coarsePoint = (lat, lng, digits = 2) => ({ lat: +lat.toFixed(digits), lng: +lng.toFixed(digits) });
+export const COARSE_PAD_M = 800;
+
+// Hỏi Overpass quanh điểm đã làm tròn với bán kính rộng thêm phần sai lệch, rồi tính khoảng cách và lọc lại theo vị trí thật ngay trên máy
+export async function fetchOverpass({ cat, lat, lng, radiusM = 2000, fetchFn = fetch, limit = 12 }) {
+  const q = coarsePoint(lat, lng);
+  const res = await fetchFn('https://overpass-api.de/api/interpreter', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'data=' + encodeURIComponent(overpassQuery(cat, q.lat, q.lng, radiusM + COARSE_PAD_M)) });
   if (!res.ok) throw new Error('Dịch vụ bản đồ mở trả lỗi ' + res.status);
-  return normalizeOverpass(await res.json(), { lat, lng }, cat);
+  return normalizeOverpass(await res.json(), { lat, lng }, cat, 200).filter((x) => x.km <= radiusM / 1000).slice(0, limit);
 }
 
 export const mapsSearchUrl = (cat, lat, lng) => `https://www.google.com/maps/search/${encodeURIComponent(MAPS_QUERY[cat])}/@${lat},${lng},15z`;
