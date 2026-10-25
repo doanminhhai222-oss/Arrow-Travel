@@ -1703,10 +1703,12 @@ setTimeout(hideSplash, 2800);
 
 /* ---------- Trang phụ ---------- */
 let pageName = null, pageFrom = 'home', currentScreen = 'home';
+// Đoạn văn pháp lý: thoát ký tự rồi tô nổi các chỗ chủ app phải điền hoặc quyết định ([ĐIỀN: ...], [ĐỀ XUẤT: ...]) và ghi chú cho luật sư ([Luật sư ...])
+const legalText = (t) => esc(t).replace(/\[(ĐIỀN|ĐỀ XUẤT|Luật sư)[^\]]*\]/g, (m) => '<mark>' + m + '</mark>');
 const legalPage = (key) => () => {
   const d = LEGAL[key];
   return '<div class="panel legal">' + (key !== 'payguide' ? '<div class="warn" style="margin-bottom:8px">Bản nháp, chưa được luật sư rà soát. Chủ app cần điền các mục [ĐIỀN] trước khi công khai.</div>' : '') +
-    (d.updated ? '<p class="hint">' + esc(d.updated) + '</p>' : '') + d.sections.map((s) => '<h3 aria-level="2">' + esc(s.h) + '</h3><p>' + esc(s.p) + '</p>').join('') + '</div>';
+    (d.updated ? '<p class="hint">' + esc(d.updated) + '</p>' : '') + d.sections.map((s) => '<h3 aria-level="2">' + esc(s.h) + '</h3>' + s.p.split('\n\n').map((para) => '<p>' + legalText(para) + '</p>').join('')).join('') + '</div>';
 };
 const PAGES = {
   album: { title: 'Album kỷ niệm', render: () => pageAlbum() },
@@ -1720,6 +1722,7 @@ const PAGES = {
   about: { title: 'Giới thiệu', render: () => pageAbout() },
   privacy: { title: LEGAL.privacy.title, render: legalPage('privacy') },
   terms: { title: LEGAL.terms.title, render: legalPage('terms') },
+  refund: { title: LEGAL.refund.title, render: legalPage('refund') },
   payguide: { title: LEGAL.payguide.title, render: legalPage('payguide') },
 };
 function renderPage() { stopReel(); $('pageBody').innerHTML = PAGES[pageName].render(); if (pageName === 'album') fillAlbum(); if (pageName === 'reel') fillReel(); }
@@ -1826,7 +1829,7 @@ function pageAbout() {
   return '<div class="panel" style="text-align:center"><svg width="72" height="72" aria-hidden="true"><use href="#logo-sym"/></svg>' +
     '<h2 style="margin:8px 0 0">' + esc(APP.name) + '</h2><div class="vn-about">' + vnMapSvg({ labels: true }) + '</div><p style="margin:4px 0;color:var(--teal);font-weight:600">' + esc(APP.slogan) + '</p><p class="hint">Phiên bản ' + esc(APP.version) + ' · bản thử nghiệm</p></div>' +
     '<div class="panel"><b>Arrow Travel là gì?</b><p style="margin:6px 0 0">Ứng dụng lên lịch trình du lịch theo người đi cùng. Gia đình có trẻ nhỏ có giờ nghỉ trưa dài và ít đi bộ, cặp đôi có quán yên tĩnh và hoàng hôn, nhóm bạn trẻ có lịch dày và nhiều điểm check-in. Từ lịch trình, bạn tìm chuyến bay, khách sạn, chọn phương tiện và xem tổng chi phí cả chuyến.</p></div>' +
-    '<div class="panel menu"><button class="mi" data-page="privacy"><span>Chính sách bảo mật</span><span class="chev">›</span></button><button class="mi" data-page="terms"><span>Điều khoản sử dụng</span><span class="chev">›</span></button><button class="mi" data-page="payguide"><span>Hướng dẫn thanh toán</span><span class="chev">›</span></button></div>' +
+    '<div class="panel menu"><button class="mi" data-page="privacy"><span>Chính sách bảo mật</span><span class="chev">›</span></button><button class="mi" data-page="terms"><span>Điều khoản sử dụng</span><span class="chev">›</span></button><button class="mi" data-page="refund"><span>Chính sách huỷ và hoàn tiền</span><span class="chev">›</span></button><button class="mi" data-page="payguide"><span>Hướng dẫn thanh toán</span><span class="chev">›</span></button></div>' +
     '<p class="foot">Mã nguồn: <a href="' + esc(APP.repoUrl) + '" target="_blank" rel="noopener" style="color:var(--teal)">' + esc(APP.repoUrl.replace('https://', '')) + '</a>. Dữ liệu địa điểm, giá, khuyến mãi, đánh giá đang là dữ liệu mẫu.</p>';
 }
 

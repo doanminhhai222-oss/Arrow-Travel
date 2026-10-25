@@ -402,5 +402,6 @@ export const JA = {
   "Hội An + Đà Nẵng": "ホイアン + ダナン",
   "Kết hợp thêm": "あわせて訪れる",
   "Mỗi ngày ở trọn một thành phố, mỗi thành phố một khách sạn. Nên chọn ít nhất 2 ngày cho mỗi nơi.": "1日につき1都市で、都市ごとにホテルを1つ選びます。各地に2日以上をおすすめします。",
-  "thông báo chưa đọc": "件の未読通知"
+  "thông báo chưa đọc": "件の未読通知",
+  "Chính sách huỷ và hoàn tiền": "キャンセル・返金ポリシー"
 };

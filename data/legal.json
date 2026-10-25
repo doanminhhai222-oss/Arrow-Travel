@@ -1,74 +1,140 @@
 {
-  "_note": "BẢN NHÁP do công cụ soạn, chưa được luật sư rà soát. Chủ app phải điền các mục [ĐIỀN] và nhờ luật sư kiểm tra trước khi ra mắt công khai.",
+  "_note": "BẢN NHÁP do công cụ soạn theo đúng hành vi của app ở thời điểm viết (25/10/2026), chưa được luật sư rà soát. Chủ app phải điền các mục [ĐIỀN: ...], quyết định các mục [ĐỀ XUẤT: ...] và nhờ luật sư kiểm tra trước khi ra mắt công khai. Xem docs/PHAP-LY-CAN-LUAT-SU.md.",
   "privacy": {
     "title": "Chính sách bảo mật",
-    "updated": "Bản nháp 0.1",
+    "updated": "Bản nháp 0.2, ngày 25/10/2026",
     "sections": [
       {
-        "h": "Chúng tôi lưu gì về bạn",
-        "p": "Bản hiện tại không có tài khoản và không có máy chủ riêng. Lịch trình bạn lưu, ảnh bạn tải lên, điểm thưởng, voucher, thông báo và cài đặt chỉ nằm trong bộ nhớ của trình duyệt trên thiết bị này. Chúng tôi không nhận được các dữ liệu đó."
+        "h": "Ai chịu trách nhiệm về dữ liệu của bạn",
+        "p": "Arrow Travel do [ĐIỀN: tên hộ kinh doanh hoặc công ty, mã số thuế, địa chỉ] vận hành. Mọi câu hỏi về dữ liệu cá nhân gửi tới [ĐIỀN: email liên hệ về dữ liệu cá nhân].\n\nChính sách này mô tả đúng cách app hoạt động hiện nay: chưa có tài khoản, chưa có máy chủ lưu dữ liệu của bạn. Khi có thay đổi lớn (ví dụ thêm tài khoản, đồng bộ lịch trình, công cụ thống kê), chúng tôi cập nhật chính sách và xin sự đồng ý của bạn trước khi áp dụng."
       },
       {
-        "h": "Chúng tôi không thu thập",
-        "p": "Không lưu mật khẩu. Không lưu số thẻ hay thông tin thanh toán. Không theo dõi vị trí. Không bán dữ liệu."
+        "h": "Dữ liệu nằm trên thiết bị của bạn",
+        "p": "Lịch trình đã lưu, cài đặt, địa điểm yêu thích, ghi chú và đánh giá ở mục Khoảnh khắc, ảnh và tệp bạn thêm, điểm thưởng, voucher, thông báo, đơn đặt thử, địa điểm bạn tự thêm từ Google Maps, trạng thái chuyến đang theo dõi (những nơi đã đến kèm giờ) và trạng thái gói ArrowPro (mã kích hoạt, ngày dùng thử) chỉ được lưu trong bộ nhớ của trình duyệt trên thiết bị này. Chúng tôi không nhận được các dữ liệu đó.\n\nẢnh và tệp đính kèm không được mã hoá. Ai dùng được thiết bị và trình duyệt này đều có thể xem. Đừng đính kèm giấy tờ nhạy cảm như căn cước, hộ chiếu, thẻ ngân hàng nếu thiết bị dùng chung."
       },
       {
-        "h": "Chuyển khoản",
-        "p": "Khi thanh toán, bạn tự chuyển khoản từ app ngân hàng của mình tới tài khoản nhận tiền của Arrow Travel. Ngân hàng xử lý giao dịch theo chính sách của họ. Chúng tôi chỉ biết thông tin có trong giao dịch chuyển khoản như số tiền và nội dung."
+        "h": "Vị trí của bạn",
+        "p": "App chỉ đọc vị trí khi bạn bấm bật Theo dõi chuyến đi. Trình duyệt sẽ hỏi quyền, bạn có thể từ chối hoặc chọn vị trí thủ công. Khi bật, vị trí GPS được dùng ngay trên thiết bị để biết bạn đã tới điểm nào trong lịch trình. App không lưu toạ độ GPS vào bộ nhớ và không gửi cho chúng tôi.\n\nMột ngoại lệ bạn cần biết: khi mở mục Gợi ý gần đó, trình duyệt gửi toạ độ quanh vị trí của bạn (hoặc vị trí bạn chọn thủ công) cùng địa chỉ IP tới dịch vụ dữ liệu bản đồ mở OpenStreetMap (Overpass API, máy chủ overpass-api.de) để lấy quán ăn, cà phê, ATM gần đó. Dịch vụ này do bên thứ ba vận hành và áp dụng chính sách của họ. Nếu không muốn, đừng mở mục Gợi ý gần đó.\n\nVị trí là dữ liệu nhạy cảm. Chúng tôi chỉ dùng khi bạn chủ động bật và bạn tắt được bất cứ lúc nào (nút Dừng theo dõi hoặc thu hồi quyền vị trí trong cài đặt trình duyệt). [Luật sư xác nhận cách xin đồng ý này đã đủ theo quy định về dữ liệu nhạy cảm chưa.]"
       },
       {
-        "h": "Dịch vụ bên thứ ba",
-        "p": "Trang tải phông chữ từ Google Fonts. Khi chủ app bật tính năng đánh giá từ Google Maps, trang sẽ gọi Google Maps Platform và áp dụng chính sách của Google. Các liên kết mở Google Maps, Grab, Xanh SM thuộc các bên đó."
+        "h": "Dịch vụ của bên thứ ba",
+        "p": "Khi bạn mở app, trình duyệt tải phông chữ từ Google Fonts nên Google nhận địa chỉ IP và thông tin trình duyệt của bạn. Trang được lưu trên [ĐIỀN: nhà cung cấp hosting, hiện là GitHub Pages], nhà cung cấp này ghi nhật ký truy cập (địa chỉ IP, thời gian) theo chính sách của họ.\n\nKhi bạn bấm vào các liên kết mở Google Maps, Grab, Xanh SM, Flightradar24 hoặc trang đối tác, bạn rời app và áp dụng chính sách của các bên đó. Tính năng lấy đánh giá từ Google Maps chưa được bật.\n\nMáy chủ của các bên thứ ba có thể ở nước ngoài. [Luật sư xác nhận nghĩa vụ liên quan tới chuyển dữ liệu ra nước ngoài.]"
+      },
+      {
+        "h": "Thanh toán và gói ArrowPro",
+        "p": "Bạn tự chuyển khoản từ app ngân hàng của mình. Chúng tôi chỉ thấy thông tin có trong giao dịch như số tiền, nội dung chuyển khoản (kèm mã đặt chỗ), tên và số tài khoản của người chuyển do ngân hàng cung cấp. Chúng tôi dùng chúng để đối chiếu, kích hoạt gói và lưu sổ sách kế toán, thuế trong thời hạn pháp luật yêu cầu [ĐIỀN: thời hạn lưu]. Chúng tôi không lưu và không có mật khẩu, mã OTP hay số thẻ của bạn.\n\nMã kích hoạt ArrowPro do chúng tôi gửi được lưu trên thiết bị bạn đã nhập. Chúng tôi giữ bản ghi các mã đã cấp (mã, ngày hết hạn, mã giao dịch) để hỗ trợ và chống dùng sai."
+      },
+      {
+        "h": "Những điều chúng tôi không làm",
+        "p": "Không bán hay cho thuê dữ liệu. Không quảng cáo. Hiện không dùng cookie theo dõi hay công cụ thống kê hành vi. Không thu thập mật khẩu. Nếu sau này dùng công cụ thống kê hoặc đo lỗi, chúng tôi sẽ nói rõ ở đây và xin đồng ý trước."
+      },
+      {
+        "h": "Thời gian lưu và xoá dữ liệu",
+        "p": "Dữ liệu trên thiết bị được giữ tới khi bạn xoá. Bạn xoá toàn bộ ở Tài khoản, mục Dữ liệu của bạn, hoặc xoá dữ liệu trang web trong trình duyệt. Dữ liệu giao dịch ở phía chúng tôi được giữ theo thời hạn pháp luật về kế toán, thuế."
       },
       {
         "h": "Quyền của bạn",
-        "p": "Bạn có thể xoá toàn bộ dữ liệu trên thiết bị bất cứ lúc nào ở Tài khoản, mục Dữ liệu của bạn. Xoá dữ liệu trình duyệt cũng xoá hết."
+        "p": "Theo pháp luật Việt Nam về bảo vệ dữ liệu cá nhân (Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 có hiệu lực từ 1/1/2026 và các văn bản hướng dẫn), bạn có quyền được biết, đồng ý hoặc rút lại sự đồng ý, truy cập, chỉnh sửa, yêu cầu xoá hoặc hạn chế xử lý, phản đối, khiếu nại và yêu cầu bồi thường khi bị xâm phạm. [Luật sư rà soát danh sách quyền và thời hạn phản hồi.]\n\nDữ liệu trên thiết bị: bạn tự xem và xoá. Dữ liệu giao dịch ở chúng tôi: gửi yêu cầu tới [ĐIỀN: email], chúng tôi trả lời trong [ĐIỀN: thời hạn theo luật]."
       },
       {
         "h": "Trẻ em",
-        "p": "App dành cho người lập kế hoạch là người lớn. Người dưới 16 tuổi cần có người giám hộ khi dùng."
+        "p": "App dành cho người lập kế hoạch là người lớn. Người dưới 16 tuổi cần có cha mẹ hoặc người giám hộ cùng dùng và đồng ý. Chúng tôi không chủ ý thu thập dữ liệu của trẻ em."
+      },
+      {
+        "h": "Bảo mật và sự cố",
+        "p": "Chúng tôi dùng kết nối an toàn (HTTPS) để tải app. Không hệ thống nào an toàn tuyệt đối. Nếu xảy ra sự cố ảnh hưởng dữ liệu cá nhân của bạn, chúng tôi sẽ thông báo và báo cơ quan có thẩm quyền theo quy định [ĐIỀN: quy trình xử lý sự cố]."
       },
       {
         "h": "Thay đổi và liên hệ",
-        "p": "Khi có thay đổi chúng tôi cập nhật trang này. Liên hệ: [ĐIỀN email hoặc số điện thoại của chủ app]. Việc xử lý dữ liệu cá nhân cần tuân thủ pháp luật Việt Nam, trong đó có Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân, nên cần luật sư xác nhận trước khi công khai."
+        "p": "Khi có thay đổi, chúng tôi cập nhật trang này và ghi ngày cập nhật. Liên hệ: [ĐIỀN: email, số điện thoại, địa chỉ]."
       }
     ]
   },
   "terms": {
     "title": "Điều khoản sử dụng",
-    "updated": "Bản nháp 0.1",
+    "updated": "Bản nháp 0.2, ngày 25/10/2026",
     "sections": [
       {
-        "h": "Bản chất dịch vụ",
-        "p": "Arrow Travel là công cụ gợi ý lịch trình và ước tính chi phí. Dữ liệu địa điểm, giá, giờ mở cửa, chuyến bay, khách sạn, khuyến mãi và đánh giá trong bản thử nghiệm là dữ liệu mẫu, chỉ để tham khảo."
+        "h": "Chấp nhận điều khoản",
+        "p": "Khi dùng Arrow Travel, bạn đồng ý với điều khoản này và Chính sách bảo mật. Nếu không đồng ý, vui lòng ngừng sử dụng. Dịch vụ do [ĐIỀN: tên hộ kinh doanh hoặc công ty, mã số thuế, địa chỉ] cung cấp."
       },
       {
-        "h": "Không đảm bảo",
-        "p": "Giờ giấc, quãng đường, chi phí là ước tính và có thể khác thực tế. Hãy kiểm tra lại giá, giờ mở cửa và điều kiện trước khi quyết định."
+        "h": "Bản chất dịch vụ",
+        "p": "Arrow Travel là công cụ gợi ý lịch trình du lịch và ước tính chi phí. Chúng tôi không phải công ty lữ hành hay đại lý bán tour, không tổ chức chuyến đi, không cung cấp dịch vụ vận chuyển hay lưu trú. [Luật sư xác nhận cách mô tả này phù hợp mô hình kinh doanh thực tế.]\n\nTrong bản thử nghiệm, dữ liệu chuyến bay, khách sạn, khuyến mãi, đánh giá và các mục có nhãn \"mẫu\" là dữ liệu minh hoạ, chỉ để tham khảo, không phải chào giá hay xác nhận còn chỗ."
+      },
+      {
+        "h": "Thông tin chỉ để tham khảo",
+        "p": "Giờ mở cửa, giá vé, toạ độ, quãng đường, thời gian di chuyển, chi phí là ước tính và có thể khác thực tế hoặc đã thay đổi. Địa điểm có nhãn \"ước lượng\" hoặc \"chưa xác minh\" cần được kiểm tra lại trên Google Maps hoặc với chính địa điểm trước khi đi. Bạn tự chịu trách nhiệm về quyết định và an toàn của mình trong chuyến đi (leo núi, đi tàu đảo, bơi biển, thời tiết, đường xa). Nếu thấy thông tin sai, hãy báo cho chúng tôi."
       },
       {
         "h": "Đặt chỗ và thanh toán",
-        "p": "Thanh toán bằng chuyển khoản vào tài khoản được hiển thị. Chuyển khoản không đồng nghĩa với đặt chỗ thành công. Vé và phòng chỉ được xác nhận khi chúng tôi đối chiếu giao dịch theo mã đặt chỗ và thông báo xác nhận. Hãy ghi đúng nội dung chuyển khoản."
-      },
-      {
-        "h": "Huỷ và hoàn tiền",
-        "p": "[ĐIỀN chính sách huỷ, đổi và hoàn tiền: thời hạn, phí, thời gian hoàn]. Quy định riêng của hãng bay và khách sạn được áp dụng."
-      },
-      {
-        "h": "Điểm thưởng và voucher",
-        "p": "Điểm và voucher không quy đổi thành tiền mặt, có hạn sử dụng và điều kiện đơn tối thiểu ghi trên voucher. Chúng tôi có quyền từ chối voucher khi phát hiện gian lận hoặc sai lệch."
-      },
-      {
-        "h": "Nội dung bạn đăng",
-        "p": "Ảnh và đánh giá bạn tạo thuộc về bạn. Bạn cam kết có quyền dùng ảnh và không đăng nội dung vi phạm pháp luật. Hiện ảnh chỉ lưu trên thiết bị của bạn."
-      },
-      {
-        "h": "Giới hạn trách nhiệm",
-        "p": "Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm về thiệt hại phát sinh do dựa vào thông tin tham khảo trong app. Điều khoản chi tiết cần luật sư soạn: [ĐIỀN]."
+        "p": "Hiện app chỉ ghi nhận đơn đặt thử, không thu tiền thật. [ĐIỀN: mô tả cách thanh toán khi mở bán, ví dụ cổng thanh toán hoặc chuyển khoản.] Chuyển khoản không đồng nghĩa với đặt chỗ thành công; chỉ khi có thông báo xác nhận kèm mã đặt chỗ thì đơn mới có hiệu lực. Hãy ghi đúng nội dung chuyển khoản. Với vé máy bay và khách sạn do bên thứ ba cung cấp, điều kiện của hãng và khách sạn được áp dụng."
       },
       {
         "h": "Gói ArrowPro (trả phí)",
-        "p": "ArrowPro là gói trả phí theo tháng hoặc năm, thanh toán bằng chuyển khoản. Gói được kích hoạt bằng mã do Arrow Travel gửi sau khi đối chiếu giao dịch, gắn với thiết bị đã nhập mã và hết hiệu lực vào ngày ghi trên mã, không tự gia hạn. Chỉ các đặc quyền đang có tại thời điểm mua mới thuộc gói; mục ghi \"Sắp có\" không được tính vào giá. Hoàn tiền: [ĐIỀN chính sách hoàn tiền, ví dụ hoàn 100% trong 7 ngày nếu chưa dùng]. Ưu đãi riêng cho thành viên hiện là ưu đãi mẫu."
+        "p": "ArrowPro là gói thuê bao theo tháng hoặc năm ([ĐIỀN: giá hiện hành, hiện đề xuất 49.000 đ/tháng và 399.000 đ/năm]). Gói được kích hoạt bằng mã do chúng tôi gửi sau khi đối chiếu giao dịch, gắn với thiết bị đã nhập mã, hết hiệu lực vào ngày ghi trên mã và không tự gia hạn. Chỉ các đặc quyền đang có tại thời điểm mua mới thuộc gói; mục ghi \"Sắp có\" không được tính vào giá. Ưu đãi riêng cho thành viên hiện là ưu đãi mẫu. Hoàn tiền xem Chính sách huỷ và hoàn tiền."
+      },
+      {
+        "h": "Điểm thưởng và voucher",
+        "p": "Điểm và voucher không quy đổi thành tiền mặt, có hạn sử dụng và điều kiện đơn tối thiểu ghi trên voucher. Chúng tôi có quyền từ chối hoặc thu hồi khi phát hiện gian lận hoặc sai lệch."
+      },
+      {
+        "h": "Nội dung bạn tạo",
+        "p": "Ảnh, ghi chú, đánh giá bạn tạo thuộc về bạn và hiện chỉ lưu trên thiết bị của bạn. Bạn cam kết có quyền dùng ảnh bạn thêm và không đăng nội dung vi phạm pháp luật hoặc xâm phạm quyền của người khác, kể cả hình ảnh của người khác khi chưa được đồng ý. Nếu sau này có tính năng chia sẻ công khai, chúng tôi sẽ bổ sung điều khoản cấp phép nội dung."
+      },
+      {
+        "h": "Quyền sở hữu trí tuệ",
+        "p": "Mã nguồn, giao diện, logo, văn bản và dữ liệu tổng hợp của Arrow Travel thuộc [ĐIỀN: chủ sở hữu]. Ảnh địa điểm lấy từ Wikimedia Commons theo giấy phép ghi dưới từng ảnh (CC BY, CC BY-SA, CC0 hoặc miền công cộng); bạn chỉ được dùng lại ảnh theo đúng giấy phép đó. Tên và hình ảnh thương hiệu của các cửa hàng, quán xuất hiện chỉ để mô tả địa điểm, không có nghĩa là họ hợp tác hay bảo trợ."
+      },
+      {
+        "h": "Sử dụng được phép",
+        "p": "Không dùng app để vi phạm pháp luật; không sao chép hàng loạt dữ liệu, dò quét tự động hoặc tìm cách vượt qua kiểm tra gói trả phí; không dùng chung một mã ArrowPro cho nhiều thiết bị khi gói không cho phép."
+      },
+      {
+        "h": "Giới hạn trách nhiệm",
+        "p": "Trong phạm vi pháp luật cho phép, chúng tôi không chịu trách nhiệm về thiệt hại gián tiếp hoặc phát sinh do dựa vào thông tin tham khảo trong app, do dịch vụ của bên thứ ba, hoặc do sự cố ngoài tầm kiểm soát (mất mạng, thay đổi của nhà cung cấp). Trách nhiệm tối đa của chúng tôi đối với một khiếu nại không vượt quá số tiền bạn đã trả cho dịch vụ liên quan trong [ĐIỀN: số tháng] gần nhất. [Luật sư rà soát điều khoản này, nhất là với người tiêu dùng.]"
+      },
+      {
+        "h": "Thay đổi dịch vụ, chấm dứt",
+        "p": "Chúng tôi có thể thay đổi hoặc ngừng một tính năng, và sẽ thông báo trước với thay đổi ảnh hưởng gói đã trả. Chúng tôi có thể chấm dứt quyền dùng của người vi phạm điều khoản."
+      },
+      {
+        "h": "Luật áp dụng và giải quyết tranh chấp",
+        "p": "Điều khoản theo pháp luật Việt Nam. Hai bên thương lượng trước; nếu không được, tranh chấp do toà án có thẩm quyền tại [ĐIỀN: nơi đặt trụ sở] giải quyết. [Luật sư xác nhận.]"
+      },
+      {
+        "h": "Liên hệ",
+        "p": "[ĐIỀN: email, số điện thoại, địa chỉ]."
+      }
+    ]
+  },
+  "refund": {
+    "title": "Chính sách huỷ và hoàn tiền",
+    "updated": "Bản nháp 0.2, ngày 25/10/2026",
+    "sections": [
+      {
+        "h": "Phạm vi",
+        "p": "Chính sách này áp dụng cho gói ArrowPro, đơn đặt vé máy bay, khách sạn (khi mở bán), điểm thưởng và voucher. Ở chế độ thử không thu tiền thật nên không có hoàn tiền."
+      },
+      {
+        "h": "Gói ArrowPro",
+        "p": "[ĐỀ XUẤT: hoàn 100% trong 7 ngày kể từ ngày kích hoạt nếu bạn chưa dùng các tính năng trả phí quá 3 lần.] Sau thời hạn này, gói không hoàn tiền nhưng bạn vẫn dùng đến hết hạn.\n\nNếu lỗi thuộc về chúng tôi (không kích hoạt được mã, tính sai số tiền, tính năng đã quảng cáo không dùng được), bạn được cấp lại mã hoặc hoàn tiền đủ phần chưa dùng, tuỳ bạn chọn.\n\nNếu chuyển nhầm hoặc chuyển thừa, chúng tôi hoàn lại về tài khoản đã chuyển, trừ phí ngân hàng (nếu có)."
+      },
+      {
+        "h": "Vé máy bay và khách sạn",
+        "p": "Điều kiện huỷ, đổi và hoàn tiền do hãng bay hoặc khách sạn quy định và được hiển thị khi đặt. [ĐIỀN: nếu thanh toán thực hiện với đối tác, nói rõ bạn làm việc trực tiếp với đối tác và chúng tôi không giữ tiền của bạn. Nếu chúng tôi thu tiền hộ, ghi rõ phí huỷ, thời hạn và cách hoàn.]"
+      },
+      {
+        "h": "Điểm thưởng và voucher",
+        "p": "Không quy đổi thành tiền mặt và không hoàn lại sau khi đã dùng hoặc hết hạn."
+      },
+      {
+        "h": "Cách yêu cầu và thời gian xử lý",
+        "p": "Gửi email tới [ĐIỀN: email] kèm mã đặt chỗ hoặc mã giao dịch và ảnh chụp giao dịch. Chúng tôi phản hồi trong [ĐIỀN: ví dụ 2 ngày làm việc] và hoàn tiền trong [ĐIỀN: ví dụ 7 ngày làm việc] kể từ khi chấp nhận, về đúng tài khoản đã chuyển."
+      },
+      {
+        "h": "Khiếu nại",
+        "p": "Nếu không đồng ý với kết quả, bạn có thể gửi khiếu nại tới [ĐIỀN: email] hoặc liên hệ cơ quan quản lý nhà nước về bảo vệ quyền lợi người tiêu dùng. [Luật sư đối chiếu Luật Bảo vệ quyền lợi người tiêu dùng về quyền của người mua hàng, dịch vụ từ xa.]"
       }
     ]
   },
@@ -94,11 +160,11 @@
       },
       {
         "h": "Bước 5. Chờ xác nhận",
-        "p": "Chúng tôi đối chiếu giao dịch theo mã đặt chỗ rồi xác nhận vé và phòng. Nếu quá [ĐIỀN thời gian] chưa thấy xác nhận, hãy liên hệ và gửi mã đặt chỗ cùng ảnh giao dịch."
+        "p": "Chúng tôi đối chiếu giao dịch theo mã đặt chỗ rồi xác nhận vé và phòng. Nếu quá [ĐIỀN: thời gian, ví dụ 1 ngày làm việc] chưa thấy xác nhận, hãy liên hệ [ĐIỀN: email] và gửi mã đặt chỗ cùng ảnh giao dịch."
       },
       {
         "h": "Lưu ý an toàn",
-        "p": "Chỉ chuyển khoản tới tài khoản hiển thị trong app. Không chia sẻ mật khẩu hay mã OTP ngân hàng cho bất kỳ ai. Ở chế độ thử, mã QR bị phủ chữ MẪU và không dùng để chuyển tiền."
+        "p": "Chỉ chuyển khoản tới tài khoản hiển thị trong app và kiểm tra tên người nhận. Không chia sẻ mật khẩu hay mã OTP ngân hàng cho bất kỳ ai, chúng tôi không bao giờ hỏi. Ở chế độ thử, mã QR bị phủ chữ MẪU và không dùng để chuyển tiền. Nếu nghi ngờ bị mạo danh, hãy liên hệ chúng tôi qua kênh chính thức."
       }
     ]
   }

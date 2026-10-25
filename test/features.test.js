@@ -81,7 +81,7 @@ test('tiền tệ: đổi cách hiển thị, thanh toán luôn VND; ngôn ngữ
 });
 
 test('văn bản pháp lý có đủ 3 phần, mỗi phần có mục và dấu [ĐIỀN] ở chỗ chủ app phải điền', () => {
-  for (const k of ['privacy', 'terms', 'payguide']) { assert.ok(legal[k].title); assert.ok(legal[k].sections.length >= 5, k); assert.ok(legal[k].sections.every((s) => s.h && s.p)); }
+  for (const k of ['privacy', 'terms', 'refund', 'payguide']) { assert.ok(legal[k].title); assert.ok(legal[k].sections.length >= 5, k); assert.ok(legal[k].sections.every((s) => s.h && s.p)); }
   assert.ok(JSON.stringify(legal).includes('[ĐIỀN'));
 });
 
